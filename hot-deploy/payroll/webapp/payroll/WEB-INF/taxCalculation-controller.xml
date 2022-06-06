@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+           
+	<request-map uri="TaxCalculationTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindTaxCalculationType"/>
+        <response name="error" type="view" value="FindTaxCalculationType"/>
+ 	</request-map>  
+ 	<request-map uri="NewTaxCalculationTypeSetup">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="NewTaxCalculationTypeSetup"/>
+        <response name="error" type="view" value="NewTaxCalculationTypeSetup"/>
+ 	</request-map>  
+ 	<request-map uri="createTaxCalculationTypeSetup">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.taxCalculation.TaxCalculationTypeConf" invoke="createTaxCalculationTypeSetup"/>
+       <response name="success" type="view" value="FindTaxCalculationType"/>
+       <response name="error" type="view" value="NewTaxCalculationTypeSetup"/>
+   </request-map> 
+   <request-map uri="FindTaxCalculationType">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindTaxCalculationType"/>
+        <response name="error" type="view" value="FindTaxCalculationType"/>
+   </request-map>
+   <request-map uri="updateTaxCalculationTypeSetup">
+     <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.taxCalculation.TaxCalculationTypeConf" invoke="updateTaxCalculationTypeSetup"/>
+     <response name="success" type="view" value="FindTaxCalculationType"/>
+     <response name="error" type="view" value="NewTaxCalculationTypeSetup"/>
+   </request-map>    
+   <request-map uri="deleteTaxCalculationTypeSetup">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTaxCalculationTypeSetup"/>
+        <response name="success" type="request-redirect-noparam" value="FindTaxCalculationType"/>
+    </request-map>   
+    <request-map uri="editTaxCalculationTypeSetup">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="editTaxCalculationTypeSetup"/>
+        <response name="error" type="view" value="editTaxCalculationTypeSetup"/>
+ 	</request-map> 
+ 	<request-map uri="updateTaxCalculationTypeSetupExt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateTaxCalculationTypeSetup"/>
+        <response name="success" type="request" value="FindTaxCalculationType"/>
+    </request-map>
+    
+    
+	<!-- Tax ExamptionSet -->
+ 	<request-map uri="TaxExamptionSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PayrollItemListForExamption"/>
+ 	</request-map>  
+ 	
+ 	<request-map uri="EditPayrollItemForExamption">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditPayrollItemForExamption"/>
+ 	</request-map>  
+ 	
+    <request-map uri="updatePayrollItemTypeForExamption">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePayrollItemType"/>
+        <response name="success" type="request-redirect-noparam" value="TaxExamptionSetup"/>
+    </request-map>
+
+
+	<!-- Tax Condition  Request Map -->
+ 	<request-map uri="TaxConditionSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="TaxConditionSetup"/>
+        <response name="error" type="view" value="TaxConditionSetup"/>
+ 	</request-map>  
+ 	<request-map uri="AddTaxCondition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddTaxCondition"/>
+        <response name="error" type="view" value="TaxConditionSetup"/>
+ 	</request-map>   	
+ 	<request-map uri="EditTaxCondition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditTaxCondition"/>
+        <response name="error" type="view" value="TaxConditionSetup"/>
+ 	</request-map>   	
+    <request-map uri="FindTaxCondition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="TaxConditionSetup"/>
+        <response name="error" type="view" value="TaxConditionSetup"/>
+ 	</request-map>
+ 	<request-map uri="createTaxCondition">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.taxCalculation.TaxConditionConf" invoke="createTaxCondition"/>
+       <response name="success" type="view" value="TaxConditionSetup"/>
+       <response name="error" type="view" value="AddTaxCondition"/>
+   </request-map> 
+   <request-map uri="updateTaxCondition">
+		<security https="true" auth="true"/>
+	    <event type="java" path="org.ofbiz.taxCalculation.TaxConditionConf" invoke="updateTaxCondition"/>
+	    <response name="success" type="view" value="TaxConditionSetup"/>
+	    <response name="error" type="view" value="TaxConditionSetup"/>
+   </request-map>    
+   <request-map uri="deleteTaxCondition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTaxCondition"/>
+        <response name="success" type="view" value="TaxConditionSetup"/>
+    </request-map>      
+    
+    
+    <!-- Tax Payer Setup -->
+    <request-map uri="PartyTaxTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListPartyTaxTypeSetup"/>
+        <response name="error" type="view" value="ListPartyTaxTypeSetup"/>
+ 	</request-map> 
+    <request-map uri="configureTaxPayerSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ConfigureTaxPayerSetup"/>
+        <response name="error" type="view" value="ListPartyTaxTypeSetup"/>
+ 	</request-map> 
+ 	
+   <request-map uri="updateTaxPayerSetup">
+     <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.taxCalculation.TaxPayerSetupConf" invoke="updateTaxPayerSetup"/>
+     <response name="success" type="view" value="ListPartyTaxTypeSetup"/>
+     <response name="error" type="view" value="ConfigureTaxPayerSetup"/>
+   </request-map>    
+ 	
+ 	
+ 	
+    <!-- Monthly Bonus Calculate -->
+ 	
+    <request-map uri="MonthlyTaxCalculate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="MonthlyTaxCalculate"/>
+        <response name="error" type="view" value="MonthlyTaxCalculate"/>
+ 	</request-map> 
+   <request-map uri="setIndivisualPartyMonthlyTaxableAmount">
+     <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.taxCalculation.MonthlyTaxCalculate" invoke="setIndivisualPartyMonthlyTaxableAmount"/>
+     <response name="success" type="view" value="MonthlyTaxCalculate"/>
+     <response name="error" type="view" value="MonthlyTaxCalculate"/>
+   </request-map>    
+   <request-map uri="setAllPartyMonthlyTaxableAmount">
+     <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.taxCalculation.MonthlyTaxCalculate" invoke="setAllPartyMonthlyTaxableAmount"/>
+     <response name="success" type="view" value="MonthlyTaxCalculate"/>
+     <response name="error" type="view" value="MonthlyTaxCalculate"/>
+   </request-map>      
+   <request-map uri="setAllEmployeeTaxPayrollIntregration">
+     <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.taxCalculation.MonthlyTaxCalculate" invoke="AllEmployeeTaxPayrollIntregration"/>
+     <response name="success" type="view" value="MonthlyTaxCalculate"/>
+     <response name="error" type="view" value="MonthlyTaxCalculate"/>
+   </request-map>       
+   <request-map uri="IndivisualTaxPayrollIntregration">
+     <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.taxCalculation.MonthlyTaxCalculate" invoke="IndivisualTaxPayrollIntregration"/>
+     <response name="success" type="view" value="MonthlyTaxCalculate"/>
+     <response name="error" type="view" value="MonthlyTaxCalculate"/>
+   </request-map>    
+ 	
+ 	
+ 	
+ 	
+	<!-- View Map -->
+	<view-map name="FindTaxCalculationType" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxCalculationTypeScreens.xml#FindTaxCalculationType"/>
+	<view-map name="NewTaxCalculationTypeSetup" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxCalculationTypeScreens.xml#NewTaxCalculationTypeSetup"/>
+	<view-map name="editTaxCalculationTypeSetup" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxCalculationTypeScreens.xml#EditTaxCalculationTypeSetup"/>
+	
+	<!-- Tax Condition View Map -->
+	<view-map name="PayrollItemListForExamption" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxExamptionSetScreens.xml#PayrollItemListForExamption"/>
+	<view-map name="EditPayrollItemForExamption" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxExamptionSetScreens.xml#EditPayrollItemForExamption"/>
+	
+	<!-- Tax Condition View Map -->
+	<view-map name="TaxConditionSetup" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxConditionScreens.xml#TaxConditionSetup"/>
+	<view-map name="AddTaxCondition" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxConditionScreens.xml#AddTaxCondition"/>
+	<view-map name="EditTaxCondition" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxConditionScreens.xml#EditTaxCondition"/>
+	<view-map name="FindTaxCalculationType" type="screen" page="component://payroll/widget/taxcalculation/screens/TaxCalculationTypeScreens.xml#FindTaxCalculationType"/>
+	
+	<!-- Tax Payer Setup -->
+	<view-map name="ListPartyTaxTypeSetup" type="screen" page="component://payroll/widget/taxcalculation/screens/EmployeeTaxPayerSetupScreens.xml#ListTaxPayerSetup"/>
+	<view-map name="ConfigureTaxPayerSetup" type="screen" page="component://payroll/widget/taxcalculation/screens/EmployeeTaxPayerSetupScreens.xml#ConfigureTaxPayerSetup"/>
+	
+    <!-- Monthly Bonus Calculate -->
+    <view-map name="MonthlyTaxCalculate" type="screen" page="component://payroll/widget/taxcalculation/screens/MonthlyTaxCalculationScreens.xml#MonthlyTaxCalculation"/>
+	
+</site-conf>

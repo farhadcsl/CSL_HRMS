@@ -1,0 +1,478 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+	<description>Human Resources Manager Organization Manage Module Site Configuration File</description>
+
+	<!-- view handlers -->
+	<handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler" />
+	<request-map uri="OrganizationMain">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="OrganizationMain" save-last-view="true" />
+		<response name="error" type="view" value="OrganizationMain" />
+	</request-map>
+	<request-map uri="setUserPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="setUserPreference" />
+		<response name="success" type="request-redirect" value="OrganizationMain" />
+		<response name="error" type="request" value="OrganizationMain" />
+	</request-map>
+	
+	<request-map uri="CompanyAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="CompanyAddPopUp" />
+	</request-map>
+	<request-map uri="PaygradeAddPopUp"><!-- Request map for paygrade PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="PaygradeAddPopUp" />
+	</request-map>
+	<request-map uri="PositionAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="PositionAddPopUp" />
+	</request-map>
+	<request-map uri="OrganizationHeadAssignAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="OrganizationHeadAssignAddPopUp" />
+	</request-map>
+	
+	
+	
+	<request-map uri="UnitPositionAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="UnitPositionAddPopUp" />
+	</request-map>
+	
+	<request-map uri="ReportingStructAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="ReportingStructAddPopUp" />
+	</request-map>
+	<request-map uri="EmplPositionResponsibilityAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="EmplPositionResponsibilityAddPopUp" />
+	</request-map>
+	<request-map uri="EmplJobRequisitionAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="EmplJobRequisitionAddPopUp" />
+	</request-map>
+	
+	<request-map uri="createContessaCompany"><!-- request map for create event for Division -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createContessaCompany"/>
+		<response name="success" type="view" value="OrganizationMain" />
+		<response name="error" type="view" value="OrganizationMain"/>
+	</request-map>
+	<request-map uri="createDivisions"><!-- request map for create event for Division -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createDivisions"/>
+		<response name="success" type="view" value="OrganizationMain" />
+		<response name="error" type="view" value="OrganizationMain"/>
+	</request-map>
+	<request-map uri="createDepartments"><!-- request map for create event for Departments -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createDepartments"/>
+		<response name="success" type="view" value="OrganizationMain" />
+		<response name="error" type="view" value="OrganizationMain"/>
+	</request-map>
+	
+	<request-map uri="createSection"><!-- request map for create event for Section -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createSection"/>
+		<response name="success" type="view" value="OrganizationMain" />
+		<response name="error" type="view" value="OrganizationMain"/>
+	</request-map>
+	
+	<request-map uri="createLine"><!-- request map for create event for Line -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createUnit"/>
+		<response name="success" type="view" value="OrganizationMain" />
+		<response name="error" type="view" value="OrganizationMain"/>
+	</request-map>
+	
+	<!-- Remove document by Hr Admin from document list in Organization tab -->
+    <request-map uri="removeDocuments">
+    	<security auth="true" https="true"/>
+    	<!-- <event type="simple" path="component://humanres/script/org/ofbiz/humanres/HumanResEvents.xml" invoke="RemoveMethodContentByHradminForEmployee"/> -->
+    	<event type="service" invoke="removeContentByHradminForEmployee"/>
+    	<response name="success" type="view" value="OrganizationMain"/>
+    	<response name="error" type="view" value="OrganizationMain"/>
+    </request-map>
+	
+	<request-map uri="uploadContent">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="uploadContent" />
+	</request-map>
+	
+	<request-map uri="uploadUnitContent">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="uploadUnitContent" />
+	</request-map>
+	
+	<request-map uri="uploadBudgetContent">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="uploadBudgetContent" />
+	</request-map>
+	<request-map uri="uploadPositionBudgetContent">
+		<security auth="true" https="true" />
+		<event type="service" invoke="uploadBudgetContentFile" />
+		 <response name="success" type="request" value="ContessaPositionView" >
+		 <redirect-parameter name="emplPositionId"/>
+		 </response>
+		
+		<response name="error" type="view" value="ContessaPositionView" />
+	</request-map>
+	<!-- Remove Budget document by Hr Admin from document list in Organization tab -->
+    <request-map uri="removeBudgetDocuments">
+    	<security auth="true" https="true"/>
+    	<event type="simple" path="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="RemoveMethodContentByHradminForBudget"/>
+    	 <response name="success" type="request" value="PorttayPositionView" >
+		 <redirect-parameter name="emplPositionId"/>
+		 </response>
+    	<response name="error" type="view" value="ContessaPositionView"/>
+    </request-map>
+	<request-map uri="ContessaPositionView">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="ContessaPositionView" />
+	</request-map>
+	<!-- pay grade profile mapping -->
+	<request-map uri="OrgPaygradeView">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="OrgPaygradeView" />
+	</request-map>
+	<!-- Salary Step profile mapping -->
+	<request-map uri="OrgSalaryStepView">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="OrgSalaryStepView" />
+	</request-map>
+	<request-map uri="back">
+		<security auth="true" https="true" />
+		<response name="success" type="request" value="setUserPreference" />
+	</request-map>
+	<request-map uri="uploadOrganizationContent">
+		<security auth="true" https="true" />
+		<event type="service" invoke="uploadPartyContentFile" />
+		<response name="success" type="view" value="OrganizationMain" />
+		<response name="error" type="view" value="OrganizationMain" />
+	</request-map>
+	<request-map uri="createPayGradeAndUpdateEmplPosition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createPayGradeAndUpdateEmplPosition"/>
+        <response name="success" type="request-redirect" value="ContessaPositionView"/>
+        <response name="error" type="view" value="ContessaPositionView"/>
+    </request-map>
+    <request-map uri="AssignPaygradeBenfitAddPopUp"><!-- Request map for assign paygrade PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AssignPaygradeBenfitAddPopUp" />
+	</request-map>
+	<request-map uri="AssignPaygradeDeductionAddPopUp"><!-- Request map for assign paygrade PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AssignPaygradeDeductionAddPopUp" />
+	</request-map>
+	<request-map uri="AddPaygradeIncrementsPopUp"><!-- Request map for assign paygrade PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AddPaygradeIncrementsPopUp" />
+	</request-map>
+	
+	<request-map uri="orgChart"><!-- request map for orgChart -->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="orgChart"/>
+		<response name="error" type="view" value="orgChart"/>
+	</request-map>
+	
+	<request-map uri="orgChartNew"><!-- request map for orgChart -->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="orgChartNew"/>
+		<response name="error" type="view" value="orgChartNew"/>
+	</request-map>
+	
+	<request-map uri="PrintOrgChart"><!-- request map for orgChart -->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="PrintOrgChart"/>
+	</request-map>
+	
+	<!-- paygrade benefit assingment -->
+	<request-map uri="paygradeBenefitRuleAssignmentForm">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="OrgPaygradeView"/>
+    </request-map>
+    
+    <request-map uri="paygradeDeductionRuleAssignment">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.PaygradeRuleAssignment" invoke="payGradeDeductionRuleAssignment"/>
+        <response name="success" type="request-redirect" value="OrgPaygradeView"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+	 <request-map uri="paygradeBenefitRuleAssignment">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.PaygradeRuleAssignment" invoke="payGradeBenefitRuleAssignment"/>
+        <response name="success" type="request-redirect" value="OrgPaygradeView"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+    <!-- increments/salary steps -->
+    <request-map uri="createContessaSalaryStep">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.ContessaSalaryStep" invoke="createContessaSalaryStep"/>
+       <response name="success" type="request-redirect" value="OrgPaygradeView"/>
+       <response name="error" type="request-redirect" value="OrgPaygradeView"/>
+    </request-map>
+     <request-map uri="incrementBenefitRuleAssignment">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.IncrementRuleAssignment" invoke="incrementBenefitRuleAssignment"/>
+        <response name="success" type="request-redirect" value="OrgSalaryStepView"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+    <request-map uri="incrementDeductionRuleAssignment">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.IncrementRuleAssignment" invoke="incrementDeductionRuleAssignment"/>
+        <response name="success" type="request-redirect" value="OrgSalaryStepView"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+      <request-map uri="AssignIncrementBenfitAddPopUp"><!-- Request map for assign increment PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AssignIncrementBenfitAddPopUp" />
+	</request-map>
+	<request-map uri="AssignIncrementDeductionAddPopUp"><!-- Request map for assign increment PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AssignIncrementDeductionAddPopUp" />
+	</request-map>
+	
+	<request-map uri="AssignassignIncrementPersonAddPopUp"><!-- Request map for assign increment person PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AssignassignIncrementPersonAddPopUp" />
+	</request-map>
+	<request-map uri="assingIncrementPerson"><!-- request map for create event for Division -->
+		<security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.IncrementRuleAssignment" invoke="assingIncrementPerson"/>
+        <response name="success" type="request-redirect" value="OrgSalaryStepView"/>
+        <response name="error" type="view" value="error"/>
+	</request-map>
+	
+	
+	
+	<!-- Lookups -->
+	<request-map uri="LookupForTotalEmplPosition">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupForTotalEmplPosition"/>
+    </request-map>
+	<request-map uri="LookupForEmplPosition">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupForEmplPosition"/>
+    </request-map>
+    <request-map uri="LookupForEmplPositionType">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupForEmplPositionType"/>
+    </request-map>
+    
+    <request-map uri="LookupOrgResponsibilityType">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupOrgResponsibilityType"/>
+    </request-map>
+    <request-map uri="LookupForEmplPositionWithOrgFilter">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupForEmplPositionWithOrgFilter"/>
+    </request-map>
+    
+    <request-map uri="OrgLookupUserLoginAndPartyDetails">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="OrgLookupUserLoginAndPartyDetails"/>
+    </request-map>
+     <request-map uri="OrgLookupUserLoginAndPartyDetailsAndPosition">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="OrgLookupUserLoginAndPartyDetailsAndPosition"/>
+    </request-map>
+    <request-map uri="contessaLookupPartyGroupDivision">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="contessaLookupPartyGroupDivision"/>
+    </request-map>
+     <request-map uri="contessaLookupPartyGroupDepartment">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="contessaLookupPartyGroupDepartment"/>
+    </request-map>
+     <request-map uri="contessaLookupPartyGroupSection">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="contessaLookupPartyGroupSection"/>
+    </request-map>
+     <request-map uri="contessaLookupPartyGroupLine">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="contessaLookupPartyGroupLine"/>
+    </request-map>
+   
+	<request-map uri="PositionAddPopUpChild"><!-- Request map for position child PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="PositionAddPopUpChild" />
+	</request-map>
+	
+	<request-map uri="createOrgEmplForPosition"><!-- Create new Company Level Positions under organization tab -->
+        <security https="true" auth="true"/>
+        <!-- <event type="service" invoke="createEmplPosition"/> -->
+        <event type="java"  path="org.ofbiz.humanres.organization.OrgPosition" invoke="addOrgPosition"/>
+        <response name="success" type="view" value="OrganizationMain"/>
+        <response name="error" type="view" value="OrganizationMain"/>
+    </request-map>
+    
+	<request-map uri="PositionMovePopUp"><!-- Request map for Move PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="PositionMovePopUp" />
+	</request-map>
+	
+	<request-map uri="UnitPositionMovePopUp"><!-- Request map for Move PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="UnitPositionMovePopUp" />
+	</request-map>
+	
+	<request-map uri="updateEmplPositionForMove"><!-- Event for Move position -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateEmplPositionForMove"/>
+		<response name="success" type="request-redirect" value="OrganizationMain" />
+		<response name="error" type="request" value="OrganizationMain" />
+	</request-map>
+	<request-map uri="AssignFulfillmentPersonAddPopUp"><!-- Request map for assign increment person PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AssignFulfillmentPersonAddPopUp" />
+	</request-map>
+	<!-- add fullfillment for a position -->
+	<request-map uri="assingFulfillmentPerson"><!-- request map for create event for Division -->
+		<security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.OrgPosition" invoke="assingFulfillmentPerson"/>
+        <response name="success" type="request-redirect" value="ContessaPositionView"/>
+        <response name="error" type="view" value="error"/>
+	</request-map>
+	<!-- add fullfillment for a Reporting Struct -->
+	<request-map uri="addContessaReportingStruct"><!-- request map for create event for Reporting Struct -->
+		<security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.OrgPosition" invoke="addContessaReportingStruct"/>
+        <response name="success" type="request-redirect" value="ContessaPositionView"/>
+        <response name="error" type="view" value="error"/>
+	</request-map>
+	<!-- add fullfillment for a Reporting Struct -->
+	<request-map uri="addContessaPositionResponsibility"><!-- request map for create event for Reporting Struct -->
+		<security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.OrgPosition" invoke="addContessaPositionResponsibility"/>
+        <response name="success" type="request-redirect" value="ContessaPositionView"/>
+        <response name="error" type="view" value="error"/>
+	</request-map>
+	<request-map uri="moveEmplForPosition"><!-- request map for create event for Division -->
+		<security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.organization.OrgPosition" invoke="moveEmplForPosition"/>
+        <response name="success" type="view" value="OrganizationMain"/>
+        <response name="error" type="view" value="OrganizationMain"/>
+	</request-map>
+	
+	 <request-map uri="updatePositionBudget">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePositionBudget"/>
+        <response name="success" type="request" value="ContessaPositionView"/>
+        <response name="error" type="view" value="ContessaPositionView"/>
+    </request-map>
+    <!-- add DeapartmentHead -->
+    <request-map uri="createOrganizationHead">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.organization.OrganizationTopPosition" invoke="createOrganizationHead"/>
+       <response name="success" type="request-redirect" value="OrganizationMain"/>
+       <response name="error" type="request" value="OrganizationMain"/>
+    </request-map> 
+    <request-map uri="updateOrganizationHead">
+        <security https="true" auth="true"/>
+        <event type="service-multi" invoke="updateOrganizationHead"/>
+        <response name="success" type="request" value="OrganizationMain"/>
+    </request-map>
+    <request-map uri="deleteOrganizationHead">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteOrganizationHead"/>
+        <response name="success" type="request" value="OrganizationMain"/>
+    </request-map>
+    
+    <request-map uri="updateEmployeeBasicInfo">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.EmployeeService" invoke="updateEmployeeBasicInfo"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+    <request-map uri="updateEmployeeBasicContactInfo">
+        <security https="true" auth="true"/>
+         <event type="java" path="org.ofbiz.humanres.EmployeeService" invoke="updateEmployeeBasicContactInfo"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+    
+    
+    	
+	<!-- job Requisition -->
+	<request-map uri="createPositionWiseJobRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createContessaJobRequisition"/>
+        <response name="success" type="view" value="ContessaPositionView"/>
+        <response name="error" type="view" value="ContessaPositionView"/>
+    </request-map>
+    <request-map uri="updatePositionWiseJobRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateContessaJobRequisition"/>
+        <response name="success" type="request" value="ContessaPositionView"/>
+        <response name="error" type="view" value="ContessaPositionView"/>
+    </request-map>
+    <request-map uri="deletePositionWiseRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteContessaJobRequisition"/>
+        <response name="success" type="view" value="ContessaPositionView"/>
+    </request-map>
+    <request-map uri="detailofRequisition">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="detailofRequisition"/>
+    </request-map>
+    <request-map uri="JobRequisitionDetails">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="JobRequisitionDetails" />
+	</request-map>
+    <request-map uri="DocumentPermission">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="DocumentPermission" />
+	</request-map>
+	<request-map uri="SetDocumentPermission">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.organization.DocumentPermission" invoke="setDocumentPermission"/>
+        <response name="success" type="view" value="OrganizationMain" />
+        <response name="error" type="view" value="error"/>
+    </request-map>
+    
+	<view-map name="OrganizationMain" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#structure"></view-map>
+	<view-map name="uploadContent" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#uploadContent" />
+	<view-map name="uploadUnitContent" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#uploadUnitContent" />
+	<view-map name="uploadBudgetContent" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#uploadBudgetContent" />
+	<view-map name="DocumentPermission" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#DocumentPermission" />
+	
+	<view-map name="ContessaPositionView" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#ContessaPositionView"/>
+	<view-map name="CompanyAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#CompanyAddPopUp" />
+	<view-map name="PaygradeAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#PaygradeAddPopUp" />
+	<view-map name="OrgPaygradeView" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#OrgPaygradeView"></view-map>
+	<view-map name="OrgSalaryStepView" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#OrgSalaryStepView"></view-map>
+	<view-map name="AssignPaygradeBenfitAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#AssignPaygradeBenfitAddPopUp" />
+	<view-map name="AssignPaygradeDeductionAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#AssignPaygradeDeductionAddPopUp" />
+	<view-map name="AddPaygradeIncrementsPopUp" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#AddPaygradeIncrementsPopUp" />
+	<view-map name="AssignIncrementBenfitAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#AssignIncrementBenfitAddPopUp" />
+	<view-map name="AssignIncrementDeductionAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#AssignIncrementDeductionAddPopUp" />
+	<view-map name="AssignassignIncrementPersonAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrgPositionScreen.xml#AssignassignIncrementPersonAddPopUp" />
+	<view-map name="AssignFulfillmentPersonAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#AssignFulfillmentPersonAddPopUp" />
+	<view-map name="PositionAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#PositionAddPopUp" />
+	<view-map name="UnitPositionAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#UnitPositionAddPopUp" />
+	<view-map name="PositionAddPopUpChild" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#PositionAddPopUpChild" />
+	<view-map name="PositionMovePopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#PositionMovePopUp" />
+	<view-map name="UnitPositionMovePopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#UnitPositionMovePopUp" />
+	<view-map name="ReportingStructAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#ReportingStructAddPopUp" />
+	<view-map name="EmplPositionResponsibilityAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#EmplPositionResponsibilityAddPopUp" />
+	<view-map name="OrganizationHeadAssignAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#OrganizationHeadAssignAddPopUp" />
+	<view-map name="orgChartNew" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#OrgChartNew" />
+	<view-map name="orgChart" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#OrgChart" />
+	<view-map name="PrintOrgChart" type="screenfop" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#PrintOrgChart" content-type="application/pdf" encoding="none" />
+	<!-- Lookups ORG -->
+	<view-map name="LookupForEmplPosition" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#LookupForEmplPosition"/>
+	<view-map name="LookupForTotalEmplPosition" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#LookupForTotalEmplPosition"/>
+    <view-map name="LookupForEmplPositionType" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#LookupForEmplPositionType"/>
+    <view-map name="LookupForEmplPositionWithOrgFilter" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#LookupForEmplPositionWithOrgFilter"/>
+     <view-map name="OrgLookupUserLoginAndPartyDetails" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#OrgLookupUserLoginAndPartyDetails"/>
+     <view-map name="OrgLookupUserLoginAndPartyDetailsAndPosition" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#OrgLookupUserLoginAndPartyDetailsAndPosition"/>
+     
+     <view-map name="contessaLookupPartyGroupDivision" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#ContessaLookupPartyGroupDivision"/>
+     <view-map name="contessaLookupPartyGroupDepartment" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#ContessaLookupPartyGroupDepartment"/>
+     <view-map name="contessaLookupPartyGroupSection" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#ContessaLookupPartyGroupSection"/>
+     <view-map name="contessaLookupPartyGroupLine" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#ContessaLookupPartyGroupLine"/>
+     <view-map name="LookupOrgResponsibilityType" type="screen" page="component://humanres/widget/organization/screens/OrgLookUpScreens.xml#LookupOrgResponsibilityType"/>
+     
+     <view-map name="EmplJobRequisitionAddPopUp" type="screen" page="component://humanres/widget/organization/screens/OrganizationScreens.xml#EmplJobRequisitionAddPopUp" />
+     <view-map name="JobRequisitionDetails" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#JobRequisitionDetails"/>
+     
+</site-conf>

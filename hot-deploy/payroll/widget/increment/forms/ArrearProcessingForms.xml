@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+<form name="generalArrearProcess" type="single" target="arrearProcessInitiate">
+	  	 
+  	
+        <field name="monthNo" tooltip="${uiLabelMap.CommonRequired}" title="For Salary Month" parameter-name="monthNo">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+       <field name="fiscalYear" title="Year" parameter-name="fiscalYear" widget-style="number" required-field="true">
+        	<display description="${bsh:org.ofbiz.base.util.UtilDateTime.nowDateString(&quot;yyyy&quot;)}"/>
+        </field>
+        
+  	 <field name="submitButton" title="Submit" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+     </form> 
+     
+     
+   <form name="arrearinfo" type="single" target="processArrear">
+	  <field name="monthNo"><hidden/></field>
+      <field name="month" title="Salary Month"><display description="${bsh:org.ofbiz.salaryprocess.SalaryUtils.getMonthName(monthNo)}"/></field>
+     
+       
+      <field name="submitButton" title="Process Arrear" widget-style="smallSubmit">
+            <submit button-type="button"/>
+      </field>
+  	</form> 
+  <form name="FindEmployeeForArrear" type="single" target="FindArrearSalary">
+     
+    <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+      <field name="monthNo"><hidden/></field>
+  	   <!-- <field name="fiscalYear"><hidden/></field> -->
+    	<field name="employeeId" title="Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+     	<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+      </form>
+      
+      <form name="eligibleEmplDetailViewlist" title="dww" list-name="listIt" target="updateCheckArrerList" type="multi" paginate-target="FindArrearSalary" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true"  >
+        <actions>
+         <set field="monthNo" from-field="monthNo"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ArrearStatus"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+        
+  	  	<!-- <field name="fiscalYear">
+           <hidden/>
+        </field> -->
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+            <hidden value="Y"/>
+        </field>
+        <field name="listActive" title="Select" event="onClick" action="">
+            <check />
+        </field>
+        
+       <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+    
+       <field name="name">
+       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/>
+       </field>
+         <field name="monthNumber">
+            <hidden/>
+        </field>
+        <field name="monthNo"><hidden/></field>
+        <field name="fromMonth"><display description="${bsh:org.ofbiz.salaryprocess.SalaryUtils.getMonthName(monthNumber)}"/></field>
+         
+      <field name="submitButton" title="Update List" widget-style="smallSubmit">
+            <submit request-confirmation="true"/>
+        </field> 
+        
+        
+    </form>  
+ </forms>    

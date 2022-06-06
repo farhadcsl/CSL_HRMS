@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Payroll Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+	<!-- ====================PayrollItem=================================== -->
+
+      <service name="createPayrollItemType" engine="simple" default-entity-name="PayrollItem"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="createPayrollItemType" auth="true">
+        <description>Create a New PayrollItem</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="payrollItemTypeId" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updatePayrollItemType" engine="simple" default-entity-name="PayrollItem"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="updatePayrollItemType" auth="true">
+        <description>Update PayrollItem</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    
+    <service name="deletePayrollItemType" engine="simple" default-entity-name="PayrollItem"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="deletePayrollItemType" auth="true">
+        <description>Delete PayrollItem</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+    <!-- ======================================================================================= -->
+
+	<!-- ====================================BasicSalaryStep===================================== -->
+    
+     <service name="createBasicSalaryStep" engine="simple" default-entity-name="BasicSalaryStep"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="createBasicSalaryStep" auth="true">
+        <description>Create a New Salary BasicSalaryStep</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="updateBasicSalaryStep" engine="simple" default-entity-name="BasicSalaryStep"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="updateBasicSalaryStep" auth="true">
+        <description>Update Salary BasicSalaryStep</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="deleteBasicSalaryStep" engine="simple" default-entity-name="BasicSalaryStep"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="deleteBasicSalaryStep" auth="true">
+        <description>Delete Salary BasicSalaryStep</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+	<!-- =============================================================================================== -->
+    
+    <!-- ================================Salary Temaplate=========================================== -->    
+    <service name="createSalaryTemplate" engine="simple" default-entity-name="SalaryTemplate"
+             location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+             invoke="createSalaryTemplate" auth="true">
+        <description>Create a Pay Grade</description>
+        <!-- permission-service service-name="humanResManagerPermission" main-action="CREATE"/> -->
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="salaryTemplateName" optional="false"/>
+    </service>
+
+    <service name="updateSalaryTemplate" engine="simple" default-entity-name="SalaryTemplate"
+             location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+             invoke="updateSalaryTemplate" auth="true">
+        <description>Update a Pay Grade</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="salaryTemplateName" optional="false"/>
+    </service>
+
+    <service name="deleteSalaryTemplate" engine="simple" default-entity-name="SalaryTemplate"
+             location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+             invoke="deleteSalaryTemplate" auth="true">
+        <description>Delete a Pay Grade</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    <!-- =============================================================================== -->
+    
+    
+   <!-- ========================Salary Template Details================================== --> 
+     <service name="createSalaryTemplateDetails" engine="simple" 
+     		default-entity-name="SalaryTemplateDetails"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="createSalaryTemplateDetails" auth="true">
+        <description>Create a New Salary Level Item</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="salaryTemplateId" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    <service name="updateSalaryTemplateDetails" engine="simple" 
+    		default-entity-name="SalaryTemplateDetails"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="updateSalaryTemplateDetails" auth="true">
+        <description>Update Salary Template Details</description>        
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="salaryTemplateId" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    <service name="deleteSalaryTemplateDetails" engine="simple" 
+    		default-entity-name="SalaryTemplateDetails"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="deleteSalaryTemplateDetails" auth="true">
+        <description>Delete Salary Template Details</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="salaryTemplateId" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    <!-- ========================================================================================== -->
+    
+     
+   <!-- ====================Position Template Assign================================ --> 
+       
+    <service name="createPositionTemplateAssign" engine="simple" 
+    		default-entity-name="PositionSalTempAssign"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="createPositionTemplateAssign" auth="true">
+        <description>Create a New Position SalaryTemplate Assign</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="updatePositionTemplateAssign" engine="simple" 
+    		default-entity-name="PositionSalTempAssign"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="updatePositionTemplateAssign" auth="true">
+        <description>Update Position SalaryTemplate Assign</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    
+    <service name="deletePositionTemplateAssign" engine="simple" 
+    		default-entity-name="PositionSalTempAssign"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="deletePositionTemplateAssign" auth="true">
+        <description>Delete Position SalaryTemplate Assign</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <!-- ==================================================================================== -->
+    <!-- ====================Template BasicSalaryStep Assign================================ --> 
+       
+    <service name="createTemplateBasicSalaryStepAssign" engine="simple" 
+    		default-entity-name="SalTempBasSalAssign"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="createTemplateBasicSalaryStepAssign" auth="true">
+        <description>Create a New Template BasicSalaryStep Assign</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="updateTemplateBasicSalaryStepAssign" engine="simple" 
+    		default-entity-name="SalTempBasSalAssign"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="updateTemplateBasicSalaryStepAssign" auth="true">
+        <description>Update Template BasicSalaryStep Assign</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    
+    <service name="deleteTemplateBasicSalaryStepAssign" engine="simple" 
+    		default-entity-name="SalTempBasSalAssign"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="deleteTemplateBasicSalaryStepAssign" auth="true">
+        <description>Delete Template BasicSalaryStep Assign</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <!-- ======================================================================================== -->
+   
+    
+    
+    
+    <!-- =============================Employee Present salary setup=================================  -->   
+    
+     <service name="createSalarySetup" engine="simple" 
+     		default-entity-name="EmplPresentSalary"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="createSalarySetup" auth="true">
+        <description>Create a New Salary Setup</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="salaryTemplateId" mode="INOUT" type="String"></attribute>
+    </service>
+    <service name="updateSalarySetup" engine="simple" 
+    		default-entity-name="EmplPresentSalary"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="updateSalarySetup" auth="true">
+        <description>Update Salary Setup</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>    
+    <service name="deleteSalarySetup" engine="simple" 
+    		default-entity-name="EmplPresentSalary"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" 
+            invoke="deleteSalarySetup" auth="true">
+        <description>Delete Salary Setup</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    <service name="findSalaryTemplate" engine="java"
+        location="org.ofbiz.configuration.SalarySetup" invoke="findSalaryTemplate">
+        <description>Get Salary Template</description>
+        <attribute name="salaryTemplateList" type="List" mode="OUT" optional="false"/>       
+    </service>
+    <service name="loadBasicSalaryStep" engine="java"
+        location="org.ofbiz.configuration.SalarySetup" 
+        invoke="loadBasicSalaryStep">
+        <description>Get Basic Salary Step</description>
+        <attribute name="salaryTemplateId" type="String" mode="IN" optional="false"/>
+        <attribute name="basicSalaryStepList" type="List" mode="OUT" optional="false"/>       
+    </service>
+    <service name="saveEmployeeSalarySetup" engine="java"
+        location="org.ofbiz.configuration.SalarySetup" 
+        invoke="saveEmployeeSalarySetup">
+        <description>Save Employee Salary Setup</description>
+        <attribute name="partyId" type="String" mode="OUT" optional="false"/>
+        <attribute name="employeeId" type="String" mode="IN" optional="false"/>
+        <attribute name="salaryTemplateId" type="String" mode="IN" optional="false"/>
+        <attribute name="basicSalaryStepId" type="String" mode="IN" optional="false"/>
+        <attribute name="_EVENT_MESSAGE_" type="String" mode="OUT" optional="false" />
+        <!-- <attribute name="_ERROR_MESSAGE_" type="String" mode="OUT" optional="true"/> -->
+    </service>
+    
+    
+</services>

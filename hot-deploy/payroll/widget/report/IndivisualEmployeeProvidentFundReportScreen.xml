@@ -1,0 +1,23 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+
+<screen name="IndivisualEmployeeProvidentFundReportScreen">
+	 <section>
+            <actions>
+                <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> 
+                <set field="headerItem" value="report"/> 
+             </actions>
+            <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                      	<screenlet title="Indivisual Employee Provident Fund Report">
+                        	<include-form name="IndivisualEmployeeProvidentFundReportForm" location="component://payroll/widget/report/IndivisualEmployeeProvidentFundReportForm.xml"/>
+                     	</screenlet>      
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+</screens>

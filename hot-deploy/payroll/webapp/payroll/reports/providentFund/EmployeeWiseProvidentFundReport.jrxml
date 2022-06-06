@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeWiseProvidentFundReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0773e88-bdb7-433c-a071-842c15e5c14a">
+	<property name="ireport.zoom" value="1.100000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<field name="employeeId" class="java.lang.String"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="selfInvestment" class="java.lang.String"/>
+	<field name="companyInvestment" class="java.lang.String"/>
+	<field name="totalAmount" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="35" y="28" width="480" height="20" uuid="188fd02f-6d3b-4d46-9100-b6f413a77252"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="3" width="401" height="21" uuid="367d9c11-c867-4b22-a6f6-d3f5a2ba9e49"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contessa Solutions and Consultants Ltd]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="50" width="555" height="1" uuid="c42e59a9-36cf-4aca-ab44-1b0c4c261cce"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="49">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="414" y="28" width="138" height="20" uuid="d5368ca4-2c5e-48bf-ba6f-e666da34e6eb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="70" y="0" width="370" height="20" uuid="65d86ade-79cd-48ba-b189-5273ed0a7b14"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Wise Provident Fund Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="3" width="554" height="1" uuid="677ce5ef-3ae1-4a4f-9849-f7876adb0b21"/>
+			</line>
+			<line>
+				<reportElement x="0" y="3" width="1" height="22" uuid="cf8332b2-3259-4adf-8ac0-72d133f75a21"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="4" width="76" height="20" uuid="057c3456-9094-4d2f-8eec-e1f0394889ea"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Id]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="24" width="554" height="1" uuid="996d593e-c156-4a9b-9e97-f49738dd9b92"/>
+			</line>
+			<line>
+				<reportElement x="77" y="4" width="1" height="20" uuid="b1e436ba-5200-48b2-b1f6-cbf01e0098e5"/>
+			</line>
+			<line>
+				<reportElement x="214" y="4" width="1" height="20" uuid="0e9ad219-4111-4ea3-956a-01e4acc4926e"/>
+			</line>
+			<line>
+				<reportElement x="425" y="4" width="1" height="20" uuid="02c63b64-a66a-42e6-9c2c-8dbd6cbb9882"/>
+			</line>
+			<line>
+				<reportElement x="555" y="4" width="1" height="20" uuid="74fda1eb-1819-4da6-9374-ed67ba1bda2b"/>
+			</line>
+			<line>
+				<reportElement x="315" y="4" width="1" height="20" uuid="2ebae841-11b0-4dd7-9115-213d6d0678c4"/>
+			</line>
+			<staticText>
+				<reportElement x="78" y="4" width="136" height="20" uuid="32ca2626-ab6d-450b-a527-0a0e54c97cd8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="4" width="100" height="20" uuid="a7921908-7293-4ee4-b088-3a2d6c8ac3cd"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salf Investment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="4" width="109" height="20" uuid="083369da-9c10-4da1-9fb4-c11ac382d828"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comp Investment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="4" width="129" height="20" uuid="2f45519e-c8ee-4940-8e5f-b27a5b420144"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Fund Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="1" height="21" uuid="a56b2147-2c2d-4a65-9833-fc8c53551832"/>
+			</line>
+			<line>
+				<reportElement x="77" y="0" width="1" height="20" uuid="b55a29d9-d0ae-44d9-b62b-96f49a23a75b"/>
+			</line>
+			<line>
+				<reportElement x="1" y="20" width="554" height="1" uuid="a070de4b-923e-4c92-960d-be3bdb899336"/>
+			</line>
+			<line>
+				<reportElement x="214" y="0" width="1" height="20" uuid="8d3724df-f91d-4e1e-bd13-fd2a5bbc4450"/>
+			</line>
+			<line>
+				<reportElement x="315" y="0" width="1" height="20" uuid="28692585-3070-4480-8704-b67233e7199f"/>
+			</line>
+			<line>
+				<reportElement x="425" y="0" width="1" height="20" uuid="f972a5ed-c2e1-4426-96a5-6bdfe43de664"/>
+			</line>
+			<line>
+				<reportElement x="555" y="-1" width="1" height="21" uuid="26854f08-b48d-49ea-9027-f222d0b2470a"/>
+			</line>
+			<textField>
+				<reportElement x="2" y="1" width="75" height="20" uuid="62e8dd40-96a4-414b-b401-383f86b5b0c9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="2" width="124" height="20" uuid="2dd0fe3b-8e54-421a-a0d7-0049ce7422f8"/>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="316" y="2" width="109" height="20" uuid="bfc89621-6a42-480e-a88e-6919a9c2a57e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{companyInvestment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="2" width="100" height="20" uuid="13725ed7-8fa9-4a7f-918f-7c53c9755029"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{selfInvestment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="2" width="105" height="20" uuid="6a877085-8f99-4ec9-9457-2ff5cfbe3f7d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="13" width="80" height="20" uuid="ddbaa04a-98a4-4c7e-a1ef-3d8192c8fe32"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="13" width="40" height="20" uuid="bec8df97-75c6-42d3-8062-27ab7e49278e"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

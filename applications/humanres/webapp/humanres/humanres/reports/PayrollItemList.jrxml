@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PayrollItemList" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1eaee8ba-286d-428c-b85b-a4907971eadc">
+	<property name="ireport.zoom" value="10.09124992398847"/>
+	<property name="ireport.x" value="5205"/>
+	<property name="ireport.y" value="1066"/>
+	<field name="payrollItemName" class="java.lang.String"/>
+	<field name="invoiceItemTypeId" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="26" width="480" height="20" uuid="e8924ac3-5a07-4321-bd3b-a98e90cdcc6b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="3" width="401" height="21" uuid="b8c6b250-2314-4b25-bf9e-357274014705"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contessa Solutions and Consultants Ltd]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="43" width="555" height="1" uuid="47be1517-bb5b-4df2-ba99-de00caa2b614"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="108" y="4" width="350" height="20" uuid="c1e3936b-3b6f-4714-b5e0-d031926e64f9"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payroll Item List Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="5" width="236" height="20" uuid="6afe96ce-0f70-49de-8fa6-c880a003e0f2"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="243" y="5" width="236" height="20" uuid="fcc96474-d661-4bd6-9ad9-5264250ee78d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Item]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="26" width="554" height="1" uuid="07e0d3f8-b727-4079-b74c-9d43a4576317"/>
+			</line>
+			<line>
+				<reportElement x="1" y="3" width="554" height="1" uuid="17c49311-c883-459c-89b6-34c816a64da0"/>
+			</line>
+			<line>
+				<reportElement x="0" y="3" width="1" height="24" uuid="f431887c-92a8-4f98-8cc1-0507058754ef"/>
+			</line>
+			<line>
+				<reportElement x="242" y="3" width="1" height="23" uuid="db4af463-228e-4c85-984b-c779a7eea980"/>
+			</line>
+			<line>
+				<reportElement x="554" y="3" width="1" height="24" uuid="2fa9e8f8-e13f-4f2b-b8ef-c19d514d4348"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="-1" width="1" height="25" uuid="758c165b-9860-4d90-87da-c5f9c87d22be"/>
+			</line>
+			<line>
+				<reportElement x="0" y="23" width="555" height="1" uuid="eb9271da-0f84-41aa-8929-95fa525a8cdb"/>
+			</line>
+			<textField>
+				<reportElement x="4" y="2" width="233" height="20" uuid="38387415-ca1f-4b5d-a982-53b62884442c"/>
+				<textFieldExpression><![CDATA[$F{payrollItemName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="3" width="294" height="20" uuid="16ec41dd-4c8d-431c-a4b8-7766fc76778e"/>
+				<textFieldExpression><![CDATA[$F{invoiceItemTypeId}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="554" y="-1" width="1" height="25" uuid="87b65f32-f654-4c87-a94b-477c369275f4"/>
+			</line>
+			<line>
+				<reportElement x="242" y="-1" width="1" height="24" uuid="270e0f0b-0553-461e-9b9e-da1a5b3f1231"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="542" y="10" width="1" height="14" uuid="ec9206de-0cce-4e1d-8e8b-a71d55619e50"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="68" splitType="Stretch"/>
+	</summary>
+</jasperReport>

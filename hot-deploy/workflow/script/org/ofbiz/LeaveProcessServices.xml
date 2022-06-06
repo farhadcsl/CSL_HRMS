@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+ <!-- <simple-method method-name="deleteLeaveProcessStructureSetup" short-description="deleteLeaveProcessStructureSetup">
+      <entity-one entity-name="ProcessSteps" value-field="lookedUpValue"/>
+      <remove-value value-field="lookedUpValue"/>
+       <entity-one entity-name="ProcessSteps" value-field="stepId"/>
+       <remove-value value-field="stepId"/>
+       <remove-value value-field="processStrId"/>
+   </simple-method>  -->
+   <simple-method method-name="deleteLeaveProcessStructureSetup" short-description="Delete Leave Process Structure">
+        <entity-one entity-name="ProcessStructure" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+   </simple-method>
+   <simple-method method-name="deleteLeaveProcessStepSetup" short-description="Delete Leave Process Steps">
+        <entity-one entity-name="ProcessSteps" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+   </simple-method>
+   <simple-method method-name="deleteLeaveNotificationMap" short-description="Delete Leave Process Steps Notification">
+        <entity-one entity-name="ProcessStepNotifications" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+   </simple-method>
+</simple-methods>

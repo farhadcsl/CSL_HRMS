@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Human Resources Attendance Preference Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    
+  	<!-- Start Attendance Employee Preference -->  
+    <!-- Add Attendance Preferences for HR Admin for attendance -->
+    <service name="addEmpAttenPreference" engine="java" default-entity-name="EmployeeAttendancePreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addEmpAttenPreference" auth="true">
+		<description>Add Employee Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="employeePreferenceId" mode="IN" type="String" optional="true" field-name="employeePreferenceId"/>
+		<attribute name="employeeId" mode="IN" type="String" optional="false" field-name="employeeId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="rosterPreferenceId" mode="IN" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="organizationPreferencdId" mode="IN" type="String" optional="true" field-name="organizationPreferencdId"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+	  	<attribute name="empPrefRevision" mode="IN" type="String" optional="true" field-name="empPrefRevision"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		
+		<attribute name="firstHalfHolidayRate" mode="IN" type="String" optional="true" field-name="firstHalfHolidayRate"/>
+		<attribute name="secondHalfHolidayRate" mode="IN" type="String" optional="true" field-name="secondHalfHolidayRate"/>
+		
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	
+	<!-- Update Attendance Preferences for HR Admin for attendance -->
+    <service name="updateEmpAttenPreference" engine="java" default-entity-name="EmployeeAttendancePreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateEmpAttenPreference" auth="true">
+		<description>Add Employee Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="employeePreferenceId" mode="IN" type="String" optional="true" field-name="employeePreferenceId"/>
+		<attribute name="employeeId" mode="IN" type="String" optional="false" field-name="employeeId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="rosterPreferenceId" mode="IN" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="organizationPreferencdId" mode="IN" type="String" optional="true" field-name="organizationPreferencdId"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+	  	<attribute name="empPrefRevision" mode="IN" type="String" optional="true" field-name="empPrefRevision"/>
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		
+		<attribute name="firstHalfHolidayRate" mode="IN" type="String" optional="true" field-name="firstHalfHolidayRate"/>
+		<attribute name="secondHalfHolidayRate" mode="IN" type="String" optional="true" field-name="secondHalfHolidayRate"/>
+		
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		
+		<attribute name="firstTiffinRate" mode="IN" type="String" optional="true" field-name="firstTiffinRate"/>
+		<attribute name="secondTiffinRate" mode="IN" type="String" optional="true" field-name="secondTiffinRate"/>
+		<attribute name="nightRate" mode="IN" type="String" optional="true" field-name="nightRate"/>
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	<!-- End Attendance Employee Preference -->   
+	
+	<!-- Start Attendance Day Preference -->
+	<!-- Add Attendance Preferences for HR Admin for attendance -->
+    <service name="addDayAttenPreference" engine="java" default-entity-name="EmployeeAttendancePreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addDayAttenPreference" auth="true">
+		<description>Add Day Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="dayPreferenceId" mode="IN" type="String" optional="true" field-name="dayPreferenceId"/>
+		 <attribute name="dateId" mode="IN" type="String" optional="false" field-name="dateId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<!-- Add Attendance Preferences for HR Admin for attendance -->
+    <service name="updateDayAttenPreference" engine="java" default-entity-name="EmployeeAttendancePreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateDayAttenPreference" auth="true">
+		<description>Add Day Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="dayPreferenceId" mode="IN" type="String" optional="true" field-name="dayPreferenceId"/>
+		 <attribute name="dateId" mode="IN" type="String" optional="false" field-name="dateId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	<!-- End Attendance Day Preference -->
+	
+	<!-- Start Attendance Organization Preference -->
+	<!-- Add Organization Preferences for HR Admin for attendance -->
+    <service name="addOrgAttenPreference" engine="java" default-entity-name="OrgAttendancePreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addOrgAttenPreference" auth="true">
+		<description>Add Organization Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="organizationPreferencdId" mode="IN" type="String" optional="true" field-name="organizationPreferencdId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+	  	<attribute name="orgPrefRevision" mode="IN" type="String" optional="true" field-name="orgPrefRevision"/>
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		<attribute name="confirmationAfter" mode="IN" type="String" optional="true" />
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	
+	<!-- Edit Organization Preference  for HR Admin for attendance -->
+    <service name="updateOrgAttenPreference" engine="java" default-entity-name="OrgAttendancePreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateOrgAttenPreference" auth="true">
+		<description>Edit Organization Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		<attribute name="organizationPreferencdId" mode="IN" type="String" optional="true" field-name="organizationPreferencdId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+	  	<attribute name="orgPrefRevision" mode="IN" type="String" optional="true" field-name="orgPrefRevision"/>
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		<attribute name="confirmationAfter" mode="IN" type="String" optional="true" />
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		<attribute name="halfDayMorningStart" mode="IN" type="String" optional="true" />
+		<attribute name="halfDayMorningEnd" mode="IN" type="String" optional="true" />
+		<attribute name="halfDayEveningStart" mode="IN" type="String" optional="true" />
+		<attribute name="halfDayEveningEnd" mode="IN" type="String" optional="true" />
+		
+		
+	</service>
+	<!-- End Attendance Organization Preference -->
+	
+	<!-- Start Attendance Roster Preference Services -->
+	<!-- AddRoster Preferences for HR Admin for attendance -->
+    <service name="addRosterAttenPreference" engine="java" default-entity-name="AttendanceRosterPreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addRosterAttenPreference" auth="true">
+		<description>Add Roster Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="IN" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="rosterName" mode="IN" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="rosterStartTime" mode="IN" type="String" optional="true" field-name="rosterStartTime"/>
+		<attribute name="rosterEndTime" mode="IN" type="String" optional="true" field-name="rosterEndTime"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<attribute name="rosterPrefRevision" mode="IN" type="String" optional="true" field-name="rosterPrefRevision"/>
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<!-- UpdateRoster Preferences for HR Admin for attendance -->
+    <service name="updateRosterAttenPreference" engine="java" default-entity-name="AttendanceRosterPreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateRosterAttenPreference" auth="true">
+		<description>Edit Roster Attendance Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="IN" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="rosterName" mode="IN" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="rosterStartTime" mode="IN" type="String" optional="true" field-name="rosterStartTime"/>
+		<attribute name="rosterEndTime" mode="IN" type="String" optional="true" field-name="rosterEndTime"/>
+		<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	 	
+	 	<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<attribute name="rosterPrefRevision" mode="IN" type="String" optional="true" field-name="rosterPrefRevision"/>
+		
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<!-- Add  employee into Roster  -->
+    <service name="addRosterEmployee" engine="java" default-entity-name="RosterEmployee" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addRosterEmployee" auth="true">
+		<description>Add employee into roster  </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="INOUT" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="rosterPrefRevision" mode="INOUT" type="String" optional="true" field-name="rosterPrefRevision"/>
+		<attribute name="rosterName" mode="INOUT" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="employeeId" mode="IN" type="String" optional="true" field-name="employeeId"/>
+		<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+		<attribute name="rosterEmpRevesion" mode="IN" type="String" optional="true" field-name="rosterEmpRevesion"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+				
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+				
+	</service>
+	
+	<!-- update  employee into Roster  -->
+    <service name="updateRosterEmployee" engine="java" default-entity-name="RosterEmployee" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateRosterEmployee" auth="true">
+		<description>Add employee into roster  </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="INOUT" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="rosterPrefRevision" mode="INOUT" type="String" optional="true" field-name="rosterPrefRevision"/>
+		<attribute name="rosterName" mode="INOUT" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="employeeId" mode="IN" type="String" optional="true" field-name="employeeId"/>
+		<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+		<attribute name="rosterEmpRevesion" mode="IN" type="String" optional="true" field-name="rosterEmpRevesion"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+				
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+				
+	</service>
+	
+	
+	<!-- Swap Roster  -->
+    <service name="SwapRoster" engine="java" default-entity-name="RosterEmployee" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="swapRoster" auth="true">
+		<description>Swap Roster </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="INOUT" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="rosterPrefRevision" mode="INOUT" type="String" optional="true" field-name="rosterPrefRevision"/>
+		<attribute name="swapTo" mode="IN" type="String" optional="true" field-name="swapTo"/>
+		<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+				
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+				
+	</service>
+	
+	<!-- SwapSingleEmpBtnRoster  -->
+    <service name="SwapSingleEmpBtnRoster" engine="java" default-entity-name="RosterEmployee" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="swapSingleEmpBtnRoster" auth="true">
+		<description>SwapSingleEmpBtnRoster </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="INOUT" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="rosterPrefRevision" mode="INOUT" type="String" optional="true" field-name="rosterPrefRevision"/>
+		<attribute name="rosterName" mode="INOUT" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="partyId" mode="IN" type="String" optional="true" field-name="partyId"/>
+		<attribute name="employeeId" mode="IN" type="String" optional="true" field-name="employeeId"/>
+		<attribute name="rosterEmpRevesion" mode="IN" type="String" optional="true" field-name="rosterEmpRevesion"/>
+		<attribute name="employeeFullName" mode="IN" type="String" optional="true" field-name="employeeFullName"/>
+		<attribute name="swapTo" mode="IN" type="String" optional="true" field-name="swapTo"/>
+		<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+				
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+				
+	</service>
+	
+	<!-- Delete employee form roster  -->
+    <service name="deleteRosterEmployee" engine="java" default-entity-name="RosterEmployee" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="deleteRosterEmployee" auth="true">
+		<description>Add employee into roster  </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="rosterPreferenceId" mode="INOUT" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="employeeId" mode="IN" type="String" optional="true" field-name="employeeId"/>
+		<attribute name="rosterName" mode="INOUT" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="rosterPrefRevision" mode="INOUT" type="String" optional="true" field-name="rosterPrefRevision"/>
+		<attribute name="partyId" mode="IN" type="String" optional="true" field-name="partyId"/>
+		<attribute name="rosterEmpRevesion" mode="IN" type="String" optional="true" field-name="rosterEmpRevesion"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+				
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+				
+	</service>
+	<!-- End Attendance Roster Preference Services -->
+
+	<!-- Start Designation Preference -->
+	<service name="addDesignationPreference" engine="java" default-entity-name="DesignationPreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addDesignationPreference" auth="true">
+		<description>Add Designation Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="designationPreferenceId" mode="IN" type="String" optional="true" field-name="designationPreferenceId"/>
+		<!-- <attribute name="designPrefRevision" mode="IN" type="String" optional="true" field-name="designPrefRevision"/> -->
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<!-- <attribute name="emplPositionId" mode="IN" type="String" optional="false" field-name="emplPositionId"/> -->
+		<attribute name="firstTiffinRate" mode="IN" type="String" optional="true" field-name="firstTiffinRate"/>
+		<attribute name="secondTiffinRate" mode="IN" type="String" optional="true" field-name="secondTiffinRate"/>
+		<attribute name="nightRate" mode="IN" type="String" optional="true" field-name="nightRate"/>
+		<attribute name="confirmationAfter" mode="IN" type="String" optional="true" />
+		<attribute name="attBonDeductAmnt" mode="IN" type="String" optional="true" />
+		
+		<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<!-- <attribute name="designPrefRevision" mode="IN" type="String" optional="true" field-name="designPrefRevision"/> -->
+	 	<!-- <attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/> -->
+	 	
+	 	
+	 	<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		
+		<attribute name="firstHalfHolidayRate" mode="IN" type="String" optional="true" field-name="firstHalfHolidayRate"/>
+		<attribute name="secondHalfHolidayRate" mode="IN" type="String" optional="true" field-name="secondHalfHolidayRate"/>
+		
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+	 	
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<service name="updateDesignationPreference" engine="java" default-entity-name="DesignationPreference" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateDesignationPreference" auth="true">
+		<description>Add Designation Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="designationPreferenceId" mode="IN" type="String" optional="false" field-name="designationPreferenceId"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<!-- <attribute name="emplPositionId" mode="IN" type="String" optional="false" field-name="emplPositionId"/> -->
+		<attribute name="firstTiffinRate" mode="IN" type="String" optional="true" field-name="firstTiffinRate"/>
+		<attribute name="secondTiffinRate" mode="IN" type="String" optional="true" field-name="secondTiffinRate"/>
+		<attribute name="nightRate" mode="IN" type="String" optional="true" field-name="nightRate"/>
+		<attribute name="confirmationAfter" mode="IN" type="String" optional="true" />
+		<attribute name="attBonDeductAmnt" mode="IN" type="String" optional="true" />
+		
+		<attribute name="leOrAbsForattbnDis" mode="IN" type="String" optional="true" field-name="leOrAbsForattbnDis"/>
+	 	<attribute name="halfLesForattbnDed" mode="IN" type="String" optional="true" field-name="halfLesForattbnDed"/>
+	 	
+	 	<attribute name="lunchStartTime" mode="IN" type="String" optional="true" field-name="lunchStartTime"/>
+	 	<attribute name="lunchEndTime" mode="IN" type="String" optional="true" field-name="lunchEndTime"/>	
+	 	
+	 	<!-- <attribute name="designPrefRevision" mode="IN" type="String" optional="true" field-name="designPrefRevision"/>
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+	 	 -->
+	 	<attribute name="entryTime" mode="IN" type="String" optional="true" field-name="entryTime"/>
+		<attribute name="exitTime" mode="IN" type="String" optional="true" field-name="exitTime"/>
+		<attribute name="maximumStayTime" mode="IN" type="String" optional="true" field-name="maximumStayTime"/>
+		<attribute name="lateEntryTime" mode="IN" type="String" optional="true" field-name="lateEntryTime"/>
+		<attribute name="oTStartTime" mode="IN" type="String" optional="true" field-name="oTStartTime"/>
+		<attribute name="oTEndTime" mode="IN" type="String" optional="true" field-name="oTEndTime"/>
+		<attribute name="extraOTStartTime" mode="IN" type="String" optional="true" field-name="extraOTStartTime"/>
+		<attribute name="extraOTEndTime" mode="IN" type="String" optional="true" field-name="extraOTEndTime"/>
+		
+		<attribute name="firstTiffinStartTime" mode="IN" type="String" optional="true" field-name="firstTiffinStartTime"/>	
+		<attribute name="firstTiffinEndTime" mode="IN" type="String" optional="true" field-name="firstTiffinEndTime"/>	
+		<attribute name="secondTiffinStartTime" mode="IN" type="String" optional="true" field-name="secondTiffinStartTime"/>
+		<attribute name="secondTiffinEndTime" mode="IN" type="String" optional="true" field-name="secondTiffinEndTime"/>
+		<attribute name="nightStartTime" mode="IN" type="String" optional="true" field-name="nightStartTime"/>
+	 	<attribute name="nightEndTime" mode="IN" type="String" optional="true" field-name="nightEndTime"/>
+	
+		<attribute name="lunchTime" mode="IN" type="String" optional="true" field-name="lunchTime"/>
+		<attribute name="lunchDuration" mode="IN" type="String" optional="true" field-name="lunchDuration"/>
+		<attribute name="oTallowances" mode="IN" type="String" optional="true" field-name="oTallowances"/>
+		<attribute name="attendanceBonusAllowances" mode="IN" type="String" optional="true" field-name="attendanceBonusAllowances"/>
+		<attribute name="extraOTallowances" mode="IN" type="String" optional="true" field-name="extraOTallowances"/>
+		<attribute name="lateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDisable"/>
+		<attribute name="lateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="lateEntryDaysForAttenBonusDeduction"/>
+		<attribute name="yearlyLateEntryDaysForAttenBonusDisable" mode="IN" type="String" optional="true" field-name="yearlyLateEntryDaysForAttenBonusDisable"/>
+		<attribute name="yearlylateEntryDaysForAttenBonusDeduction" mode="IN" type="String" optional="true" field-name="yearlylateEntryDaysForAttenBonusDeduction"/>
+		
+		<attribute name="firstHalfHolidayRate" mode="IN" type="String" optional="true" field-name="firstHalfHolidayRate"/>
+		<attribute name="secondHalfHolidayRate" mode="IN" type="String" optional="true" field-name="secondHalfHolidayRate"/>
+		
+		<attribute name="montlyBonusAmount" mode="IN" type="String" optional="true" field-name="montlyBonusAmount"/>
+		<attribute name="yearlyBonusAmount" mode="IN" type="String" optional="true" field-name="yearlyBonusAmount"/>
+		<attribute name="bonusDeductionAmount" mode="IN" type="String" optional="true" field-name="bonusDeductionAmount"/>
+		<attribute name="oTCalculationOperand" mode="IN" type="String" optional="true" field-name="oTCalculationOperand"/>
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<service name="addPosition" engine="java" default-entity-name="DesignPrefEmplposition" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addPosition" auth="true">
+		<description>Add Designation Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="designationPreferenceId" mode="INOUT" type="String" optional="false" field-name="designationPreferenceId"/>
+		<attribute name="emplPositionId" mode="IN" type="String" optional="false" field-name="emplPositionId"/>
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<service name="updateEmpPosition" engine="java" default-entity-name="DesignPrefEmplposition" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="updateEmpPosition" auth="true">
+		<description>Add Designation Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		<attribute name="designationPreferenceId" mode="INOUT" type="String" optional="false" field-name="designationPreferenceId"/>
+		<attribute name="emplPositionId" mode="IN" type="String" optional="true" field-name="emplPositionId"/>
+		<attribute name="designEmplposRevesion" mode="IN" type="String" optional="true" field-name="designEmplposRevesion"/>
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+     	 
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	
+	<service name="addBatchPosition" engine="java" default-entity-name="DesignPrefEmplposition" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="addBatchPosition" auth="true">
+		<description>Add Designation Preferences </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		
+		
+		<attribute name="designationPreferenceId" mode="INOUT" type="String" optional="false" field-name="designationPreferenceId"/>
+		<attribute name="emplPositionTypeId" mode="IN" type="String" optional="false" field-name="emplPositionTypeId"/>
+	 	<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+	
+	<!-- End Designation Preference -->
+	
+	<!-- Assign Batch Employee Roster  -->
+    <service name="assignBatchEmployee" engine="java" default-entity-name="RosterEmployee" location="org.ofbiz.humanres.attendance.AttendancePreferenceEvents" invoke="assignBatchEmployee" auth="true">
+		<description>Add employee into roster  </description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		<attribute name="rosterPreferenceId" mode="INOUT" type="String" optional="true" field-name="rosterPreferenceId"/>
+		<attribute name="rosterPrefRevision" mode="INOUT" type="String" optional="true" field-name="rosterPrefRevision"/>
+		<attribute name="fromDate" mode="IN" type="Date" optional="true" field-name="fromDate"/>
+	  	<attribute name="thruDate" mode="IN" type="Date" optional="true" field-name="thruDate"/>
+	  	<attribute name="orgPartyId" mode="IN" type="String" optional="true" field-name="orgPartyId"/>
+		<attribute name="division" mode="IN" type="String" optional="true" field-name="division"/>
+		<attribute name="department" mode="IN" type="String" optional="true" field-name="department"/>
+		<attribute name="section" mode="IN" type="String" optional="true" field-name="section"/>	
+		<attribute name="line" mode="IN" type="String" optional="true" field-name="line"/>
+		<attribute name="rosterName" mode="INOUT" type="String" optional="true" field-name="rosterName"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	
+	
+    <service name="deleteDesigPosBatch" engine="simple" default-entity-name="DesignPrefEmplposition"
+             location="component://humanres/script/org/ofbiz/humanres/HumanResServices.xml" invoke="deleteDesigPosBatch" auth="true">
+        <description>Delete a DesigPosBatch</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+    <service name="deleteEmployeePreference" engine="simple" default-entity-name="EmployeeAttendancePreference"
+             location="component://humanres/script/org/ofbiz/humanres/HumanResServices.xml" invoke="deleteEmployeePreference" auth="true">
+        <description>Delete a Employee Preference</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+</services>

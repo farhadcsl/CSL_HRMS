@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IndivisualProvidentFundReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c8a7d34-eb6e-400b-b3f4-d75f91455a5a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/../../../home/tutul/project/new/contessawork/hot-deploy/payroll/webapp/payroll/reports/providentFund/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportsDirPath" class="java.lang.String"/>
+	<field name="employeeId" class="java.lang.String"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="departmentName" class="java.lang.String"/>
+	<field name="designationName" class="java.lang.String"/>
+	<field name="monthlySelfInvestmentAmount" class="java.lang.String"/>
+	<field name="monthlyCompanyInvestmentAmount" class="java.lang.String"/>
+	<field name="totalAmount" class="java.lang.String"/>
+	<field name="monthlyPfDeductionInfoList" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="52" y="1" width="401" height="21" uuid="7ec63f44-3e03-416a-8c89-60a05158875c"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contessa Solutions and Consultants Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="24" width="480" height="20" uuid="878a0d6d-bb77-4f8e-b262-07fcf479aa98"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="44" width="555" height="1" uuid="c16a8f3b-08a0-4436-8929-eeb2ff4cda1c"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="201" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="76" width="167" height="20" uuid="f009812e-a6af-4575-86ea-ac160e51c7a5"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="195" y="53" width="274" height="20" uuid="e5712f6f-2bb1-4b3b-957c-066d31134ef4"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="30" width="274" height="20" uuid="dbb09b3b-c850-4bda-be12-49f580de9760"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="125" width="167" height="20" uuid="2ef27f1b-585b-4f60-bd48-8a859616f2c7"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monthly Self Invesment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="53" width="167" height="20" uuid="f9c72994-2d67-4601-a286-8528c9dd2315"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="3" width="339" height="20" uuid="71291ddb-8577-489e-919d-ce9fa7853c74"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Provident Fund]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="30" width="167" height="20" uuid="6c07c896-7349-4230-a42f-81ec5ec4163a"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Id         ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="173" width="10" height="20" uuid="28ad8154-a609-4f9c-af43-47fffea8e356"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="149" width="167" height="20" uuid="4a9482be-fa3f-413e-8609-052b9b998675"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monthly Company Invesment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="173" width="167" height="20" uuid="7f34764f-320f-44bb-8061-bee724fc29cf"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Provident Fund Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="149" width="10" height="20" uuid="533ad987-bebf-46e6-ae87-e609158143b4"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="125" width="10" height="20" uuid="9a6f1c7a-8182-4c3d-a2db-16a3ecb34a41"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="76" width="10" height="20" uuid="99effa85-987c-438d-94b1-58fa6efc7979"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="53" width="10" height="20" uuid="5e59c850-f595-4e0a-bc15-25e1dba1237f"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="30" width="10" height="20" uuid="cebf46a7-c640-4ab5-8f77-d7673f6294a2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="417" y="177" width="132" height="20" uuid="0503eaad-5b64-42aa-8fd2-a787ad6090c6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="181" y="100" width="10" height="20" uuid="7a9aad56-ecd1-4c0b-8110-6ab78de5c4be"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="100" width="167" height="20" uuid="a64ec086-0f9d-4fbb-a72d-991e5654132f"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Designation]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="196" y="76" width="273" height="20" uuid="d37c0d8c-0548-4045-8529-8c4b2e000456"/>
+				<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="100" width="269" height="20" uuid="c3859e62-d39e-47ac-9fcc-8d3487b7bd57"/>
+				<textFieldExpression><![CDATA[$F{designationName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="125" width="269" height="20" uuid="3f1b29e7-28f2-4067-9acc-51f315e8ddea"/>
+				<textFieldExpression><![CDATA[$F{monthlySelfInvestmentAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="149" width="269" height="20" uuid="ac58cb5c-a001-48bb-91cf-28ce4c21cb5e"/>
+				<textFieldExpression><![CDATA[$F{monthlyCompanyInvestmentAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="173" width="217" height="20" uuid="058e334f-50b0-4979-9f86-5b1e5ce535a6"/>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<subreport>
+				<reportElement x="10" y="0" width="304" height="43" uuid="f455e65b-2218-4eb6-8efa-5508c1033585"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+            ($F{monthlyPfDeductionInfoList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportsDirPath} + "/IndivisualProvidentFundReport_PaymentList.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="430" y="14" width="80" height="20" uuid="39d7ccbe-d3fd-4449-9e1c-98517ddbb16e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="510" y="14" width="40" height="20" uuid="12a1e054-083d-4d1e-8336-7789ac2fbfb2"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

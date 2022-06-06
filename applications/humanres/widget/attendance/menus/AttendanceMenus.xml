@@ -1,0 +1,441 @@
+<!-- This file lists all sub menus and action menus of Attendance Application Menu (#see HumanresMenus#attendance) -->
+
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+	
+	<menu name="StructureActionMenu" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem">
+      <!--  <menu-item name="profile" title="Profile">
+			<link target="AttendanceMain"></link>
+		</menu-item>
+        <menu-item name="preference" title="Attendance Prefarence">
+			<link target="AttendancePreference"></link>
+		</menu-item>
+        <menu-item name="profile1" title="Show Current Employee">
+			<link target="AttendanceCurrentEmpInfo"/>
+		</menu-item>
+        
+        <menu-item name="import" title="Import Employee Log">
+			<link target="ImportEmployeeLog"/>
+		</menu-item>
+        <menu-item name="emplog" title="Add Employee Log">
+			<condition>
+				<or>
+                <if-has-permission permission="HUMANRES" action="ADMIN"/>
+                <if-has-permission permission="PARTY" action="ADMIN"/>
+            	</or>
+            	
+            </condition>
+			<link target="AddEmployeeLog"/>
+		</menu-item>
+
+        -->
+        <menu-item name="DailyAttendanceLog" title="Daily Attendance">			
+			<link target="DailyAttendanceLog"/>
+		</menu-item>
+		
+        <menu-item name="DailyAttendanceLogWithComments" title="Daily Attendance Data With Comments">			
+			<link target="DailyAttendanceLogComments"/>
+		</menu-item>
+     
+
+    </menu>
+	
+	
+	 <!-- added for sub-menu of attendance preference config menus -->
+    <menu name="PreferenceConfigMenus" type="simple"
+          default-menu-item-name="EmployeePreference" menu-container-style="button-bar tab-bar"
+          selected-menuitem-context-field-name="tabButtonItem"
+          default-selected-style="selected">
+        <menu-item name="EmployeePreference" title="Employee Preference" selected-style="selected">
+            <link target="EmployeePreference"/>
+        </menu-item>
+        <menu-item name="OrganizationPreference" title="Organization Preference" selected-style="selected">
+            <link target="OrganizationPreference"/>
+        </menu-item>
+        <menu-item name="DayPreference" title="Day Preference">
+            <link target="DayPreference"/>
+            
+        </menu-item>
+        
+
+   		<menu-item name="DesignationPreference" title="Designation Preference">
+            <link target="DesignationPreference">
+            </link>
+        </menu-item>
+        <menu-item name="RosterPreference" title="Roster Preference">
+            <link target="RosterPreference"/>
+        </menu-item>
+        
+     
+    </menu>
+    
+    <!-- added for sub-menu of Designation  menus -->
+    <menu name="designationBatchMenus" type="simple"
+          default-menu-item-name="EmployeePreference" menu-container-style="button-bar tab-bar"
+          selected-menuitem-context-field-name="tabButtonItem"
+          default-selected-style="selected">
+        <menu-item name="EmployeePreference" title="Employee Preference" selected-style="selected">
+            <link target="EmployeePreference"/>
+        </menu-item>
+        <menu-item name="OrganizationPreference" title="Organization Preference" selected-style="selected">
+            <link target="OrganizationPreference"/>
+        </menu-item>
+        <menu-item name="DayPreference" title="Day Preference">
+            <link target="DayPreference"/>
+        </menu-item>
+        
+        <menu-item name="DesignationPreference" title="Designation Preference">
+            <link target="DesignationPreference">
+            </link>
+        </menu-item>
+        
+        <menu-item name="Designation" title=">>${designationPreferenceId}">
+            <link target="PositionsBatchAssignment" >
+            	<parameter param-name="orgPartyId"/>
+            	<parameter param-name="designationPreferenceId"/>
+            </link>
+        </menu-item>
+
+        <menu-item name="RosterPreference" title="Roster Preference">
+            <link target="RosterPreference"/>
+        </menu-item>
+        
+        
+     
+
+    </menu>
+    
+    <!-- added for sub-menu of Designation  menus -->
+    <menu name="designationSingleMenus" type="simple"
+          default-menu-item-name="EmployeePreference" menu-container-style="button-bar tab-bar"
+          selected-menuitem-context-field-name="tabButtonItem"
+          default-selected-style="selected">
+        <menu-item name="EmployeePreference" title="Employee Preference" selected-style="selected">
+            <link target="EmployeePreference"/>
+        </menu-item>
+        <menu-item name="OrganizationPreference" title="Organization Preference" selected-style="selected">
+            <link target="OrganizationPreference"/>
+        </menu-item>
+        <menu-item name="DayPreference" title="Day Preference">
+            <link target="DayPreference"/>
+        </menu-item>
+        
+        <menu-item name="DesignationPreference" title="Designation Preference">
+            <link target="DesignationPreference">
+            </link>
+            
+        </menu-item>
+        <menu-item name="Designation" title=">>${designationPreferenceId}">
+            <link target="DesignationPositions" >
+            	<parameter param-name="orgPartyId"/>
+            	<parameter param-name="designationPreferenceId"/>
+            </link>
+        </menu-item>
+
+        <menu-item name="RosterPreference" title="Roster Preference">
+            <link target="RosterPreference"/>
+        </menu-item>
+     
+
+    </menu>
+    
+     <!-- added for sub-menu of Roster  menus -->
+    <menu name="rosterConfigMenus" type="simple"
+          default-menu-item-name="EmployeePreference" menu-container-style="button-bar tab-bar"
+          selected-menuitem-context-field-name="tabButtonItem"
+          default-selected-style="selected">
+        <menu-item name="EmployeePreference" title="Employee Preference" selected-style="selected">
+            <link target="EmployeePreference"/>
+        </menu-item>
+        <menu-item name="OrganizationPreference" title="Organization Preference" selected-style="selected">
+            <link target="OrganizationPreference"/>
+        </menu-item>
+        <menu-item name="DayPreference" title="Day Preference">
+            <link target="DayPreference"/>
+        </menu-item>
+        
+        <menu-item name="DesignationPreference" title="Designation Preference">
+            <link target="DesignationPreference">
+            </link>
+        </menu-item>
+
+        <menu-item name="RosterPreference" title="Roster Preference">
+            <link target="RosterPreference"/>
+        </menu-item>
+     
+        <menu-item name="Roster" title=">>${rosterName}[${rosterPrefRevision}]">
+            <link target="RosterEmployees" >
+            	<parameter param-name="orgPartyId"/>
+            	<parameter param-name="rosterPreferenceId"/>
+                <parameter param-name="rosterName"/>
+                <parameter param-name="rosterPrefRevision"/>
+            </link>
+        </menu-item>
+    </menu>
+	
+	
+		 <!-- added for sub-menu of attendance report menus -->
+    <menu name="ReportsMenus" type="simple"
+          default-menu-item-name="DailyAbsentReport" menu-container-style="button-bar tab-bar"
+          selected-menuitem-context-field-name="tabButtonItem"
+          default-selected-style="selected">
+   <!--      <menu-item name="DailyAbsentReport" title="Daily Absence Report" selected-style="selected">
+            <link target="DailyAbsentReport"/>
+        </menu-item> -->
+        <menu-item name="DailyAbsentReport1" title="Daily Absence Report" selected-style="selected">
+            <link target="DailyAbsentReport1"/>
+        </menu-item>
+        <menu-item name="DailyMonthlyAbsenteeism" title="DailyAndMonthly Absenteeism%" selected-style="selected">
+            <link target="DailyMonthlyAbsenteeism"/>
+        </menu-item>
+        <!-- <menu-item name="DailyLateReport" title="Daily Late Report" selected-style="selected">
+            <link target="DailyLateReport"/>
+        </menu-item> -->
+        <menu-item name="DailyLateReport1" title="Daily Late Report" selected-style="selected">
+            <link target="DailyLateReport1"/>
+        </menu-item>
+        
+        <menu-item name="OverTimeReport" title="Over Time Report">
+            <link target="OverTimeReport"/>
+        </menu-item>
+		<!-- <menu-item name="LeaveSummeryReportProbition" title="Leave Summery Report(Probition)">
+            <link target="LeaveSummeryReportProbition"/>
+        </menu-item> -->
+        <!-- <menu-item name="LeaveSummeryReportPermanent" title="Leave Summery Report (Permanent)">
+        	<link target="LeaveSummeryReportPermanent"/>
+        </menu-item> -->
+        <menu-item name="HolidayWorkSummery" title="Holiday Work Summery">
+            <link target="HolidayWorkSummery"/>
+        </menu-item>
+        <menu-item name="LeaveSummeryReportDesignation" title="Designation Wise Leave Summery Report">
+            <link target="LeaveSummeryReportDesignation"/>
+        </menu-item>
+        <menu-item name="MonthlyAttendanceBonusReport" title="Monthly Attendance Bonus Report">
+            <link target="MonthlyAttendanceBonusReport"/>
+        </menu-item>
+        <menu-item name="YearlyAttendanceBonusReport" title="Yearly Attendance Bonus Report">
+            <link target="YearlyAttendanceBonusReport"/>
+        </menu-item>
+        <!--JobCard-->
+        <menu-item name="JobCard" title="Job Card">
+            <link target="JobCard"/>
+        </menu-item>
+         <menu-item name="Attendance2daysReport" title="Two Days Report">
+            <link target="Attendance2daysReport"/>
+        </menu-item>
+        <menu-item name="Attendance3daysReport" title="Three Days Report">
+            <link target="Attendance3daysReport"/>
+        </menu-item>
+        <menu-item name="SectionWiseStrenth" title="Section Wise Strenth">
+            <link target="SectionWiseStrenth"/>
+        </menu-item>
+        <menu-item name="LostCard" title="Lost Card Info">
+        	<link target="LostCardInfo"/>
+        </menu-item>
+        <menu-item name="AttendanceMissingReport" title="In Attendance Missing">
+            <link target="InAttendanceMissing"/>
+        </menu-item>
+        <menu-item name="OutAttendanceMissingReport" title="Out Attendance Missing">
+        	<link target="OutAttendanceMissing"/>
+        </menu-item>
+        <menu-item name="TiffinReport" title="Tiffin Report">
+        	<link target="TiffinReport"/>
+        </menu-item>
+        <menu-item name="DailyMonthlyMigration" title="Daily and Monthly Migration">
+        	<link target="DailyMonthlyMigration"/>
+        </menu-item>
+        <menu-item name="NewEmplStatusReport" title="New Employee Status Report">
+        	<link target="NewEmplStatusReport"/>
+        </menu-item>
+        <menu-item name="ManpowerPositionReport" title="Manpower Position">
+        	<link target="ManpowerPositionReport"/>
+        </menu-item>
+        <menu-item name="ResignedEmployeeReport" title="Resigned Employee Report">
+        	<link target="ResignedEmployeeReport"/>
+        </menu-item>
+        <menu-item name="HolidayOtLedger" title="Holiday Over Time Ledger">
+        	<link target="HolidayOtLedger"/>
+        </menu-item>
+        <menu-item name="OTHolidayAndCostReport" title="OT,Holiday And Cost Report">
+        	<link target="OTHolidayAndCostReport"/>
+        </menu-item>
+        <menu-item name="MonthlyTiffinBillSummary" title="Monthly Tiffin Bill Summary">
+        	<link target="MonthlyTiffinBillSummary"/>
+        </menu-item>
+        <menu-item name="DailyEarlyoutReport" title="Daily Earlyout Report">
+        	<link target="DailyEarlyoutReport"/>
+        </menu-item>
+        <menu-item name="MonthlyLateAbsentLeaveHalfDay" title="Monthly Late Absent Early Out Leave Halfday Summary">
+        	<link target="MonthlyLateAbsentLeaveHalfDay"/>
+        </menu-item>
+        <menu-item name="MonthlyAttendanceSummary" title="Monthly Attendance Summary">
+        	<link target="MonthlyAttendanceSummary"/>
+        </menu-item>
+        <menu-item name="HolidayBenefit" title="Holiday Benefit Statement">
+        	<link target="HolidayBenefitReport"/>
+        </menu-item>
+        <menu-item name="ExtraOvertimePaymentSheet" title="Extra Overtime Payment Sheet">
+        	<link target="ExtraOvertimePaymentSheet"/>
+        </menu-item>
+        <menu-item name="RecruitAbsenteeismMigration" title="Recruit Absenteeism Migration">
+        	<link target="RecruitAbsenteeismMigration"/>
+        </menu-item>
+        <menu-item name="ExtraOvertimePaymentSheetLedger" title="Extra Overtime Payment Sheet Ledger">
+        	<link target="ExtraOvertimePaymentSheetLedger"/>
+        </menu-item>
+         <menu-item name="OvertimeStatement" title="Overtime Statement">
+            <link target="OvertimeStatement"/>
+        </menu-item>
+        <menu-item name="AttendanceBonus" title="Attendance Bonus Statement">
+            <link target="AttendanceBonus"/>
+        </menu-item>
+        <menu-item name="ExtraOvertimeSummary" title="Extra Overtime Summary">
+            <link target="ExtraOvertimeSummary"/>
+        </menu-item>
+        <menu-item name="ExtraOvertimeStatement" title="Extra Overtime Statement">
+            <link target="ExtraOvertimeStatement"/>
+        </menu-item>
+       <menu-item name="SalaryManpower" title="Salary Manpower">
+            <link target="SalaryManpower"/>
+        </menu-item>
+         <menu-item name="SalaryOtSummery" title="Salary and Overtime Summery(Bangla) ">
+            <link target="SalaryOtSummery"/>
+        </menu-item>
+    </menu>
+	
+	<menu name="AttendanceSubMenu" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem">
+		<menu-item name="structure" title="Structure">
+			<link target="#"></link>
+		</menu-item>
+		<menu-item name="chart" title="Chart">
+			<link target="#"></link>
+		</menu-item>
+		<menu-item name="content" title="Contents">
+			<link target="#"></link>
+		</menu-item>
+	</menu>
+
+	<!-- <menu name="StructureActionMenu" default-selected-style="selected" type="simple" menu-container-style="left-hr-action-menu" selected-menuitem-context-field-name="actionButtonItem">
+		<menu-item name="profile" selected-style="selected" tooltip="Attendacne Locations">
+			<link target="AttendanceMain" style="hr-view-icon"></link>
+		</menu-item>
+		<menu-item name="preference" selected-style="selected" tooltip="Attendance Preference Setting">
+			<link target="AttendancePreference" style="hr-preference-icon"></link>
+		</menu-item>
+		<menu-item name="report" selected-style="selected" tooltip="Attendance Reports">
+			<link target="AttendanceReports" style="hr-report-icon"></link>
+			<link target="DailyAbsentReport1" style="hr-report-icon"></link>
+			
+		</menu-item>
+		<menu-item name="profile1" selected-style="selected" tooltip="Show Current Employee">
+			<link target="AttendanceCurrentEmpInfo" style="hr-list-icon" />
+		</menu-item>
+		<menu-item name="import" selected-style="selected" tooltip="Import Employee Log">
+			<link target="ImportEmployeeLog" style="hr-import-icon" />
+		</menu-item>
+		<menu-item name="emplog" selected-style="selected" tooltip="Add Employee Log">
+			<condition>
+				<or>
+                <if-has-permission permission="HUMANRES" action="ADMIN"/>
+                <if-has-permission permission="PARTY" action="ADMIN"/>
+            	</or>
+            	
+            </condition>
+			<link target="AddEmployeeLog" style="left-hr-logprocess-action-menu" />
+		</menu-item>
+	</menu> -->
+	
+	<menu name="AddLocation">
+		<menu-item name="addLocation" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addLocationIcon" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddDevice">
+		<menu-item name="AddDevice" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDeviceIcon" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddPreference">
+		<menu-item name="addPreference" title=" " tooltip="Add Employee Preference">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addEmpPreferenceIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+		
+	<menu name="AddDayPreferencemenu">
+		<menu-item name="addPreference" title=" " tooltip="Add Day Preference">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDayPreferenceIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+		<menu name="AddOrgPreferencemenu">
+		<menu-item name="addPreference" title="" tooltip="Add Organization Preference">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addOrgPreferenceIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddDesPreferencemenu">
+		<menu-item name="addPreference" title="" tooltip="Add Designation Preference">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDesignationPreferenceIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddRosPreferencemenu">
+		<menu-item name="addPreference" title="" tooltip="Add Roster Preference">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addRosPreferenceIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddRosterEmployeemenu">
+		<menu-item name="addPreference" title="" tooltip="Add Employee">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addEmployeeIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	
+	<menu name="AddSinglePositionmenu">
+		<menu-item name="addPreference" title="" tooltip="Add Position">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPositionIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddBatchPositionmenu">
+		<menu-item name="addPreference" title="" tooltip="Add Batch Position">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addBatchPositionIcon"  style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="MaximizeAndMinimize">
+		<menu-item name="maximize" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/attendance/maximize.png" id="deviceCurrentEmpStatusdivMax" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+		<menu-item name="minimize" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/attendance/minimize.png" id="deviceCurrentEmpStatusdivMin" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+</menus>
+

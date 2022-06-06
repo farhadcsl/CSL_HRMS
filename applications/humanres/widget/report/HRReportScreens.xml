@@ -1,0 +1,26 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+     <screen name="HRReportCoverPage">
+        <section>
+            <actions>
+                <set field="headerItem" value="Report"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+                        <screenlet title="Human Resource Reports ">
+                            <section>
+                                <widgets>
+                                    <platform-specific>
+                                        <html><html-template location="component://humanres/webapp/humanres/humanres/HRReportCoverPage.ftl"/></html>
+                                    </platform-specific>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+  </screens>

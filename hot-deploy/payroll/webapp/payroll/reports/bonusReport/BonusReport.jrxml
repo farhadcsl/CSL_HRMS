@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bonus type" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0eac0f07-749a-4ce4-a95d-beff711e1c70">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/../../../home/tutul/project/new/contessawork/hot-deploy/payroll/webapp/payroll/reports/bonusReport/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportsDirPath" class="java.lang.String"/>
+	<field name="totalAmount" class="java.lang.String"/>
+	<field name="employeeBonusList" class="java.util.List"/>
+	<field name="bonusMonth" class="java.lang.String"/>
+	<field name="bonusName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="86" y="4" width="401" height="21" uuid="fcf21cda-4b5f-4a13-9e49-e9b6022dbeb8"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contessa Solutions and Consultants Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="28" width="480" height="20" uuid="52c083d6-0a7f-49b5-af45-4019527689d4"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="48" width="571" height="1" uuid="cf13b94a-a124-4662-934c-cdb4d150727e"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="93" y="0" width="344" height="22" uuid="132626ff-1516-4b22-b69f-85bbdcb6f57b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bonus Sheet Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="22" width="232" height="20" uuid="aa2f51ec-099d-4aee-bb1d-d7df34c78239"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonusName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="22" width="96" height="20" uuid="6d18acc8-f211-4643-bbf4-0e52fcf1c826"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bonus Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="42" width="97" height="20" uuid="96c1e3d8-b2aa-4350-a377-a12b4fd158ab"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="42" width="232" height="20" uuid="5163e338-827f-4c0e-91b1-e24fd2570b2c"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonusMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="371" y="62" width="199" height="20" uuid="a40a53bb-fbfd-4c34-9711-3e200a8bec11"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="62" width="232" height="20" uuid="dc18b625-6cad-4303-a2b8-1e373b03ed85"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="62" width="97" height="20" uuid="4db67e31-fbd1-4cd5-a959-30bbc5d166d9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="0" width="102" height="44" uuid="27653f22-0212-4901-8808-572b476d93d0"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+            ($F{employeeBonusList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportsDirPath} + "/BonusReport_bonusList.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="452" y="15" width="80" height="20" uuid="f61f18cb-d7c9-403c-af01-40ee4422e5bb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="15" width="40" height="20" uuid="0bc7b3a5-486b-4d4b-acd4-15530ebb13dd"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

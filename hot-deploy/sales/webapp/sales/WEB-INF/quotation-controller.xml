@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+
+    <description>Sales Component Site Configuration File</description>
+
+    <!-- Request Mappings -->
+    <request-map uri="FindQuote">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="FindQuote"/>
+    </request-map>
+    <request-map uri="EditQuotes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuotes"/>
+    </request-map>
+     <request-map uri="createQuote">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="createQuote"/>
+        <response name="success" type="view" value="ViewQuotes"/>
+        <response name="error" type="view" value="EditQuote"/>
+    </request-map>
+    <request-map uri="ViewQuotes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewQuotes"/>
+    </request-map>
+    <request-map uri="updateQuotes">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="updateQuote"/>
+        <response name="success" type="view" value="ViewQuotes"/>
+        <response name="error" type="view" value="EditQuotes"/>
+    </request-map>
+    <request-map uri="ManageQuotePricess">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ManageQuotePricess"/>
+    </request-map>
+    
+    
+    
+    
+    
+    
+    
+    <request-map uri="ListQuoteRoless">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteRoless"/>
+    </request-map>
+    <request-map uri="EditQuoteRoles">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuoteRoles"/>
+    </request-map>
+    <request-map uri="createQuoteRoles">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="createQuoteRole"/>
+        <response name="success" type="view" value="EditQuoteRoles"/>
+        <response name="error" type="view" value="EditQuoteRoles"/>
+    </request-map>
+    <request-map uri="removeQuoteRole">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="removeQuoteRole"/>
+        <response name="success" type="view" value="ListQuoteRoless"/>
+        <response name="error" type="view" value="ListQuoteRoless"/>
+    </request-map>
+    
+    
+    
+     
+    <request-map uri="createquotenote">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createQuoteNote"/>
+        <response name="success" type="view" value="ListQuoteNotess"/>
+        <response name="error" type="view" value="createnewquotenotes"/>
+    </request-map>
+    <request-map uri="updateQuoteNote">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateNote"/>
+        <response name="success" type="request-redirect" value="ListQuoteNotes"><redirect-parameter name="quoteId"/></response>
+        <response name="error" type="view" value="ListQuoteNotess"/>
+    </request-map>    
+    <request-map uri="EditQuoteNotes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuoteNotes"/>
+    </request-map>
+    
+    
+    
+    
+    <request-map uri="ListQuoteItemss">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteItemss"/>
+    </request-map>
+    <request-map uri="ListQuoteNotess">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteNotess"/>
+    </request-map>
+    <request-map uri="createnewquotenotes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="createnewquotenotes"/>
+    </request-map>
+    <request-map uri="ListQuoteAttributess">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteAttributes"/>
+    </request-map>
+     <request-map uri="EditQuoteAttributes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuoteAttributes"/>
+    </request-map>
+    <request-map uri="ListQuoteCoefficientss">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteCoefficientss"/>
+    </request-map>
+    <request-map uri="EditQuoteCoefficients">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuoteCoefficients"/>
+    </request-map>
+    <request-map uri="ListQuoteTermss">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="ListQuoteTermss" save-last-view="true"/>
+    </request-map>
+   <request-map uri="copyQuote">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="copyQuote"/>
+        <response name="success" type="view" value="EditQuotes"/>
+        <response name="error" type="view" value="EditQuotes"/>
+    </request-map>
+   <request-map uri="updateQuote">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="updateQuote"/>
+        <response name="success" type="view" value="ViewQuotes"/>
+        <response name="error" type="view" value="EditQuotes"/>
+    </request-map>
+    
+    
+    
+    
+    <request-map uri="createQuoteAttribute">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="createQuoteAttribute"/>
+        <response name="success" type="view" value="EditQuoteAttributes"/>
+    </request-map>
+    <request-map uri="updateQuoteAttribute">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="updateQuoteAttribute"/>
+        <response name="success" type="view" value="EditQuoteAttributes"/>
+    </request-map>
+    <request-map uri="removeQuoteAttribute">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="removeQuoteAttribute"/>
+        <response name="success" type="view" value="ListQuoteAttributess"/>
+    </request-map>
+    <request-map uri="createQuoteCoefficient">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="createQuoteCoefficient"/>
+        <response name="success" type="view" value="EditQuoteCoefficients"/>
+    </request-map>
+    <request-map uri="updateQuoteCoefficient">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="updateQuoteCoefficient"/>
+        <response name="success" type="view" value="EditQuoteCoefficients"/>
+    </request-map>
+    <request-map uri="removeQuoteCoefficient">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="removeQuoteCoefficient"/>
+        <response name="success" type="view" value="ListQuoteCoefficientss"/>
+    </request-map>
+    
+    
+    <request-map uri="createQuoteTerm">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createQuoteTerm"/>
+        <response name="success" type="request-redirect" value="ListQuoteTermss">
+            <redirect-parameter name="quoteId"/>
+        </response>
+        <response name="error" type="request-redirect" value="EditQuoteTerm">
+            <redirect-parameter name="quoteId"/>
+        </response>
+    </request-map>
+    
+    
+    <request-map uri="ListQuoteWorkEffortss">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteWorkEffortss"/>
+    </request-map>
+    <request-map uri="AddQuoteWorkEfforts">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddQuoteWorkEfforts"/>
+    </request-map>
+    <request-map uri="EditQuoteWorkEfforts">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuoteWorkEfforts"/>
+    </request-map>
+    <request-map uri="createQuoteWorkEffort">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createQuoteWorkEffort"/>
+        <response name="success" type="view" value="EditQuoteWorkEfforts"/>
+        <response name="error" type="view" value="AddQuoteWorkEffort"/>
+    </request-map>
+    <request-map uri="updateQuoteWorkEffort">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateWorkEffort"/>
+        <response name="success" type="view" value="EditQuoteWorkEfforts"/>
+        <response name="error" type="view" value="EditQuoteWorkEfforts"/>
+    </request-map>
+    <request-map uri="deleteQuoteWorkEffort">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteQuoteWorkEffort"/>
+        <response name="success" type="view" value="ListQuoteWorkEffortss"/>
+        <response name="error" type="view" value="ListQuoteWorkEffortss"/>
+    </request-map>
+    <request-map uri="autoUpdateQuotePricess">
+        <security https="true" auth="true"/>
+        <event type="service-multi" invoke="autoUpdateQuotePrice"/>
+        <response name="success" type="view" value="ManageQuotePricess"/>
+        <response name="error" type="view" value="ManageQuotePricess"/>
+    </request-map>
+    <request-map uri="ViewQuoteProfits">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewQuoteProfits"/>
+    </request-map>
+    <request-map uri="ListQuoteAdjustmentss">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListQuoteAdjustmentss"/>
+    </request-map>
+    <request-map uri="EditQuoteAdjustments">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditQuoteAdjustments"/>
+    </request-map>
+    <request-map uri="updateQuoteAdjustment">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="updateQuoteAdjustment"/>
+        <response name="success" type="view" value="EditQuoteAdjustments"/>
+    </request-map>
+    <request-map uri="autoCreateQuoteAdjustments">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="autoCreateQuoteAdjustments"/>
+        <response name="success" type="view" value="ListQuoteAdjustmentss"/>
+    </request-map>
+     <request-map uri="createQuoteAdjustments">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="createQuoteAdjustment"/>
+        <response name="success" type="view" value="EditQuoteAdjustments"/>
+    </request-map>       
+    <request-map uri="removeQuoteAdjustment">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="removeQuoteAdjustment"/>
+        <response name="success" type="view" value="ListQuoteAdjustmentss"/>
+    </request-map>
+    
+    
+    <!-- View Mappings -->
+	<view-map name="FindQuote" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#FindQuote"/>
+    <view-map name="EditQuotes" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuotes"/>
+    <view-map name="ViewQuotes" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ViewQuotes"/>
+    <view-map name="EditQuoteRoles" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuoteRole"/>
+    <view-map name="EditQuoteNotes" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuoteNote"/>
+    <view-map name="ListQuoteRoless" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteRoless"/>
+    <view-map name="ListQuoteItemss" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteItemss"/>
+    <view-map name="ListQuoteNotess" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteNotess"/>
+    <view-map name="createnewquotenotes" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#QuoteNewNote"/>
+    <view-map name="ListQuoteAttributes" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteAttributes"/>
+    <view-map name="EditQuoteAttributes" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuoteAttributes"/>
+    <view-map name="ListQuoteCoefficientss" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteCoefficientss"/>
+    <view-map name="EditQuoteCoefficients" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuoteCoefficients"/>
+    <view-map name="ListQuoteTermss" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteTermss"/>
+    <view-map name="ManageQuotePricess" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ManageQuotePrices"/>
+    <view-map name="ViewQuoteProfits" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ViewQuoteProfit"/>
+    <view-map name="ListQuoteAdjustmentss" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteAdjustments"/>
+    <view-map name="EditQuoteAdjustments" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuoteAdjustment"/>
+    
+    <view-map name="AddQuoteWorkEfforts" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#AddQuoteWorkEffort"/>
+    <view-map name="EditQuoteWorkEfforts" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#EditQuoteWorkEffort"/>
+    <view-map name="ListQuoteWorkEffortss" type="screen" page="component://sales/widget/quotation/screens/QuotationScreens.xml#ListQuoteWorkEfforts"/>
+    
+</site-conf>

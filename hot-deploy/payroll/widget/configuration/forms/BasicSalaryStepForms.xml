@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+          
+   <form name="ListBasicSalaryStep" type="multi" target="updateBasicSalaryStep" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="BasicSalaryStep"><order-by field-name="basicSalaryStepId"/></entity-condition>
+        </actions>
+    <!--  <auto-fields-service default-field-type="display" service-name="updateBasicSalaryStep"/>  -->
+        <field name="basicSalaryStepId"><display/></field>       
+        <field name="basicSalaryStepName" ><display/></field>
+        <field name="amount" title="Amount"><display/></field>     
+        
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink target="EditBasicSalaryStepExt" description="Edit" also-hidden="false">
+                <parameter param-name="basicSalaryStepId"/>  
+                <parameter param-name="basicSalaryStepName"/>
+                <parameter param-name="amount"/>  
+            </hyperlink>
+        </field>
+        
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteBasicSalaryStep" request-confirmation="true" confirmation-message="Do you want to delete this basic salary step"> 
+                <parameter param-name="basicSalaryStepId"/> 
+            </hyperlink>
+        </field>
+        <!-- <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field>
+        -->
+    </form>
+     
+    <form name="AddBasicSalaryStep" target="createBasicSalaryStep" type="single" odd-row-style="header-row"
+          default-table-style="basic-table">
+        <field name="basicSalaryStepName" title="Basic Salary Step Name" required-field="true" tooltip="Basic Salary Step Name" >
+            <text maxlength="40" default-value="${parameters.payrollItemTypeId}"/>
+        </field>
+        <field name="amount" title="Amount" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text></text>
+        </field>
+        <field name="submitButton" title="Submit">
+            <submit/>
+        </field>
+    </form>
+ 
+    
+    <form name="UpdateBasicSalaryStepExt" type="single" target="updateBasicSalaryStepExt" header-row-style="header-row" default-table-style="basic-table">
+        <field name="basicSalaryStepId"><display/></field>        
+        <field name="basicSalaryStepName" required-field="true"><text/></field>
+        <field name="amount" title="Amount" required-field="true"><text/></field> 
+   
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+</forms>

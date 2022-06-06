@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+ 
+     <request-map uri="PerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="FindPerfApprProcessStructureSetup"/>
+	 </request-map>	 
+	  <request-map uri="NewPerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewPerfApprProcessStructureSetup"/>
+	 </request-map>
+	 
+	  <request-map uri="createPerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.performanceAppraisalProcess.PerfApprWorkflowConfig" invoke="createPerfApprProcessStructureSetup"/>
+        <response name="success" type="view" value="FindPerfApprProcessStructureSetup"/>
+        <response name="error" type="view" value="NewPerfApprProcessStructureSetup"/>
+	 </request-map>
+	 
+	 <request-map uri="FindPerfApprProcessStructureSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPerfApprProcessStructureSetup"/>
+    </request-map> 
+    
+	  <request-map uri="EditPerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="EditPerfApprProcessStructureSetup"/>
+	 </request-map>
+    
+	  <request-map uri="updatePerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.performanceAppraisalProcess.PerfApprWorkflowConfig" invoke="updatePerfApprProcessStructureSetup"/>
+        <response name="success" type="view" value="FindPerfApprProcessStructureSetup"/>
+        <response name="error" type="view" value="NewPerfApprProcessStructureSetup"/>
+	 </request-map>
+    
+     <request-map uri="deletePerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deletePerfApprProcessStructureSetup"/>
+	 	<response name="success" type="view" value="FindPerfApprProcessStructureSetup"/>
+	 </request-map>
+    
+	  <request-map uri="DetailsPerfApprProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="DetailsPerfApprProcessStructureSetup"/>
+	 </request-map>
+    
+    
+	 
+	
+	
+	
+	
+	
+    <!-- ======================== PerfAppr Process Step ====================================  -->
+    
+	  <request-map uri="NewPerfApprProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewPerfApprProcessStepSetup"/>
+	 </request-map>
+	  <request-map uri="EditPerfApprProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="EditPerfApprProcessStepSetup"/>
+	 </request-map>
+	 
+	  <request-map uri="createPerfApprProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="createLeaveProcessStepSetup"/>
+        <response name="success" type="view" value="DetailsPerfApprProcessStructureSetup"/>
+        <response name="error" type="view" value="DetailsPerfApprProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="updatePerfApprProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="updateLeaveProcessStepSetup"/>
+        <response name="success" type="view" value="DetailsPerfApprProcessStructureSetup"/>
+        <response name="error" type="view" value="DetailsPerfApprProcessStructureSetup"/>
+	 </request-map>
+	 <request-map uri="deletePerfApprProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deletePerfApprProcessStepSetup"/>
+	 	<response name="success" type="view" value="DetailsPerfApprProcessStructureSetup"/>
+	 </request-map>
+	 
+    <!-- ======================== PerfAppr Process Step ====================================   -->
+    
+	
+	
+	
+	
+	
+	
+    <!-- ======================== Party Process Assign ====================================  -->
+    <request-map uri="PerfApprPartyProcessAssign">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="PerfApprPartyProcessAssign"/>
+	 </request-map>
+	   <request-map uri="NewPerfApprPartyProcessAssign">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewPerfApprPartyProcessAssign"/>
+	 </request-map>
+    
+	  <request-map uri="createPerfApprPartyWorkflowAssign">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.performanceAppraisalProcess.PerfApprWorkflowConfig" invoke="createPartyProcess"/>
+        <response name="success" type="view" value="PerfApprPartyProcessAssign"/>
+        <response name="error" type="view" value="NewPerfApprPartyProcessAssign"/>
+	 </request-map>
+	  <request-map uri="statusChangePartyPerfApprProcess">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.performanceAppraisalProcess.PerfApprWorkflowConfig" invoke="statusChangePartyProcess"/>
+        <response name="success" type="request-redirect-noparam" value="PerfApprPartyProcessAssign"/>
+        <response name="error" type="view" value="NewPerfApprPartyProcessAssign"/>
+	 </request-map>
+	 <!-- =============================================================================   -->
+    
+    <!-- ======================== Party Process Assign ====================================  -->
+    
+	 <view-map name="PerfApprPartyProcessAssign" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprPartyWorkflowAssignScreens.xml#PerfApprPartyProcessAssign"/>
+	<view-map name="NewPerfApprPartyProcessAssign" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprPartyWorkflowAssignScreens.xml#NewPerfApprPartyProcessAssign"/>
+	<view-map name="FindPerfApprProcessStructureSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprConfigurationScreens.xml#FindPerfApprProcessStructureSetup"/>
+	<view-map name="NewPerfApprProcessStructureSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprConfigurationScreens.xml#NewPerfApprProcessStructureSetup"/>
+	<view-map name="FindPerfApprProcessStructureSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprConfigurationScreens.xml#FindPerfApprProcessStructureSetup"/>
+	<view-map name="EditPerfApprProcessStructureSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprConfigurationScreens.xml#EditPerfApprProcessStructureSetup"/>
+	<view-map name="DetailsPerfApprProcessStructureSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprConfigurationScreens.xml#DetailsPerfApprProcessStructureSetup"/>
+	<view-map name="NewPerfApprProcessStepSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprProcessStepScreens.xml#NewPerfApprProcessStepSetup"/>
+	<view-map name="EditPerfApprProcessStepSetup" type="screen" page="component://workflow/widget/performanceAppraisal/screens/PerfApprProcessStepScreens.xml#EditPerfApprProcessStepSetup"/>
+	
+	
+</site-conf>

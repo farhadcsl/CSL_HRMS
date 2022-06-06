@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+   <form name="FindSalaryDetailView" type="single" target="FindEmplNewSalary">
+     
+    	<field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="monthNumber"><hidden/></field>
+    
+        <field name="employeeId" title="Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field> 
+    </form>
+    <form name="ListFindNewSalary" target="UpdateSalaryList" title="" list-name="listIt" type="multi" paginate-target="FindEmplNewSalary" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true">
+        <actions>
+         <set field="monthNumber" from-field="parameters.monthNumber"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="EligibleEmployee"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+        <field name="companyId"><hidden/></field>
+        <field name="name">
+        <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+		<field name="processId"><display/></field>
+        <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+        <field name="totalSalary"><display/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="fiscalYear">
+            <hidden value="${fiscalYear}"/>
+        </field>
+        <field name="monthNumber">
+            <hidden/>
+        </field>
+        <field name="activeInactiveLink" title="Active" widget-style="buttontext" use-when="${isActive =='N'}">
+            <hyperlink also-hidden="false" description="Active" target="statusChangeSalaryProcess"> 
+               <parameter param-name="partyId"/>
+               <parameter param-name="processId" from-field="processId"/>
+               <parameter param-name="monthNumber"/>
+               <!-- <parameter param-name="fiscalYear"/> -->
+               <parameter param-name="fiscalYear" value="${fiscalYear}"/>
+               <parameter param-name="companyId"/> 
+               <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+        
+    </form>
+    <form name="ExistingSalaryProcessMonthSelect" type="single" target="ViewSalaryProcessList" odd-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="fiscalYear"><text></text></field>
+        <field name="searchButton" title="View" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="NewEmplSalaryDetailViewlist" type="multi" list-name="eligibleEmployee"  target="StatusChangeForAllEmpl" paginate-target="findEmployeeFromSalaryList" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" > 
+      <actions>
+	      <set field="monthNumber" from-field="parameters.monthNumber"/>
+	      <set field="fiscalYear" from-field="parameters.fiscalYear"/>	     
+      </actions>
+        
+      <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+      </row-actions>
+      
+        <field name="name">
+        <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+        <field name="processId"><display/></field>
+        <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+        <field name="totalSalary"><display/></field>
+        <field name="monthNumber" parameter-name="monthNumber"><display/></field>
+        <field name="isActive"><hidden/></field>
+     	<field name="activeInactiveLink" title="Active" widget-style="buttontext" use-when="${isActive =='N'}">
+            <hyperlink also-hidden="false" description="Active" target="statusChangeSalaryProcess"> 
+               <parameter param-name="partyId"/>
+               <parameter param-name="processId" from-field="processId"/>
+               <parameter param-name="monthNumber"/>
+               <!-- <parameter param-name="fiscalYear"/> -->
+               <parameter param-name="fiscalYear" value="${fiscalYear}"/>
+               <parameter param-name="companyId"/> 
+               <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+    </form> 
+    <form name="UpdateSalaryOverallSalarySummary"  target="StatusChangeForAllEmpl" type="single" default-map-name="monthlyTotalSalary" odd-row-style="header-row" default-table-style="basic-table">
+        <actions>
+    
+        <set field="finalMonthlyNetPay" from-field="finalMonthlyNetPay"/>
+		<set field="totalListEmplint" from-field="totalListEmplint"/>
+        </actions>
+    	 <field name="monthNumber"><hidden/></field>
+        <field name="fiscalYear"><hidden/></field>
+    	<field name="submitButton" title="Active All" widget-style="smallSubmit">
+            <submit request-confirmation="false"/>
+        </field> 
+    </form>
+     <form name="FindEmplSalaryDetailView" type="single" target="FindEmplNewSalary">
+        <field name="monthNumber"><hidden/></field>
+    	<field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+    
+        <field name="employeeId" title="Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field> 
+    </form>
+    </forms>

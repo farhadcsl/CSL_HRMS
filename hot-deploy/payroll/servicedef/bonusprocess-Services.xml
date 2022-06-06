@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Payroll Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    
+   <!-- Bonus -->
+    
+ <service name="createBonusType" engine="simple" default-entity-name="BonusType"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="createBonusType" auth="true">
+        <description>Create a New Bonus Type</description>
+     <!--    <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/> -->
+   <!-- <permission-service service-name="humanResManagerPermission" main-action="CREATE"/> -->
+    <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="Timestamp" mode="IN" name="dateAdded" optional="true"/>
+    </service>
+    <service name="updateBonusType" engine="simple" default-entity-name="BonusType"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="updateBonusType" auth="true">
+        <description>Update Bonus Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+       
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+        <override type="Timestamp" mode="IN" name="dateAdded" optional="true"/>
+    </service>
+    
+    <service name="deleteBonusType" engine="simple" default-entity-name="BonusType"
+            location="component://payroll/script/org/ofbiz/PayrollServices.xml" invoke="deleteBonusType" auth="true">
+        <description>Delete Bonus Process</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    
+</services>

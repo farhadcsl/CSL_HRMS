@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>Training Development Management and Report Related Entity</description>
+    <version>1.0</version>
+    
+    
+    <entity entity-name="TrainingExpenseType" package-name="org.ofbiz.humanres.ability"
+		title="Training Expense Type Entity">
+		<field name="expenseId" type="id-ne" />
+		<field name="expenseName" type="id-ne" />
+		<field name="description" type="description" />
+		<prim-key field="expenseId" />
+	</entity>
+    
+    
+    <entity entity-name="TrainingOffer"
+            package-name="org.ofbiz.humanres.trainings"
+            title="Training Offer Entity">
+	        <field name="trainingOfferId" type="id-ne"></field>
+	        <field name="trainingTitle" type="short-varchar"></field>
+	        <field name="durationTime" type="short-varchar"></field>
+	        <field name="trainingPlace" type="short-varchar"></field>
+		   	<field name="description" type="description"></field>
+		    <field name="comments" type="comment"></field>
+		    <field name="dateAdded" type="date-time"></field>
+			<field name="isActive" type="indicator"></field>
+	        <prim-key field="trainingOfferId"/>
+    </entity>
+    <entity entity-name="PartyTrainingRequest"
+            package-name="org.ofbiz.humanres.trainings"
+            title="Party Training Request Entity">
+        <field name="requestId" type="id-ne"></field>
+        <field name="trainingOfferId" type="id-ne"></field>
+        <field name="partyId" type="id-ne"></field>
+		<field name="description" type="description"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+        <prim-key field="requestId"/>
+        <prim-key field="trainingOfferId"/>
+        <prim-key field="partyId"/>
+	    <relation type="one" fk-name="PA_TRA_REQ_TRA_OFF" title="TrainingOffer" 
+	    	rel-entity-name="TrainingOffer">
+	        <key-map field-name="trainingOfferId" rel-field-name="trainingOfferId"/>
+	    </relation>
+	    <relation type="one" fk-name="PA_TRA_REQ_PAR"  rel-entity-name="Party">
+	        <key-map field-name="partyId" rel-field-name="partyId"/>
+	    </relation>
+    </entity>
+
+    <entity entity-name="PartyTrainingRequestDetails"
+            package-name="org.ofbiz.humanres.trainings"
+            title="Party Training Request Details Entity">
+        <field name="requestDetailsId" type="id-ne"></field>
+        <field name="requestId" type="id-ne"></field>
+        <field name="expenseId" type="id-ne"></field>
+        <field name="amount" type="currency-amount"></field>
+		<field name="description" type="description"></field>
+		<field name="comments" type="comment"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+        <prim-key field="requestDetailsId"/>
+        <prim-key field="requestId"/>
+        <prim-key field="expenseId"/>
+	    <relation type="one" fk-name="TRA_TRA_DETAILS" rel-entity-name="PartyTrainingRequest">
+	        <key-map field-name="requestId" rel-field-name="requestId"/>
+	    </relation>
+	    <relation type="one" fk-name="TRA_REQ_EXP_TYP" rel-entity-name="TrainingExpenseType">
+	        <key-map field-name="expenseId" rel-field-name="expenseId"/>
+	    </relation>
+    </entity>
+
+</entitymodel>
+

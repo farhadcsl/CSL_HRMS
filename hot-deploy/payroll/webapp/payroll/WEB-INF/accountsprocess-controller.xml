@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+        
+    <handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler"/>
+     <request-map uri="AccountProcess">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AccountProcess"/>
+        <response name="error" type="view" value="AccountProcess"/>
+    </request-map>
+     <request-map uri="NewSalaryAccount">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.accountsprocess.AccountSalaryEvents" invoke="newAccountSalaryList"/>
+        <response name="success" type="view" value="AccountProcessList"/>
+        <response name="error" type="request-redirect-noparam" value="AccountProcess"/>
+    </request-map>
+    
+    <request-map uri="UpdateSalaryAccountsList">
+        <security https="true" auth="true"/>
+        
+       <event type="service-multi" invoke="updateSalaryACCList"/>
+        <response name="success" type="view" value="AccountProcess"/>
+        <response name="error" type="view" value="AccountProcess"/>
+    </request-map>
+    <request-map uri="finalAccountingProcess">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.accountsprocess.AccountSalaryEvents" invoke="finalAccountingProcess"/>
+        <response name="success" type="view" value="AccountProcess"/>
+        <response name="error" type="view" value="AccountProcess"/>
+    </request-map>
+    <request-map uri="emplAccDetailSalaryItems">
+        <security https="true" auth="true"/>
+        <!--  <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="updateBenAndDedList"/> -->
+       <response name="success" type="view" value="emplDetailAccSalaryItems"/>
+        <response name="error" type="view" value="ViewSalaryList"/>
+    </request-map>
+    
+    
+    <view-map name="AccountProcessList" type="screen" page="component://payroll/widget/accountsprocess/screens/SalaryAccountsScreens.xml#detailSalaryAccountProcessList"/> 
+ 	<view-map name="AccountProcess" type="screen" page="component://payroll/widget/accountsprocess/screens/SalaryAccountsScreens.xml#SalaryAccountProcess"/> 
+ 	<view-map name="emplDetailAccSalaryItems" type="screen" page="component://payroll/widget/accountsprocess/screens/SalaryAccountsScreens.xml#EditSalaryItems"/>   
+    
+    
+    
+    </site-conf>

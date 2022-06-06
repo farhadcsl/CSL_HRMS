@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="ConfigurePerfAppraisalWaiting">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleFindJobRequisition" />
+				<set field="headerItem" value="PerfAppraisal"/>
+				<set field="tabButtonItem" value="PerfApprWaitingView"/>
+                <set field="titleProperty" value="Performance Type Settings"/>
+                <set field="employmentCtx" from-field="parameters"/>
+				<set field="processId" from-field="parameters.processId" />
+				<set field="isActive" from-field="parameters.isActive" />
+				<set field="parameters.partyId" value="${parameters.partyId}"  default-value="${userLogin.partyId}" /> 
+				<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId"  from-field="parameters.partyId"/>
+             	</entity-and>
+             	<entity-one entity-name="PerfApprProcess" value-field="perfApprProcess">
+                    <field-map field-name="processId"  from-field="parameters.processId"/>
+             	</entity-one>
+            </actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+					 <include-menu name="PerformanceAppraisalMenus" location="component://humanres/widget/perfappr/PerformanceAppraisalMenus.xml"/>
+						<section>
+							<widgets>
+								<container >
+									<section>
+                   						<widgets>
+		                   					<include-screen name="PerfApprHead"/>	                   						
+											<include-screen name="PerfApprBusinessKPI"/>
+											<include-screen name="PerfApprBehaviourKPI"/> 
+											<include-screen name="PerfApprDevelopmentPlan"/> 
+											<include-screen name="SubmitScreen"/>              						
+		                   					<include-screen name="PerfApprComments"/>
+                   						</widgets>
+               						</section> 
+								</container> 
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="PerfApprHead">
+		<section>
+			<actions>
+               <set field="headerItem" value="PerfAppraisal"/>
+                <set field="employmentCtx" from-field="parameters"/>
+				<set field="partyId" from-field="parameters.partyId"/>
+           </actions>
+           <widgets>
+	           <section>
+	               <widgets>
+	       				<screenlet title="Preformance Appraisal Waiting For Approval" >
+	              		<container>
+	                   		<include-form name="PerfApprHead" location="component://humanres/widget/perfappr/PerfApprWaitingForms.xml"/> 
+	                    </container>
+	            		</screenlet>
+	               </widgets>
+	           </section>
+           </widgets>
+		</section>
+	</screen>
+	<screen name="PerfApprComments">
+		<section>
+			<actions>
+               <set field="headerItem" value="PerfAppraisal"/>
+                <set field="employmentCtx" from-field="parameters"/>
+				<set field="partyId" from-field="parameters.partyId"/>
+             	<entity-one entity-name="PerfApprProcess" value-field="perfApprProcess">
+                    <field-map field-name="processId"  from-field="parameters.processId"/>
+             	</entity-one>
+				<set field="firstApprovarComments" value="${perfApprProcess.firstApprovarComments}"/>
+				<set field="partyComments" value="${perfApprProcess.partyComments}"/> 
+				<set field="secondApprovarComments" value="${perfApprProcess.secondApprovarComments}"/>
+				<set field="thirdApprovarComments" value="${perfApprProcess.thirdApprovarComments}"/> 
+           </actions>
+           <widgets>
+	           <section>
+	               <widgets>
+	       				<screenlet title="Preformance Appraisal Action" >
+	              		 	<container>
+	                  		<include-form name="PerfApprComments" location="component://humanres/widget/perfappr/PerfApprWaitingForms.xml"/>	                           
+	                      	</container>
+	                      	<!-- <container style="button-bar" > 	              		                      		 
+	                   <link target="ApprovedPerformanceApproval" text="Approved" style="buttontext create" >
+	                   	<parameter param-name="processId"/>
+	                   </link>
+	                   <link target="RejectPreformanceApproval" text="Reject" style="buttontext create">
+	                  		<parameter param-name="processId"/>
+	                  	</link>		                       		      			
+	                	</container> -->
+	                    </screenlet>
+	               </widgets>
+	           </section>
+           </widgets>
+		</section>
+	</screen>
+   <screen name="PerfApprBusinessKPI">
+		<section>
+			<actions>
+               <set field="headerItem" value="PerfAppraisal"/>
+           </actions>
+           <widgets>
+               <screenlet title="Objective/Goal (Business KPI) Settings">
+					<section>
+                       <widgets>
+                          <include-form name="ListPerfApprBusinessKPI" location="component://humanres/widget/perfappr/PerfApprWaitingForms.xml"/> 
+                       </widgets>
+                   </section>
+               </screenlet>
+           </widgets>
+		</section>
+	</screen>
+	<screen name="PerfApprBehaviourKPI">
+		<section>
+			<actions>
+               <set field="headerItem" value="PerfAppraisal"/>              
+           </actions>
+           <widgets>
+               <screenlet title="Behavioral KPI Setting">
+					<section>
+                       <widgets>
+                           <include-form name="ListPerfApprBehaviourKpi" location="component://humanres/widget/perfappr/PerfApprWaitingForms.xml"/>                          
+                       </widgets>
+                   </section>
+               </screenlet>
+           </widgets>
+		</section>
+	</screen>
+	
+	<screen name="PerfApprDevelopmentPlan">
+		<section>
+			<actions>
+               <set field="headerItem" value="PerfAppraisal"/>
+           </actions>
+           <widgets>
+               <screenlet title="Development plan">
+					<section>
+                       <widgets>
+                           <include-form name="ListPerfApprDevelopmentPlan" location="component://humanres/widget/perfappr/PerfApprWaitingForms.xml"/>                           
+                       </widgets>
+                   </section>
+               </screenlet>
+           </widgets>
+		</section>
+	</screen>
+	
+	<screen name="SubmitScreen">
+		<section>
+			<actions>
+               <set field="headerItem" value="PerfAppraisal"/>
+				<set field="processId" from-field="parameters.processId" />
+				<set field="isActive" from-field="parameters.isActive" />
+           </actions>
+           <widgets>           
+	           <section>
+		           <condition>
+		           		<if-compare operator="equals" value="" field="isActive"/>
+		           </condition>
+		      		<widgets>                       
+	              		 <container style="button-bar" > 	              		                      		 
+		                        <link target="SendForProcessPerfAppraisal" text="Send For Process" style="buttontext create" >
+		                        	<parameter param-name="processId"/>
+		                        </link>
+		                       
+		                       <link target="RemovePerfAppraisal" text="Remove" style="buttontext create">
+		                       		<parameter param-name="processId"/>
+		                       	</link>		                       		      			
+	                      </container>
+	               </widgets>      		    
+	           </section>	          
+           </widgets>
+		</section>
+	</screen>
+	
+	<screen name="PerfApprWaitingListView">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Performance Appraisal Setup"/>
+                <set field="headerItem" value="PerfAppraisal"/>
+                <set field="tabButtonItem" value="PerfApprWaitingView"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="parameters.partyId" value="${parameters.partyId}"  default-value="${userLogin.partyId}" /> 
+				<entity-one entity-name="PerfApprProcess" value-field="perfApprProcess"/>               
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerformanceAppraisalMenus" location="component://humanres/widget/perfappr/PerformanceAppraisalMenus.xml"/>
+	                    <screenlet title="Performance Appraisal Waiting List View" >
+	                         <include-form name="PerfApprWaitingListView" location="component://humanres/widget/perfappr/PerfApprWaitingForms.xml"/>
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

@@ -1,0 +1,32 @@
+  <?xml version="1.0" encoding="UTF-8"?>
+
+<entity-engine-xml>
+  
+   <Party partyId="wfadmin" partyTypeId="PERSON" statusId="EMPL_POS_ACTIVE"/>
+    <Person partyId="wfadmin" firstName="Mr." lastName="WORKFLOW ADMIN"/>
+    <PartyRole partyId="wfadmin" roleTypeId="CONTACT"/>
+    <PartyRole partyId="wfadmin" roleTypeId="EMPLOYEE"/>
+    <PartyRole partyId="wfadmin" roleTypeId="ORIGINATOR"/>
+     <PartyRole partyId="wfadmin" roleTypeId="OWNER"/>
+     
+    <ContactMech contactMechId="wfadmin" contactMechTypeId="EMAIL_ADDRESS" infoString="wfadmin@contessabd.com"/>
+    <PartyContactMech partyId="wfadmin" contactMechId="wfadmin" fromDate="2013-01-01 00:00:00.0"/>
+    <PartyContactMechPurpose partyId="wfadmin" contactMechId="wfadmin" contactMechPurposeTypeId="PRIMARY_EMAIL" fromDate="2013-01-01 00:00:00"/>
+    <UserLogin userLoginId="wfadmin" partyId="wfadmin" currentPassword="{SHA}d23079bbca9105f78abff1d7f66e833231739923" passwordHint="hradmin"/>
+    
+   
+    
+    <PartyRelationship partyIdFrom="CSL" roleTypeIdFrom="ACCOUNT" partyIdTo="wfadmin" roleTypeIdTo="CONTACT" fromDate="2013-01-01 00:00:00.000" partyRelationshipTypeId="EMPLOYMENT"/>
+    <UserPreference userLoginId="wfadmin" userPrefTypeId="ORGANIZATION_PARTY" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="CSL"/>
+
+    <!-- employee positinType get from global HR settings -->
+    <Employment roleTypeIdFrom="INTERNAL_ORGANIZATIO" roleTypeIdTo="EMPLOYEE" partyIdFrom="CSL" partyIdTo="wfadmin" fromDate="2013-09-09 00:00:00.0" lastUpdatedStamp="2013-09-11 13:07:03.291" lastUpdatedTxStamp="2013-09-11 13:07:03.254" createdStamp="2013-09-11 13:06:41.227" createdTxStamp="2013-09-11 13:06:41.188"/>
+    <EmplPosition emplPositionId="2000" statusId="EMPL_POS_ACTIVE" partyId="CSL" emplPositionTypeId="100" estimatedFromDate="2013-09-10 00:00:00.0" salaryFlag="Y" exemptFlag="Y" fulltimeFlag="Y" temporaryFlag="Y" actualFromDate="2013-09-10 00:00:00.0" lastUpdatedStamp="2013-09-11 15:10:01.998" lastUpdatedTxStamp="2013-09-11 15:10:01.969" createdStamp="2013-09-11 12:59:55.06" createdTxStamp="2013-09-11 12:59:55.006"/>
+   <!--  <EmplPositionFulfillment emplPositionId="2000" partyId="bcadmin" fromDate="2013-09-10 00:00:00.0" lastUpdatedStamp="2013-09-11 13:04:22.889" lastUpdatedTxStamp="2013-09-11 13:04:22.888" createdStamp="2013-09-11 13:04:22.889" createdTxStamp="2013-09-11 13:04:22.888"/>
+    
+     -->
+    
+     <SecurityGroup description="access for workflow" groupId="WORKFLOW" lastUpdatedStamp="2014-07-20 14:32:27.845" lastUpdatedTxStamp="2014-07-20 14:32:27.83"/>
+     <UserLoginSecurityGroup groupId="WORKFLOW" userLoginId="wfadmin" fromDate="2013-01-01 12:00:00.0"/>
+    </entity-engine-xml>
+    

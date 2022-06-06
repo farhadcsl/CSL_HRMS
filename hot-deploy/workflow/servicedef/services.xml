@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Workflow Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+    <service name="deleteLeaveProcessStructureSetup" engine="simple" default-entity-name="ProcessStructure"
+            location="component://workflow/script/org/ofbiz/LeaveProcessServices.xml" invoke="deleteLeaveProcessStructureSetup" auth="true">
+        <description>delete LeaveProcess Structure Setup</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="deletePerfApprProcessStructureSetup" engine="simple" default-entity-name="ProcessStructure"
+            location="component://workflow/script/org/ofbiz/LeaveProcessServices.xml" invoke="deleteLeaveProcessStructureSetup" auth="true">
+        <description>delete Performance Appraisal Process Structure Setup</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="deleteLeaveProcessStepSetup" engine="simple" default-entity-name="ProcessSteps"
+           location="component://workflow/script/org/ofbiz/LeaveProcessServices.xml" invoke="deleteLeaveProcessStepSetup" auth="true">
+       <description>delete LeaveProcess Steps Setup</description>
+       <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+       <auto-attributes mode="INOUT" include="pk" optional="true"/>
+       <auto-attributes mode="IN" include="nonpk" optional="true"/>
+   </service>
+    <service name="deletePerfApprProcessStepSetup" engine="simple" default-entity-name="ProcessSteps"
+           location="component://workflow/script/org/ofbiz/LeaveProcessServices.xml" invoke="deleteLeaveProcessStepSetup" auth="true">
+       <description>delete LeaveProcess Steps Setup</description>
+       <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+       <auto-attributes mode="INOUT" include="pk" optional="true"/>
+       <auto-attributes mode="IN" include="nonpk" optional="true"/>
+   </service>
+    <service name="deleteLeaveNotificationMap" engine="simple" default-entity-name="ProcessStepNotifications"
+           location="component://workflow/script/org/ofbiz/LeaveProcessServices.xml" invoke="deleteLeaveNotificationMap" auth="true">
+       <description>delete LeaveProcess Step Notifications Setup</description>
+       <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+       <auto-attributes mode="INOUT" include="pk" optional="true"/>
+       <auto-attributes mode="IN" include="nonpk" optional="true"/>
+   </service>
+</services>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+     
+     
+   <form name="ListPayrollItemType" type="multi" target="updatePayrollItemType" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PayrollItem"><order-by field-name="payrollItemTypeId"/></entity-condition>
+        </actions>
+        <field name="payrollItemTypeId" title="Payroll Item Id"><display/></field>
+        <field name="payrollItemName" title="Name"><display/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        <field name="invoiceItemTypeId" title="Invoice Item Type"><display/></field>
+        <field name="payrollType" title="Payroll Type"><display description="${groovy: if(payrollType=='V') return 'Variable'; if(payrollType=='F') return 'Fixed';}"/></field>
+        <field name="isCalculatable" title="Tax Calculatable"><display description="${groovy: if(isCalculatable=='T') return 'True'; if(isCalculatable=='F') return 'False';}"/></field>
+        <!--<field name="isCondition" title="Has examption"><display/></field>
+        <field name="examptionType" title="Examption Type"><display/></field>
+        <field name="examptionAmount" title="Examption Amount"><display/></field>
+        <field name="examptionPrecentage" title="Examption Percentage"><display/></field> -->
+   
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="Edit" target="EditPayrollItem"> 
+                <parameter param-name="payrollItemTypeId"/> 
+                <parameter param-name="description"/> 
+                <parameter param-name="payrollItemName"/> 
+                <parameter param-name="invoiceItemTypeId"/> 
+                <parameter param-name="payrollType"/> 
+                <parameter param-name="isCalculatable"/> 
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deletePayrollItemType" request-confirmation="true" confirmation-message="Do you want to delete payroll item ${payrollItemTypeId}"> 
+                <parameter param-name="payrollItemTypeId"/> 
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="AddPayrollItemType" target="createPayrollItemType" type="single" odd-row-style="header-row"
+          default-table-style="basic-table">
+        <field name="payrollItemTypeId" title="Payroll Item Type Id" required-field="true" tooltip="payrollItemTypeId word should be infront of the type e.g: PAYROLL_BASIC" >
+            <text maxlength="20" default-value="${parameters.payrollItemTypeId}"/>
+        </field>
+        <field name="payrollItemName" title="payroll Item Name" tooltip="Payroll Item Name" required-field="true"><text maxlength="30"></text>
+        </field>
+         <field name="description" title="Description" required-field="true" tooltip=" Describe your added Payroll Type">
+            <textarea maxlength="250" cols="28" rows="3"/>
+        </field>
+        <field name="invoiceItemTypeId" title="Invoice item type" required-field="true">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${description}" key-field-name="invoiceItemTypeId" entity-name="InvoiceItemType">
+                    <entity-order-by field-name="invoiceItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+		<field name="isCalculatable" title="Tax Calculatable">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="T" description="True"/>
+                <option key="F" description="False"/>
+            </drop-down>
+        </field>
+        <field name="payrollType"><hidden value="V"/></field>
+        <field name="isActive"><hidden value="Y"/></field>
+      
+        <field name="submitButton" title="Submit">
+            <submit/>
+        </field>
+    </form>
+     
+    <form name="EditPayrollItemType" type="single" target="updatePayrollItemType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="payrollItemTypeId" ><display/></field>
+        <field name="payrollItemName" title="Name" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><textarea cols="28" rows="2"/></field>        
+        <field name="invoiceItemTypeId" tooltip="Invoice item type">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${description}" key-field-name="invoiceItemTypeId" entity-name="InvoiceItemType">
+                    <entity-order-by field-name="invoiceItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="payrollType">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="F" description="Fixed"/>
+                <option key="V" description="Variable"/>
+            </drop-down>
+        </field>
+        <field name="isCalculatable" title="Tax Calculatable">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="T" description="True"/>
+                <option key="F" description="False"/>
+            </drop-down>
+        </field>
+        <field name="isActive" title="Value"><hidden/></field>
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        
+    </form>
+     
+
+</forms>

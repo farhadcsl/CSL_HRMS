@@ -1,0 +1,984 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="ContessaFindJobRequisitions">
+        <section>             
+            <actions>   
+                <set field="titleProperty" value="PageTitleFindJobRequisition"/>
+                <set field="tabButtonItem" value="ContessaJobRequisition"/>
+                <service service-name="humanResManagerPermission" result-map="permResult">
+                    <field-map field-name="mainAction" value="ADMIN"/>
+                </service>
+                <set field="hasAdminPermission" from-field="permResult.hasPermission"/>
+               
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="HUMANRES" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                        <section>
+                                            <condition>
+                                                <if-has-permission permission="HUMANRES" action="_ADMIN"/>
+                                            </condition>
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <link target="EditContessaJobRequisition" text="${uiLabelMap.HumanResNewJobRequisition}" style="buttontext create"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindJobRequisitions" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListJobRequisitions" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.HumanResViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="ContessaNewJobRequisitions">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditJobRequisition"/>
+                <set field="tabButtonItem" value="ContessaJobRequisition"/>
+                <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="ContessaJobRequisition" value-field="contessaJobRequisition"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.HumanResEditJobRequisition}">
+                            <section>
+                                <widgets>
+                                    <include-form name="EditContessaJobRequisition" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+     <screen name="detailofRequisition">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditJobRequisition"/>
+                <set field="tabButtonItem" value="ContessaJobRequisition"/>
+                <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="ContessaJobRequisition" value-field="contessaJobRequisition"/>
+                <entity-condition list="requisitionDocuments" entity-name="RequisitionAndContent">
+							<condition-list>
+								<condition-expr field-name="jobRequisitionId" from-field="jobRequisitionId" />
+							</condition-list>
+				</entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        
+                            <section>
+                          	<widgets>
+                          	<container style="profile-left">
+                          	<screenlet title="Detail of Requisition">
+                                    <include-form name="detailofRequisition" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                             </screenlet>
+                             </container>
+                             <container style="profile-right">
+                            
+                            	 <include-screen name="requisitionDocumentList"/>
+                             
+                             </container>
+                                </widgets>
+                            </section>
+                       
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="DiscardEmployeePopup">
+		<section>			
+			<actions>				
+			<set field="partyId" from-field="parameters.partyId"/>					
+			</actions>
+			
+			<widgets>
+					<section>
+						<widgets>
+							<screenlet title="Discard Applicant">
+								<include-form name="FormForDiscardApplicant" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+							</screenlet>
+						</widgets>
+					</section>
+			</widgets>
+		</section>
+	</screen>
+   <screen name="requisitionDocumentList">
+	
+		<section>
+			<widgets>
+				<screenlet name="documents" title="Requisition Documents " id="documents" navigation-menu-name="AddRequisitionDocument">
+					<container id="addDocumentRequisitionPopUp"></container>
+					<include-menu location="component://humanres/widget/HumanresMenus.xml" name="AddRequisitionDocument" />
+					<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="RequisitionDocumentList" />
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="uploadRequisitionContent">
+		<section>
+			<actions>
+				 <entity-one entity-name="PartyGroup" value-field="company">
+					<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_UNIT" />
+				</entity-one> 
+				<set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>				
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+				<set field="partyContentTypeId" value="INTERNAL" />
+				<set field="uploadTitle" value="Upload Document" />
+				
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" />
+				<platform-specific>
+					<html>
+						<html-template location="component://humanres/webapp/humanres/humanres/recruitment/RequisitionContent.ftl" />
+					</html>
+				</platform-specific>
+			</widgets>
+		</section>
+	</screen>
+		<screen name="PopupActions">
+		<section>
+			<actions>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true" />
+				
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="AccountingUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="OrderUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="WorkEffortUiLabels" map-name="uiLabelMap" global="true" />
+			</actions>
+			<widgets />
+		</section>
+	</screen>
+	
+	
+	 <screen name="FindApplicantApps">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindEmploymentApp"/>
+                <set field="tabButtonItem" value="Applicants"/>
+                
+                <set field="employmentAppCtx" from-field="parameters"/>  
+                <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+                <entity-condition entity-name="EmploymentApp" list="applicantList" >
+                	<condition-expr field-name="statusId" operator="not-equals" value="CONFIRMATION"/>
+                </entity-condition>
+				 <!-- <service service-name="getApplyingApplicantInfo" auto-field-map="true"/> -->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">                
+                    <decorator-section name="body">
+                          <!-- <include-menu location="component://humanres/widget/recruitment/ContessaRecruitmentMenus.xml" name="ApplicantActionMenu"/> -->
+                        	<decorator-screen name="FindScreenDecorator" location="component://humanres/widget/CommonScreens.xml">
+                      			<decorator-section name="menu-bar">
+                                        <section>
+                                            <condition>
+                                                <if-has-permission permission="HUMANRES" action="_ADMIN"/>
+                                            </condition>
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <link target="EditContessaJobApplicant" text="Add New Applicant" style="buttontext create"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                      			
+                      			<decorator-section name="search-options">
+                                	<include-form name="FindApplicantApps" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                                </decorator-section>
+                     			<decorator-section name="search-results">
+                                 	<include-form name="ListEmploymentApplications" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                               			
+                       			 </decorator-section>
+                        	</decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+     <screen name="FindApplicantApproval">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find Waiting Approval List"/>
+                <set field="tabButtonItem" value="ApplicantsApproval"/>
+                
+                <set field="employmentAppsCtx" from-field="parameters"/>  
+                <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+                 <entity-and entity-name="EmploymentApp" list="listIt">
+	 				<field-map field-name="statusId" value="WAIT_APPROVAL"/>
+	 			</entity-and>
+				 <!-- <service service-name="getApplyingApplicantInfo" auto-field-map="true"/> -->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">                
+                    <decorator-section name="body">
+                         
+                        	<decorator-screen name="FindScreenDecorator" location="component://humanres/widget/CommonScreens.xml">
+                      			
+                      			
+                      			<decorator-section name="search-options">
+                                	<include-form name="FindApplicantApproval" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                                </decorator-section>
+                     			<decorator-section name="search-results">
+                                 	<include-form name="ListApplicantApproval" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                               			
+                       			 </decorator-section>
+                        	</decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditContessaJobApplicant">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditApplicantInformation"/>
+                <set field="tabButtonItem" value="Applicants"/>
+                <set field="headerItem" value="Recruitment"/>
+                <set field="labelTitleProperty" value="PageTitleAdd/EditApplicantInformation"/>
+				
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="PartyAndPerson" value-field="personInfo"/>
+                
+                <!-- Check Mobile or not if yes returns String "true" -->
+               <!--  <set field="isMobile" value="${bsh:org.ofbiz.common.CommonServices.isMobile(request)}"/> -->
+            </actions>
+            <widgets>
+                
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">    
+                    <decorator-section name="body">
+                       
+                        <screenlet title="New Applicant Information">
+							<section>
+		                    	
+		                    	<widgets>
+		                    		<include-form name="EditContessaApplicant" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+		                    	</widgets>
+		                    	
+		                    </section>
+                        </screenlet>                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    
+    
+     <screen name="ApplicantProfile">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleViewPartyProfile" />
+				<set field="tabButtonItem" value="Applicants" />
+			
+				<set field="labelTitleProperty" value="PartyTaxAuthInfos" />
+				<set field="parameters.partyId" value="${parameters.partyId}"/>
+				<set field="layoutSettings.javaScripts[]" value="/partymgr/js/PartyProfileContent.js" global="true" />
+				<script location="component://party/webapp/partymgr/WEB-INF/actions/party/ViewProfile.groovy" />
+				<script location="component://party/webapp/partymgr/WEB-INF/actions/party/GetUserLoginPrimaryEmail.groovy" />
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             	</entity-and>
+                <entity-and entity-name="PartyQual" list="pqList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             	</entity-and>             	
+             	<set field="pq" from-field="pqList[0].partyId"/>             	
+             	
+             	<entity-and list="applications" entity-name="PartyAndPersonAndEmploymentApp">
+             		<field-map field-name="applyingPartyId" value="${parameters.partyId}"/>
+             	</entity-and>
+             	<set field="applicationStatus" value="${applications[0].statusId}"/>
+             	<entity-and list="statusItem" entity-name="StatusItem">
+             		<field-map field-name="statusId" value="${applicationStatus}"/>
+             	</entity-and>
+             	<set field="applicationStatusSequence" value="${statusItem[0].sequenceId}"/>
+             	<entity-and list="PartyAndPersonAndEmploymentApp" entity-name="PartyAndPersonAndEmploymentApp">
+             		<field-map field-name="partyId" value="${partyId}"/>
+             	</entity-and>
+ 				<entity-and list="emplPositions" entity-name="EmplPosition">
+             		<field-map field-name="emplPositionId" value="${applications[0].emplPositionId}"/>
+             	</entity-and>             	
+             	<set field="applicantPayGradeId" value="${emplPositions[0].payGradeId}"/>             	
+             	<entity-and list="payGrades" entity-name="PayGrade">
+             		<field-map field-name="payGradeId" value="${emplPositions[0].payGradeId}"/>
+             	</entity-and>	             	
+             	<entity-and list="emplPositionType" entity-name="EmplPositionType">
+             		<field-map field-name="emplPositionTypeId" value="${emplPositions[0].emplPositionTypeId}"/>
+             	</entity-and>       	
+             	<entity-and entity-name="EmploymentApp" list="partyJoiningDate">
+                     <field-map field-name="applyingPartyId" value="${parameters.partyId}"/>				 
+                </entity-and>
+                <set field="empJoiningDate" value="${partyJoiningDate[0].joiningDate}"/>
+                <entity-and entity-name="UserLogin" list="refreeLoginList">
+                    <field-map field-name="partyId" value="${partyJoiningDate[0].referredByPartyId}"/>
+             	</entity-and>
+             	<set field="refereeEmployeeId" value="${refreeLoginList[0].userLoginId}"/>
+             	<set field="refereeDetails" value="${partyJoiningDate[0].referenceDetails}"/>
+             	<entity-and list="ApplicantBasic" entity-name="PartyAndPersonAndEmploymentApp">
+             		<field-map field-name="partyId" value="${parameters.partyId}"/>
+             	</entity-and>
+             	<set field="discardFlag" value="${partyJoiningDate[0].discardFlag}"/>
+            </actions>             
+			<widgets>
+		        <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}"> 
+					<decorator-section name="body">
+						<section>				
+							<condition>
+								<not>
+									<if-empty field="party" />
+								</not>
+							</condition>
+							<widgets>							
+								<section>
+									<widgets>						
+										<container style="clear"/>
+						                <container style="profile-left">
+											<section>
+								               <widgets>
+								                    <include-screen name="Applicant"/>
+								                     <include-screen name="ApplicantSalaryNegotiation"/>
+								               </widgets>	                       						
+									        </section>
+									        
+						        			<!-- <section>
+						        				<condition>			                        
+							                       <and>
+				 			                        	<if-compare field="empJoiningDate" operator="equals" value="nullfield"/>
+				 			                      		<if-compare field="applicationStatusSequence" operator="equals" value="3" type="Integer"/>
+							                       </and>
+												</condition> 
+									           <widgets>	                   		 	                   
+									           </widgets>
+											</section> -->
+						        			<section>
+						        				<condition>			                        
+							                       <and>
+				 			                        	<if-compare field="empJoiningDate" operator="not-equals" value="nullfield"/>
+				 			                      		<if-compare field="applicationStatusSequence" operator="equals" value="3" type="Integer"/>
+							                       </and>
+												</condition> 
+									           <widgets>	                   		 
+									               <include-screen name="ForwardNextStage" />			                   
+									           </widgets>
+									           <fail-widgets>
+								                      <include-screen name="AddOrUpdateJoinDate"/>										           
+									           </fail-widgets>
+											</section> 
+							            </container>
+										<container style="profile-right">
+											<section>
+							                    <widgets>                          						
+					                           		<include-screen name="ApplicantProfilePicture"/>				
+					                           		<include-screen name="ApplicantQualAdd" />
+					                           		<include-screen name="NoteForApplicant"/>	
+					                           		<include-screen name="ApplicantContent" /> 
+							                           		<!--  <include-screen name="ApplicantContentList"/> -->  
+												</widgets>
+											</section>
+							            </container>	                       							
+                          			</widgets>
+                      			</section>			
+                   			</widgets>
+                         </section>	
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+    <screen name="Applicant">
+        <section>
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="parameters.partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                
+                <entity-one entity-name="PartyAndGroup" value-field="lookupGroup">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-one entity-name="PartyAndPerson" value-field="lookupPerson">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-and list="partyContentList" entity-name="PartyContent">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <field-map field-name="partyContentTypeId" value="LGOIMGURL"/>
+                    <order-by field-name="-fromDate"/>
+                </entity-and>
+                <entity-and list="presentAddressnew" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="POSTAL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="permanentAddressnew" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>				
+					<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>				
+				</entity-and>
+				<entity-and list="mailingAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="MAILING_ADDRESS"/>
+				</entity-and>
+				<entity-and list="telecomnumberlist" entity-name="PartyAndTelecomNumber">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and>
+				<entity-and list="emaillist" entity-name="PartyAndContactMech">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="presentAddressList" entity-name="PartyAndPostalAddress">
+			 		<field-map field-name="partyId" value="${parameters.partyId}"/>
+			 		<field-map field-name="contactMechTypeId" value="CHANGE_POSTAL"/>
+				</entity-and> 
+				<entity-and list="emergencyContactList" entity-name="PartyAndPostalAddress">
+			 		<field-map field-name="contactMechTypeId" value="CHANGE_EMERGENCY"/>
+				</entity-and>
+             	<entity-and entity-name="PartyIdentification" list="partyIdentificationBGMEAId">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <field-map field-name="partyIdentificationTypeId" value="Nationalid"/><!-- is required -->
+              	</entity-and>
+              	
+              
+               
+                <set field="partyContentId" from-field="partyContentList[0].contentId"/>
+                <set field="partyContent" value="${groovy: partyContentId!=null?&quot;/content/control/stream?contentId=&quot; + partyContentId : &quot;&quot;}"/>
+                <set field="partyGroupLogoLinkUrl" from-field="partyContent" default-value="${lookupGroup.logoImageUrl}" global="true"/>
+                <set field="personalImage" from-field="partyContent"/>
+            </actions>
+            <widgets>
+                 <section>
+                    <condition>
+                        <not><if-empty field="lookupPerson"/></not>
+                    </condition>
+                    <widgets>
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="PARTYMGR" action="_GRP_UPDATE"/>
+                                    <if-compare-field field="parameters.partyId" operator="equals" to-field="userLogin.partyId"/>
+                                    <if-has-permission permission="HUMANRES" action="_ADMIN" />
+                                </or>
+                            </condition>
+                            	<!-- added for admin view -->
+                            	<widgets>
+                            		
+                               <screenlet title="${uiLabelMap.PartyPersonalInformation}" navigation-menu-name="ApplicantPersonalInfoUpdate">
+                               <container id="discardBtnPopUp"></container>
+ 									<include-menu name="ApplicantPersonalInfoUpdate" location="component://humanres/widget/HumanresMenus.xml"/>                               
+                                    <include-form name="ApplicantPersonalInformation" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                                    
+                                </screenlet>
+                            </widgets>
+                          
+                        </section>
+                    </widgets>
+                </section> 
+                
+            </widgets>
+        </section>
+    </screen>
+    
+    
+     <screen name="EditContessaApplicant">
+        <section>
+           
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPersonalInformation"/>
+                <set field="tabButtonItem" value="Applicants"/>               
+                <set field="labelTitleProperty" value="PageTitleEditPersonalInformation"/>                
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="PartyAndPerson" value-field="personInfo"/>
+                <entity-and list="presentAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="POSTAL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="permanentAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>
+				</entity-and>
+				<entity-and list="mailingAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="MAILING_ADDRESS"/>
+				</entity-and>
+				<entity-and list="telecomnumberlist" entity-name="PartyAndTelecomNumber">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and>
+				<entity-and list="emaillist" entity-name="PartyAndContactMech">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				
+            </actions>
+            
+            <widgets>
+                
+               <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="body">
+                   
+                        <screenlet title="${uiLabelMap.PageTitleEditPersonalInformation}">
+                            <include-form name="UpdateApplicantInfo" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                        </screenlet>
+                         
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ApplicantSalaryNegotiation">
+		<section>			
+			<actions>			
+				<set field="applicantId" from-field="applicantId"/>
+			</actions>			
+			<widgets>
+				<section>
+					<widgets>
+						<screenlet title="Salary Negotiation" navigation-menu-name="LinkForApplicantSalary">
+							<container id="addApplicantSalaryPopUp"></container>
+							<include-menu name="LinkForApplicantSalary" location="component://humanres/widget/HumanresMenus.xml"/>
+							<include-form name="ApplicantSalaryNegotiationView" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+						</screenlet>						
+						<!-- <screenlet title="Joining Confirmation">
+							<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="AddOrUpdateJoinDate"/>
+					    </screenlet> -->							
+					</widgets>
+				</section>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="AddOrUpdateJoinDate">
+		<section>			
+			<actions>			
+				<set field="applicantId" from-field="applicantId"/>
+			</actions>			
+			<widgets>
+				<section>
+					<widgets>						
+						<screenlet title="Joining Confirmation">
+							<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="AddOrUpdateJoinDate"/>
+					    </screenlet>							
+					</widgets>
+				</section>
+			</widgets>
+		</section>
+	</screen>
+	  <screen name="ApplicantSalaryNegotiationModify">
+		<section>		
+			<actions>
+				<entity-and entity-name="ApplicantSalarySetup" list="applicantSalarySetupInfo">
+					<field-map field-name="partyId" from-field="${parameters.partyId}" />
+				</entity-and>
+				<set field="actionType" from-field="parameters.actionType"></set>
+			</actions>
+			<widgets>
+				<section>
+					<widgets>
+						<screenlet title="Applicant Salary Negotiation ${dateAdded}" navigation-menu-name="LinkForAddIncrement">
+							<include-form name="ApplicantSalaryNegotiationModify" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+						</screenlet>							
+					</widgets>
+				</section>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="ForwardNextStage">
+		<section>			
+			<widgets>
+			<label></label>
+					<section>
+						<actions>		
+                			<set field="partyId" from-field="parameters.partyId"/>									
+					        <entity-and entity-name="UserLogin" list="userLogin">
+					        	<field-map field-name="partyId" value="${partyId}"/>
+					        </entity-and>
+							
+							<!-- <script location="component://humanres/webapp/humanres/WEB-INF/actions/recruitment/GetEmployeeId.groovy" /> -->							
+						</actions>
+						<widgets>
+ 						<section>
+ 						 <!--  <condition>
+ 						    <and>
+			                  <if-compare field="applicationStatusSequence" operator="equals" value="4" type="Integer"/>			                         
+			                 <if-compare operator="equals" value="" field="empJoiningDate" type="String"/> 
+			                   <if-compare field="partyWrittenStatus" operator="equals" type="String" value="Pass" />
+ 			                </and>
+ 						  </condition> -->
+ 						<widgets>
+ 						<screenlet title="Confirm Employee ${userLogin[0].userLoginId}" navigation-menu-name="LinkForDiscard">						
+ 						    <include-menu name="LinkForDiscard" location="component://humanres/widget/HumanresMenus.xml"/>						    
+ 							<!-- <container id="discardBtnPopUp"></container>Menu Comes from Below Menu	 -->					
+ 							<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="ForwardNextStage"/> 						
+ 						</screenlet>
+ 						
+ 						</widgets>
+ 						
+ 						
+ 						</section>
+ 						 						
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="ApplicantContent">
+        <section>
+            <actions>
+                <property-map resource="HRRecruitUiLabels" map-name="uiLabelMap" global="true"/>
+                <entity-condition entity-name="PartyContentType" list="partyContentTypes">
+                	<condition-list>
+						<condition-expr field-name="partyContentTypeId" operator="not-equals" value="INTERNAL"/>
+                		<condition-expr field-name="partyContentTypeId" operator="not-equals" value="WAITINGFORAPPROVAL"/>
+                	</condition-list>
+                </entity-condition>
+                <entity-condition entity-name="MimeType" list="mimeTypes">
+                    <order-by field-name="description"/>
+                    <order-by field-name="mimeTypeId"/>
+                </entity-condition>
+                <entity-condition entity-name="RoleType" list="roles">
+                    <order-by field-name="description"/>
+                    <order-by field-name="roleTypeId"/>
+                </entity-condition>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                <entity-and entity-name="PartyContent" list="partyContent">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="partyContentTypeId" value="USERDEF1"/>
+                    <field-map field-name="partyContentTypeId" value="USERDEF2"/>
+                    <field-map field-name="partyContentTypeId" value="USERDEF3"/>
+                </entity-and>
+
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <!-- <html-template location="component://party/webapp/partymgr/party/profileblocks/Content.ftl"/> -->
+                        <html-template location="component://humanres/webapp/humanres/humanres/recruitment/ContentApplicant.ftl"/>
+                        
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ApplicantContentList">
+        <section>
+            <actions>
+                <set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                 
+                <entity-condition list="partyContent" entity-name="PartyContent">
+                	<condition-list>
+                		<condition-expr field-name="partyId" from-field="partyId"/>
+                		<condition-expr field-name="partyContentTypeId" value="WAITINGFORAPPROVAL" operator="not-equals"/>
+                	</condition-list>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <!-- <html-template location="component://party/webapp/partymgr/party/profileblocks/ContentList.ftl"/> -->
+                        
+                        <html-template location="component://humanres/webapp/humanres/humanres/recruitment/ContentListApplicant.ftl"/>
+                        
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    
+ 
+ 	<screen name="ApplicantProfilePicture">
+        <section>
+            <actions>
+            	<property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+               
+                <entity-condition entity-name="PartyContentType" list="partyContentTypes">
+                    <order-by field-name="description"/>
+                </entity-condition>
+                <entity-condition entity-name="MimeType" list="mimeTypes">
+                    <order-by field-name="description"/>
+                    <order-by field-name="mimeTypeId"/>
+                </entity-condition>
+                <entity-condition entity-name="RoleType" list="roles">
+                    <order-by field-name="description"/>
+                    <order-by field-name="roleTypeId"/>
+                </entity-condition>
+                <set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                <entity-and entity-name="PartyContent" list="partyContent">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="partyContentTypeId" value="INTERNAL"/>
+                </entity-and>
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://humanres/webapp/humanres/humanres/recruitment/PhotoApplicant.ftl"/>
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+        
+ 	<!-- Applicant Note -->
+ 
+	<screen name="NoteForApplicant">
+        <section>
+            <actions>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <entity-and entity-name="PartyNoteView" list="notes">
+                    <field-map field-name="targetPartyId" from-field="partyId"/>
+                    <order-by field-name="-noteDateTime"/>
+                </entity-and>
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://humanres/webapp/humanres/humanres/recruitment/NotesRecruitment.ftl"/>
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ApplicantQualUpdate">
+		<section>
+			<actions>
+			<set field="tabButtonItem" value="Applicants" />
+			<set field="headerItem" value="Recruitment"/>
+            <set field="actionButtonItem" value="FindApplicants"/>
+			<set field="partyId" from-field="parameters.partyId"/>
+            <set field="partyQualTypeId" from-field="parameters.partyQualTypeId"/>
+            <set field="fromDate" from-field="parameters.fromDate"/>
+            <set field="partyQualCtx" from-field="parameters"/>
+			<entity-and list="partyqualList" entity-name="PartyQual">
+			 <field-map field-name="partyId" value="${parameters.partyId}"/>
+			</entity-and> 
+			<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             </entity-and>
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+			</actions>
+			<widgets>
+				<screenlet title="${uiLabelMap.HumanResProfileQualifications}" navigation-menu-name="AppQualUpdate">
+					<include-menu name="AppQualUpdate" location="component://humanres/widget/HumanresMenus.xml"/>
+					<include-form name="SimpleApplicantQual" location="component://humanres/widget/recruitment/RecruitmentQualForms.xml"/>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>  
+
+	<screen name="ApplicantQualAdd">
+		<section>
+			<actions>
+			<set field="tabButtonItem" value="Applicants" />
+			<set field="headerItem" value="Recruitment"/>
+            <set field="actionButtonItem" value="FindApplicants"/>
+			<set field="partyId" from-field="parameters.partyId"/>
+            <set field="partyQualTypeId" from-field="parameters.partyQualTypeId"/>
+            <set field="fromDate" from-field="parameters.fromDate"/>
+            <set field="partyQualCtx" from-field="parameters"/>
+			<entity-and list="partyqualList" entity-name="PartyQual">
+			 <field-map field-name="partyId" value="${parameters.partyId}"/>
+			</entity-and> 
+			<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             </entity-and>
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+			</actions>
+			
+			<widgets>
+				<screenlet title="Applicant Qualification" navigation-menu-name="AppQualAdd">
+					<include-menu name="AppQualAdd" location="component://humanres/widget/HumanresMenus.xml"/>
+					<include-form name="SimpleApplicantQual" location="component://humanres/widget/recruitment/RecruitmentQualForms.xml"/>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="addRecruitmentNote">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleNewPartyNote"/>
+                <set field="tabButtonItem" value="Applicants"/>
+                <set field="labelTitleProperty" value="PageTitleNewPartyNote"/>
+                <set field="donePage" from-field="parameters.DONE_PAGE" default-value="ApplicantProfile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+            </actions>
+            <widgets>
+                 <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}"> 
+                    <decorator-section name="body">
+                    <!-- <include-menu name="ApplicantNavigationMenu" location="component://humanres/widget/recruitment/ContessaRecruitmentMenus.xml"/> -->
+                        <screenlet title="New Note">
+					<include-form name="addRecruitmentNote" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="JobRequisitionList">
+		<section>
+			<actions>
+			
+				<entity-one entity-name="EmplPosition" value-field="emplposition" />
+				<set field="EmplPositionId" from-field="emplposition.emplPositionId" />
+				<entity-condition list="recruitmentList" entity-name="ContessaJobRequisition">
+				<condition-list combine="and">
+				<condition-expr field-name="jobPostingTypeEnumId" operator="equals" value="JOB_POSTING_INTR"/>
+				<condition-expr field-name="requisitionStatus" operator="equals" value="JOB_REQ_CREATED"/>
+				
+				</condition-list>
+				
+				</entity-condition>
+			
+			</actions>
+			<widgets>
+				<screenlet name="jobRequisition" title="Job Requisition Information" navigation-menu-name="AddRequisition">
+				    <container id="addRequisitionPopUp"></container><!-- Menu Comes from Below Menu -->
+					<include-menu location="component://humanres/widget/HumanresMenus.xml" name="AddRequisition" />
+					<include-form name="FormForRecruitmentList" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="RequisitionAddPopUp">
+		<section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditJobRequisition"/>
+                <set field="tabButtonItem" value="ContessaJobRequisition"/>
+                <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="ContessaJobRequisition" value-field="contessaJobRequisition"/>
+            </actions>
+            <widgets>
+					<section>
+						<widgets>
+						<screenlet title="Create/Update Requisition">
+							<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="FormForAddRequisition"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+        </section>
+	</screen>
+	
+	<screen name="RequisitionDetail">
+		<section>
+			<actions>
+                <set field="titleProperty" value="PageTitleEditJobRequisition"/>
+                <set field="tabButtonItem" value="JobRequisition"/>
+                <set field="actionButtonItem" value="AddJobRequisitions"/>
+                <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="JobRequisition" value-field="jobRequisition"/>
+                
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Requisition Details">
+							<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="RequisitionDetail"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	<screen name="JobRequisitionDetails">
+        <section>
+            <actions>
+				<entity-one entity-name="EmplPosition" value-field="emplPosition" />
+            	<set field="headerItem" value="organization" /> <!-- App Menu -->
+				<set field="tabButtonItem" value="profile" /> 
+                <set field="titleProperty" value="PageTitleEditJobRequisition"/>
+                <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="ContessaJobRequisition" value-field="contessaJobRequisition"/>
+                <entity-condition list="requisitionDocuments" entity-name="RequisitionAndContent">
+							<condition-list>
+								<condition-expr field-name="jobRequisitionId" from-field="jobRequisitionId" />
+							</condition-list>
+				</entity-condition>
+				<set field="decorator" value="component://humanres/widget/organization/screens/OrganizationScreens.xml" /> <!-- Decorator -->
+            </actions>
+            <widgets>
+                 <decorator-screen name="OrganizationMainDecorator" location="${decorator}">
+                    <decorator-section name="body"> 
+                        
+                            <section>
+                          	<widgets>
+                          	<container style="profile-left">
+                          	<screenlet title="Detail of Requisition">
+                                    <include-form name="detailofRequisition" location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml"/>
+                             </screenlet>
+                             </container>
+                             <container style="profile-right">
+                            
+                            	 <include-screen name="requisitionDocumentList"/>
+                             
+                             </container>
+                                </widgets>
+                            </section>
+                    
+                    </decorator-section>
+                </decorator-screen> 
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="ApplicantIncAddPopUp">
+		<section>
+            <actions>               
+                <set field="tabButtonItem" value="ContessaJobRequisition"/>
+                <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="ContessaJobRequisition" value-field="contessaJobRequisition"/>
+            </actions>
+            <widgets>
+					<section>
+						<widgets>
+						<screenlet title="Create/Update Requisition">
+							<include-form location="component://humanres/widget/recruitment/ContessaRecruitmentForms.xml" name="FormForAddRequisition"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+        </section>
+	</screen>
+	
+   </screens> 

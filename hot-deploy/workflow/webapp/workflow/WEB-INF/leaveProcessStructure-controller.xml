@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+	 
+	 
+	  <request-map uri="NewLeaveProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewLeaveProcessStepSetup"/>
+	 </request-map>
+	 
+	 
+	 <view-map name="NewLeaveProcessStepSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveProcessStepScreens.xml#NewLeaveProcessStepSetup"/>
+	
+	 
+</site-conf>

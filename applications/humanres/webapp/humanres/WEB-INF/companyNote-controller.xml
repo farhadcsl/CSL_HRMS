@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+        
+        
+    
+    <request-map uri="FindCompanyNotes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindCompanyNotes"/>
+    </request-map>
+    <request-map uri="CompanyNoteViewAll">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CompanyNoteViewAll"/>
+    </request-map>
+    <request-map uri="CompanyNoteView">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="CompanyNoteView"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+    
+    <request-map uri="CreateEmpNote">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="CreateEmpNote"/>
+        <response name="success" type="view" value="FindCompanyNotes"/>
+        <response name="error" type="view" value="FindCompanyNotes"/>
+    </request-map>
+    <request-map uri="deleteOrgEmpNote">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteOrgEmpNote"/>
+        <response name="success" type="view" value="FindCompanyNotes"/>
+    </request-map>
+    <request-map uri="CreateCompanyNote">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreateCompanyNote"/>
+    </request-map>
+    <request-map uri="EditOrgEmpNote">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditOrgEmpNote"/>
+    </request-map>
+    <request-map uri="UpdateOrgEmpNote">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="UpdateOrgEmpNote"/>
+        <response name="success" type="request-redirect-noparam" value="FindCompanyNotes"/>
+    </request-map>
+    <request-map uri="StatusChangeCompanyNote">
+		<security https="true" auth="true" />
+		<event type="java"  path="org.ofbiz.humanres.CompanyNoteService" invoke="statusChangeCompanyNote"/>
+		<response name="success" type="request-redirect-noparam" value="FindCompanyNotes" />
+	</request-map>
+    
+    
+    
+    <view-map name="CreateCompanyNote" type="screen" page="component://humanres/widget/companyNote/CompanyNoteScreen.xml#CreateCompanyNote"/>
+    <view-map name="EditOrgEmpNote" type="screen" page="component://humanres/widget/companyNote/CompanyNoteScreen.xml#EditOrgEmpNote"/>
+    <view-map name="FindCompanyNotes" type="screen" page="component://humanres/widget/companyNote/CompanyNoteScreen.xml#FindCompanyNotes"/>
+    <view-map name="CompanyNoteViewAll" type="screen" page="component://humanres/widget/companyNote/CompanyNoteScreen.xml#CompanyNoteViewAll"/>
+    
+</site-conf>

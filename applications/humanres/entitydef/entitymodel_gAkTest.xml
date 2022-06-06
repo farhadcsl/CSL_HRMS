@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>Employee Goals and Kpi Related Entity</description>
+    <version>1.0</version>
+    
+    <entity entity-name="TestGaK" package-name="org.ofbiz.humanres.employment"
+		title="Test Goals And Kpi">
+		<field name="gKId" type="id-ne"/>
+		<field name="empId" type="id-ne"/>
+		<field name="mId" type="id-ne"/>
+		<field name="hodId" type="id-ne"/>
+		<field name="goal" type="long-varchar"/>
+		<field name="kpi" type="long-varchar"/>
+		<field name="target" type="short-varchar"/>
+        <prim-key field="gKId"/>
+	</entity>
+	<entity entity-name="managerModel" package-name="org.ofbiz.humanres.employment"
+		title="Test Manager Model">
+		<field name="mId" type="id-ne"/>
+		<field name="name" type="long-varchar"/>
+        <prim-key field="mId"/>
+	</entity>
+	<entity entity-name="hodModel" package-name="org.ofbiz.humanres.employment"
+		title="Test HOD Model">
+		<field name="hodId" type="id-ne"/>
+		<field name="name" type="long-varchar"/>
+        <prim-key field="hodId"/>
+	</entity>
+	<entity entity-name="employeeModel" package-name="org.ofbiz.humanres.employment"
+		title="Test Employee Model">
+		<field name="eId" type="id-ne"/>
+		<field name="name" type="long-varchar"/>
+        <prim-key field="eId"/>
+	</entity>
+    
+</entitymodel>

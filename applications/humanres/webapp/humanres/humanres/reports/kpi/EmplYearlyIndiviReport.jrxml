@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmplYearlyIndiviReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c2fbaf6-e4e9-4c9e-8542-8d57a2c04511">
+	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="133"/>
+	<parameter name="empId" class="java.lang.String"/>
+	<parameter name="empName" class="java.lang.String"/>
+	<parameter name="empDept" class="java.lang.String"/>
+	<parameter name="ovlResult" class="java.lang.String"/>
+	<parameter name="ovlStatus" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.String"/>
+	<field name="goal" class="java.lang.String"/>
+	<field name="kpi" class="java.lang.String"/>
+	<field name="target" class="java.lang.String"/>
+	<field name="achievement" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="71" y="10" width="401" height="21" uuid="ab34030d-48c1-4017-9497-6924494b4259"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Computer Services Limited ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="69" width="401" height="21" uuid="082fcb39-b873-4fb3-8284-8aa9c6c56aea"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Annual Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="34" width="480" height="20" uuid="6a6e0581-030c-4f9a-8b10-a1ee1d510ca3"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[House No: 450 ,Road No: 31 , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="93" width="35" height="21" uuid="71129ea4-aca9-4a83-85d8-d04660b802c0"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="257" y="93" width="100" height="20" uuid="eff54e3e-cde4-4b33-a6fb-c32e36be1a39"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="87" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="4" width="571" height="1" uuid="dd87cfbc-66b5-456a-b377-be2723e29965"/>
+			</line>
+			<staticText>
+				<reportElement x="9" y="55" width="98" height="21" uuid="f5fa1b5d-39d1-4fd7-8d73-1bb0f79ef08e"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="37" width="12" height="21" uuid="5c6bd8bd-ec9f-4e6f-ac46-ce8844a15252"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="14" width="12" height="21" uuid="b0d07964-bd89-4f60-bf1c-ce2f3d568e21"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="55" width="12" height="21" uuid="ee09c85d-f5db-4222-b3f6-05257a3eb1a8"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="34" width="12" height="21" uuid="3f6c88d2-2cc4-4526-aeaf-7a2736db63de"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="58" width="58" height="21" uuid="e5e8d960-3980-4ed1-ba40-cb377317e973"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="59" width="12" height="21" uuid="8c54197d-c7cf-4656-bddb-9d8bf197c2d8"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="14" width="98" height="21" uuid="1aa2a6e2-80a7-4da4-8bfd-f5977269c7e2"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="14" width="165" height="21" uuid="fa095d75-b9fd-4be2-8f35-f6e57b4a0fcd"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Achievement Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="37" width="58" height="21" uuid="9438ae16-6d04-467f-acc5-20853eeb76f4"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="34" width="98" height="21" uuid="18c606f0-cac4-4204-9c65-de685dc6c5ca"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="290" y="5" width="1" height="78" uuid="648c084d-a938-4134-9f05-26aad5b2f5ae"/>
+			</line>
+			<line>
+				<reportElement x="0" y="83" width="571" height="1" uuid="4d75b83b-e099-42f3-8be9-b8f31958551e"/>
+			</line>
+			<textField>
+				<reportElement x="119" y="15" width="157" height="20" uuid="d8057f8a-d7ab-44f3-aca7-a47c05663faf"/>
+				<textFieldExpression><![CDATA[$P{empId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="35" width="157" height="20" uuid="b2ad2b54-1230-46b9-a860-757c7162f274"/>
+				<textFieldExpression><![CDATA[$P{empName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="55" width="157" height="20" uuid="bfb124db-ee12-4f4f-b80a-67e31eed3116"/>
+				<textFieldExpression><![CDATA[$P{empDept}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="39" width="145" height="20" uuid="6e5dbf4d-ec09-4594-be7f-b4dc8db5c5ce"/>
+				<textFieldExpression><![CDATA[$P{ovlResult}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="60" width="145" height="20" uuid="69cffe7d-55cf-4df8-83b9-3f3698464fb0"/>
+				<textFieldExpression><![CDATA[$P{ovlStatus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="10" width="154" height="18" uuid="069c9603-d600-43b3-84c8-22878957c626"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Goals]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="10" width="216" height="17" uuid="c421dce8-0cba-41d5-91e0-baa93cd19bde"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KPI]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="6" width="571" height="1" uuid="d9b58222-9227-4aab-9a53-a944ed62aaf5"/>
+			</line>
+			<staticText>
+				<reportElement x="511" y="12" width="48" height="17" uuid="4ac92d91-148c-43f2-8d66-ce0830b0629a"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="11" width="40" height="18" uuid="be16b8f5-baae-4c36-b94b-4385b1e5b51f"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Target]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="12" width="56" height="17" uuid="eced57ac-fb0d-423a-9cc1-ee29f70d1b5e"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Achievement]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="29" width="571" height="1" uuid="44d99daa-d688-4093-af23-b911c01eae1c"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="6" width="1" height="23" uuid="183cbd0f-f8a1-4c4a-8742-c787ff025f70"/>
+			</line>
+			<line>
+				<reportElement x="163" y="7" width="1" height="23" uuid="dd9e428d-55dd-463d-ad46-020ec4382938"/>
+			</line>
+			<line>
+				<reportElement x="383" y="7" width="1" height="23" uuid="6c371e35-b239-4480-96de-5ac641b8b808"/>
+			</line>
+			<line>
+				<reportElement x="437" y="7" width="1" height="23" uuid="9bd67b1c-7983-4964-b3fd-17024cfc398b"/>
+			</line>
+			<line>
+				<reportElement x="504" y="7" width="1" height="23" uuid="0b9e1491-d959-49b9-9b6f-a5d386e9b470"/>
+			</line>
+			<line>
+				<reportElement x="570" y="7" width="1" height="23" uuid="33f47805-5ecb-4c93-8bd2-b055282ac501"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="571" height="1" uuid="a4e9a8f1-3cf4-46cb-a2f8-ee3d90ea26c9"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="26" width="571" height="1" uuid="7430ec01-18a8-40f7-9374-c2e6d92cff6e"/>
+			</line>
+			<textField>
+				<reportElement x="7" y="4" width="154" height="20" uuid="82d2a0c0-52ee-41e5-a02e-4809cef918cc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="4" width="216" height="20" uuid="979a8536-1950-4093-a4e2-ad462121dfe8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kpi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="387" y="4" width="50" height="20" uuid="7c8e7725-551b-4367-bb94-04538d9fffb9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{target}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="4" width="56" height="20" uuid="68039c28-d789-4f65-b626-928bed035927"/>
+				<textFieldExpression><![CDATA[$F{achievement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="4" width="57" height="20" uuid="60696ac1-8337-4a87-9bc3-6c03af4937ff"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="0" width="1" height="27" uuid="174aab77-853a-486a-8ff4-1aa131d76028"/>
+			</line>
+			<line>
+				<reportElement x="163" y="0" width="1" height="27" uuid="a7a8fe9a-771c-4b92-9621-a64cdd62cdff"/>
+			</line>
+			<line>
+				<reportElement x="383" y="0" width="1" height="27" uuid="366dabd4-66f6-4fdd-bd1f-a54b61014c5e"/>
+			</line>
+			<line>
+				<reportElement x="437" y="0" width="1" height="27" uuid="cec034f6-82ad-4236-a003-be42d78ee11a"/>
+			</line>
+			<line>
+				<reportElement x="504" y="0" width="1" height="27" uuid="638742df-89cb-4291-b86c-3716b736cff0"/>
+			</line>
+			<line>
+				<reportElement x="570" y="0" width="1" height="27" uuid="c5725ca7-1270-4541-890d-bf16caa5398f"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="53" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="118" y="2" width="324" height="21" uuid="a0125613-2080-4d6a-95a5-332b39d52be8"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[© 2014-2018 Computer Services Ltd. All Rights Reserved]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

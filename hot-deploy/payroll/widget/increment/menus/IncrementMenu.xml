@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+<menu name="incrementProcessGen" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Increment Salary Process Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="GeneralIncrementIndividual" title="Process Individual Increment">
+            <link target="incrementMng"/>
+        </menu-item>
+         <menu-item name="GeneralIncrementAll" title="Process Increment All Employees">
+            <link target="incrementMngAll"/>
+        </menu-item>
+        <menu-item name="ArrearProcess" title="Process Arrear">
+            <link target="arrearProcess"/>
+        </menu-item>
+              
+    </menu>
+
+</menus>

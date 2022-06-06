@@ -1,0 +1,100 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+    <form name="EmployeeProfileReportForms" type="single" target="EmployeeReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+      
+      <field name="employeeId" title="Employee Id" position="1" >
+      	<lookup target-form-name="LookupPartyAndUserLoginAndPerson"/>
+      </field>
+        
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+   
+     <form name="publicHoliday" type="single" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="WorkEffort"  default-field-type="find"/>
+        <field name="workEffortId"><hidden/></field>
+        <field name="workEffortTypeId"><hidden/></field>
+        <field name="currentStatusId"><hidden/></field>
+        <field name="lastStatusUpdate"><hidden/></field>
+        <field name="workEffortPurposeTypeId"><hidden/></field>
+        <field name="workEffortParentId"><hidden/></field>
+        <field name="scopeEnumId"><hidden/></field>
+        <field name="priority"><hidden/></field>
+        <field name="percentComplete"><hidden/></field>
+        <field name="showAsEnumId"><hidden/></field>
+        <field name="sendNotificationEmail"><hidden/></field>
+        
+        <field name="description"><hidden/></field>
+        <field name="locationDesc"><hidden/></field>
+        <!-- <field name="estimatedStartDate"><hidden/></field> -->
+        <field name="estimatedCompletionDate"><hidden/></field>
+        <field name="actualStartDate"><hidden/></field>
+        <field name="actualCompletionDate"><hidden/></field>
+        <field name="estimatedMilliSeconds"><hidden/></field>
+        <field name="estimatedSetupMillis"><hidden/></field>
+        <field name="estimateCalcMethod"><hidden/></field>
+        <field name="actualMilliSeconds"><hidden/></field>
+        <field name="actualSetupMillis"><hidden/></field>
+        
+        <field name="totalMilliSecondsAllowed"><hidden/></field>
+        <field name="totalMoneyAllowed"><hidden/></field>
+        <field name="moneyUomId"><hidden/></field>
+        <field name="specialTerms"><hidden/></field>
+        <field name="timeTransparency"><hidden/></field>
+        <field name="universalId"><hidden/></field>
+        <field name="sourceReferenceId"><hidden/></field>
+        <field name="fixedAssetId"><hidden/></field>
+        <field name="facilityId"><hidden/></field>
+        <field name="infoUrl"><hidden/></field>
+        <field name="recurrenceInfoId"><hidden/></field>
+        
+        <field name="tempExprId"><hidden/></field>
+        <field name="tempExprId"><hidden/></field>
+        <field name="runtimeDataId"><hidden/></field>
+        <field name="noteId"><hidden/></field>
+        <field name="serviceLoaderName"><hidden/></field>
+        <field name="quantityToProduce"><hidden/></field>
+        <field name="quantityProduced"><hidden/></field>
+        <field name="quantityRejected"><hidden/></field>
+        <field name="reservPersons"><hidden/></field>
+        <field name="reserv2ndPPPerc"><hidden/></field>
+        <field name="reservNthPPPerc"><hidden/></field>
+        <field name="accommodationMapId"><hidden/></field>
+        
+        <field name="accommodationSpotId"><hidden/></field>
+        <field name="revisionNumber"><hidden/></field>
+        <field name="createdDate"><hidden/></field>
+        <field name="createdByUserLogin"><hidden/></field>
+        <field name="lastModifiedDate"><hidden/></field>
+        <field name="lastModifiedByUserLogin"><hidden/></field>
+        <field name="companyId"><hidden/></field>
+        <field name="lastUpdatedStamp"><hidden/></field>
+        <field name="lastUpdatedTxStamp"><hidden/></field>
+        <field name="createdStamp"><hidden/></field>
+        <field name="createdTxStamp"><hidden/></field>
+        <field name="sequenceNum"><hidden/></field>
+        <field name="workEffortName"><hidden/></field>
+        
+        
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+       
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>   
+    <form name="ListpublicHoliday" type="list" list-name="listIt" paginate-target="publicHoliday" default-sort-field-style="estimatedStartDate"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="holidayCtx"/>
+                <field-map field-name="entityName" value="WorkEffort"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            <!-- <entity-condition entity-name="WorkEffort"><order-by field-name="estimatedStartDate"/></entity-condition> -->
+        </actions>
+        <field name="workEffortName" title="Holiday Name"><display/></field>
+        <field name="estimatedStartDate" title="Holiday Date"><display/></field>
+       
+    </form>
+  </forms>

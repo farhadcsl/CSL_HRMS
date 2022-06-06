@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="CommonDataImportDecorator">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+   <screen name="EmployeeDataImport">
+        <section>
+            <actions>
+                <set field="headerItem" value="DataImport"/>
+                <set field="titleProperty" value="Employee Data Import"/>
+                <set field="tabButtonItem" value="EmployeeDataImport"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonDataImportDecorator">
+                    <decorator-section name="body">
+                    	<include-menu name="DataImport" location="component://humanres/widget/HumanresMenus.xml" />
+                    	<screenlet title="Employee Data Import">
+			                 <section>
+				                 <widgets>
+				                	 <include-form name="EmployeeDataImport" location="component://humanres/widget/dataimport/DataImportForms.xml"/>
+				                </widgets>
+			                </section>
+		                </screenlet>
+		                
+		                <screenlet title="Employee Data Import Guideline">
+			                 <section>
+				                 <widgets>
+				                  <platform-specific>
+                                          <html><html-template location="component://humanres/webapp/humanres/humanres/dataImportGuideline.ftl"/></html>
+                                  </platform-specific>
+				                </widgets>
+			                </section>
+		                </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+   <screen name="AttendaceInput">
+        <section>
+            <actions>
+                <set field="headerItem" value="AttendaceInput"/>
+                <set field="partyId" from-field="parameters.partyId" />
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId"  from-field="parameters.partyId"/>
+             	</entity-and>
+             	<set field="employeeId" from-field="userLoginList[0].userLoginId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+                        <screenlet title="Daily Attendance">
+                            <section>
+                                <widgets>
+				                	 <include-form name="formAttendaceInput" location="component://humanres/widget/dataimport/DataImportForms.xml"/>
+				                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ListProfile">
+        <section>
+            <actions>
+                <set field="headerItem" value="ListProfile"/>
+                <set field="entityName" value="Person"/>
+				<set field="parameters" from-field="parameters"/>
+				<entity-and list="list" entity-name="Person" />
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+                        <screenlet title="Profile List">
+                            <section>
+                                <widgets>
+				                	 <include-form name="ListProfile" location="component://humanres/widget/dataimport/DataImportForms.xml"/>
+				                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+   <screen name="AttendanceDataImport">
+        <section>
+            <actions>
+                <set field="headerItem" value="DataImport"/>
+                <set field="titleProperty" value="Attendance Data Import"/>
+                <set field="tabButtonItem" value="AttendanceDataImport"/>
+            </actions>
+	    <condition>
+		<if-has-permission permission="HUMANRES" action="_ADMIN" />
+	    </condition>
+            <widgets>
+                <decorator-screen name="CommonDataImportDecorator">
+                    <decorator-section name="body">
+                    	<include-menu name="DataImport" location="component://humanres/widget/HumanresMenus.xml" />
+                    	<screenlet title="Attendance Data Import">
+			                 <section>
+				                 <widgets>
+				                	 <include-form name="AttendanceDataImport" location="component://humanres/widget/dataimport/DataImportForms.xml"/>
+				                </widgets>
+			                </section>
+		                </screenlet>
+		                <screenlet title="Attendance Data Import Guideline">
+			                 <section>
+				                 <widgets>
+				                  <platform-specific>
+                                          <html><html-template location="component://humanres/webapp/humanres/humanres/attendanceDataImportGuideline.ftl"/></html>
+                                  </platform-specific>
+				                </widgets>
+			                </section>
+		                </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="GoalsAndKpiDataImport">
+        <section>
+            <actions>
+                <set field="headerItem" value="DataImport"/>
+                <set field="titleProperty" value="Goals And Kpi Data Import"/>
+                <set field="tabButtonItem" value="GoalsAndKpiDataImport"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonDataImportDecorator">
+                    <decorator-section name="body">
+                    	<include-menu name="DataImport" location="component://humanres/widget/HumanresMenus.xml" />
+                    	<screenlet title="Goals And Kpi Data Import">
+			                 <section>
+				                 <widgets>
+				                	 <include-form name="GoalsAndKpiDataImport" location="component://humanres/widget/dataimport/DataImportForms.xml"/>
+				                </widgets>
+			                </section>
+		                </screenlet>
+		                 <screenlet title="Goals And Kpi Data Import Guideline">
+			                 <section>
+				                 <widgets>
+				                  <platform-specific>
+                                          <html><html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpiImportGuideline.ftl"/></html>
+                                  </platform-specific>
+				                </widgets>
+			                </section>
+		                </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+ </screen>   
+    </screens>

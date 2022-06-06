@@ -1,0 +1,765 @@
+package org.ofbiz.humanres;
+
+import javolution.util.FastList;
+import javolution.util.FastMap;
+
+import org.apache.xmlrpc.metadata.Util;
+import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilGenerics;
+import org.ofbiz.base.util.UtilHttp;
+import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.base.util.UtilProperties;
+import org.ofbiz.base.util.UtilValidate;
+import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
+import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.condition.EntityExpr;
+import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.transaction.GenericTransactionException;
+import org.ofbiz.entity.transaction.TransactionUtil;
+import org.ofbiz.entity.util.EntityListIterator;
+import org.ofbiz.entity.util.EntityUtil;
+import org.ofbiz.humanres.dataimport.HrDataImportServices;
+import org.ofbiz.humanres.kpi.KpiEmailServices;
+import org.ofbiz.party.communication.CommunicationEventServices;
+import org.ofbiz.service.DispatchContext;
+//import org.ofbiz.service.GenericDispatcher;
+import org.ofbiz.service.GenericAbstractDispatcher;
+import org.ofbiz.service.GenericServiceException;
+import org.ofbiz.service.LocalDispatcher;
+import org.ofbiz.service.ServiceUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.transaction.Transaction;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.*;
+
+public class KpiEvents {
+	public static final String module = CommunicationEventServices.class.getName();
+	public static Map updateKpi(DispatchContext dctx, Map context) {
+		Delegator delegator = dctx.getDelegator();
+		String partyId = (String) context.get("partyId");
+		String achievementStatus = "";
+		Float achievementResult = 0f;
+		Float totalAchvResult = 0f;
+		Float overallAchvResult = 0f;
+		int kpiCount = 0;
+		String overallAchvStatus = "";
+		Map resultMap = null;
+		String goalsKpiId;
+		String unit;
+		String unitRemarks;
+		String target;
+		String achievement;
+		String mgrApprStatus = "Need to be Reviewed By Manager";
+		GenericValue empKpiValues = null;
+		String employeeId, managerId, department;
+		try {
+			List<EntityCondition> findEmployeeKpi = FastList.newInstance();
+
+			findEmployeeKpi.add(EntityCondition.makeCondition("partyId",
+					EntityOperator.EQUALS, partyId));
+			List<GenericValue> empKpi = delegator.findList(
+					"EmployeeGoalsAndKpi", EntityCondition.makeCondition(
+							findEmployeeKpi, EntityOperator.AND), null, null,
+					null, false);
+
+			if (empKpi != null) {
+				for (int i = 0; i < empKpi.size(); i++) {
+					empKpiValues = empKpi.get(i);
+					goalsKpiId = (String) empKpiValues.get("goalsKpiId");
+					unit = (String) empKpiValues.get("unit");
+					unitRemarks = (String) empKpiValues.get("unitRemarks");
+					target = (String) empKpiValues.get("target");
+					achievement = (String) empKpiValues.get("achievement");
+
+//					kpiresult = calculatekpiresult(unit, target, achievement);
+					achievementResult = calculateIndividualKpi(unitRemarks, target, achievement);
+					achievementStatus = findKpiStatus(achievementResult);
+					//edied for overall achievement Result
+					totalAchvResult = totalAchvResult + achievementResult;
+					//edied for overall achievement Result
+					Timestamp currentDatetime = new Timestamp(
+							System.currentTimeMillis());
+					Map<String, Object> EmployeeKpiIn = FastMap.newInstance();
+					EmployeeKpiIn.put("goalsKpiId", goalsKpiId);
+					EmployeeKpiIn.put("achievement", achievement);
+					EmployeeKpiIn.put("achievementResult", achievementResult.toString());
+					EmployeeKpiIn.put("achievementStatus", achievementStatus);
+					GenericValue EmployeeKpiUpdate = delegator.makeValue(
+							"EmployeeGoalsAndKpi", EmployeeKpiIn);
+//					delegator.createOrStore(EmployeeKpiUpdate);
+					EmployeeKpiUpdate.store();
+					kpiCount++ ;
+				}	
+			}
+			
+			// new edited march 27
+			employeeId = (String) empKpiValues.get("employeeId");
+			managerId = (String) empKpiValues.get("managerId");
+			department = (String) empKpiValues.get("department");
+			// new edited march 27
+			
+			// new edited march 23
+//			String overallgoalsKpiId = delegator.getNextSeqId("EmployeeGoalsAndKpiOverallStatus");
+			Map<String, Object> EmployeeOverallResultIn = FastMap.newInstance();
+			overallAchvResult = totalAchvResult/kpiCount;
+			overallAchvStatus = findKpiStatus(overallAchvResult);
+//			EmployeeOverallResultIn.put("overallgoalsKpiId", overallgoalsKpiId);
+			EmployeeOverallResultIn.put("partyId", partyId);
+			EmployeeOverallResultIn.put("employeeId", employeeId);
+			EmployeeOverallResultIn.put("managerId", managerId);
+			EmployeeOverallResultIn.put("department", department);
+			EmployeeOverallResultIn.put("overallAchvResult", overallAchvResult.toString());
+			EmployeeOverallResultIn.put("overallAchvStatus", overallAchvStatus);
+			EmployeeOverallResultIn.put("mgrApprStatus", mgrApprStatus);
+			EmployeeOverallResultIn.put("mgrRemarks", "mgrRemarks");
+			EmployeeOverallResultIn.put("kpiType", "Personal");
+			
+			GenericValue EmployeeOverallResultADD = delegator.makeValue(
+					"EmployeeGoalsAndKpiOverallStatus", EmployeeOverallResultIn);
+			delegator.createOrStore(EmployeeOverallResultADD);
+			// new edited march 23
+			
+			
+			String managerPartyId = new HrDataImportServices().findPartyIdByEmployeeId(delegator, managerId);
+			
+//			String managerEmailId = getEmailByParty(delegator, managerPartyId);
+//			sendEmailWhenKPIChange( dctx, managerEmailId, mgrApprStatus);
+		
+			
+			resultMap = ServiceUtil
+					.returnSuccess("Achievement Status Updated Successfully!");
+			return resultMap;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap = ServiceUtil.returnError("Achievement Status failed to update!");
+			return resultMap;
+		}
+	}
+	
+	
+	
+	
+	public static Map updateKPIByManagerService(DispatchContext dctx, Map context) {
+		Delegator delegator = dctx.getDelegator();
+		String partyId = (String) context.get("partyId");
+		String achievementStatus = "";
+		Float achievementResult = 0f;
+		Float totalAchvResult = 0f;
+		Float overallAchvResult = 0f;
+		int kpiCount = 0;
+		String overallAchvStatus = "";
+		Map resultMap = null;
+		String goalsKpiId;
+		String unit;
+		String unitRemarks;
+		String target;
+		String achievement;
+		String mgrApprStatus = "Reviewed by Manager";
+		
+		GenericValue empKpiValues = null;
+		String employeeId, managerId, department;
+		try {
+			List<EntityCondition> findEmployeeKpi = FastList.newInstance();
+
+			findEmployeeKpi.add(EntityCondition.makeCondition("partyId",
+					EntityOperator.EQUALS, partyId));
+			List<GenericValue> empKpi = delegator.findList(
+					"EmployeeGoalsAndKpi", EntityCondition.makeCondition(
+							findEmployeeKpi, EntityOperator.AND), null, null,
+					null, false);
+
+			if (empKpi != null) {
+				for (int i = 0; i < empKpi.size(); i++) {
+					empKpiValues = empKpi.get(i);
+					goalsKpiId = (String) empKpiValues.get("goalsKpiId");
+					unit = (String) empKpiValues.get("unit");
+					unitRemarks = (String) empKpiValues.get("unitRemarks");
+					target = (String) empKpiValues.get("target");
+					achievement = (String) empKpiValues.get("achievement");
+
+//					kpiresult = calculatekpiresult(unit, target, achievement);
+					achievementResult = calculateIndividualKpi(unitRemarks, target, achievement);
+					achievementStatus = findKpiStatus(achievementResult);
+					//edied for overall achievement Result
+					totalAchvResult = totalAchvResult + achievementResult;
+					//edied for overall achievement Result
+					Timestamp currentDatetime = new Timestamp(
+							System.currentTimeMillis());
+					Map<String, Object> EmployeeKpiIn = FastMap.newInstance();
+					EmployeeKpiIn.put("goalsKpiId", goalsKpiId);
+					EmployeeKpiIn.put("achievement", achievement);
+					EmployeeKpiIn.put("achievementResult", achievementResult.toString());
+					EmployeeKpiIn.put("achievementStatus", achievementStatus);
+					GenericValue EmployeeKpiUpdate = delegator.makeValue(
+							"EmployeeGoalsAndKpi", EmployeeKpiIn);
+//					delegator.createOrStore(EmployeeKpiUpdate);
+					EmployeeKpiUpdate.store();
+					kpiCount++ ;
+				}	
+			}
+			
+			// new edited march 27
+			employeeId = (String) empKpiValues.get("employeeId");
+			managerId = (String) empKpiValues.get("managerId");
+			department = (String) empKpiValues.get("department");
+			// new edited march 27
+			
+			// new edited march 23
+//			String overallgoalsKpiId = delegator.getNextSeqId("EmployeeGoalsAndKpiOverallStatus");
+			Map<String, Object> EmployeeOverallResultIn = FastMap.newInstance();
+			overallAchvResult = totalAchvResult/kpiCount;
+			overallAchvStatus = findKpiStatus(overallAchvResult);
+//			EmployeeOverallResultIn.put("overallgoalsKpiId", overallgoalsKpiId);
+			EmployeeOverallResultIn.put("partyId", partyId);
+			EmployeeOverallResultIn.put("employeeId", employeeId);
+			EmployeeOverallResultIn.put("managerId", managerId);
+			EmployeeOverallResultIn.put("department", department);
+			EmployeeOverallResultIn.put("overallAchvResult", overallAchvResult.toString());
+			EmployeeOverallResultIn.put("overallAchvStatus", overallAchvStatus);
+			EmployeeOverallResultIn.put("mgrApprStatus", mgrApprStatus);
+			EmployeeOverallResultIn.put("mgrRemarks", "mgrRemarks");
+			EmployeeOverallResultIn.put("kpiType", "Personal");
+			
+			GenericValue EmployeeOverallResultADD = delegator.makeValue(
+					"EmployeeGoalsAndKpiOverallStatus", EmployeeOverallResultIn);
+			delegator.createOrStore(EmployeeOverallResultADD);
+			// new edited march 23
+			
+//			String employeePartyId = getEmailByParty(delegator, partyId);
+//			sendEmailWhenKPIChange( dctx, employeePartyId, mgrApprStatus);
+			
+			
+			
+			resultMap = ServiceUtil
+					.returnSuccess("Achievement Status Updated Successfully!");
+			return resultMap;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap = ServiceUtil.returnError("Achievement Status failed to update!");
+			return resultMap;
+		}
+	}
+	
+	
+	
+	
+
+	public static float calculatekpiresult(String unit, String target,
+			String achievement) {
+		Float result = 0f;
+		String tempUnit = unit.toLowerCase();
+		String kpiUnit = null;
+		if (tempUnit.length() < 4) {
+			kpiUnit = tempUnit.substring(0);
+		} else {
+			kpiUnit = tempUnit.substring(0, 3);
+		}
+		Float calcA = Float.parseFloat(target);
+		Float calcB = Float.parseFloat(achievement);
+		if ((kpiUnit.equals("day")) || (kpiUnit.equals("mon"))
+				|| (kpiUnit.equals("hou")) || (kpiUnit.equals("bus")) && (calcA > calcB)) {
+			result = (calcA / calcB) * 100;
+		}
+
+		else {
+			result = (calcB / calcA) * 100;
+		}
+		
+//		Modification by Parves and Farhad
+		
+		
+//		if(!kpiUnit.isEmpty()){
+//			if(kpiUnit.equals("")){
+//				
+//			}
+//			
+//		}
+		
+//		End Modification
+		
+		
+		
+		return result;
+	}
+	
+	public static float calculateIndividualKpi(String unitRemarks, String target,
+			String achievement) {
+		Float result = 0f;
+		String kpiUnit = unitRemarks.toLowerCase();
+		Float calcA = Float.parseFloat(target);
+		Float calcB = Float.parseFloat(achievement);
+		
+//		Modification by Parves and Farhad
+		
+		if(!kpiUnit.isEmpty()){
+			if(kpiUnit.equals("greater than or equal")){
+				result = (calcB / calcA) * 100;
+			}else if(kpiUnit.equals("less than or equal")){
+				result = (calcA / calcB) * 100;
+			}else if(kpiUnit.equals("nbd, less than or equal")){
+				result = (calcA / calcB) * 100;
+			}
+			
+		}
+		
+		if (result>=120){
+			result = (float) 120;
+		}
+		
+		return result;
+//		End Modification
+	}
+
+	public static String findKpiStatus(Float achievementResult) {
+		String achievementStatus = "";
+		if (achievementResult >= 95) {
+			achievementStatus = "Outstanding";
+		} else if (achievementResult >= 80 && achievementResult <= 94)
+			achievementStatus = "Excellent";
+		else if (achievementResult >= 50 && achievementResult <= 79)
+			achievementStatus = "Average";
+		else if (achievementResult >= 40 && achievementResult <= 49)
+			achievementStatus = "poor";
+		else
+			achievementStatus = "Need to improve";
+		return achievementStatus;
+	}
+	
+	
+	
+// This method is for department wise kpi 
+// Created by Md. Farhad Hossain	
+	
+	public static Map deptWisekpI(DispatchContext dctx, Map context) {
+		Delegator delegator = dctx.getDelegator();
+		String department = (String) context.get("department");
+		String achievementStatus = "";
+		Float deptResult = 0f;
+		Float totaldeptResult = 0f;
+		Float overallDeptResult = 0f;
+		int deptCount = 0;
+		String overallDeptStatus = "";
+		Map resultMap = null;
+		GenericValue deptKpiValues = null;
+		String employeeId, managerId;
+		String deptToStore = " ";
+		
+		try {
+			List<EntityCondition> findDeptWiseKpi = FastList.newInstance();
+
+			findDeptWiseKpi.add(EntityCondition.makeCondition("department",
+					EntityOperator.EQUALS, department));
+			List<GenericValue> deptWiseKpi = delegator.findList(
+					"EmployeeGoalsAndKpiOverallStatus", EntityCondition.makeCondition(
+							findDeptWiseKpi, EntityOperator.AND), null, null,
+					null, false);
+
+			if (deptWiseKpi != null) {
+				for (int i = 0; i < deptWiseKpi.size(); i++) {
+					deptKpiValues = deptWiseKpi.get(i);
+					String collectiondeptResult = (String) deptKpiValues.get("overallAchvResult");
+					deptResult = Float.parseFloat(collectiondeptResult);
+					totaldeptResult = totaldeptResult + deptResult;
+					deptCount++ ;
+				}	
+				
+				deptToStore = (String) deptKpiValues.get("department");
+			}
+			
+
+			Map<String, Object> DeptOverallResultIn = FastMap.newInstance();
+						
+			overallDeptResult = totaldeptResult/deptCount;
+			overallDeptStatus = findKpiStatus(overallDeptResult);
+			DeptOverallResultIn.put("department", deptToStore);
+			DeptOverallResultIn.put("overallDeptResult", overallDeptResult.toString());
+			DeptOverallResultIn.put("overallDeptStatus", overallDeptStatus);
+			DeptOverallResultIn.put("year", "2018");
+			DeptOverallResultIn.put("month", "month");
+			DeptOverallResultIn.put("hodStatus", "hodStatus");
+			DeptOverallResultIn.put("remarks", "remarks");
+			
+			
+			try {
+			GenericValue DeptOverallResultADD = delegator.makeValue(
+					"DepartmentWiseKpiStatus", DeptOverallResultIn);
+			delegator.createOrStore(DeptOverallResultADD);
+							
+//			GenericValue DeptOverallResultADD = delegator.makeValue("DepartmentWiseKpiStatus", UtilMisc.toMap(DeptOverallResultIn));
+//			DeptOverallResultADD.create();
+			
+			} catch (Exception e) {
+				e.printStackTrace();}
+			
+			
+			resultMap = ServiceUtil.returnSuccess("Department Data Generated Successfully");
+			return resultMap;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap = ServiceUtil.returnError("Department Data failed to update!");
+			return resultMap;
+		}
+	}
+	
+	
+	
+	public static String sendEmailWhenKPIChange(DispatchContext ctx,  String email,
+			String mailBody) {
+		// Get the local Service dispatcher from the context
+		// Note: Dont forget to import the org.ofbiz.service.* classes
+		LocalDispatcher dispatcher = (LocalDispatcher) ctx.getDispatcher();
+		String errMsg = null;
+		// The following are hardcoded as an example only
+		// Your program would set these up from the context or from
+		// database lookups
+
+		/* Map sendMailContext = new HashMap(); */
+		Map<String, Object> sendMailContext = FastMap.newInstance();
+		/* Map<String, Object> sendMailParams = FastMap.newInstance(); */
+		sendMailContext.put("sendTo", email);
+		sendMailContext.put("sendCc", "");
+		sendMailContext.put("sendBcc", "");
+		sendMailContext.put("sendFrom", "admin.erp@computerservicesltd.com");
+		sendMailContext.put("subject", "KPI Review Notification");
+		sendMailContext.put("body", mailBody + "\n\n\nComputer Services Ltd.");
+		try {
+			// Call the sendMail Service and pass the sendMailContext
+			// Map object.
+			// Set timeout to 360 and wrap with a new transaction
+			Map<String, Object> result = null;
+
+			result = dispatcher.runSync("sendMail", sendMailContext);
+			// Note easy way to get errors when they are returned
+			// from another Service
+
+//			if (ModelService.RESPOND_ERROR.equals((String) result.get(ModelService.RESPONSE_MESSAGE))) {
+//				Map<String, Object> messageMap = UtilMisc.toMap("errorMessage", result.get(ModelService.ERROR_MESSAGE));
+//				errMsg = "Problem sending this email";
+//				ctx.setAttribute("_ERROR_MESSAGE_", errMsg);
+//				return "error";
+//			}
+		} catch (GenericServiceException e) {
+			// For Events error messages are passed back
+			Debug.logWarning(e, "", module);
+			// as Request Attributes
+			errMsg = "Problem with the send Service call...!";
+//			request.setAttribute("_ERROR_MESSAGE_", errMsg);
+			return "error";
+		}
+		return "success";
+	}
+
+	
+	//Get Email Address using Party Id
+	public static String getEmailByParty(Delegator delegator, String partyId) {
+
+		String email = "";
+
+		try {
+			List<GenericValue> listPartyContactMechs = delegator.findList("PartyContactMech",
+					EntityCondition.makeCondition("partyId", EntityOperator.EQUALS, partyId), null, null, null, false);
+			String contactMechIdToCheck = "";
+			GenericValue contactMech = null;
+			for (GenericValue val : listPartyContactMechs) {
+				contactMechIdToCheck = (String) val.get("contactMechId");
+				List<EntityExpr> exprs = FastList.newInstance();
+				exprs.add(EntityCondition.makeCondition("contactMechId", EntityOperator.EQUALS, contactMechIdToCheck));
+				exprs.add(EntityCondition.makeCondition("contactMechTypeId", EntityOperator.EQUALS, "EMAIL_ADDRESS"));
+
+				List<GenericValue> listContactMechs = delegator.findList("ContactMech",
+						EntityCondition.makeCondition(exprs, EntityOperator.AND), null, null, null, false);
+				if (listContactMechs.size() > 0) {
+					contactMech = listContactMechs.get(0);
+				}
+
+			}
+
+			if (contactMech != null)
+				email = (String) contactMech.get("infoString");
+
+			if (email == null)
+				email = "";
+
+		} catch (GenericEntityException e) {
+		}
+
+		return email;
+
+	}
+	
+	
+	
+	
+	
+//	Modified by Parves
+	
+	public static Map generateMonthlyGoalsAndKpi(DispatchContext dctx, Map context) {
+		Delegator delegator = dctx.getDelegator();
+		String partyId = (String) context.get("partyId");
+		int kpiCount = 0;
+		Map resultMap = null;
+		String goalsKpiId;
+		String target, department, employeeId, managerId;
+		
+		GenericValue empKpiValues = null;
+		String mTarget = "";
+		String mMonth = "";
+		Timestamp mKpiDate = null;
+		String mYear = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+		int targetCounter = 0;
+		boolean checkFlag = true;
+		String goal,kpi,unit,unitRemarks;
+
+		
+		try {
+			List<EntityCondition> findEmployeeKpi = FastList.newInstance();
+
+			findEmployeeKpi.add(EntityCondition.makeCondition("partyId",
+					EntityOperator.EQUALS, partyId));
+			List<GenericValue> empKpi = delegator.findList(
+					"EmployeeGoalsAndKpi", EntityCondition.makeCondition(
+							findEmployeeKpi, EntityOperator.AND), null, null,
+					null, false);
+			
+			List<GenericValue> empKpiMonthly = delegator.findList(
+					"EmployeeGoalsAndKpiMonthly", EntityCondition.makeCondition(
+							findEmployeeKpi, EntityOperator.AND), null, null,
+					null, false);
+			if (empKpiMonthly != null) {
+				for (int i = 0; i < empKpiMonthly.size(); i++) {
+					empKpiValues = empKpiMonthly.get(i);
+					String mYearTemp = (String) empKpiValues.get("mYear");
+					if(mYearTemp.equals(mYear)){
+						checkFlag = false;
+					}
+					
+					empKpiMonthly.clear();
+					
+				}
+				
+			}
+			
+			if(checkFlag== false){
+				resultMap = ServiceUtil.returnError("Monthly Goals and KPI already Ganarated!");
+				return resultMap;
+			}
+			
+
+			if (empKpi != null) {
+				for (int i = 0; i < empKpi.size(); i++) {
+					empKpiValues = empKpi.get(i);
+					goalsKpiId = (String) empKpiValues.get("goalsKpiId");
+					department = (String) empKpiValues.get("department");
+					employeeId = (String) empKpiValues.get("employeeId");
+					managerId = (String) empKpiValues.get("managerId");
+					target = (String) empKpiValues.get("target");
+					goal = (String) empKpiValues.get("goal");
+					kpi = (String) empKpiValues.get("kpi");
+					unit = (String) empKpiValues.get("unit");
+					unitRemarks = (String) empKpiValues.get("unitRemarks");
+					mTarget = getMTargetRoundValue(target, 12);
+					//insert a KPI for 12 times
+					for(int j= 0; j<12; j++){
+						Map<String, Object> EmployeeKpiIn = FastMap.newInstance();
+						String mGoalsKpiId = delegator.getNextSeqId("EmployeeGoalsAndKpiMonthly");
+						EmployeeKpiIn.put("mGoalsKpiId", mGoalsKpiId);
+						EmployeeKpiIn.put("partyId", partyId);
+						EmployeeKpiIn.put("goalsKpiId", goalsKpiId);
+						EmployeeKpiIn.put("employeeId", employeeId);
+						EmployeeKpiIn.put("managerId", managerId);
+						EmployeeKpiIn.put("department", department);
+						EmployeeKpiIn.put("goal", goal);
+						EmployeeKpiIn.put("kpi", kpi);
+						EmployeeKpiIn.put("unit", unit);
+						EmployeeKpiIn.put("unitRemarks", unitRemarks);
+						EmployeeKpiIn.put("mTarget", mTarget);
+						EmployeeKpiIn.put("mAchievement", "0");
+						EmployeeKpiIn.put("mAchievementStatus", "Status");
+						
+						mKpiDate = getMKpiDate(j);
+						
+						EmployeeKpiIn.put("mKpiDate", mKpiDate);
+						EmployeeKpiIn.put("mMgrRemarks", "mMgrRemarks");
+						EmployeeKpiIn.put("mMgrApprStatus", "mMgrApprStatus");
+						mMonth = theMonth(j);
+						EmployeeKpiIn.put("mMonth", mMonth);
+						EmployeeKpiIn.put("mYear", mYear);
+						
+						GenericValue EmployeeKpiUpdate = delegator.makeValue("EmployeeGoalsAndKpiMonthly", EmployeeKpiIn);
+						EmployeeKpiUpdate.create();	
+						
+					}
+					kpiCount++ ;
+				}	
+			}
+			
+
+			
+			resultMap = ServiceUtil
+					.returnSuccess("Monthly Goals and KPI generated Successfully!");
+			return resultMap;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap = ServiceUtil.returnError("Monthly Goals and KPI failed to Ganarate!");
+			return resultMap;
+		}
+	}
+	
+	private static Timestamp getMKpiDate(int monthValue){
+		
+		String tempMonth ="0"+monthValue;
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = Integer.parseInt(tempMonth);
+		int day = 01;
+		
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month); 
+		cal.set(Calendar.DAY_OF_MONTH, day);
+		Timestamp tstamp = new Timestamp(cal.getTimeInMillis());
+		return tstamp;
+	}
+	
+	private static String getMTargetRoundValue(String target, int numberOfDivision){
+		String mTarget = "";
+		if(mTarget != null){
+			double tempTarget = Math.ceil(Double.parseDouble(target)/numberOfDivision);
+			String formatedTarget = String.format ("%.0f", tempTarget);
+			mTarget =  String.valueOf(formatedTarget);
+		}
+		return mTarget;
+	}
+	
+	public static String theMonth(int month){
+	    String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	    return monthNames[month];
+	}
+	
+//	Modified by Parves
+	
+	
+	public static Map<String, Object> sendEmailNotification(
+			   DispatchContext ctx, Map<String, ? extends Object> context, String managerId, String action) {
+			  Map<String, Object> resultMap = null;
+			  String employeePartyId = "10067";
+			  resultMap = KpiEmailServices.sendKpiEmail(ctx, context, "10067", employeePartyId, action);
+			  return resultMap;
+			 }
+
+	
+	public static Map updateMonthlyTarget(DispatchContext dctx, Map context) {
+		Delegator delegator = dctx.getDelegator();
+		String partyId = (String) context.get("partyId");
+		String achievementStatus = "";
+		Float achievementResult = 0f;
+		Float totalAchvResult = 0f;
+		Float overallAchvResult = 0f;
+		int kpiCount = 0;
+		String overallAchvStatus = "";
+		Map resultMap = null;
+		String goalsKpiId;
+		String unit;
+		String unitRemarks;
+		String target = (String) context.get("mTarget");
+		String achievement;
+		String mgrApprStatus = "Need to be Reviewed By Manager";
+		GenericValue empKpiValues = null;
+		String employeeId, managerId, department;
+		try {
+			List<EntityCondition> findEmployeeKpi = FastList.newInstance();
+
+			findEmployeeKpi.add(EntityCondition.makeCondition("partyId",
+					EntityOperator.EQUALS, partyId));
+			List<GenericValue> empKpi = delegator.findList(
+					"EmployeeGoalsAndKpiMonthly", EntityCondition.makeCondition(
+							findEmployeeKpi, EntityOperator.AND), null, null,
+					null, false);
+
+			if (empKpi != null) {
+				for (int i = 0; i < empKpi.size(); i++) {
+					empKpiValues = empKpi.get(i);
+					goalsKpiId = (String) empKpiValues.get("goalsKpiId");
+					unit = (String) empKpiValues.get("unit");
+					unitRemarks = (String) empKpiValues.get("unitRemarks");
+					target = (String) empKpiValues.get("target");
+					achievement = (String) empKpiValues.get("achievement");
+
+//					kpiresult = calculatekpiresult(unit, target, achievement);
+					achievementResult = calculateIndividualKpi(unitRemarks, target, achievement);
+					achievementStatus = findKpiStatus(achievementResult);
+					//edied for overall achievement Result
+					totalAchvResult = totalAchvResult + achievementResult;
+					//edied for overall achievement Result
+					Timestamp currentDatetime = new Timestamp(
+							System.currentTimeMillis());
+					Map<String, Object> EmployeeKpiIn = FastMap.newInstance();
+					EmployeeKpiIn.put("goalsKpiId", goalsKpiId);
+					EmployeeKpiIn.put("achievement", achievement);
+					EmployeeKpiIn.put("achievementResult", achievementResult.toString());
+					EmployeeKpiIn.put("achievementStatus", achievementStatus);
+					GenericValue EmployeeKpiUpdate = delegator.makeValue(
+							"EmployeeGoalsAndKpiMonthly", EmployeeKpiIn);
+//					delegator.createOrStore(EmployeeKpiUpdate);
+					EmployeeKpiUpdate.store();
+					kpiCount++ ;
+				}	
+			}
+			
+			// new edited march 27
+			employeeId = (String) empKpiValues.get("employeeId");
+			managerId = (String) empKpiValues.get("managerId");
+			department = (String) empKpiValues.get("department");
+			// new edited march 27
+			
+			// new edited march 23
+//			String overallgoalsKpiId = delegator.getNextSeqId("EmployeeGoalsAndKpiOverallStatus");
+			Map<String, Object> EmployeeOverallResultIn = FastMap.newInstance();
+			overallAchvResult = totalAchvResult/kpiCount;
+			overallAchvStatus = findKpiStatus(overallAchvResult);
+//			EmployeeOverallResultIn.put("overallgoalsKpiId", overallgoalsKpiId);
+			EmployeeOverallResultIn.put("partyId", partyId);
+			EmployeeOverallResultIn.put("employeeId", employeeId);
+			EmployeeOverallResultIn.put("managerId", managerId);
+			EmployeeOverallResultIn.put("department", department);
+			EmployeeOverallResultIn.put("overallAchvResult", overallAchvResult.toString());
+			EmployeeOverallResultIn.put("overallAchvStatus", overallAchvStatus);
+			EmployeeOverallResultIn.put("mgrApprStatus", mgrApprStatus);
+			EmployeeOverallResultIn.put("mgrRemarks", "mgrRemarks");
+			EmployeeOverallResultIn.put("kpiType", "Personal");
+			
+			GenericValue EmployeeOverallResultADD = delegator.makeValue(
+					"EmployeeGoalsAndKpiOverallStatus", EmployeeOverallResultIn);
+			delegator.createOrStore(EmployeeOverallResultADD);
+			// new edited march 23
+			
+			
+			String managerPartyId = new HrDataImportServices().findPartyIdByEmployeeId(delegator, managerId);
+			
+//			String managerEmailId = getEmailByParty(delegator, managerPartyId);
+//			sendEmailWhenKPIChange( dctx, managerEmailId, mgrApprStatus);
+		
+			
+			resultMap = ServiceUtil
+					.returnSuccess("Achievement Status Updated Successfully!");
+			return resultMap;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap = ServiceUtil.returnError("Achievement Status failed to update!");
+			return resultMap;
+		}
+	}
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeePayslip_DeductionItemList" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4c23aabd-7b04-4a0f-9863-d748a6487188">
+	<property name="ireport.zoom" value="2.593742460100007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="deductionName" class="java.lang.String"/>
+	<field name="deductionAmount" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="0" width="122" height="20" uuid="094b1793-4faf-4dde-bc31-acbe9a7d8c3b"/>
+				<textFieldExpression><![CDATA[$F{deductionName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="0" width="121" height="20" uuid="39a06898-252c-4b4a-a418-dc82abcf809f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{deductionAmount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="21" width="267" height="1" uuid="9bc8407e-1387-440e-a4ad-b5cebec3123f"/>
+			</line>
+			<line>
+				<reportElement x="131" y="0" width="1" height="21" uuid="c16b523c-2179-4902-90bc-54dd988aa4c1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

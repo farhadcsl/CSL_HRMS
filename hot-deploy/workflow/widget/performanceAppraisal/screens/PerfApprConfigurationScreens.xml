@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="FindPerfApprProcessStructureSetup">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Performance Appraisal Structure Setup"/>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="perfApprProcessStructureSetup"/>
+                <entity-one entity-name="ProcessStructure" value-field="processStructure"/>
+                <set field="ProcessStructureCtx" from-field="parameters"/>
+            </actions>
+            <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                         <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="NewPerfApprProcessStructureSetup" text="New Performance Appraisal Structure Create" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindPerfApprProcessStructureSetup" location="component://workflow/widget/performanceAppraisal/forms/PerfApprConfigurationForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListPerfApprProcessStructureSetup" location="component://workflow/widget/performanceAppraisal/forms/PerfApprConfigurationForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>   
+    
+    <screen name="NewPerfApprProcessStructureSetup">
+        <section>
+            <actions>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="perfApprProcessStructureSetup"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="WorkflowCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	                    <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <screenlet title="Create New Wordflow For Performance Appraisal">
+	                    	<include-form  name="CreatePerfApprProcessStructureSetup" location="component://workflow/widget/performanceAppraisal/forms/PerfApprConfigurationForms.xml"/>
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditPerfApprProcessStructureSetup">
+        <section>
+            <actions>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="perfApprProcessStructureSetup"/>
+                <entity-one entity-name="ProcessStructure" value-field="processStructure"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="WorkflowCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	                    <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <screenlet title="Workflow Information">
+	                    	<include-form name="EditPerfApprProcessStructureSetup" location="component://workflow/widget/performanceAppraisal/forms/PerfApprConfigurationForms.xml" />
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="DetailsPerfApprProcessStructureSetup">
+        <section>
+            <actions>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="perfApprProcessStructureSetup"/>
+                <entity-one entity-name="ProcessStructure" value-field="processStructure"/>
+                <set field="processStrId" from-field="parameters.processStrId"/>
+                <set field="processName" from-field="parameters.processName"/>
+                <set field="strDescription" from-field="parameters.processName"/>
+                <set field="strIsActive" from-field="parameters.processName"/>
+                <set field="strFromDate" from-field="parameters.processName"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="WorkflowCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	                    <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <screenlet title="Workflow Information For  [${processName}]"  navigation-menu-name="LinkForAddPerfApprProcessStep">
+	                    	<container id="LinkForAddPerfApprProcessStepPopUp"></container>
+							<include-menu  name="LinkForAddPerfApprProcessStep" location="component://workflow/widget/WorkflowMenus.xml"/> 
+							
+	                    	<include-form location="component://workflow/widget/performanceAppraisal/forms/PerfApprConfigurationForms.xml" name="DetailsPerfApprProcessStructureSetup"/>
+	                    	<include-form location="component://workflow/widget/performanceAppraisal/forms/PerfApprPrecessStepForms.xml" name="ListPerfApprWorkflowStep"/>
+	                    
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+</screens>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+
+    <request-map uri="TrainingDevelopmentHrSettings">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditTrainingExpenseType"/>
+    </request-map> 
+    <request-map uri="EditTrainingExpenseType">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditTrainingExpenseType"/>
+    </request-map> 
+    <request-map uri="createTrainingExpenseType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaTrainingDevelopment.TrainingDevelopmentConfig" invoke="createTrainingExpenseType"/>
+       <response name="success" type="request-redirect-noparam" value="EditTrainingExpenseType"/>
+       <response name="error" type="view" value="EditTrainingExpenseType"/>
+   </request-map>
+    <request-map uri="updateTrExpType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateTrainingExpenseType"/>
+        <response name="success" type="request-redirect-noparam" value="EditTrainingExpenseType"/>
+    </request-map>
+    <request-map uri="deleteTrExpType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTrExpType"/>
+        <response name="success" type="view" value="EditTrainingExpenseType"/>
+    </request-map>
+    <request-map uri="editTrainingExpenseTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="UpdateTrainingExpenseTypeSetup"/>
+    </request-map>
+    <!-- Training Offer -->
+    <request-map uri="FindTrainingOffer">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindTrainingOffer"/>
+    </request-map> 
+    
+     <request-map uri="createTrainingOffer">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaTrainingDevelopment.TrainingDevelopmentConfig" invoke="createTrainingOffer"/>
+       <response name="success" type="request-redirect-noparam" value="FindTrainingOffer"/>
+       <response name="error" type="view" value="NewTrainingOffer"/>
+   </request-map>
+    <request-map uri="updateTrainingOffer">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateTrainingOffer"/>
+        <response name="success" type="request-redirect-noparam" value="FindTrainingOffer"/>
+        <response name="error" type="view" value="UpdateTrainingOffer"/>
+    </request-map>
+    <request-map uri="deleteTrainingOffer">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTrainingOffer"/>
+        <response name="success" type="view" value="FindTrainingOffer"/>
+    </request-map>
+    <request-map uri="editTrainingOffer">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="UpdateTrainingOffer"/>
+    </request-map>
+    <request-map uri="NewTrainingOffer">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewTrainingOffer"/>
+    </request-map>
+    
+    <!-- Party Training Request  -->
+    <request-map uri="FindPartyTrainingRequest">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPartyTrainingRequest"/>
+    </request-map> 
+    <request-map uri="NewPartyTrainingRequest">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewPartyTrainingRequest"/>
+    </request-map>    
+    <request-map uri="createPartyTrainingRequest">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaTrainingDevelopment.TrainingDevelopmentConfig" invoke="createPartyTrainingRequest"/>
+       <response name="success" type="view" value="FindPartyTrainingRequest"/>
+       <response name="error" type="view" value="NewPartyTrainingRequest"/>
+   </request-map>    
+    <request-map uri="FindPartyTrainingRequest">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPartyTrainingRequest"/>
+    </request-map> 
+    <request-map uri="detailsPartyTrainingRequest">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="detailsPartyTrainingRequest"/>
+    </request-map>
+    <request-map uri="deletePartyTrainingRequest">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePartyTrainingRequest"/>
+        <response name="success" type="request-redirect-noparam" value="FindPartyTrainingRequest"/>
+    </request-map>
+    
+    <request-map uri="NewPartyTrainingRequestDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewPartyTrainingRequestDetails"/>
+    </request-map>
+    <request-map uri="EditPartyTrainingRequestDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditPartyTrainingRequestDetails"/>
+    </request-map>
+     
+    <request-map uri="createPartyTrainingRequestDetails">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaTrainingDevelopment.TrainingDevelopmentConfig" invoke="createPartyTrainingRequestDetails"/>
+       <response name="success" type="view" value="detailsPartyTrainingRequest"/>
+       <response name="error" type="view" value="detailsPartyTrainingRequest"/>
+   </request-map>
+    <request-map uri="updatePartyTrainingRequestDetails">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaTrainingDevelopment.TrainingDevelopmentConfig" invoke="updatePartyTrainingRequestDetails"/>
+       <response name="success" type="view" value="detailsPartyTrainingRequest"/>
+       <response name="error" type="view" value="detailsPartyTrainingRequest"/>
+   </request-map> 
+    <request-map uri="deletePartyTrainingRequestDetails">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePartyTrainingRequestDetails"/>
+        <response name="success" type="view" value="detailsPartyTrainingRequest"/>
+        <response name="error" type="view" value="detailsPartyTrainingRequest"/>
+    </request-map>
+    
+    
+    <view-map name="EditTrainingExpenseType" type="screen" page="component://humanres/widget/trainingDevelopment/screens/TrainingDevelopmentConfigScreens.xml#EditTrainingExpenseType"/>
+    <view-map name="UpdateTrainingExpenseTypeSetup" type="screen" page="component://humanres/widget/trainingDevelopment/screens/TrainingDevelopmentConfigScreens.xml#UpdateTrainingExpenseType"/>
+    
+    <view-map name="FindTrainingOffer" type="screen" page="component://humanres/widget/trainingDevelopment/screens/TrainingDevelopmentOfferScreens.xml#FindTrainingOffer"/>
+    <view-map name="UpdateTrainingOffer" type="screen" page="component://humanres/widget/trainingDevelopment/screens/TrainingDevelopmentOfferScreens.xml#UpdateTrainingOffer"/>
+    <view-map name="NewTrainingOffer" type="screen" page="component://humanres/widget/trainingDevelopment/screens/TrainingDevelopmentOfferScreens.xml#NewTrainingOffer"/>
+
+	<view-map name="FindPartyTrainingRequest" type="screen" page="component://humanres/widget/trainingDevelopment/screens/PartytrainingrequestScreens.xml#FindPartyTrainingRequest"/>
+	<view-map name="NewPartyTrainingRequest" type="screen" page="component://humanres/widget/trainingDevelopment/screens/PartytrainingrequestScreens.xml#NewPartyTrainingRequest"/>
+    <view-map name="detailsPartyTrainingRequest" type="screen" page="component://humanres/widget/trainingDevelopment/screens/PartytrainingrequestScreens.xml#detailsPartyTrainingRequest"/>
+    <view-map name="NewPartyTrainingRequestDetails" type="screen" page="component://humanres/widget/trainingDevelopment/screens/PartyTrainingRequestDetailsScreens.xml#NewPartyTrainingRequestDetails"/>
+    <view-map name="EditPartyTrainingRequestDetails" type="screen" page="component://humanres/widget/trainingDevelopment/screens/PartyTrainingRequestDetailsScreens.xml#EditPartyTrainingRequestDetails"/>
+    
+</site-conf>

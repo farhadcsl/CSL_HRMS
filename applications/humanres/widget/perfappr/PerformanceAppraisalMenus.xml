@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    
+    
+	 <menu name="PerfApprBusinessKPIAdd">		
+		<menu-item name="addPerfApprBusinessKPI" >
+			<link style="addCompanyScreenLet" id="addPerfApprBusinessKPIBtn">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPerfApprBusinessKPIBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu> 
+    <menu name="PerfApprBehavioralKPIAdd">
+        <menu-item name="addPerfApprBehavioralKPI">
+        	<link style="addCompanyScreenLet" id="addPerfApprBehavioralKPIBtn">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPerfApprBehavioralKPIBtn" style="addCompanyScreenLet"/>
+			</link>
+        </menu-item>
+    </menu>
+    <menu name="PerfApprDevelopmentPlanAdd">
+        <menu-item name="addPerfApprDevelopmentPlan" >
+        	<link style="addCompanyScreenLet" id="addPerfApprDevelopmentPlanBtn">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPerfApprDevelopmentPlanBtn" style="addCompanyScreenLet"/>
+			</link>
+        </menu-item>
+    </menu>
+    
+     <menu name="PerformanceAppraisalMenus" type="simple" default-menu-item-name="PerfApprView"
+        menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem" default-selected-style="selected">
+        
+        <menu-item name="PerfApprApproverAssign" title="Approver Assign">
+            <link target="PerfApprApproverAssign"/>
+        </menu-item>
+        <menu-item name="PerfApprView" title="Performance Appraisal View">
+            <link target="PerfApprView"/>
+        </menu-item>
+        <menu-item name="PerfApprProcessView" title="Performance Appraisal Process">
+            <link target="PerfAppraisal"></link>
+        </menu-item>
+        <menu-item name="PerfApprWaitingView" title="Waiting For Approval">
+            <link target="PerfApprWaitingView"/>
+        </menu-item>
+    </menu>
+</menus>

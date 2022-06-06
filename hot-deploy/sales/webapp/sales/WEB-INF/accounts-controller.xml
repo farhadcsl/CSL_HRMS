@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+    <!-- Request Mappings -->
+    <!-- Account Entry Requests -->
+    <request-map uri="FindAccounts">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindAccounts" save-home-view="true"/>
+    </request-map>
+    <request-map uri="NewAccount">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewAccount"/>
+    </request-map>
+    <request-map uri="createAccount">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createAccount"/>
+        <response name="success" type="view" value="FindAccounts"/>
+        <response name="error" type="view" value="NewAccount"/>
+    </request-map>
+    <request-map uri="ContactMechTypeOnly">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ContactMechTypeOnly"/>
+    </request-map>
+    
+    
+    
+    
+    <!-- View Mappings -->
+
+    <view-map name="FindAccounts" type="screen" page="component://sales/widget/accounts/screens/AccountsScreens.xml#FindAccounts"/>
+    <view-map name="NewAccount" type="screen" page="component://sales/widget/accounts/screens/AccountsScreens.xml#NewAccount"/>
+    <view-map name="ContactMechTypeOnly" type="screen" page="component://sales/widget/accounts/screens/AccountsScreens.xml#ContactMechTypeOnly"/>
+
+
+
+
+</site-conf>

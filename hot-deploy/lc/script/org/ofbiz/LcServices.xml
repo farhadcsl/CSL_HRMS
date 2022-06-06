@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+     <simple-method method-name="createNewPi" short-description="Create a Lc">
+        <make-value entity-name="LcPi" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.piId">
+            <sequenced-id sequence-name="LcPi" field="newEntity.piId"/>
+        </if-empty>
+        <field-to-result field="newEntity.piId" result-name="piId"/>
+         <if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+     <simple-method method-name="TtNoteCreate" short-description="Create a Lc">
+        <make-value entity-name="TtNote" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.ttNoteId">
+            <sequenced-id sequence-name="TtNote" field="newEntity.ttNoteId"/>
+        </if-empty>
+        <field-to-result field="newEntity.ttNoteId" result-name="ttNoteId"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+     <simple-method method-name="CreateNewTt" short-description="Create a Lc">
+        <make-value entity-name="LcTt" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.ttId">
+            <sequenced-id sequence-name="LcTt" field="newEntity.ttId"/>
+        </if-empty>
+        <field-to-result field="newEntity.ttId" result-name="ttId"/>
+        <if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    <simple-method method-name="LcNoteCreate" short-description="Create a Lc">
+        <make-value entity-name="LcNote" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.terminationReasonId">
+            <sequenced-id sequence-name="LcNote" field="newEntity.lcNoteId"/>
+        </if-empty>
+        <field-to-result field="newEntity.lcNoteId" result-name="lcNoteId"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+     <simple-method method-name="updateTt" short-description="Update a Resume of a Party">
+        <entity-one entity-name="LcTt" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="updatePi" short-description="Update a Resume of a Party">
+        <entity-one entity-name="LcPi" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deleteTtNotepopup" short-description="Delete Performance Review">
+        <entity-one entity-name="TtNote" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deletePi" short-description="Delete Performance Review">
+        <entity-one entity-name="LcPi" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deleteTt" short-description="Delete Performance Review">
+        <entity-one entity-name="LcTt" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deleteLcNotepopup" short-description="Delete Performance Review">
+        <entity-one entity-name="LcNote" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deleteLc" short-description="Delete Performance Review">
+        <entity-one entity-name="LcBank" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="addLcCreate" short-description="Create a Lc">
+        <make-value entity-name="LcBank" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.lcId">
+            <sequenced-id sequence-name="LcBank" field="newEntity.lcId"/>
+        </if-empty>
+        <field-to-result field="newEntity.lcId" result-name="lcId"/>
+        <if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    <simple-method method-name="UpdateLc" short-description="Update a Resume of a Party">
+        <entity-one entity-name="LcBank" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+     <simple-method method-name="createBankinfo" short-description="Create a Lc">
+        <make-value entity-name="LcBankInfo" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.lcBankInfoId">
+            <sequenced-id sequence-name="LcBankInfo" field="newEntity.lcBankInfoId"/>
+        </if-empty>
+        <field-to-result field="newEntity.lcBankInfoId" result-name="lcBankInfoId"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    
+    <simple-method method-name="deleteListBank" short-description="Delete Performance Review">
+        <entity-one entity-name="LcBankInfo" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    
+     <simple-method method-name="createInsurance" short-description="Create a Lc">
+        <make-value entity-name="LcInsuranceCoverNote" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.lcInsuranceCoverNoteId">
+            <sequenced-id sequence-name="LcBankInfo" field="newEntity.lcInsuranceCoverNoteId"/>
+        </if-empty>
+        <field-to-result field="newEntity.lcInsuranceCoverNoteId" result-name="lcInsuranceCoverNoteId"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    
+    <simple-method method-name="deleteListInsurance" short-description="Delete Performance Review">
+        <entity-one entity-name="LcInsuranceCoverNote" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    
+    <simple-method method-name="createShiper" short-description="Create a Lc">
+        <make-value entity-name="LcShiperInfo" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+         <if-empty field="newEntity.lcShiperId">
+            <sequenced-id sequence-name="LcShiperInfo" field="newEntity.lcShiperId"/>
+        </if-empty>
+        <field-to-result field="newEntity.lcShiperId" result-name="lcShiperId"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    
+    <simple-method method-name="deleteListIShiper" short-description="Delete Performance Review">
+        <entity-one entity-name="LcShiperInfo" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+</simple-methods>

@@ -1,0 +1,68 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+   <form name="BonusGeneralReports" type="single" target="BonusreportView" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+    <field name="bonusId" parameter-name="bonusId">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${bonusName}" key-field-name="bonusId" entity-name="BonusType">
+                    <entity-order-by field-name="bonusId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="bonusMonth" title="${uiLabelMap.CommonMonth}" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="0" description="${uiLabelMap.CommonJanuary}"/>
+                <option key="1" description="${uiLabelMap.CommonFebruary}"/>
+                <option key="2" description="${uiLabelMap.CommonMarch}"/>
+                <option key="3" description="${uiLabelMap.CommonApril}"/>
+                <option key="4" description="${uiLabelMap.CommonMay}"/>
+                <option key="5" description="${uiLabelMap.CommonJune}"/>
+                <option key="6" description="${uiLabelMap.CommonJuly}"/>
+                <option key="7" description="${uiLabelMap.CommonAugust}"/>
+                <option key="8" description="${uiLabelMap.CommonSeptember}"/>
+                <option key="9" description="${uiLabelMap.CommonOctober}"/>
+                <option key="10" description="${uiLabelMap.CommonNovember}"/>
+                <option key="11" description="${uiLabelMap.CommonDecember}"/>
+            </drop-down>
+        </field>
+        
+       <field name="noConditionFind"><hidden value="N"/></field>
+      <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit/></field>
+    </form>
+	<form name="ListEmployeeBonusSheet" type="multi" list-name="listIt" target="BonusSheetReport.pdf" use-row-submit="true" title="" 
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="partyBonusStatusctx"/>
+                <field-map field-name="entityName" value="PartyBonusStatus"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            <set field="bonusId" from-field="parameters.bonusId"/>
+        </actions>
+        <row-actions>
+			 <entity-and entity-name="PartyAndUserLoginAndPerson" list="partyAndUserLoginAndPerson">
+				<field-map field-name="partyId" value="${partyId}" />
+			</entity-and>
+			<entity-and entity-name="PartyAndPerson" list="partyAndPerson">
+				<field-map field-name="partyId" value="${partyId}" />
+			</entity-and>
+		</row-actions>
+		<field name="employeeId" title="Employee Id"><display/>
+		</field>
+		<field name="partyName" title="Name">
+			<display description="${partyAndPerson[0].firstName} ${partyAndPerson[0].lastName}"></display>
+		 </field>
+     </form>
+     
+     <form name="exportReport" type="single" target="BonusSheetReport.pdf">
+     	<field name="bonusId" title="Bonus Id" parameter-name="bonusId"><hidden value="${bonusId}"/></field>
+      	<field name="bonusMonth" title="Bonus Id" parameter-name="bonusMonth"><hidden value="${bonusMonth}"/></field>
+		   <field name="submitButton" title="Export Report" widget-style="smallSubmit">
+            <submit button-type="button">
+            
+            </submit>
+        </field>
+     </form>
+</forms>
+

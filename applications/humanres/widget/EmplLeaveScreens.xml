@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindEmplLeaves">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindEmplLeave"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <set field="emplLeaveCtx" from-field="parameters"/>
+                <service service-name="humanResManagerPermission" result-map="permResult">
+                    <field-map field-name="mainAction" value="ADMIN"/>
+                </service>
+                <set field="hasAdminPermission" from-field="permResult.hasPermission"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="pre-body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="HUMANRES" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                        <section>
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <!-- <link target="EditEmplLeave" text="${uiLabelMap.HumanResNewLeave}" style="buttontext create"/> -->
+                                                    <link target="EmplLeaveAdd" style="buttontext" text="Apply for Leave"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindEmplLeaves" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListEmplLeaves" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindEmplSelfLeaves">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindEmplLeave"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <set field="emplSelfLeaveCtx" from-field="parameters"/>
+               <entity-condition list="listIt" entity-name="EmplLeave">
+               <!-- 	<field-map field-name="partyId" value="${parameters.partyId}"/> -->
+               <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+               </entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="pre-body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <section>
+                           
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindEmplSelfLeaves" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListEmplSelfLeaves" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindLeaveApprovals">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindApprovals"/>
+                <set field="tabButtonItem" value="Approval"/>
+                <set field="headerItem" value="Leave"/>
+               
+              
+                <set field="approverPartyId" from-field="parameters.partyId"/>
+               <entity-condition list="listIt" entity-name="EmplLeave">
+               <condition-list combine="and">
+               <condition-expr field-name="approverPartyId" operator="equals" value="${parameters.partyId}"/>
+               <condition-expr field-name="leaveStatus" operator="equals" value="LEAVE_CREATED"/>
+               </condition-list>
+               </entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="pre-body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <section>
+                            
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindLeaveApprovals" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListLeaveApprovals" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.HumanResViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplLeave">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResEditEmplLeave"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <entity-one entity-name="EmplLeave" value-field="leaveApp" auto-field-map="false">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="leaveTypeId" from-field="leaveTypeId"/>
+                    <field-map field-name="fromDate" from-field="fromDate"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddEmplLeavePanel" title="${uiLabelMap.HumanResAddEmplLeave}" collapsible="true">
+                            <include-form name="EditEmplLeave" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplLeaveStatus">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditApprovalStatus"/>
+                <set field="tabButtonItem" value="Approval"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <entity-one entity-name="EmplLeave" value-field="leaveApp" auto-field-map="false">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="leaveTypeId" from-field="leaveTypeId"/>
+                    <field-map field-name="fromDate" from-field="fromDate"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                     <decorator-section name="pre-body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                       <screenlet id="EditEmplLeaveStatus" title="${uiLabelMap.HumanResEditLeaveApprovalStatus}" collapsible="true">
+                            <include-form name="EditEmplLeaveStatus" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+	<screen name="EmplLeaveAdd">
+		<section>
+			<actions>			
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+				<set field="titleProperty" value="HumanResEditEmplLeave" />
+				<set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}" />
+				<set field="actionButtonItem" value="AddEmplLeaves" />
+				<entity-one entity-name="EmplLeave" value-field="leaveApp" />
+				<entity-condition list="approvers" entity-name="UserLoginSecurityGroup"
+					filter-by-date="true">
+					<condition-list>
+						<condition-expr field-name="groupId" operator="equals"
+							value="HUMANRES_ADMIN" />
+						<condition-expr field-name="userLoginId" operator="not-equals"
+							value="admin" />
+					</condition-list>
+				</entity-condition>
+				<!-- Find the employee position -->
+				<entity-condition list="emplPostions" entity-name="EmplPositionFulfillment">
+					<condition-list>
+						<condition-expr field-name="partyId" from-field="userLogin.partyId"/>
+					</condition-list>
+					<order-by field-name="fromDate DESC"/>
+				</entity-condition>
+				
+				<!-- Find the employee reporting position -->
+				<entity-condition entity-name="EmplPositionReportingStruct" list="emplPositionReportingStructs">
+				                <condition-expr field-name="emplPositionIdManagedBy" operator="equals" from-field="emplPostions[0].emplPositionId"/>
+				                <order-by field-name="fromDate"/>
+				            </entity-condition>				
+				<!-- Find the employee reporting person -->
+				<entity-condition list="reportingPerson" entity-name="EmplPositionFulfillment">
+					<condition-list>
+						<condition-expr field-name="emplPositionId" from-field="emplPositionReportingStructs[0].emplPositionIdReportingTo"/>
+					</condition-list>
+					<order-by field-name="fromDate DESC"/>
+				</entity-condition>
+			
+			<!-- Find default approvers if not found any reporting person -->
+				<entity-condition list="defaultApprovers" entity-name="UserLoginAndSecurityGroup" filter-by-date="true">
+					<condition-list>
+						<condition-expr field-name="groupId" operator="equals" value="HUMANRES_LEAVE_ADMIN" />
+					</condition-list>
+				</entity-condition>				
+				<entity-and list="leaveInfo" entity-name="PartyContactMech">
+					<field-map field-name="partyId" from-field="userLogin.partyId"/>
+				</entity-and>
+				<entity-and list="listContactMech" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo[0].contactMechId}"/>
+					<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				
+				<entity-and list="leaveInfo1" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="hradmin"/>
+				</entity-and>
+				<entity-and list="listContactMech1" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo1[0].contactMechId}"/>
+					<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}"> 
+					<decorator-section name="pre-body">
+	                       <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+	                   </decorator-section>
+					<decorator-section name="body">
+						<screenlet id="AddEmplLeavePanel" title="Apply For Leave" collapsible="true">
+							<include-form name="EmplLeaveAdd" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+						</screenlet>
+						</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<!-- <screen name="EmplLeaveAdd">
+		<section>
+			<actions>
+			
+				<set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+				<set field="titleProperty" value="HumanResEditEmplLeave" />
+				<set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}" />
+				<set field="headerItem" value="LeaveEmployee" />
+				<set field="actionButtonItem" value="AddEmplLeaves" />
+				<entity-one entity-name="EmplLeave" value-field="leaveApp" />
+				
+
+				<entity-condition list="approvers" entity-name="UserLoginSecurityGroup"
+					filter-by-date="true">
+					<condition-list>
+						<condition-expr field-name="groupId" operator="equals"
+							value="HUMANRES_ADMIN" />
+						<condition-expr field-name="userLoginId" operator="not-equals"
+							value="admin" />
+					</condition-list>
+				</entity-condition>
+				
+				
+				Find the employee position
+				<entity-condition list="emplPostions" entity-name="EmplPositionFulfillment">
+					<condition-list>
+						<condition-expr field-name="partyId" from-field="userLogin.partyId"/>
+					</condition-list>
+					<order-by field-name="fromDate DESC"/>
+				</entity-condition>
+				
+				Find the employee reporting position
+				<entity-condition entity-name="EmplPositionReportingStruct" list="emplPositionReportingStructs">
+                    <condition-expr field-name="emplPositionIdManagedBy" operator="equals" from-field="emplPostions[0].emplPositionId"/>
+                    <order-by field-name="fromDate"/>
+                </entity-condition>
+				
+				Find the employee reporting person
+				<entity-condition list="reportingPerson" entity-name="EmplPositionFulfillment">
+					<condition-list>
+						<condition-expr field-name="emplPositionId" from-field="emplPositionReportingStructs[0].emplPositionIdReportingTo"/>
+					</condition-list>
+					<order-by field-name="fromDate DESC"/>
+				</entity-condition>
+				
+				Find default approvers if not found any reporting person
+				<entity-condition list="defaultApprovers" entity-name="UserLoginAndSecurityGroup" filter-by-date="true">
+					<condition-list>
+						<condition-expr field-name="groupId" operator="equals" value="HUMANRES_LEAVE_ADMIN" />
+					</condition-list>
+				</entity-condition>
+				
+				<entity-and list="leaveInfo" entity-name="PartyContactMech">
+					<field-map field-name="partyId" from-field="userLogin.partyId"/>
+				</entity-and>
+				<entity-and list="listContactMech" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo[0].contactMechId}"/>
+					<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				
+				<entity-and list="leaveInfo1" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="hradmin"/>
+				</entity-and>
+				<entity-and list="listContactMech1" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo1[0].contactMechId}"/>
+					<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+					<include-menu location="component://humanres/widget/HumanresMenus.xml" name="EmplLeaveTabBar"/>
+						<include-menu location="component://humanres/widget/HumanresMenus.xml" name="ApplyForLeaveNavigationMenu" />
+						<screenlet id="AddEmplLeavePanel" title="Apply For Leave" collapsible="true">
+							<include-form name="EditEmplLeave2" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+						</screenlet>
+						</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen> -->
+
+     <screen name="EmployeeLeaveView">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleEditApprovalStatus" />
+				<set field="tabButtonItem" value="EmployeeLeave" />
+				<set field="headerItem" value="Leave" />
+				<set field="partyId" from-field="parameters.partyId" />
+				<set field="leaveTypeId" from-field="parameters.leaveTypeId" />
+				<set field="fromDate" from-field="parameters.fromDate" />
+				<!-- <set field="headerItem" value="Leave"/> -->
+				<script location="component://party/webapp/partymgr/WEB-INF/actions/party/ViewProfile.groovy" />
+				<entity-and entity-name="EmplLeave" list="leaveApp" >  <!-- value-field="leaveApp"> -->
+					<field-map field-name="partyId" from-field="partyId" />
+					<field-map field-name="leaveTypeId" from-field="leaveTypeId" />
+					<field-map field-name="fromDate" from-field="fromDate" />
+				</entity-and>
+				
+				<set field="fromDateTime" value="${leaveApp[0].fromDate}" type="Timestamp"/>
+				<set field="thruDateTime" value="${leaveApp[0].thruDate}" type="Timestamp"/> 
+		
+				<set field="leaveApp" from-field="leaveApp[0]"/>
+				
+				
+			
+				
+				<entity-and list="leaveInfo" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and>
+				<entity-and list="listContactMech" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo[0].contactMechId}"/>
+				</entity-and>
+				
+				
+				<entity-and list="listContactMech1" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo1[0].contactMechId}"/>
+				</entity-and>
+				
+				<entity-and list="listEmplLeave" entity-name="EmplLeave">
+					<field-map field-name="fromDate" value="${listEmplLeave[0].fromDate}"/>
+				</entity-and>
+				<set field="result" from-field="parameters.result" />
+			
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						 <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+						<screenlet id="EditEmplLeaveStatus" title="${uiLabelMap.HumanResEditLeaveApprovalStatus}" collapsible="false">
+							<include-form name="EditEmplLeaveStatusDetail" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+						
+					</screenlet>
+					<include-screen name="LeaveContent"/>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+    <screen name="EmployeeLeavesView">
+	<section>
+		<actions>
+			<set field="headerItem" value="LeaveEmployee" />
+			<set field="titleProperty" value="HumanResEditEmplLeave" />
+			<set field="tabButtonItem" value="LeaveEmployee" />
+			<set field="partyId" from-field="parameters.partyId" />
+			<set field="leaveTypeId" from-field="parameters.leaveTypeId" />
+			<set field="result" from-field="parameters.result" />
+			<entity-condition list="emplLeaveType" entity-name="EmplLeaveType"></entity-condition>
+			</actions>
+		<widgets>
+			<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+				<decorator-section name="body">
+				
+				<include-form name="EmplLeavesList" location="component://humanres/widget/forms/EmployeeForms.xml" />
+					<link target="EmplLeaveAdd" style="buttontext" text="Apply for Leave"/>
+				</decorator-section>
+			</decorator-screen>
+		</widgets>
+	</section>
+</screen>
+
+
+
+<screen name="UploadLeaveContent">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleEditApprovalStatus" />
+				<set field="tabButtonItem" value="LeaveContentUpload" />
+				<set field="partyId" from-field="parameters.partyId" />
+				<set field="leaveTypeId" from-field="parameters.leaveTypeId" />
+				<set field="fromDate" from-field="parameters.fromDate" />
+				<set field="headerItem" value="LeaveEmployee" />
+				<script location="component://party/webapp/partymgr/WEB-INF/actions/party/ViewProfile.groovy" />
+				<entity-and entity-name="EmplLeave" list="leaveApp" >  <!-- value-field="leaveApp"> -->
+					<field-map field-name="partyId" from-field="partyId" />
+					<field-map field-name="leaveTypeId" from-field="leaveTypeId" />
+					<field-map field-name="fromDate" from-field="fromDate" />
+				</entity-and>
+				
+				<set field="fromDateTime" value="${leaveApp[0].fromDate}" type="Timestamp"/>
+				<set field="thruDateTime" value="${leaveApp[0].thruDate}" type="Timestamp"/> 
+		
+				<set field="leaveApp" from-field="leaveApp[0]"/>
+				
+				
+				<!-- <entity-and entity-name="EmplLeave" list="result">
+					<field-map field-name="partyId" from-field="partyId" />
+					<field-map field-name="leaveTypeId" from-field="leaveTypeId" />
+				</entity-and> -->
+				
+				<entity-and list="leaveInfo" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and>
+				<entity-and list="listContactMech" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo[0].contactMechId}"/>
+				</entity-and>
+				
+				<entity-and list="leaveInfo1" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${userLogin.partyId}" />
+				</entity-and>
+				<entity-and list="listContactMech1" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo1[0].contactMechId}"/>
+				</entity-and>
+				<set field="result" from-field="parameters.result" />
+			
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-menu location="component://humanres/widget/HumanresMenus.xml" name="LeavesNavigationMenuDetails"/>
+						<include-menu location="component://humanres/widget/HumanresMenus.xml" name="LeaveViewMenu"/>
+						<screenlet id="EditEmplLeaveStatus" title="${uiLabelMap.HumanResEditLeaveApprovalStatus}" collapsible="false">
+							<include-screen name="LeaveContent"/>
+						</screenlet>
+						
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>					
+	<screen name="LeaveContent">
+        <section>
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <entity-condition entity-name="PartyContentType" list="partyContentTypes">
+                	<condition-list>
+						<condition-expr field-name="partyContentTypeId" operator="not-equals" value="INTERNAL"/>
+                		<condition-expr field-name="partyContentTypeId" operator="not-equals" value="WAITINGFORAPPROVAL"/>
+                	</condition-list>
+                </entity-condition>
+                <entity-condition entity-name="MimeType" list="mimeTypes">
+                    <order-by field-name="description"/>
+                    <order-by field-name="mimeTypeId"/>
+                </entity-condition>
+                <entity-condition entity-name="RoleType" list="roles">
+                    <order-by field-name="description"/>
+                    <order-by field-name="roleTypeId"/>
+                </entity-condition>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                <entity-and entity-name="PartyContent" list="partyContent">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="partyContentTypeId" value="LEAVE_CONTENT1"/>
+                    <!-- <field-map field-name="partyContentTypeId" value="LEAVE_CONTENT2"/>       -->              
+                </entity-and>
+
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://humanres/webapp/humanres/humanres/employeeLeave/leaveContent.ftl"/>
+                    </html>
+                </platform-specific>
+                
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="LeaveContentList">
+        <section>
+            <actions>
+                <set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                 
+                <entity-condition list="partyContent" entity-name="PartyContent">
+                	<condition-list>
+                		<condition-expr field-name="partyId" from-field="partyId"/>
+                		<condition-expr field-name="fromDate" from-field="fromDate" operator="equals"/>
+                		<!-- <condition-expr field-name="partyContentTypeId" value="LEAVE_CONTENT1" operator="equals"/> -->
+                	</condition-list>
+                </entity-condition>
+                
+            </actions>
+            <widgets>
+            	<screenlet title="Content List" id="ContentList">
+            		<platform-specific>
+	                    <html>
+	                        <html-template location="component:///humanres/webapp/humanres/humanres/employeeLeave/leaveContentList.ftl"/>
+	                    </html>
+                	</platform-specific>
+            	</screenlet>
+            	
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EmplLeavesListForAdmin">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleViewPartyEmplLeavesListForAdmin" />
+				<set field="tabButtonItem" value="Approval" />	
+				<set field="headerItem" value="Leave"/>
+				<set field="parameters.partyId" value="${parameters.partyId}"  default-value="${userLogin.partyId}" />
+				<entity-condition list="approvers" entity-name="UserLoginAndSecurityGroup" filter-by-date="true">
+					<condition-list>
+						<condition-expr field-name="groupId" operator="equals" value="HUMANRES_LEAVE_APPR" />
+						<condition-expr field-name="userLoginId" operator="not-equals" value="admin" />
+					</condition-list>
+				</entity-condition>
+				<set field="approverPartyId" value="${userLogin.partyId}"/>
+				<service service-name="findEmplLeave" auto-field-map="true" result-map="emplLeaveResult" />
+				<set field="result" value="${emplLeaveResult.employeeLeaveList}"/>
+				<entity-and list="leaveInfo" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${result[0].partyId}"/>
+				</entity-and>
+				<entity-and list="listContactMech" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo[0].contactMechId}"/>
+				</entity-and>
+				<entity-and list="leaveInfo1" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${userLogin.partyId}" />
+				</entity-and>
+				<entity-and list="listContactMech1" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo1[0].contactMechId}"/>
+				</entity-and>
+				<entity-and entity-name="UserLogin" list="userLoginList">
+	                    <field-map field-name="partyId" value="${result[0].partyId}"/>
+	             </entity-and>
+	                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+				<set field="subject" value="Leave Status Changed"/>
+				<set field="bodyText" value="Leave status changed successfuly."/>
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+					<include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+						<screenlet title="Leave Request Waiting For Approval">
+							<section>
+								<widgets>
+									<include-form name="ListEmplLeavesForAdmin" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+								</widgets>
+							</section>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="EditEmplLeaveStatusDetail">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleEditApprovalStatus" />
+				<set field="tabButtonItem" value="Approval" />
+				<set field="partyId" from-field="parameters.partyId" />
+				<set field="leaveTypeId" from-field="parameters.leaveTypeId" />
+				<set field="fromDate" from-field="parameters.fromDate" />
+				<set field="headerItem" value="Leave"/>
+				<script location="component://party/webapp/partymgr/WEB-INF/actions/party/ViewProfile.groovy" />
+				<entity-and entity-name="EmplLeave" list="leaveApp" >  <!-- value-field="leaveApp"> -->
+					<field-map field-name="partyId" from-field="partyId" />
+					<field-map field-name="leaveTypeId" from-field="leaveTypeId" />
+					<field-map field-name="fromDate" from-field="fromDate" />
+				</entity-and>
+				
+				<set field="fromDateTime" value="${leaveApp[0].fromDate}" type="Timestamp"/>
+				<set field="thruDateTime" value="${leaveApp[0].thruDate}" type="Timestamp"/> 
+		
+				<set field="leaveApp" from-field="leaveApp[0]"/>
+				
+				<entity-condition list="employeeLeaveHistoryList" entity-name="EmplLeave">
+					<condition-list>
+		                <condition-expr field-name="partyId" operator="equals" from-field="${parameters.partyId}"/>
+		            </condition-list>
+					<order-by field-name="-fromDate" />
+				</entity-condition>
+				<entity-and list="leaveInfo" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and>
+				<entity-and list="listContactMech" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo[0].contactMechId}"/>
+				</entity-and>
+				
+				<entity-and list="leaveInfo1" entity-name="PartyContactMech">
+					<field-map field-name="partyId" value="${userLogin.partyId}" />
+				</entity-and>
+				<entity-and list="listContactMech1" entity-name="ContactMech">
+					<field-map field-name="contactMechId" value="${leaveInfo1[0].contactMechId}"/>
+				</entity-and>
+				<set field="result" from-field="parameters.result" />
+			
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+						
+						<screenlet id="EditEmplLeaveStatus" title="${uiLabelMap.HumanResEditLeaveApprovalStatus}" collapsible="false">
+						
+							 <include-form name="EditEmplLeaveStatusDetail" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+							<!-- <include-form name="EditEmplLeaveStatus" location="component://humanres/widget/forms/EmplLeaveForms.xml" /> -->
+							 <include-screen name="LeaveContentList"/> 
+							
+						</screenlet>
+						
+						<screenlet collapsible="true" title="Employee Leave Status" id="employee_leave">
+							<include-form name="EmplLeavesList" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+						</screenlet>
+						<screenlet collapsible="true" title="Employee Leave History" id="employee_leave_history">
+							<include-form name="EmployeeLeaveHistory" location="component://humanres/widget/forms/EmplLeaveForms.xml" />
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+   
+   
+</screens>

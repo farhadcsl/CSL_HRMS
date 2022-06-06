@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+	  
+	 <!--  BonusType  -->
+	           
+	<request-map uri="BonusTypeSetup">
+	       <security https="true" auth="true"/>
+	       <response name="success" type="view" value="EditBonusSetup"/>
+	       <response name="error" type="view" value="EditBonusSetup"/>
+	</request-map>
+	<request-map uri="BonusTypeExt">
+	      <security https="true" auth="true"/>
+	      <response name="success" type="view" value="EditBonusSetupExt"/>
+	  </request-map>
+	  <request-map uri="createBonusType">
+	      <security https="true" auth="true"/>
+	      <event type="service" invoke="createBonusType"/>
+	      <response name="success" type="request-redirect-noparam" value="BonusTypeSetup"/>
+	  </request-map>
+	  <request-map uri="updateBonusType">
+	      <security https="true" auth="true"/>
+	      <event type="service-multi" invoke="updateBonusType"/>
+	      <response name="success" type="request-redirect-noparam" value="BonusTypeSetup"/>
+	  </request-map>
+	  <request-map uri="updateBonusTypeExt">
+	      <security https="true" auth="true"/>
+	      <event type="service" invoke="updateBonusType"/>
+	     <!--  <event type="java" path="org.ofbiz.bonus.PartyBonusType" invoke="updateBonusType"/> -->
+	       <response name="success" type="request-redirect-noparam" value="BonusTypeSetup"/>
+	   </request-map>
+	   <request-map uri="deleteBonusType">
+	       <security https="true" auth="true"/>
+	       <event type="service" invoke="deleteBonusType"/>
+	       <response name="success" type="request-redirect-noparam" value="BonusTypeSetup"/>
+	   </request-map>
+	   
+	
+	<!--  Party Bonus Setup  -->
+	<request-map uri="BonusSetup">
+	       <security https="true" auth="true"/>
+	      <response name="success" type="view" value="FindBonusView"/>
+	       <response name="error" type="view" value="FindBonusView"/>
+	</request-map> 
+	<request-map uri="FindPartyBonus">
+	       <security https="true" auth="true"/>
+	      <response name="success" type="view" value="FindBonusView"/>
+	       <response name="error" type="view" value="FindBonusView"/>
+	</request-map>
+	<request-map uri="NewPartyBonusSetup">
+	       <security https="true" auth="true"/>
+	      <response name="success" type="view" value="NewPartyBonusSetup"/>
+	       <response name="error" type="view" value="NewPartyBonusSetup"/>
+	</request-map>
+	
+	<request-map uri="createPartyBonusSetup">
+	    <security https="true" auth="true"/>
+	    <event type="java" path="org.ofbiz.bonus.PartyBonusSetup" invoke="createPartyBonusSetup"/>
+	    <response name="success" type="view" value="FindBonusView"/>
+	    <response name="error" type="view" value="NewPartyBonusSetup"/>
+	</request-map>   
+	
+	<request-map uri="EditPartyBonusSetup">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="EditPartyBonusSetup"/>
+	</request-map>
+	
+	<request-map uri="updatePartyBonusSetup">
+	    <security https="true" auth="true"/>
+	    <event type="java" path="org.ofbiz.bonus.PartyBonusSetup" invoke="updatePartyBonusSetup"/>
+	    <response name="success" type="view" value="FindBonusView"/>
+	    <response name="error" type="view" value="NewPartyBonusSetup"/>
+	</request-map> 
+	
+	
+	 <request-map uri="processPartyBonus">
+	     <security https="true" auth="true"/>
+	     <event type="java" path="org.ofbiz.bonus.PartyBonusSetup" invoke="processPartyBonus"/>
+	     <response name="success" type="view" value="FindBonusView"/>
+	     <response name="error" type="view" value="FindBonusView"/>
+	 </request-map> 
+	 <request-map uri="bonusProcessForAllEmployee">
+	     <security https="true" auth="true"/>
+	     <event type="java" path="org.ofbiz.bonus.PartyBonusProcess" invoke="AllEmployeesBonusprocess"/>
+	     <response name="success" type="view" value="FindBonusView"/>
+	     <response name="error" type="view" value="BonusProcess"/>
+	 </request-map> 
+	 <request-map uri="createPartyBonusSetupForAllEmpl">
+	     <security https="true" auth="true"/>
+	     <event type="java" path="org.ofbiz.bonus.BonusProcessForAllEmpl" invoke="createPartyBonusSetupForAllEmpl"/>
+	     <response name="success" type="view" value="FindBonusView"/>
+	     <response name="error" type="view" value="BonusProcessForAllEmpl"/>
+	 </request-map>
+	 
+	 <!-- Party Bonus Setup  -->
+	<request-map uri="BonusProcess">
+	       <security https="true" auth="true"/>
+	      <response name="success" type="view" value="BonusProcess"/>
+	       <response name="error" type="view" value="BonusProcess"/>
+	</request-map> 
+	
+	 <request-map uri="BonusProcessForAllEmpl">
+	       <security https="true" auth="true"/>
+	      <response name="success" type="view" value="BonusProcessForAllEmpl"/>
+	       <response name="error" type="view" value="BonusProcessForAllEmpl"/>
+	</request-map> 
+	
+	
+	<view-map name="EditBonusSetup" type="screen" page="component://payroll/widget/bonusprocess/screens/NewBonusProcessScreens.xml#EditBonusSetup"/>
+	<view-map name="EditBonusSetupExt" type="screen" page="component://payroll/widget/bonusprocess/screens/NewBonusProcessScreens.xml#EditBonusSetupExt"/>
+	<view-map name="FindBonusView" type="screen" page="component://payroll/widget/bonusprocess/screens/BonusSetupScreens.xml#FindBonusView"/>
+	<view-map name="NewPartyBonusSetup" type="screen" page="component://payroll/widget/bonusprocess/screens/BonusSetupScreens.xml#NewPartyBonusSetup"/>
+	<view-map name="EditPartyBonusSetup" type="screen" page="component://payroll/widget/bonusprocess/screens/BonusSetupScreens.xml#EditPartyBonusSetup"/>
+	<view-map name="BonusProcess" type="screen" page="component://payroll/widget/bonusprocess/screens/BonusSetupScreens.xml#BonusProcess"/>
+	<view-map name="BonusProcessForAllEmpl" type="screen" page="component://payroll/widget/bonusprocess/screens/BonusSetupScreens.xml#BonusProcessForAllEmpl"/>
+	
+	
+
+  
+</site-conf>

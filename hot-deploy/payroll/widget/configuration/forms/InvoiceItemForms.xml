@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="AddInvoiceItemType" target="CreateInvoiceItemType" type="single" odd-row-style="header-row"
+          default-table-style="basic-table">
+        <field name="invoiceItemTypeId" title="Invoice Item Type" required-field="true" tooltip="PAYROLL word should be infront of the type e.g: PAYROLL_BASIC" >
+            <text maxlength="20" default-value="${parameters.invoiceItemTypeId}"/>
+        </field>
+        <field name="description" title="Description" required-field="true" tooltip=" Describe your added invoice Type e.g: Payroll Basic Salary">
+            <text/>
+        </field>
+        <field name="parentTypeId" title="Parent Type" tooltip="[For benefit PAYROL_EARN_HOURS. For Deduction PAYROL_DD_FROM_GROSS]" >
+            <lookup target-form-name="LookupInvoiceItemTypeParentType" />
+        </field>
+
+        <field name="category" title="Invoice Item Category" required-field="true" tooltip="Invoice Item Category - Monthly, Yearly, LifeTime">
+            <drop-down allow-empty="true">
+                <option key="M" description="Monthly"/>
+                <option key="Y" description="Yearly"/>
+                <option key="L" description="Life Time"/>
+            </drop-down>
+        </field>
+        <field name="defaultGlAccountId" required-field="true" title="Debit GL Account" tooltip="Select account to Debit or Credit account">
+            <lookup target-form-name="LookupGlAccount" />
+
+        </field>
+        <field name="defaultCreditGlAccountId" required-field="true" title="Credit GL Account" tooltip="Select account to Credit or Debit  account">
+            <lookup target-form-name="LookupCreditGlAccount" />
+        </field>
+        <field name="submitButton" title="Submit">
+            <submit/>
+        </field>
+    </form>
+
+    <form name="FindInvoiceItemType" type="single" target="FindInvoiceItem" header-row-style="header-row"
+          default-table-style="basic-table">
+
+        <field name="category">
+            <drop-down allow-empty="false">
+                <option key="M" description="Monthly"/>
+                <option key="Y" description="Yearly"/>
+                <option key="L" description="Life Time"/>
+            </drop-down>
+        </field>
+
+        <field name="performSearch">
+            <hidden value="Y"/>
+        </field>
+        <field name="noConditionFind">
+            <hidden value="Y"/>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+
+    <form name="ListInvoiceItemType" type="list" list-name="listIt" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="InvoiceItemType"/>
+                <field-map field-name="orderBy" value="description"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+
+        </actions>
+         <row-actions>
+			<entity-and entity-name="InvoiceItemTypeGlAccount" list="ulList">
+				<field-map field-name="invoiceItemTypeId" from-field="invoiceItemTypeId" />
+			</entity-and>
+
+		</row-actions>
+        <auto-fields-entity entity-name="InvoiceItemType" default-field-type="display"/>
+		
+        <field name="invoiceItemTypeId" widget-style="button">
+            <hyperlink also-hidden="false" description="${invoiceItemTypeId}" target="addInvoiceItem">
+                <parameter param-name="invoiceItemTypeId" from-field="invoiceItemTypeId"/>
+                <parameter param-name="category" from-field="category"/>
+                <parameter param-name="description" from-field="description"/>
+                <parameter param-name="parentTypeId" from-field="parentTypeId"/>
+                <parameter param-name="defaultGlAccountId" from-field="defaultGlAccountId"/>
+                <!-- <parameter param-name="defaultCreditGlAccountId" value="${ulList[0].defaultCreditGlAccountId}"/> -->
+                <parameter param-name="defaultCreditGlAccountId" value="${ulList[0].glAccountId}"/>
+            </hyperlink>
+        </field>
+        <field name="category">
+            <display
+                    description="${groovy:if(category=='M') return 'Monthly'; if(category=='Y') return 'Yearly'; if(category=='L') return 'Life Time';}"/>
+        </field>
+        <field name="me" title="Credit Gl Account ID" parameter-name="defaultCreditGlAccountId"><display description="${ulList[0].glAccountId}"/></field>
+
+        <field name="hasTable">
+            <hidden/>
+        </field>
+        <field name="statusId">
+            <hidden/>
+        </field>
+    </form>
+
+</forms>

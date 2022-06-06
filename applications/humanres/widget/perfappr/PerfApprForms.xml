@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    
+    <form name="InitiatePerformanceAppriasal" type="single" target="createInitiatePerformanceAppriasal" default-map-name="perfApprKpi"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><display></display></field>
+        <field name="perfApprTypeId" title="Appraisal type" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PerfApprType" key-field-name="perfApprTypeId" description="${perfApprTypeName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="startDate"><date-time/></field>
+        <field name="endDate"><date-time/></field>
+        <field name="title"><text></text></field>
+        <field name="description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+    <form name="PerfApprHead" type="single" default-map-name="perfApprProcess">
+        <field name="partyId"><display></display></field>
+        <field name="processId" title="Process"><display></display></field>
+        <field name="perfApprTypeId" title="Performance Appraisal"><display></display></field>
+        
+        <field name="startDate"><display></display></field>
+        <field name="endDate"><display></display></field>
+        <field name="title"><display></display></field>
+        <field name="description"><display></display></field>
+    </form>
+    
+    
+    <form name="CreatePerfApprBusinessKPI" type="single" target="createPerfApprBusinessKPI" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="payGrade">
+        <alt-target use-when="dataId==null" target="createPerfApprBusinessKPI"/>
+        <!-- <auto-fields-service service-name="updatePerfApprBusinessKPI"/> -->
+        <field name="dataId"><hidden/></field>
+        <field name="processId"><display/></field>
+        <field name="objectiveDesc" title="Objective Description"><text></text></field>
+        <field name="perfIndicator" title="Performance Indicator"><text></text></field>
+        <field name="ratingId" title="Rating" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="false" >
+                <entity-options entity-name="PerfApRatingType" key-field-name="perfApRatingTypeId" description="${perfApRatingTypeName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="weight"><text></text></field>
+        <field name="objectiveTypeId" title="Objective Type" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="false" >
+                <entity-options entity-name="ObjectiveType" key-field-name="objectiveTypeId" description="${objectiveTypeName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="achivementPercentage" ><text/></field>
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" title="Create" use-when="dataId!=null" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListPerfApprBusinessKPI" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprBusinessKpi" >
+            	<condition-expr field-name="processId" value="${parameters.processId}"/>
+            	<order-by field-name="processId"/>
+            </entity-condition>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="dataId"><display/></field>
+        <field name="objectiveTypeId"><display/></field>
+        <field name="objectiveDesc"><display/></field>
+        <field name="perfIndicator"><display/></field>
+        <field name="ratingId"><display/></field>
+        <field name="weight"><display/></field>
+        <field name="achivementPercentage"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editPerfApprBusinessKPI" description="Edit" also-hidden="false">
+             	<parameter param-name="processId"/>  
+                <parameter param-name="dataId"/>
+                <parameter param-name="objectiveTypeId"/> 
+                <parameter param-name="objectiveDesc"/> 
+                <parameter param-name="perfIndicator"/>
+                <parameter param-name="achivementPercentage"/>
+                <parameter param-name="ratingId"/>
+                <parameter param-name="comments"/>
+                <parameter param-name="weight"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfApprBusinessKpi" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processId"/>
+                <parameter param-name="dataId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="AddBehaviorKpi" type="single" target="createPerfApprBehaviorKpi" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="ProcessId">
+        <alt-target use-when="dataId==null" target="createPerfApprBehaviorKpi"/>
+        <!-- <auto-fields-service service-name="updatePerfApprBusinessKPI"/> -->
+        <field name="dataId"><hidden/></field>
+        <field name="processId"><display/></field>
+        <field name="perfIndicator" title="Performance Indicator"><text/></field>
+        <field name="kpiItemId" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+         	   <auto-complete/>
+                <entity-options description="${perfApprKpiName}" key-field-name="perfApprKpiId" entity-name="PerfApprKpi">
+                    <entity-order-by field-name="perfApprKpiId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="ratingId" title="Rating" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true" >
+            	<auto-complete/>
+                <entity-options entity-name="PerfApRatingType" key-field-name="perfApRatingTypeId" description="${perfApRatingTypeName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="weight"><text/></field>
+        <field name="kpiItemDescription" title="kpi Item Description"><textarea/></field>
+        <field name="comments" title="comments"><text/></field>
+        <field name="isActive"><hidden/></field>
+        
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" title="Create" use-when="dataId!=null" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListPerfApprBehaviourKpi" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprBehaviourKpi" >
+            	<condition-expr field-name="processId" value="${parameters.processId}"/>
+            	<order-by field-name="processId"/>
+            </entity-condition>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="dataId"><display/></field>
+        <field name="kpiItemId"><display/></field>
+        <field name="kpiItemDescription"><display/></field>
+        <field name="perfIndicator"><display/></field>
+        <field name="ratingId"><display/></field>
+        <field name="weight"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+       
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink  target="editPerfApprBehaviourKpi" description="Edit" also-hidden="false">
+             	<parameter param-name="processId"/>  
+                <parameter param-name="dataId"/>
+                <parameter param-name="kpiItemId"/> 
+                <parameter param-name="kpiItemDescription"/> 
+                <parameter param-name="perfIndicator"/>
+                <parameter param-name="ratingId"/>
+                <parameter param-name="weight"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+         <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfApprBehaviorKpi" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processId"/>
+                <parameter param-name="dataId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="CreatePerfApprDevelopmentPlan" type="single" target="createDevelopmentPlan" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="ProcessId">
+        <alt-target use-when="dataId==null" target="createPerfApprDevelopmentPlan"/>
+        <!-- <auto-fields-service service-name="updatePerfApprBusinessKPI"/> -->
+        <field name="dataId"><hidden/></field>
+        <field name="processId"><display/></field>
+        <field name="developmentRequirementId" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+         	   <auto-complete/>
+                <entity-options description="${perfApprDevReqName}" key-field-name="perfApprDevReqId" entity-name="PerfApprDevReq">
+                    <entity-order-by field-name="perfApprDevReqId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="ratingId" title="Rating" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true" >
+            	<auto-complete/>
+                <entity-options entity-name="PerfApRatingType" key-field-name="perfApRatingTypeId" description="${perfApRatingTypeName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="byWhen" title="By When Start"><text/></field>
+        <field name="objective" title="Description"><textarea/></field>
+        <field name="statusId">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="done" description="Done"/>
+                <option key="pending" description="Pending"/>
+            </drop-down>
+        </field>
+        <field name="comments"><text/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" title="Create" use-when="dataId!=null" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    
+    <form name="ListPerfApprDevelopmentPlan" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <!-- <entity-condition entity-name="PerfApprDevelopmentPlan"><order-by field-name="processId"/></entity-condition> -->
+            <entity-condition entity-name="PerfApprDevelopmentPlan" >
+            	<condition-expr field-name="processId" value="${parameters.processId}"/>
+            	<order-by field-name="processId"/>
+            </entity-condition>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="dataId"><display/></field>
+        <field name="developmentRequirementId"><display/></field>
+        <field name="objective"><display/></field>
+        <field name="byWhen"><display/></field>
+        <field name="ratingId"><display/></field>
+        <field name="statusId"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editPerfApprDevelopmentPlan" description="Edit" also-hidden="false">
+             	<parameter param-name="processId"/>  
+                <parameter param-name="dataId"/>
+                <parameter param-name="developmentRequirementId"/> 
+                <parameter param-name="objective"/> 
+                <parameter param-name="byWhen"/>
+                <parameter param-name="ratingId"/>
+                <parameter param-name="statusId"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfApprDevelopmentPlan" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processId"/>
+                <parameter param-name="dataId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    
+    <form name="FindPerformanceAppraisal" type="single" target="FindPerformanceAppraisal" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="PerfApprProcess" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="partyId"><hidden/></field>
+        <field name="perfApprTypeId" title="Appraisal type" widget-style="required">
+            <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="PerfApprType" key-field-name="perfApprTypeId" description="${perfApprTypeName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="description"><hidden/></field>
+        <field name="statusId"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="workflowProcessId"><hidden/></field>
+        <field name="stepPartyId"><hidden/></field>
+        <field name="firstApprovarId"><hidden/></field>
+        <field name="secondApprovarId"><hidden/></field>
+        <field name="thirdApprovarId"><hidden/></field>
+        <field name="firstApprovarStatus"><hidden/></field>
+        <field name="partyStatus"><hidden/></field>
+        <field name="secondApprovarStatus"><hidden/></field>
+        <field name="thirdApprovarStatus"><hidden/></field>
+        <field name="firstApprovarComments"><hidden/></field>
+        <field name="partyComments"><hidden/></field>
+        <field name="secondApprovarComments"><hidden/></field>
+        <field name="thirdApprovarComments"><hidden/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListPerformanceAppraisal" type="multi" list-name="listIt" use-row-submit="true" target="updatePerformanceAppraisal" paginate-target="FindPerformanceAppraisal" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="PerfApprProcessCtx"/>
+                <field-map field-name="entityName" value="PerfApprProcess"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="partyId"><display/></field>
+        <field name="perfApprTypeId" title="Appraisal Type">
+			<display-entity entity-name="PerfApprType" description="${perfApprTypeName}" key-field-name="perfApprTypeId"></display-entity>
+		</field>
+        <field name="startDate"><display/></field>
+        <field name="endDate"><display/></field>
+        <field name="title"><display/></field>
+        <field name="description"><display/></field>
+        <field name="firstApprovarStatus"><display/></field>
+        <field name="partyStatus"><display/></field>
+        <field name="secondApprovarStatus"><display/></field>
+        <field name="thirdApprovarStatus"><display/></field>
+        <field name="statusId"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field> 
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editPerformanceAppraisal" description="Edit" also-hidden="false">
+                <parameter param-name="processId"/>
+                <parameter param-name="perfApprTypeId"/>
+                <parameter param-name="startDate"/>
+                <parameter param-name="endDate"/>
+                <parameter param-name="title"/>
+                <parameter param-name="description"/>
+                <parameter param-name="statusId"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="Delete" widget-style="buttontext">
+            <hyperlink target="deletePerformanceAppraisal" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processId"/>
+                <parameter param-name="dataId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    
+    <form name="PerfApprListView" type="multi" list-name="listIt" use-row-submit="true" target="updatePerformanceAppraisal" paginate-target="FindPerformanceAppraisal" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+         <actions>
+            <entity-and entity-name="PerfApprProcess">
+            	<field-map field-name="partyId"  value="${parameters.partyId}"/>
+            	<field-map field-name="isActive"  value="Y"/>
+            </entity-and>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="partyId"><display/></field>
+       <!--  <field name="perfApprTypeId" title="Appraisal Type">
+			<display-entity entity-name="PerfApprType" description="${perfApprTypeName}" key-field-name="perfApprTypeId"></display-entity>
+		</field> -->
+        <field name="startDate"><display/></field>
+        <field name="endDate"><display/></field>
+        <field name="title"><display/></field>
+        <field name="description"><display/></field>
+        <field name="firstApprovarStatus"><display/></field>
+        <field name="partyStatus"><display/></field>
+        <field name="secondApprovarStatus"><display/></field>
+        <field name="thirdApprovarStatus"><display/></field>
+        <field name="statusId"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field> 
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editPerformanceAppraisal" description="Edit" also-hidden="false">
+                <parameter param-name="processId"/>
+                <parameter param-name="perfApprTypeId"/>
+                <parameter param-name="startDate"/>
+                <parameter param-name="endDate"/>
+                <parameter param-name="title"/>
+                <parameter param-name="description"/>
+                <parameter param-name="statusId"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="Delete" widget-style="buttontext">
+            <hyperlink target="deletePerformanceAppraisal" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processId"/>
+                <parameter param-name="dataId"/>
+            </hyperlink>
+        </field>
+    </form>
+</forms> 

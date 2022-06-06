@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+             
+    <description>Human Resources KPI Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    
+<!--     <service name="saveAllAchievements" engine="entity-auto" -->
+<!-- 		default-entity-name="EmployeeGoalsAndKpi" invoke="update" auth="true"> -->
+<!-- 		<description>Update All Achievements </description> -->
+<!-- 		<auto-attributes mode="IN" include="pk" optional="false" /> -->
+<!-- 		<auto-attributes mode="IN" include="nonpk" optional="true" /> -->
+<!-- 		<attribute name="partyId" type="String" mode="INOUT" optional="true" /> -->
+<!-- 	</service> -->
+	
+<!-- 	<service name="updateKpiService" engine="java" default-entity-name="EmployeeGoalsAndKpi" location="org.ofbiz.humanres.KpiEvents" invoke="updateKpi" auth="true"> -->
+<!-- 		<description>Update KPI Achievement</description> -->
+<!-- 		<attribute name="partyId" type="String" mode="INOUT" optional="true" /> -->
+<!-- 	</service> -->
+	
+<!-- 	<service name="updateKPIByManagerService" engine="java" default-entity-name="EmployeeGoalsAndKpi" location="org.ofbiz.humanres.KpiEvents" invoke="updateKPIByManagerService" auth="true"> -->
+<!-- 		<description>Update KPI Achievement</description> -->
+<!-- 		<attribute name="partyId" type="String" mode="INOUT" optional="true" /> -->
+<!-- 	</service> -->
+    
+<!--     <service name="ceateDeptWiseKpi" engine="java" default-entity-name="EmployeeGoalsAndKpiOverallStatus" location="org.ofbiz.humanres.KpiEvents" invoke="deptWisekpI" auth="true"> -->
+<!-- 		<description>Department Wise Kpi Report</description> -->
+<!-- 		<attribute name="department" type="String" mode="IN" optional="true" /> -->
+<!-- 	</service> -->
+	
+	
+	<service name="saveAllAchievements" engine="simple" default-entity-name="EmployeeGoalsAndKpi" 
+		location="component://humanres/script/org/ofbiz/humanres/KPIServices.xml" invoke="updateAllAchievements" auth="true">
+		<description>Update All Achievements </description>
+		<auto-attributes mode="IN" include="pk" optional="false" />
+		<auto-attributes mode="IN" include="nonpk" optional="true" />
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+	</service>
+	<service name="targetSaveAll" engine="simple" default-entity-name="EmployeeGoalsAndKpiMonthly" 
+		location="component://humanres/script/org/ofbiz/humanres/KPIServices.xml" invoke="updateMonthlyTargets" auth="true">
+		<description>Update</description>
+		<auto-attributes mode="IN" include="pk" optional="false" />
+		<auto-attributes mode="IN" include="nonpk" optional="true" />
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+	</service>
+	
+	<service name="saveMonthlyAcievement" engine="simple" default-entity-name="EmployeeGoalsAndKpiMonthly" 
+		location="component://humanres/script/org/ofbiz/humanres/KPIServices.xml" invoke="saveMonthlyAcievement" auth="true">
+		<description>Update</description>
+		<auto-attributes mode="IN" include="pk" optional="false" />
+		<auto-attributes mode="IN" include="nonpk" optional="true" />
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+	</service>
+	<!-- <service name="saveAllAchievements" engine="entity-auto" default-entity-name="EmployeeGoalsAndKpi" 
+		invoke="update" auth="true">
+		<description>Update All Achievements </description>
+		<auto-attributes mode="IN" include="pk" optional="false" />
+		<auto-attributes mode="IN" include="nonpk" optional="true" />
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+	</service> -->
+	
+	<service name="updateKpiService" engine="java" default-entity-name="EmployeeGoalsAndKpi" location="org.ofbiz.humanres.KpiEvents" invoke="updateKpi" auth="true">
+		<description>Update KPI Achievement</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+	</service>
+	
+	<service name="updateKPIByManagerService" engine="java" default-entity-name="EmployeeGoalsAndKpi" location="org.ofbiz.humanres.KpiEvents" invoke="updateKPIByManagerService" auth="true">
+		<description>Update KPI Achievement</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+	</service>
+    
+    <service name="ceateDeptWiseKpi" engine="java" default-entity-name="EmployeeGoalsAndKpiOverallStatus" location="org.ofbiz.humanres.KpiEvents" invoke="deptWisekpI" auth="true">
+		<description>Department Wise Kpi Report</description>
+		<attribute name="department" type="String" mode="IN" optional="true" />
+	</service>
+	<service name="generateDeptWiseReport" engine="java" default-entity-name="EmployeeGoalsAndKpiOverallStatus" location="org.ofbiz.humanres.kpi.MonthlyKpiEvents" invoke="genreateDeptWiseDataMonthly" auth="true">
+		<description>Department Wise Kpi Report</description>
+		<attribute name="department" type="String" mode="IN" optional="true" />
+		<attribute name="year" type="String" mode="IN" optional="true" />
+	</service>
+	<service name="genCompWiseReport" engine="java" default-entity-name="CompanyWiseKpiMontlyStat" location="org.ofbiz.humanres.kpi.MonthlyKpiEvents" invoke="genCompWiseReport" auth="true">
+		<description>Company Wise Kpi Report</description>
+		<attribute name="year" type="String" mode="IN" optional="true" />
+		<attribute name="company" type="String" mode="IN" optional="true" />
+	</service>
+	
+	<!-- 	Modified by Parves -->
+	<service name="generateMonthlyGoalsAndKpi" engine="java" default-entity-name="EmployeeGoalsAndKpiMonthly" location="org.ofbiz.humanres.KpiEvents" invoke="generateMonthlyGoalsAndKpi" auth="true">
+		<description>Generate Monthly Goals And Kpi</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+		<attribute name="year" type="String" mode="INOUT" optional="true" />
+	</service>
+	
+<!-- 	Modified by Parves -->
+
+    <service name="saveTargetsService" engine="java" default-entity-name="EmployeeGoalsAndKpiMonthly" location="org.ofbiz.humanres.KpiEvents" invoke="updateMonthlyTarget" auth="true">
+		<description>Update KPI Achievement</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+		<attribute name="mTarget" type="String" mode="IN" optional="true" />
+	</service>
+	
+	<service name="saveMonthlyAchievements" engine="simple" default-entity-name="EmployeeGoalsAndKpiMonthly" 
+		location="component://humanres/script/org/ofbiz/humanres/KPIServices.xml" invoke="saveMonthlyAchievements" auth="true">
+		<description>Update All Achievements </description>
+		<auto-attributes mode="IN" include="pk" optional="false" />
+		<auto-attributes mode="IN" include="nonpk" optional="true" />
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+		<attribute name="mMonth" type="String" mode="INOUT" optional="true" />
+		<attribute name="mYear" type="String" mode="INOUT" optional="true" />
+	</service>
+	
+	<service name="montlyKpiStatus" engine="java" default-entity-name="EmployeeGoalsAndKpiMonthly" location="org.ofbiz.humanres.kpi.MonthlyKpiEvents" invoke="updateMonthlyKpi" auth="true">
+		<description>Update KPI Achievement</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+		<attribute name="mMonth" type="String" mode="INOUT" optional="true" />
+		<attribute name="mYear" type="String" mode="INOUT" optional="true" />
+	</service>
+	
+	<service name="montlyKpiStatusByManager" engine="java" default-entity-name="EmployeeGoalsAndKpiMonthly" location="org.ofbiz.humanres.kpi.ManagerMonthlyKpiEvents" invoke="updateManagerMonthlyKpi" auth="true">
+		<description>Update KPI Achievement</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+		<attribute name="mMonth" type="String" mode="INOUT" optional="true" />
+		<attribute name="mYear" type="String" mode="INOUT" optional="true" />
+	</service>
+	<service name="sendToManagerMail" engine="java" default-entity-name="EmployeeGAKOvrlStatMonthly" location="org.ofbiz.humanres.KpiEvents" invoke="sendEmailNotification" auth="true">
+		<description>Update KPI Achievement</description>
+		<attribute name="partyId" type="String" mode="INOUT" optional="true" />
+		<attribute name="managerId" type="String" mode="INOUT" optional="true" />
+		<attribute name="mMonth" type="String" mode="INOUT" optional="true" />
+		<attribute name="mYear" type="String" mode="INOUT" optional="true" />
+		<attribute name="mgrApprStatus" type="String" mode="INOUT" optional="true" />
+	</service>
+
+</services>    

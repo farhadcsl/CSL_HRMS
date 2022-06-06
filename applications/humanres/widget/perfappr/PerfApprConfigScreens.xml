@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+ <screen name="AddPerfApprType">
+        <section>
+            <actions>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprTypeSettings"/>
+                <set field="titleProperty" value="Performance Type Settings"/>
+                <set field="perfApprTypeId" from-field="parameters.perfApprTypeId"/>
+                <entity-one entity-name="PerfApprType" value-field="perfApprType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddPerfTypePanel" title="Performance Appraisal Type" collapsible="true">
+                            <include-form name="AddPerfType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPerfType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UpdatePerfApprTypeSetting">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Update Performance Review Type"/>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprTypeSettings"/>
+                <entity-one entity-name="PerfApprType" value-field="perfApprType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet title="Update performance Type">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdatePerfApprType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="AddPerfApprObjectiveType">
+        <section>
+            <actions>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprObjectiveTypeSettings"/>
+                <set field="titleProperty" value="Performance Objective Type"/>
+                <set field="objectiveTypeId" from-field="parameters.objectiveTypeId"/>
+                <entity-one entity-name="ObjectiveType" value-field="ObjectiveType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddPerfObjectiveTypePanel" title="Performance Appraisal Type" collapsible="true">
+                            <include-form name="AddPerfObjectiveType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPerfObjectiveType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UpdatePerfApprObjectiveTypeSetting">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Update Performance Review Type"/>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprObjectiveTypeSettings"/>
+                <entity-one entity-name="ObjectiveType" value-field="objectiveType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                         <screenlet title="Update performance Type">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdatePerfApprObjectiveType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+ 
+    <screen name="AddPerfApprKpi">
+        <section>
+            <actions>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprKpi"/>
+                <set field="titleProperty" value="Performance Review Type"/>
+                <set field="perfApprKpiId" from-field="parameters.perfApprKpiId"/>
+                <entity-one entity-name="PerfApprKpi" value-field="perfApprKpi"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddPerfKpiPanel" title="Add Performance Appraisal KPI" collapsible="true">
+                            <include-form name="AddPerfKpi" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPerfKpi" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UpdatePerfApprKpiSetting">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Update Performance Review Type"/>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprKpi"/>
+                <entity-one entity-name="PerfApprKpi" value-field="perfApprKpi"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>                    
+                        <screenlet title="Update performance KPI Type">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdatePerfApprKpi" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+ 
+    <screen name="AddPerfApprDevReq">
+        <section>
+            <actions>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprDevReq"/>
+                <set field="titleProperty" value="Performance Review Type"/>
+                <set field="perfApprDevReqId" from-field="parameters.perfApprDevReqId"/>
+                <entity-one entity-name="PerfApprDevReq" value-field="perfApprDevReq"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddPerfDevReqPanel" title="Performance Appraisal DevReq" collapsible="true">
+                            <include-form name="AddPerfDevReq" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPerfDevReq" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UpdatePerfApprDevReqSetting">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Update Performance Review Type"/>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="PerfApprDevReq"/>
+                <entity-one entity-name="PerfApprDevReq" value-field="perfApprDevReq"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>                    
+                        <screenlet title="Update performance DevReq Type">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdatePerfApprDevReq" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+ 
+    
+    <!-- PerformanceAppraisal Review -->
+    <screen name="EditPerfReviewType">
+        <section>
+            <actions>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="EditPerfReviewType"/>
+                <set field="titleProperty" value="Performance Review Type"/>
+                <set field="perfReviewTypeId" from-field="parameters.perfReviewTypeId"/>
+                <entity-one entity-name="PerfReviewType" value-field="perfReviewType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddPerfReviewTypePanel" title="Add Performance Appraisal Review Item Type" collapsible="true">
+                            <include-form name="AddPerfReviewType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPerfReviewType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UpdatePerfReviewType">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Update Performance Review Type"/>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="EditPerfReviewType"/>
+                <entity-one entity-name="PerfReviewType" value-field="perfReviewType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>                    
+                        <screenlet title="Update performance Review Type">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdateperfReviewType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!-- Performance Appraisal Rating -->
+    
+    <screen name="EditPerfRatingType">
+        <section>
+            <actions>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="EditPerfRatingType"/>
+                <set field="titleProperty" value="Performance Rating Type"/>
+                <set field="perfApRatingTypeId" from-field="parameters.perfApRatingTypeId"/>
+                <entity-one entity-name="PerfApRatingType" value-field="perApfRatingType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddPerfRatingTypePanel" title="Add Performance Rating Item Type" collapsible="true">
+                            <include-form name="AddPerfRatingType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPerfRatingType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UpdatePerfRatingType">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Update Performance Rating Type"/>
+                <set field="headerItem" value="GlobalHRSettingMenus"/>
+                <set field="tabButtonItem" value="PerfApprGlobalHrSettings"/>
+                <set field="tabButtonItem2" value="EditPerfRatingType"/>
+                <entity-one entity-name="PerfApRatingType" value-field="perApfRatingType"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="GlobalHRSettingsDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="PerfApprSettingsTabBar" location="component://humanres/widget/HumanresMenus.xml"/>                    
+                        <screenlet title="Update performance Rating Type">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdateperfRatingType" location="component://humanres/widget/perfappr/PerfApprConfigForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

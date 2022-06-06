@@ -1,0 +1,311 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+
+
+	
+	<description> Human Resources Manager Attendance Manage Module Site Configuration File</description>
+	
+	<!-- view handlers -->
+	<handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler" />
+	
+	
+	<request-map uri="uploadEmployeeLog">
+            <security https="true" auth="true"/>
+
+           <event type="java" path="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="uploadEmployeeLog"/>
+
+            <response name="success" type="view" value="ImportEmployeeLog"/>
+            <response name="error" type="view" value="ImportEmployeeLog"/>
+    </request-map>   
+    
+    	
+	<request-map uri="ImportEmployeeLog">
+            <security https="true" auth="true"/>
+
+            <response name="success" type="view" value="ImportEmployeeLog"/>
+            <response name="error" type="view" value="ImportEmployeeLog"/>
+    </request-map>
+    
+    
+	
+	<request-map uri="AttendanceMain">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AttendanceMain" save-last-view="true" />
+		<response name="error" type="view" value="AttendanceMain" />
+	</request-map>
+	
+	<request-map uri="AttendanceCurrentEmpInfo"><!-- Request map for AttendanceCurrentEmpInfo view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AttendanceCurrentEmpInfo" />
+		<response name="error" type="view" value="AttendanceCurrentEmpInfo" />
+	</request-map>
+	
+	
+	
+	<request-map uri="setUserPreferenceForatten">
+		<security https="true" auth="true" />
+		<event type="service" invoke="setUserPreference" />
+		<response name="success" type="request-redirect" value="AttendanceMain" />
+		<response name="error" type="request" value="AttendanceMain" />
+	</request-map>
+	
+	<request-map uri="AddLocationPopup"><!-- Request map for Location PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AddLocationPopup" />
+	</request-map>
+	
+	<request-map uri="AttendanceList"><!-- Request map for EmplyoeeLog view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="AttendanceList" />
+	</request-map>
+	
+
+	
+	<request-map uri="EmployeeList"><!-- Request map for EmployeeList view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="EmployeeList" />
+	</request-map>
+	
+	<request-map uri="DeviceList"> <!--Request map for DeviceList view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="DeviceList" />
+	</request-map>
+	
+		
+	<request-map uri="GateList"> <!--Request map for GateList view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="GateList" />
+	</request-map>
+	
+	<request-map uri="FloorList"> <!--Request map for FloorList view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="FloorList" />
+	</request-map>
+	
+	<request-map uri="BuildingList"> <!--Request map for BuildingList view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="BuildingList" />
+	</request-map>
+
+	<request-map uri="EmpCurrentStatus"> <!--Request map for EmpCurrentStatus view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="EmpCurrentStatus" />
+	</request-map>
+	
+	<request-map uri="EmployeesCurrentStatus"> <!--Request map for EmployeesCurrentStatus view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="EmployeesCurrentStatus" />
+	</request-map>
+	
+	<request-map uri="GolobalCurrentEmpInfo">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="GolobalCurrentEmpInfo" />
+	</request-map>
+
+	
+	<request-map uri="DeviceCurrentEmpStatus"> <!--Request map for DeviceCurrentEmpStatus view  --> 
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="DeviceCurrentEmpStatus" />
+	</request-map>
+
+	<request-map uri="createBuilding"><!-- request map for create event for Building -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createBuilding"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="createFloor"><!-- request map for create event for Floor -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createFloors"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	
+	<request-map uri="createGate"><!-- request map for create event for Gate -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="createGates"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	
+	<request-map uri="registerDevice"><!-- request map for create event for Device -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="registerDevices"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="updateDeviceStaus"><!-- request map for create event for Device -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateDeviceStaus"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="registerEmployee"><!-- request map for create event for Device -->
+		<security auth="true" https="true" />
+		<event type="service" invoke="registerEmployee"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="unRegisterEmployee"><!-- request map for UnRegisterEmployee-->
+		<security auth="true" https="true" />
+		<event type="service" invoke="unRegisterEmployee"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="unRegisterDevice"><!-- request map for UnRegisterDevice-->
+		<security auth="true" https="true" />
+		<event type="service" invoke="unRegisterDevice"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="unRegisterGate"><!-- request map for UnRegisterGate-->
+		<security auth="true" https="true" />
+		<event type="service" invoke="unRegisterGate"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="sinkDevice"><!-- request map for UnRegisterDevice-->
+		<security auth="true" https="true" />
+		<event type="service" invoke="sinkDevice"/>
+		<response name="success" type="view" value="AttendanceMain" />
+		<response name="error" type="view" value="AttendanceMain"/>
+	</request-map>
+	<request-map uri="updateLocationInfo">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateLocationInfo"/>
+        <response name="success" type="request" value="AttendanceMain"/>
+        <response name="error" type="view" value="AttendanceMain"/>
+    </request-map>
+    <request-map uri="updateDevice">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateDevice"/>
+        <response name="success" type="request" value="AttendanceMain"/>
+        <response name="error" type="view" value="AttendanceMain"/>
+    </request-map>
+    
+    <!-- Add employee log by hr admin -->
+    <request-map uri="AddEmployeeLog">
+        <security https="true" auth="true"/>
+	    <response name="success" type="view" value="AddEmployeeLog"/>
+        <response name="error" type="view" value="AddEmployeeLog"/>
+    </request-map>
+	<request-map uri="addEmployeeLog">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="addEmployeeLog"/>
+        <response name="success" type="view" value="AddEmployeeLog"/>
+        <response name="error" type="view" value="AddEmployeeLog"/>
+    </request-map>
+	<!--View Mappings -->
+	<request-map uri="EmployeeLookupForAttendance"><security https="true" auth="true"/><response name="success" type="view" value="EmployeeLookupForAttendance"/></request-map>
+	<view-map name="EmployeeLookupForAttendance" type="screen" page="component://humanres/widget/attendance/screens/AttendanceLookupScreens.xml#EmployeeLookupForAttendance"/>
+	<view-map name="AttendanceMain" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#structure"></view-map>
+	<view-map name="ImportEmployeeLog" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#ImportEmployeeLog"></view-map>
+	<view-map name="AddLocationPopup" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#AddLocationPopup" />
+	<view-map name="AttendanceList" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#AttendanceListToRefresh" />
+	<view-map name="EmployeeList" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#EmployeeListToRefresh" />
+	<view-map name="DeviceList" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#DeviceListToRefresh" />
+	<view-map name="GateList" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#GateListToRefresh" />
+	<view-map name="FloorList" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#FloorListToRefresh" />
+	<view-map name="BuildingList" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#BuildingListToRefresh" />
+	<view-map name="EmpCurrentStatus" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#EmpCurrentStatus" />
+	<view-map name="EmployeesCurrentStatus" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#EmployeesCurrentStatus" />
+	<view-map name="DeviceCurrentEmpStatus" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#DeviceCurrentEmpStatus" />
+	<view-map name="GolobalCurrentEmpInfo" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#GolobalCurrentEmpInfo"></view-map>
+	<view-map name="AttendanceCurrentEmpInfo" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#AttendanceCurrentEmpInfo"></view-map>
+<!-- Add employee log by hr admin -->
+	<view-map name="AddEmployeeLog" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#AddEmployeeLog"></view-map>
+
+
+	
+
+
+
+	<request-map uri="DailyAttendanceLog">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyAttendanceLog" />
+	</request-map>
+	<view-map name="DailyAttendanceLog" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#FindDailyAttendanceLog"/>
+	
+	<request-map uri="ViewAttendanceForm">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewAttendanceForm" />
+	</request-map>
+	<view-map name="ViewAttendanceForm" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#ViewAttendanceForm"/>
+	
+	<request-map uri="EditTimeAttendanceForm">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditTimeAttendanceForm" />
+	</request-map>
+	<view-map name="EditTimeAttendanceForm" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#EditTimeAttendanceForm"/>
+	
+    <request-map uri="UpdateTimeAttendanceForm">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="UpdateAttendanceForm"/>
+        <response name="success" type="request-redirect-noparam" value="DailyAttendanceLog"/>
+    </request-map>
+    
+    <!-- DailyAttendanceLogComments -->
+    <request-map uri="DailyAttendanceLogComments">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyAttendanceLogComments" />
+	</request-map>
+	
+    <request-map uri="ViewDailyAttendanceLogComments">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewDailyAttendanceLogComments" />
+	</request-map>
+	
+    <request-map uri="EditDailyAttendanceLogComments">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditDailyAttendanceLogComments" />
+	</request-map>
+	
+	<request-map uri="UpdateDailyAttendanceLogComments">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="UpdateDailyAttendanceLogComments"/>
+        <response name="success" type="request-redirect-noparam" value="DailyAttendanceLogComments"/>
+    </request-map>
+
+	<!-- AttendanceCommentsPopUp -->
+	<request-map uri="EmployeeAttendanceCommentsPopUp">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EmployeeAttendanceCommentsPopUp" />
+	</request-map>	
+    <request-map uri="SetEmployeeAttendanceComments">
+            <security https="true" auth="true"/>
+         	<event type="java" path="org.ofbiz.humanres.attendance.AttendanceServices" invoke="SetEmployeeAttendanceComments"/>
+			<response name="success" type="request-redirect" value="main1"/>
+            <response name="error" type="view" value="main1"/>
+    </request-map>
+    <request-map uri="SendAttendanceProcessToSuperior">
+            <security https="true" auth="true"/>
+         	<event type="java" path="org.ofbiz.humanres.attendance.AttendanceServices" invoke="SendAttendanceProcessToSuperior"/>
+			<response name="success" type="request-redirect" value="main1"/>
+            <response name="error" type="view" value="main1"/>
+    </request-map>
+	<request-map uri="SetSupervisorCommentsForAttendance">
+            <security https="true" auth="true"/>
+            <event type="java" path="org.ofbiz.humanres.attendance.AttendanceServices" invoke="SetSupervisorCommentsForAttendance"/>
+			<response name="success" type="request-redirect" value="main1"/>
+            <response name="error" type="view" value="main1"/>
+    </request-map>    
+	<request-map uri="ApprovedAttendanceBySupervisor">
+            <security https="true" auth="true"/>
+            <event type="java" path="org.ofbiz.humanres.attendance.AttendanceServices" invoke="ApprovedAttendanceBySupervisor"/>
+			<response name="success" type="request-redirect" value="main1"/>
+            <response name="error" type="view" value="main1"/>
+    </request-map>
+	<request-map uri="SupervisorAttendanceCommentsPopUp">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="SupervisorAttendanceCommentsPopUp" />
+	</request-map>
+	
+	
+	
+	<view-map name="EmployeeAttendanceCommentsPopUp" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#EmployeeAttendanceCommentsPopUp"></view-map>
+	<view-map name="SupervisorAttendanceCommentsPopUp" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#SupervisorAttendanceCommentsPopUp"></view-map>
+	<view-map name="DailyAttendanceLogComments" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#DailyAttendanceLogComments"/>
+    <view-map name="ViewDailyAttendanceLogComments" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#ViewDailyAttendanceLogComments"/>
+    <view-map name="EditDailyAttendanceLogComments" type="screen" page="component://humanres/widget/attendance/screens/AttendanceScreens.xml#EditDailyAttendanceLogComments"/>
+	
+</site-conf>

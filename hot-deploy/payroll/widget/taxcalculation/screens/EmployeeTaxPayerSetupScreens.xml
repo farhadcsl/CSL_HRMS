@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+   <screen name="ListTaxPayerSetup">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Tax Condition Create"/>
+                <set field="headerItem" value="TaxCalculation"/>
+                <set field="tabButtonItem" value="PartyTaxTypeSetup"/>
+                <entity-one entity-name="PayrollItem" value-field="payrollItem"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu location="component://payroll/widget/PayrollMenus.xml" name="TaxCalculationMenus"/>
+                        <screenlet title="Employee Tax Payer Information">
+                            <section>
+                                <widgets>
+                                    <include-form name="ListTaxPayerSetup" location="component://payroll/widget/taxcalculation/forms/EmployeeTaxPayerSetupForms.xml"/> 
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ConfigureTaxPayerSetup">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Employee Tax Payer Configure"/>
+                <set field="headerItem" value="TaxCalculation"/>
+                <set field="tabButtonItem" value="PartyTaxTypeSetup"/>
+                <entity-one entity-name="PersonPayrollInfo" value-field="personPayrollInfo"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu location="component://payroll/widget/PayrollMenus.xml" name="TaxCalculationMenus"/>
+                        <screenlet title="Employee Tax Payer Configure">
+                            <section>
+                                <widgets>
+                                    <include-form name="ConfigureTaxPayerSetup" location="component://payroll/widget/taxcalculation/forms/EmployeeTaxPayerSetupForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

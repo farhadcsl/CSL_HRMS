@@ -1,0 +1,34 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+<form name="PayslipForAllEmployeeReportForm" type="single" target="activeEmployeeForsalaryPayslip" header-row-style="header-row" default-table-style="basic-table">
+        <field name="month" title="${uiLabelMap.CommonMonth}" required-field="true" parameter-name="month">
+            <drop-down allow-empty="false">
+                <option key="0" description="${uiLabelMap.CommonJanuary}"/>
+                <option key="1" description="${uiLabelMap.CommonFebruary}"/>
+                <option key="2" description="${uiLabelMap.CommonMarch}"/>
+                <option key="3" description="${uiLabelMap.CommonApril}"/>
+                <option key="4" description="${uiLabelMap.CommonMay}"/>
+                <option key="5" description="${uiLabelMap.CommonJune}"/>
+                <option key="6" description="${uiLabelMap.CommonJuly}"/>
+                <option key="7" description="${uiLabelMap.CommonAugust}"/>
+                <option key="8" description="${uiLabelMap.CommonSeptember}"/>
+                <option key="9" description="${uiLabelMap.CommonOctober}"/>
+                <option key="10" description="${uiLabelMap.CommonNovember}"/>
+                <option key="11" description="${uiLabelMap.CommonDecember}"/>
+            </drop-down>
+        </field>
+        
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+        
+        
+        
+        
+    </form>   
+
+
+</forms>
+        
+        
+        
+    

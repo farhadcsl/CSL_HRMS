@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="main-decorator">
+        <section>
+            <actions>
+                <property-map resource="LcUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+
+                <set field="layoutSettings.companyName" from-field="uiLabelMap.LcCompanyName" global="true"/>
+                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.LcCompanySubtitle" global="true"/>
+
+                <set field="activeApp" value="lc" global="true"/>
+                <set field="applicationMenuName" value="MainAppBar" global="true"/>
+                <set field="applicationMenuLocation" value="component://lc/widget/LcMenus.xml" global="true"/>
+                <set field="applicationTitle" value="${uiLabelMap.LcApplication}" global="true"/>
+            </actions>
+            <widgets>
+                <include-screen name="ApplicationDecorator" location="component://commonext/widget/CommonScreens.xml"/>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="LcCommonDecorator">
+        <section>
+            <actions>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="LC" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.LcViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindScreenDecorator">
+		<section>
+			<widgets>
+				<section>
+					<condition>
+						<if-empty field="titleProperty" />
+					</condition>
+					<widgets>
+						<container style="page-title">
+							<label text="${title}"></label>
+						</container>
+					</widgets>
+					<fail-widgets>
+						<container style="page-title">
+							<label text="${uiLabelMap[titleProperty]}"></label>
+						</container>
+					</fail-widgets>
+				</section>
+				<decorator-section-include name="menu-bar" />
+				<container style="clear" />
+				<screenlet id="searchOptions" name="findScreenlet"
+					collapsible="true" title="${uiLabelMap.CommonSearchOptions}">
+					<container id="search-options">
+						<decorator-section-include name="search-options" />
+					</container>
+				</screenlet>
+				<screenlet padded="false">
+					<label style="h3" text="${uiLabelMap.CommonSearchResults}" />
+					<container id="search-results">
+						<decorator-section-include name="search-results" />
+					</container>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+</screens>

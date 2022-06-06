@@ -1,0 +1,220 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    
+    <screen name="FindCvBank">
+        <section>             
+            <actions>   
+                <set field="titleProperty" value="Find CV"/>
+                <set field="headerItem" value="OrganizationCvBank"/>
+                <set field="tabButtonItem" value="CvBank"/>
+               <set field="memberCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="HUMANRES" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                        <section>
+                                            <condition>
+                                                <if-has-permission permission="HUMANRES" action="_ADMIN"/>
+                                            </condition>
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <link target="CreateCvBank" text="Add CV" style="buttontext create"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindCvBank" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListCvBank" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.HumanResViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="CreateCvBank">
+        <section>
+            <actions>                
+                <set field="headerItem" value="OrganizationCvBank"/>
+                <set field="tabButtonItem" value="CvBank"/>
+                <entity-one entity-name="CvBank" value-field="cvBankId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Add CV">
+                            <section>
+                                <widgets>
+                                    <include-form name="CreateCvBank" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+                               </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditCvBank">
+        <section>
+            <actions>
+                <set field="headerItem" value="OrganizationCvBank"/>
+                <set field="tabButtonItem" value="CvBank"/>
+                <entity-one value-field="cvBankInfo" entity-name="CvBank">
+                	 <field-map field-name="cvBankId" from-field="parameters.cvBankId"/>
+                </entity-one>
+                <set field="applicantName" value="${cvBankInfo.applicantName}"/>
+                <set field="referedPosition" value="${cvBankInfo.referedPosition}"/>
+                <set field="referedDepartment" value="${cvBankInfo.referedDepartment}"/>
+                <set field="priority" value="${cvBankInfo.priority}"/>
+                <set field="referdBy" value="${cvBankInfo.referdBy}"/>
+                <set field="dateAdded" value="${cvBankInfo.dateAdded}"/>
+                <set field="description" value="${cvBankInfo.description}"/>
+                <set field="applicantContactNo" value="${cvBankInfo.applicantContactNo}"/>
+                <set field="collectionType" value="${cvBankInfo.collectionType}"/>
+                <set field="cvStatus" value="${cvBankInfo.cvStatus}"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    
+	                    <screenlet title="Edit Applicant Cv">
+	                    	<include-form name="EditCvBank" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+	                    </screenlet> 
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ViewCvBank">
+        <section>
+            <actions>
+                <set field="headerItem" value="OrganizationCvBank"/>
+                <set field="tabButtonItem" value="CvBank"/>
+                <set field="notesCtx" from-field="parameters"/>
+                <set field="cvBankId" from-field="parameters.cvBankId" />
+                <entity-and list="cvNotesList" entity-name="CvBankNote">
+                	<field-map field-name="cvBankId" value="${cvBankId}"/>
+                </entity-and>
+                <entity-one value-field="cvBankInfo" entity-name="CvBank">
+                	 <field-map field-name="cvBankId" from-field="parameters.cvBankId"/>
+                </entity-one>
+                <set field="applicantName" value="${cvBankInfo.applicantName}"/>
+                <set field="referedPosition" value="${cvBankInfo.referedPosition}"/>
+                <set field="referedDepartment" value="${cvBankInfo.referedDepartment}"/>
+                <set field="priority" value="${cvBankInfo.priority}"/>
+                <set field="referdBy" value="${cvBankInfo.referdBy}"/>
+                <set field="dateAdded" value="${cvBankInfo.dateAdded}"/>
+                <set field="description" value="${cvBankInfo.description}"/>
+                <set field="collectionType" value="${cvBankInfo.collectionType}"/>
+                <set field="applicantContactNo" value="${cvBankInfo.applicantContactNo}"/>
+                <set field="cvStatus" value="${cvBankInfo.cvStatus}"/>
+                <entity-condition list="requisitionDocuments" entity-name="CvAndContent">
+							<condition-list>
+								<condition-expr field-name="cvBankId" from-field="cvBankId" />
+							</condition-list>
+				</entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <container style="profile-left">
+	                        <screenlet title="${applicantName} Information" navigation-menu-name="CvBankNotes">
+	                        <container id="addCvBankNotesPopUp"></container>
+	                        <include-menu name="CvBankNotes" location="component://humanres/widget/HumanresMenus.xml"/>
+		                
+		                    	<include-form name="ViewCvBank" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+		                    	<include-form name="ListCvBankNotes" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+		                    </screenlet> 
+	               	</container>
+	                <container style="profile-right">
+                            
+                            	 <include-screen name="requisitionDocumentList"/>
+                             
+                    </container>
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="requisitionDocumentList">
+	
+		<section>
+			<widgets>
+				<screenlet name="documents" title="Requisition Documents " id="documents" navigation-menu-name="AddcvRequisitionDocument">
+					<container id="addDocumentcvRequisitionPopUp"></container>
+					<include-menu location="component://humanres/widget/HumanresMenus.xml" name="AddcvRequisitionDocument" />
+					<include-form location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml" name="RequisitionCvDocumentList" />
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="uploadcvRequisitionContent">
+		<section>
+			<actions>
+				 <entity-one entity-name="PartyGroup" value-field="company">
+					<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_UNIT" />
+				</entity-one> 
+				<set field="cvBankId" from-field="parameters.cvBankId"/>				
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+				<set field="partyContentTypeId" value="INTERNAL" />
+				<set field="uploadTitle" value="Upload Document" />
+				
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" />
+				<platform-specific>
+					<html>
+						<html-template location="component://humanres/webapp/humanres/humanres/recruitment/RequisitionCvContent.ftl" />
+					</html>
+				</platform-specific>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="PopupActions">
+		<section>
+			<actions>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true" />
+				
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="AccountingUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="OrderUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="WorkEffortUiLabels" map-name="uiLabelMap" global="true" />
+			</actions>
+			<widgets />
+		</section>
+	</screen>
+    <screen name="addCvBankNotes">
+        <section>
+            <actions>
+                <set field="headerItem" value="OrganizationCvBank"/>
+                <set field="tabButtonItem" value="CvBank"/>
+                <set field="cvBankId" from-field="parameters.cvBankId"/>
+            </actions>
+            <widgets>                
+	            <screenlet title="Add Other Information">
+	            	<include-form name="addCvBankNotes" location="component://humanres/widget/recruitment/cvbank/CvBankForms.xml"/>
+	            </screenlet> 
+            </widgets>
+        </section>
+    </screen>
+</screens> 

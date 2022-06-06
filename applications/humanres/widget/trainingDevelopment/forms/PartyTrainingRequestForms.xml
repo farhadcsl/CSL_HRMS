@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+    <form name="FindPartyTrainingRequest" type="single" target="FindPartyTrainingRequest" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <!-- <auto-fields-entity entity-name="PartyTrainingRequest" default-field-type="find"/> -->
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="requestId"><text></text></field>
+        <field name="trainingOfferId" title="Training Offer" widget-style="required">
+            <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="TrainingOffer" key-field-name="trainingOfferId" description="${trainingTitle}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="employeeId" title="Employee Id" ><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>       
+        
+        <field name="partyId"><hidden/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field> 
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListPartyTrainingRequest" type="multi" list-name="listIt" use-row-submit="true" 
+    	target="updatePerformanceAppraisal" paginate-target="FindPartyTrainingRequest" 
+    	odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="PartyTrainingRequestCtx"/>
+                <field-map field-name="entityName" value="PartyTrainingRequest"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            
+        </actions>
+        <row-actions>
+	        <set field="employeeId" from-field="parameters.employeeId"/>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions> 
+        <field name="partyId" title="Employee Id"><display description="${userLogin[0].userLoginId}"></display></field>
+        <field name="requestId"><display/></field>
+        <field name="trainingOfferId"><display/></field>
+        <field name="description"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field> 
+        <field name="DetailsLink" title="Details" widget-style="buttontext">
+            <hyperlink target="detailsPartyTrainingRequest" description="Details" also-hidden="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="requestId"/>
+                <parameter param-name="trainingOfferId"/>
+                <parameter param-name="description"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="Delete" widget-style="buttontext">
+            <hyperlink target="deletePartyTrainingRequest" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="partyId"/>
+                <parameter param-name="requestId"/>
+                <parameter param-name="trainingOfferId"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="NewPartyTrainingRequest" type="single" target="createPartyTrainingRequest" default-map-name="perfApprType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="trainingOfferId" title="Training Offer" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="TrainingOffer" key-field-name="trainingOfferId" description="${trainingTitle}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="employeeId" title="Employee Id" position="1"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>       
+        
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="ViewPartyTrainingRequest" type="single" header-row-style="header-row" 
+        default-table-style="basic-table" default-map-name="PartyTrainingRequest">
+        
+        <field  name="requestId" ><display/></field>
+        <field  name="partyId" ><hidden /></field>
+         <field name="emlpoyeeId" title="Employee Id"><display description="${userLoginList[0].userLoginId}"></display></field> 
+        <field  name="trainingOfferId" ><display description="${trainingOffer.trainingTitle}"/></field>
+        <field  name="description" ><display description="${partyTrainingRequest.description}"/></field>
+    </form>
+ </forms>

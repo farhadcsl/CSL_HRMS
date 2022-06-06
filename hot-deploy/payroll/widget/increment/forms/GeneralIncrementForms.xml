@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+
+ 	<form name="generalIncrementProcess" type="single" target="generalIncStepOne" odd-row-style="header-row" default-table-style="basic-table">
+         <field name="employeeId" title="Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true" parameter-name="employeeId">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+        
+        <field name="searchButton" title="Start Process" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	<form name="EmployeeInfo" target="updateBenefits" type="single" >
+	   <actions>
+	   		<entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>	   
+	   </actions>
+	  	<field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+	  	<field name="name">
+	       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/>
+	    </field>
+  	</form>
+  
+  
+  
+  
+  
+  <form name="employeeEarnings" type="list" list-name="emplTempSalaryOptBen" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	
+  	<field name="payrollItemTypeId" title="Benefit Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  
+  	<field name="partyId"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amounts">
+  		<display/> 
+  	</field>
+  	
+  </form>
+  
+   <form name="employeeDeductions" type="list" list-name="emplTempSalaryOptDed"  odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+	  	<field name="payrollItemTypeId" title="Deduction Items">
+	  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+	  	</field>  
+  	<field name="partyId"><hidden/></field>
+  	<field name="amount" parameter-name="amaounts">
+  		<display/> 
+  	</field>
+  	
+  	
+  </form>
+   <form name="incrementForm" type="single" target="updateSalaryInc">
+	  	 
+	  	<field name="partyId"><hidden/></field>
+	  	<field name="incrementAmount" required-field="true" 
+        	tooltip="Only Number Value are allowed eg.(12345)" widget-style="number">
+        	<text maxlength="10"/>
+        </field>
+  	 	<field name="calculationMode">
+            <drop-down allow-empty="false">
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field>
+        <field name="monthNumber" tooltip="${uiLabelMap.CommonRequired}" title="From Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+       <field name="activeFrom" title="Active from Now" parameter-name="activeCheck">
+        	<check/>
+        </field> 
+        
+  	 <field name="submitButton" title="Submit" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+     </form>   
+        
+	<form name="incrementMngAll" type="single" target="updateSalaryIncforAll">
+	  <field name="incrementAmount" required-field="true" 
+        	tooltip="Only Number Value are allowed eg.(12345)" widget-style="number">
+        	<text maxlength="10"/>
+      </field>
+  	  <field name="calculationMode">
+            <drop-down allow-empty="false">
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field>
+  	 	<field name="submitButton" title="Submit" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+  	</form>
+  
+  	<form name="incrementMngAllinfo" type="single" target="updateIncforAll">
+	  <field name="incrementAmount"><display/></field>
+  	  <field name="calculationMode">
+           <display/>
+        </field>
+        <field name="monthNumber" tooltip="${uiLabelMap.CommonRequired}" title="From Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+       	<field name="activeFrom" title="Active from Now" parameter-name="activeCheck">
+        	<check/>
+        </field>        
+  	 	<field name="submitButton" title="Submit" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+  	
+  </form>
+  
+  
+  <form name="FindIncrementDetailView" type="single" target="FindIncrementSalary">
+     
+    <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="incrementAmount"><hidden/></field>
+  	  <field name="calculationMode">
+           <hidden/>
+        </field>
+    	<field name="employeeId" title="Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+     	<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+      </form>
+      
+  <form name="eligibleEmplDetailViewlist" target="UpdateIncrementList" title="dww" list-name="listIt" type="multi" paginate-target="FindIncrementSalary" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+        <actions>
+         
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="PersonPayrollInfo"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+         <field name="incrementAmount"><hidden/></field>
+  	  	<field name="calculationMode">
+           <hidden/>
+        </field>
+         <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+            <hidden value="Y"/>
+        </field>
+        <field name="incrementFlag" title="Select" event="onClick" action="">
+            <check />
+        </field>
+       <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+    
+       <field name="name">
+       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/>
+       </field>
+         <field name="monthNumber">
+            <hidden/>
+        </field>
+         
+        <field name="submitButton" title="Update List" widget-style="smallSubmit">
+            <submit request-confirmation="true"/>
+        </field>
+        
+        
+    </form> 
+  
+</forms>

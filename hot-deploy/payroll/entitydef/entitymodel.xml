@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of Payroll Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+<entity entity-name="PayrollItem"
+            package-name="org.ofbiz.humanres.payroll"
+            title="Party Payroll Item  Type Entity">
+      <field name="payrollItemTypeId" type="id-ne"></field>
+      <field name="invoiceItemTypeId" type="id-ne"></field>
+      <field name="hasTable" type="indicator"></field>
+      <field name="description" type="description"></field>
+      <field name="fromDate" type="date-time"></field>
+      <field name="thruDate" type="date-time"></field>
+	  <field name="isActive" type="indicator"></field>
+      <field name="payrollItemName" type="name"></field>
+      <field name="payrollType" type="indicator"></field>
+      <field name="isCalculatable" type="indicator"></field><!-- Item Taxable Check -->
+      <field name="isCondition" type="indicator"></field>
+      <field name="examptionType" type="id-ne"></field>
+      <field name="examptionAmount" type="currency-amount"></field>
+      <field name="examptionPrecentage" type="currency-amount"></field>
+      <prim-key field="payrollItemTypeId"/>
+      <relation type="one" fk-name="PARTY_IN_PITEM_PAR" title="Parent" rel-entity-name="InvoiceItemType">
+        <key-map field-name="invoiceItemTypeId" rel-field-name="invoiceItemTypeId"/>
+      </relation>
+    </entity>
+    
+    <entity entity-name="PayGrade"
+            package-name="org.ofbiz.payroll"
+            title="Pay Grade Entity">
+      	<field name="payGradeId" type="id-ne"></field>
+      	<field name="payGradeName" type="name"></field>
+      	<field name="comments" type="comment"></field>
+      	<field name="fromDate" type="date-time"></field>
+      	<field name="thruDate" type="date-time"></field>
+	  	<field name="isActive" type="indicator"></field>
+      	<prim-key field="payGradeId"/>
+    </entity>    
+    <entity entity-name="PayrollLevel" 
+    	package-name="org.ofbiz.humanres.payroll">
+      	<field name="levelId" type="id-ne"></field>
+      	<field name="levelName" type="id-ne"></field>
+	  	<field name="isActive" type="indicator"></field>
+	   	<field name="comments" type="comment"></field>
+    	<prim-key field="levelId"/>
+    </entity>    
+    <entity entity-name="BasicSalaryStep" package-name="org.ofbiz.humanres.payroll">
+      	<field name="basicSalaryStepId" type="id-ne"></field>
+      	<field name="basicSalaryStepName" type="id-ne"></field>
+      	<field name="amount" type="currency-amount"></field>
+	  	<field name="isActive" type="indicator"></field>
+	   	<field name="comments" type="comment"></field>
+    	<prim-key field="basicSalaryStepId"/>
+    </entity>
+    <entity entity-name="SalaryTemplate"
+            package-name="org.ofbiz.payroll"
+            title="Salary Template Entity">
+	      <field name="salaryTemplateId" type="id-ne"></field>
+	      <field name="salaryTemplateName" type="name"></field>
+	      <field name="comments" type="comment"></field>
+		  <field name="isActive" type="indicator"></field>
+	      <prim-key field="salaryTemplateId"/>
+    </entity>    
+    <entity entity-name="SalaryTemplateDetails"
+            package-name="org.ofbiz.payroll"
+            title="Salary Template Details Entity">     
+	      <field name="salaryTemplateId" type="id-ne"></field>
+	      <field name="payrollItemTypeId" type="id-ne"></field>
+	      <field name="calculationType" type="id-ne"></field>
+	      <field name="calculationMode" type="id-ne"></field>
+	      <field name="optValue" type="currency-amount"></field>
+	      <field name="amount" type="currency-amount"></field>
+	      <field name="fromDate" type="date-time"></field>
+	      <field name="thruDate" type="date-time"></field>
+		  <field name="isActive" type="indicator"></field>
+	      <field name="comments" type="comment"></field>
+	      <prim-key field="salaryTemplateId"/>
+	      <prim-key field="payrollItemTypeId"/>
+	      <prim-key field="fromDate"/>        
+	      <relation type="one" fk-name="SAL_TEMP_SAL_DE" rel-entity-name="SalaryTemplate">
+	          <key-map field-name="salaryTemplateId"/>
+	      </relation>
+	      <relation type="one" fk-name="SAL_TEMP_PAY_ITE" rel-entity-name="PayrollItem">
+	          <key-map field-name="payrollItemTypeId"/>
+	      </relation>
+    </entity>
+    <entity entity-name="MonthlyTotalSalary" package-name="org.ofbiz.payroll" title="Monthly Total Payable Salary">
+	     <field name="processId" type="id-ne"></field>
+	     <field name="companyId" type="id-ne"></field>
+	     <field name="monthNumber" type="id-ne"></field>
+	     <field name="fiscalYear" type="id-ne"></field>
+	     <field name="totalSalary" type="currency-amount"></field>
+	     <field name="description" type="comment"></field>
+	     <field name="totalEmployee" type="id-ne"></field>
+	     <field name="fromDate" type="date-time"></field>
+	     <field name="isProcessed" type="indicator"></field>
+	     <prim-key field="processId"/>
+    </entity>
+    <entity entity-name="EligibleEmployee"
+            package-name="org.ofbiz.payroll"
+            title="Eligible Employee List">
+	     <field name="processId" type="id-ne"></field>
+	     <field name="eligibleEmployeeId" type="id-ne"></field>
+	     <field name="partyId" type="id-ne"></field>
+	     <field name="companyId" type="id-ne"></field>
+	     <field name="totalSalary" type="currency-amount"></field>
+	     <field name="fromDate" type="date-time"></field>
+	     <field name="monthNumber" type="id-ne"></field>
+	     <field name="versionId" type="id-ne"></field>
+	     <field name="isSalary" type="indicator"></field>
+	     <field name="isActive" type="indicator"></field>
+	     <field name="fiscalYear" type="id-ne"></field>
+    	 <prim-key field="processId"/>
+    	 <prim-key field="partyId"/>
+    	 <relation type="one" fk-name="ELIGIBLE_EMPL_NET" rel-entity-name="MonthlyTotalSalary">
+            <key-map field-name="processId"/>
+         </relation>
+     </entity>
+    <entity entity-name="EmplPresentSalary" 
+            package-name="org.ofbiz.payroll"
+            title="Empl Present salary Entity">
+      <field name="partyId" type="id-ne"></field>
+      <field name="companyId" type="id-ne"></field>
+      <field name="payrollItemTypeId" type="id-ne"></field>
+      <field name="calculationType" type="id-ne"></field>
+      <field name="calculationMode" type="id-ne"></field>
+      <field name="versionId" type="id-ne"></field>
+      <field name="optValue" type="id-ne"></field>
+      <field name="amount" type="currency-amount"></field>
+      <field name="fromDate" type="date-time"></field>
+	  <field name="emplStatusId" type="id-ne"></field>
+      <field name="comments" type="comment"></field>     
+      <prim-key field="partyId"/>
+      <prim-key field="payrollItemTypeId"/> 
+      <relation type="one" fk-name="EMPL_PRE_SAL_PRTY" rel-entity-name="Party">
+          <key-map field-name="partyId"/>
+      </relation>
+      <relation type="one" fk-name="PRE_SAL_PAYITM" rel-entity-name="PayrollItem">
+          <key-map field-name="payrollItemTypeId"/>
+      </relation>
+    </entity>
+    <entity entity-name="EmplPayrollHistory"
+            package-name="org.ofbiz.payroll"
+            title="Empl salary history Entity">
+      <field name="partyId" type="id-ne"></field>
+      <field name="payrollItemTypeId" type="id-ne"></field>
+      <field name="calculationType" type="id-ne"></field>
+      <field name="calculationMode" type="id-ne"></field>
+      <field name="versionId" type="id-ne"></field>
+      <field name="optValue" type="id-ne"></field>
+      <field name="amount" type="currency-amount"></field>
+      <field name="fromDate" type="date-time"></field>
+      <field name="thruDate" type="date-time"></field>
+	  <field name="emplStatusId" type="id-ne"></field>
+      <field name="comments" type="comment"></field>
+      <prim-key field="partyId"/>
+      <prim-key field="payrollItemTypeId"/>
+      <prim-key field="fromDate"/> 
+      <relation type="one" fk-name="EMPL_PAY_PART" rel-entity-name="Party">
+          <key-map field-name="partyId"/>
+      </relation>
+      <relation type="one" fk-name="EMPL_PAY_HIS_PI" rel-entity-name="PayrollItem">
+          <key-map field-name="payrollItemTypeId"/>
+      </relation>
+      <relation type="one" fk-name="EMPL_PAY_STA_PI" rel-entity-name="Party">
+          <key-map field-name="emplStatusId" rel-field-name="statusId"/>
+      </relation>
+      <relation type="one" fk-name="EMPL_PAY_STA_PI" rel-entity-name="EmplSalaryVersion">
+          <key-map field-name="versionId"/>
+      </relation>
+    </entity>
+    <entity entity-name="SalTempBasSalAssign" package-name="org.ofbiz.payroll">
+     	<field name="salaryTemplateId" type="id-ne"></field>
+	    <field name="basicSalaryStepId" type="id-ne"></field>
+	    <field name="comments" type="comment"></field>
+	    <field name="isActive" type="indicator"></field>
+	    <prim-key field="salaryTemplateId"/>
+	    <prim-key field="basicSalaryStepId"/>
+	     <relation type="one" fk-name="Sal_Temp_ASS" rel-entity-name="SalaryTemplate">
+	         <key-map field-name="salaryTemplateId" rel-field-name="salaryTemplateId"/>
+	     </relation>
+	     <relation type="one" fk-name="BAS_SAL_ASSIGN" rel-entity-name="BasicSalaryStep">
+	         <key-map field-name="basicSalaryStepId" rel-field-name="basicSalaryStepId"/>
+	     </relation>
+    </entity>
+    <entity entity-name="PositionSalTempAssign" package-name="org.ofbiz.payroll" title="Employee Position salary template assign">
+     <field name="emplPositionTypeId" type="id-ne"></field>
+    <field name="salaryTemplateId" type="id-ne"></field>
+    <field name="comments" type="comment"></field>
+    <field name="isActive" type="indicator"></field>
+    <prim-key field="salaryTemplateId"/>
+    <prim-key field="emplPositionTypeId"/>
+     <relation type="one" fk-name="Pos_Sal_Temp" rel-entity-name="SalaryTemplate">
+         <key-map field-name="salaryTemplateId" rel-field-name="salaryTemplateId"/>
+     </relation>
+     <relation type="one" fk-name="Pos_EMPL_POS" rel-entity-name="EmplPositionType">
+         <key-map field-name="emplPositionTypeId" rel-field-name="emplPositionTypeId"/>
+     </relation>
+    </entity>
+    <entity entity-name="EmplTempSalaryOpt"
+            package-name="org.ofbiz.payroll"
+            title="Empl Temporary salary Entity">
+      <field name="partyId" type="id-ne"></field>
+      <field name="payrollItemTypeId" type="id-ne"></field>
+      <field name="calculationType" type="id-ne"></field>
+      <field name="calculationMode" type="id-ne"></field>
+     <field name="optValue" type="id-ne"></field>
+      <field name="amount" type="currency-amount"></field>
+      <field name="fromDate" type="date-time"></field>
+	  <field name="emplStatusId" type="id-ne"></field>
+      <field name="comments" type="comment"></field>
+     <field name="monthNumber" type="id-ne"></field>
+     <field name="fiscalYear" type="id-ne"></field>
+     <field name="processId" type="id-ne"></field>
+        <prim-key field="partyId"/>
+        <prim-key field="payrollItemTypeId"/>
+       <prim-key field="processId"/>
+       
+        
+        <relation type="one" fk-name="TEMP_SAL_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        
+        <relation type="one" fk-name="TMP_SAL_PAYITM" rel-entity-name="PayrollItem">
+            <key-map field-name="payrollItemTypeId"/>
+        </relation>
+       <relation type="one" fk-name="TEMP_SAL_NET" rel-entity-name="MonthlyTotalSalary">
+            <key-map field-name="processId"/>
+        </relation> 
+    </entity>
+    
+    <entity entity-name="SalaryItemTem" package-name="org.ofbiz.payroll" title="New Item from Payable Salary">
+     <field name="processId" type="id-ne"></field>
+   	<field name="payrollItemTypeId" type="id-ne"></field>
+     <field name="partyId" type="id-ne"></field>
+     <field name="reqPartyId" type="id-ne"></field>
+     <field name="companyId" type="id-ne"></field>
+    <field name="monthNumber" type="id-ne"></field>
+     <field name="fiscalYear" type="id-ne"></field>
+     <field name="amount" type="currency-amount"></field>
+     <field name="comment" type="comment"></field>
+     <field name="calculationType" type="indicator"></field>
+     
+     <field name="fromDate" type="date-time"></field>
+      <field name="isProcessed" type="indicator"></field>
+     <prim-key field="processId"/>
+     <prim-key field="payrollItemTypeId"/>
+     <prim-key field="partyId"/>
+    </entity>
+    
+    
+    
+    <entity entity-name="EmplFinalSalaryOpt"
+            package-name="org.ofbiz.payroll"
+            title="Empl Final salary Entity">
+      <field name="partyId" type="id-ne"></field>
+      <field name="payrollItemTypeId" type="id-ne"></field>
+      <field name="calculationType" type="id-ne"></field>
+      <field name="calculationMode" type="id-ne"></field>
+     <field name="optValue" type="id-ne"></field>
+      <field name="amount" type="currency-amount"></field>
+      <field name="fromDate" type="date-time"></field>
+	  <field name="emplStatusId" type="id-ne"></field>
+      <field name="comments" type="comment"></field>
+     <field name="monthNumber" type="id-ne"></field>
+     <field name="fiscalYear" type="id-ne"></field>
+     <field name="processId" type="id-ne"></field>
+     <field name="isAccounting" type="indicator"></field>
+        <prim-key field="partyId"/>
+        <prim-key field="payrollItemTypeId"/>
+       <prim-key field="processId"/>
+  
+        
+        <relation type="one" fk-name="FINAL_SAL_PTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        
+        <relation type="one" fk-name="FINAL_SAL_PAYITM" rel-entity-name="PayrollItem">
+            <key-map field-name="payrollItemTypeId"/>
+        </relation>
+       <relation type="one" fk-name="FINAL_SAL_MON_TS" rel-entity-name="MonthlyTotalSalary">
+            <key-map field-name="processId"/>
+        </relation> 
+    </entity>
+    <entity entity-name="ContessaSalaryPro" package-name="org.ofbiz.payroll">
+    	<field name="processId" type="id-ne"></field>
+    	<field name="fiscalYear" type="id-ne"></field>
+    	<field name="companyId" type="id-ne"></field>
+    	<field name="monthNumber" type="id-ne"></field>
+    	<field name="isBonus" type="id-ne"></field>
+    	<field name="isArrear" type="id-ne"></field>
+    	<prim-key field="processId"/>
+    </entity>
+    
+     <entity entity-name="EmployeeSalaryFinal"
+            package-name="org.ofbiz.payroll"
+            title=" Employee Salary Final List">
+      <field name="processId" type="id-ne"></field>
+     <field name="partyId" type="id-ne"></field>
+      <field name="companyId" type="id-ne"></field>
+      <field name="totalSalary" type="currency-amount"></field>
+      <field name="fromDate" type="date-time"></field>
+      <field name="monthNumber" type="id-ne"></field>
+      <field name="versionId" type="id-ne"></field>
+    	<field name="isActive" type="indicator"></field>
+    	<field name="isSalary" type="indicator"></field>
+     <field name="fiscalYear" type="id-ne"></field>
+    		<prim-key field="processId"/>
+    		<prim-key field="partyId"/>
+    	<relation type="one" fk-name="EMPL_SALARY_NET" rel-entity-name="MonthlyTotalSalary">
+            <key-map field-name="processId"/>
+        </relation>
+     </entity>
+    <extend-entity entity-name="InvoiceItemType">
+        <field name="category" type="indicator" />
+        <field name="statusId" type="id-ne" />
+    </extend-entity>
+     <extend-entity entity-name="Invoice">
+        <field name="monthNumber" type="id-ne" />
+        <field name="fiscalYear" type="id-ne" />
+    </extend-entity>
+    
+    
+    
+    
+      <entity entity-name="ApplicantSalarySetup"
+            package-name="org.ofbiz.payroll"
+            title="Applicant Temporary Salary Setup Entity">
+	      <field name="applicantId" type="id-ne"></field>
+	      <field name="partyId" type="id-ne"></field>
+	      <field name="payGradeId" type="id-ne"></field>
+	      <field name="salaryLevelId" type="id-ne"></field>
+	      <field name="salaryTemplateId" type="id-ne"></field>
+	      <field name="basicSalaryStepId" type="id-ne"></field>
+	      <field name="comments" type="comment"></field>
+	      <field name="dateAdded" type="date-time"></field>
+		  
+        <prim-key field="partyId"/>
+        
+        <relation type="one" fk-name="SAL_SETUP_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="SAL_SETUP_PG" rel-entity-name="PayGrade">
+            <key-map field-name="payGradeId"/>
+        </relation>
+		<relation type="one" fk-name="SAL_SETUP_LEVEL" rel-entity-name="PayrollLevel">
+            <key-map field-name="levelId"/>
+        </relation>  
+        <relation type="one" fk-name="SAL_SETUP_STI" rel-entity-name="SalaryTemplate">
+            <key-map field-name="salaryTemplateId"/>
+        </relation>
+		<relation type="one" fk-name="SAL_SETUP_BSSI" rel-entity-name="BasicSalaryStep">
+            <key-map field-name="basicSalaryStepId"/>
+        </relation>  
+    </entity>
+</entitymodel>

@@ -1,0 +1,773 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+	
+	<description> Human Resources Manager Attendance Manage Module Site Configuration File</description>
+	
+	<!-- view handlers -->
+	<handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler" />
+    <handler name="datavision" type="view" class="org.ofbiz.webapp.view.DataVisionViewHandler"/>
+    <handler name="jasperreportspdf" type="view" class="org.ofbiz.webapp.view.JasperReportsPdfViewHandler"/>
+    <handler name="jasperreportsxml" type="view" class="org.ofbiz.webapp.view.JasperReportsXmlViewHandler"/>
+
+	<!-- For Attendance Reports -->
+	<request-map uri="AttendanceReports">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AttendanceReports" />
+	</request-map>
+	<!--Start Tiffin Report -->
+	<request-map uri="TiffinReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="TiffinReport" />
+	</request-map>
+	<request-map uri="TiffinReport.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="TiffinReportpdf"/>
+    </request-map>
+    <!--End Tiffin Report -->
+    
+    <!-- Start Tiffin Bill Summary -->
+    <request-map uri="MonthlyTiffinBillSummary">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="MonthlyTiffinBillSummary" />
+	</request-map>
+	<request-map uri="MonthlyTiffinBillSummary.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="MonthlyTiffinBillSummarypdf"/>
+    </request-map>
+    
+    <!-- End Tiffin Bill Summary -->
+	
+	<!--Start DailyAbsent Report  -->
+	<request-map uri="DailyAbsentReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyAbsentReport" />
+	</request-map>
+	<request-map uri="DailyAbsentReport1">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyAbsentReport1" />
+	</request-map>
+   <request-map uri="DailyMonthlyAbsenteeism">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyMonthlyAbsenteeism" />
+   </request-map>
+
+<!--    <request-map uri="exportDailyMonthlyAbsenteeismToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportDailyMonthlyAbsenteeismToExcel" />   
+        <response name="success" type="request-redirect" value="DailyMonthlyAbsenteeism"/>
+      
+   </request-map> -->
+   <request-map uri="DailyMonthlyAbsenteeismPdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DailyMonthlyAbsenteeismPdf"/>
+    </request-map>
+	
+	<request-map uri="DailyAbsentReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DailyAbsentReportpdf"/>
+    </request-map>
+    
+    <!-- Export Employees data -->
+    <request-map uri="exportDailyAbsenceToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportDailyAbsenceToExcel" />   
+        <response name="success" type="request-redirect" value="DailyAbsentReport"/>
+      
+    </request-map>
+    
+    <request-map uri="exportDailyAbsenceToExcel1">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportDailyAbsenceToExcel1" />   
+        <response name="success" type="request-redirect" value="DailyAbsentReport1"/>
+      
+    </request-map>
+    <!--End DailyAbsent Report  -->
+    
+    <!--Start TwoDaysReport Report  -->
+    <request-map uri="TwoDaysReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="TwoDaysReportPdf"/>
+    </request-map>
+    
+    <request-map uri="Attendance2daysReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="Attendance2daysReport" />
+	</request-map>
+	
+	<request-map uri="exportTwoDaysReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportTwoDaysReportToExcel" />   
+        <response name="success" type="request-redirect" value="Attendance2daysReport"/>      
+    </request-map>
+    <!--End TwoDaysReport Report  -->
+    
+    <!--Start ThreeDaysReport Report  -->
+    <request-map uri="ThreeDaysReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ThreeDaysReportPdf"/>
+    </request-map>
+    
+    <request-map uri="Attendance3daysReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="Attendance3daysReport" />
+	</request-map>
+	
+	<request-map uri="exportThreeDaysReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportThreeDaysReportToExcel" />   
+        <response name="success" type="request-redirect" value="Attendance3daysReport"/>      
+    </request-map>
+    <!--End ThreeDaysReport Report  -->
+    
+     <!--Start SectionWiseReport Report  -->
+     <request-map uri="SectionWiseReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="SectionWiseReportPdf"/>
+    </request-map>
+    
+    <request-map uri="SectionWiseStrenth">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="SectionWiseStrenth" />
+	</request-map>
+    
+    <request-map uri="exportSectionWiseReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportSectionWiseReportToExcel" />   
+        <response name="success" type="request-redirect" value="SectionWiseStrenth"/>      
+    </request-map>
+    <!--End SectionWiseReport Report  -->
+    
+    <!--Start InAttenMissingReport  -->
+    <request-map uri="InAttenMissingReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="InAttenMissingReportPdf"/>
+    </request-map>
+    <request-map uri="InAttendanceMissing">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="InAttendanceMissing" />
+	</request-map>
+	
+	<request-map uri="exportInMissingListReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportInMissingListReportToExcel" />   
+        <response name="success" type="request-redirect" value="InAttendanceMissing"/>      
+    </request-map>
+   <!--End InAttenMissingReport  -->
+    
+    <!--Start OutAttenMissingReport  -->
+    <request-map uri="OutAttenMissingReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="OutAttenMissingReportPdf"/>
+    </request-map>
+    
+	<request-map uri="OutAttendanceMissing">
+     <security https="true" auth="true" />
+     <response name="success" type="view" value="OutAttendanceMissing" />
+    </request-map>
+    
+    <request-map uri="exportOutMissingListReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportOutMissingListReportToExcel" />   
+        <response name="success" type="request-redirect" value="OutAttendanceMissing"/>      
+    </request-map>
+     <!--End OutAttenMissingReport  -->
+	
+	<!--Start DailyLateReport  -->
+	<request-map uri="DailyLateReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyLateReport" />
+	</request-map>
+	
+	<request-map uri="DailyLateReport1">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyLateReport1" />
+	</request-map>
+	
+	<request-map uri="exportDailyLateToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportDailyLateToExcel" />   
+        <response name="success" type="request-redirect" value="DailyLateReport1"/>
+  
+    </request-map>
+    
+    <request-map uri="DailyLateReportPdf1.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DailyLateReportPdf1"/>
+    </request-map>
+	
+	<!--End DailyLateReport  -->
+	
+	<!--Start ManPower Position Report  -->
+	
+	<request-map uri="ManpowerPositionReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ManpowerPositionReport" />
+	</request-map>
+
+	<request-map uri="exportManpowerPositionReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportManpowerGradeToExcel" />   
+        <response name="success" type="request-redirect" value="ManpowerPositionReport"/>
+  
+    </request-map>
+    
+    <request-map uri="ManpowerPositionReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ManpowerPositionReportPdf"/>
+    </request-map>
+    
+	<!--End ManPower Position Report  -->
+	
+	<!--Start Monthly Late,Absent,Leave,HalfDay Report  -->
+	
+	<request-map uri="MonthlyLateAbsentLeaveHalfDay">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="MonthlyLateAbsentLeaveHalfDay" />
+	</request-map>
+	
+	<request-map uri="MonthlyLateAbsentLeaveHalfDayPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="MonthlyLateAbsentLeaveHalfDayPdf"/>
+    </request-map>
+    <request-map uri="exportMonthlySummeryForLateAbsentLeaveHalfdayReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportMonthlySummeryForLateAbsentLeaveHalfdayReportToExcel" />   
+        <response name="success" type="request-redirect" value="MonthlyLateAbsentLeaveHalfDay"/> 
+    </request-map>
+	
+	<!--End Monthly Late,Absent,Leave,HalfDay Report  -->
+	
+	<!--Start Early Out Report  -->
+	
+	<request-map uri="DailyEarlyoutReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyEarlyoutReport" />
+	</request-map>
+	
+	<request-map uri="DailyEarlyoutReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DailyEarlyoutReportPdf"/>
+    </request-map>
+    <request-map uri="exportDailyEarlyoutReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportDailyEarlyoutReportToExcel" />   
+        <response name="success" type="request-redirect" value="DailyEarlyoutReport"/> 
+    </request-map>
+    <request-map uri="DailyAttendanceViewForm">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DailyAttendanceViewForm"/>
+    </request-map>
+	<request-map uri="IndividualAttendanceReport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="IndividualAttendanceReport"/>
+    </request-map>
+    <request-map uri="DepartmentAttendanceReport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DepartmentAttendanceReport"/>
+    </request-map>
+    
+    <request-map uri="UserAttendaceReport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="UserAttendaceReport"/>
+    </request-map>
+	<!--End Early Out Report  -->
+	
+	<!--Start Leave Summery Report for Permanent  -->
+	
+	<!-- <request-map uri="LeaveSummeryReportPermanent">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="LeaveSummeryReportPermanent" />
+	</request-map>
+
+	<request-map uri="exportLeaveSummeryReportPermanentToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportLeaveSummeryReportPermanentToExcel" />   
+        <response name="success" type="request-redirect" value="LeaveSummeryReportPermanent"/> 
+    </request-map>
+    
+    <request-map uri="LeaveSummeryReportPermanentPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LeaveSummeryReportPermanentPdf"/>
+    </request-map> -->
+    
+	<!-- End Leave Summery Report for Permanent  -->
+	
+	<!--Start OverTimeReport  -->
+	<request-map uri="OverTimeReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="OverTimeReport" />
+	</request-map>
+	<request-map uri="exportOTReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportOTReportToExcel" />   
+        <response name="success" type="request-redirect" value="OverTimeReport"/>
+  
+    </request-map>
+    
+    
+    
+	<!--End OverTimeReport  -->
+	
+	
+	<!--Start LeaveSummeryReportProbition  -->
+	<!-- <request-map uri="LeaveSummeryReportProbition">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="LeaveSummeryReportProbition" />
+	</request-map>
+	<request-map uri="exportLeaveSummeryReportProbitionToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportLeavesummeryProbitionToExcel" />   
+        <response name="success" type="request-redirect" value="LeaveSummeryReportProbition"/>
+  	</request-map>
+    
+     <request-map uri="ProbitionLeaveReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ProbitionLeaveReportPdf"/>
+    </request-map> -->
+    
+    <request-map uri="LeaveSummeryReportDesignation">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="LeaveSummeryReportDesignation" />
+	</request-map>
+	<request-map uri="exportLeaveSummeryReportDesignationToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportLeavesummeryDesignationToExcel" />   
+        <response name="success" type="request-redirect" value="LeaveSummeryReportProbition"/>
+  	</request-map>
+    
+     <request-map uri="DesignationLeaveReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DesignationLeaveReportPdf"/>
+    </request-map>
+	<!--End LeaveSummeryReportProbition  -->
+	
+	<!--Start MonthlyAttendanceBonusReport  -->
+	<request-map uri="MonthlyAttendanceBonusReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="MonthlyAttendanceBonusReport" />
+	</request-map>
+	
+	<request-map uri="exportMonthlyBonusToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportMonthlyBonusToExcel" />   
+        <response name="success" type="request-redirect" value="MonthlyAttendanceBonusReport"/>
+  
+    </request-map>
+	
+	<!--End MonthlyAttendanceBonusReport  -->
+	
+	<!--Start YearlyAttendanceBonusReport  -->
+	<request-map uri="YearlyAttendanceBonusReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="YearlyAttendanceBonusReport" />
+	</request-map>
+	
+	         
+    <request-map uri="exportYABReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="exportYABReportToExcel" />   
+        <response name="success" type="request-redirect" value="YearlyAttendanceBonusReport"/>
+  
+    </request-map>
+	
+	<!--End YearlyAttendanceBonusReport  -->
+
+	
+	<!--Start Job Card  -->
+	<request-map uri="JobCard">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="JobCard" />
+	</request-map>
+	
+	<request-map uri="ExportJobCardReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendancePreferences" invoke="ExportJobCardReportToExcel" />   
+        <response name="success" type="request-redirect" value="JobCard"/>
+    </request-map>
+    
+    <request-map uri="JobCardReportPdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="JobCardReportPdf"/>
+    </request-map>
+    <!--End Job Card  -->
+	
+	
+	<!--Start NewEmplStatusReport  -->
+	<request-map uri="NewEmplStatusReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="NewEmplStatusReport" />
+	</request-map>
+	<request-map uri="exportNewEmplStatusReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportNewEmplStatusReportToExcel" />   
+        <response name="success" type="request-redirect" value="NewEmplStatusReport"/>      
+    </request-map>
+    <request-map uri="NewEmplStatusReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewEmplStatusReportPdf">
+        <redirect-parameter name="date"/>
+        </response>
+    </request-map>
+	<!--End NewEmplStatusReport -->
+	
+	<!--Start ResignedEmployeeReport  -->
+	<request-map uri="ResignedEmployeeReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ResignedEmployeeReport" />
+	</request-map>
+	<request-map uri="exportResignedEmployeeReportToExcel">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportResignedEmployeeReportToExcel" />   
+        <response name="success" type="request-redirect" value="ResignedEmployeeReport"/>      
+    </request-map>
+    <request-map uri="ResignedEmployeeReportPdf.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ResignedEmployeeReportPdf">
+        <redirect-parameter name="date"/>
+        </response>
+    </request-map>
+	<!--End ResignedEmployeeReport -->
+	
+	<!--Start  DailyMonthlyMigration -->
+	<request-map uri="DailyMonthlyMigration">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DailyMonthlyMigration" />
+	</request-map>
+	<request-map uri="DailyMonthlyMigration.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DailyMonthlyMigrationpdf"/>
+    </request-map>
+    <!--End  DailyMonthlyMigration -->
+    <!--Start  Lost Card Info -->
+	<request-map uri="LostCardInfo">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="LostCardInfo" />
+	</request-map>
+	<request-map uri="exportLostCardInfo">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.attendance.AttendanceReports" invoke="exportLostCardInfo" />   
+        <response name="success" type="request-redirect" value="LostCardInfo"/>     
+    </request-map>
+	<request-map uri="LostCardInfoPdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LostCardInfoPdf"/>
+    </request-map>
+    <!--End  Lost Card Info -->
+     <!--Start OTHolidayAndCostReport  -->
+    <request-map uri="OTHolidayAndCostReport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="OTHolidayAndCostReport"/>
+    </request-map>
+    <request-map uri="OTHolidayAndCostReport.pdf">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="OTHolidayAndCostReportpdf"/>
+    </request-map>
+    
+    <request-map uri="HolidayBenefitReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="HolidayBenefitReport" />
+	</request-map>
+    <!--End OTHolidayAndCostReport  -->
+    
+    <!-- MonthlyAttendanceSummary  start -->
+	<request-map uri="MonthlyAttendanceSummary">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="MonthlyAttendanceSummary" />
+	</request-map>
+	<!-- 	MonthlyAttendanceSummaryPdf.pdf -->
+	<request-map uri="MonthlyAttendanceSummaryPdf.pdf">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="MonthlyAttendanceSummaryPdf" />
+	</request-map>
+	<!-- MonthlyAttendanceSummery  end -->
+	
+	<!-- ExtraOvertimePaymentSheet  start -->
+	<request-map uri="ExtraOvertimePaymentSheet">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimePaymentSheet" />
+	</request-map>
+	<!-- 	ExtraOvertimePaymentSheet.pdf -->
+	<request-map uri="ExtraOvertimePaymentSheetPdf.pdf">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimePaymentSheetPdf" />
+	</request-map>
+	<!-- ExtraOvertimePaymentSheet  end -->
+	
+	<!-- ExtraOvertimePaymentSheetLedger  start -->
+	<request-map uri="ExtraOvertimePaymentSheetLedger">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimePaymentSheetLedger" />
+	</request-map>
+	<!-- 	ExtraOvertimePaymentSheet.pdf -->
+	<request-map uri="ExtraOvertimePaymentSheetLedgerPdf.pdf">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimePaymentSheetLedgerPdf" />
+	</request-map>
+	<!-- ExtraOvertimePaymentSheet Ledger end -->
+	
+	<request-map uri="HolidayBenefitReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="HolidayBenefitReport" />
+	</request-map>
+	<request-map uri="findHolidayBenefitReport">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findHolidayBenefit"/>
+		<response name="success" type="view" value="findHolidayBenefitReport" />
+	</request-map>
+	
+	<request-map uri="HolidayOtLedger">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="HolidayOtLedger" />
+	</request-map>
+    <request-map uri="findHolidayOtLedgerReport">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findHolidayOtLedger"/>
+		<response name="success" type="view" value="findHolidayOtLedgerReport" />
+	</request-map>
+	<request-map uri="HolidayWorkSummery">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="HolidayWorkSummery" />
+	</request-map>	
+	<request-map uri="findHolidayWorkSummery">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findHolidayWorkSummery"/>
+		<response name="success" type="view" value="findHolidayWorkSummery" />
+	</request-map>
+    <request-map uri="AttendanceBonus">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AttendanceBonus" />
+	</request-map>
+	<request-map uri="findAttendanceBonus">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findAttendanceBonus"/>
+		<response name="success" type="view" value="findAttendanceBonus" />
+	</request-map>
+	<request-map uri="OvertimeStatement">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="OvertimeStatement" />
+	</request-map>
+	<request-map uri="findOvertimeStatement">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findOvertimeStatement"/>
+		<response name="success" type="view" value="findOvertimeStatement" />
+	</request-map>
+	
+	<request-map uri="ExtraOvertimeSummary">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimeSummary" />
+	</request-map>
+	<request-map uri="findExtraOvertimeSummary">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findExtraOvertimeSummary"/>
+		<response name="success" type="view" value="findExtraOvertimeSummary" />
+	</request-map>
+	
+	<request-map uri="SalaryManpower">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="SalaryManpower"/>
+	</request-map>
+	<request-map uri="findSalaryManpower">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findSalaryManpower"/>
+		<response name="success" type="view" value="findSalaryManpower"/>
+	</request-map>
+	<request-map uri="SalaryOtSummery">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="SalaryOtSummery" />
+	</request-map>
+	<request-map uri="findSalaryOtSummery">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findSalaryOtSummery"/>
+		<response name="success" type="view" value="findSalaryOtSummery" />
+	</request-map>
+	
+	<request-map uri="RecruitAbsenteeismMigration">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="RecruitAbsenteeismMigration" />
+	</request-map>
+	<request-map uri="findRecruitAbsenteeismMigration">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findRecruitAbsenteeismMigration"/>
+		<response name="success" type="view" value="findRecruitAbsenteeismMigration" />
+	</request-map>	
+	
+	<!-- ExtraOvertimeStatement start-->
+	<request-map uri="ExtraOvertimeStatement">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimeStatement"/>
+	</request-map>
+	<request-map uri="ExtraOvertimeStatementPdf">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ExtraOvertimeStatementPdf"/>
+	</request-map>
+	<request-map uri="DailyAttendanceViewReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.attendance.EmployeeAttendance" invoke="generateReport"/>
+        <response name="success" type="view" value="DailyAttendanceViewReport.pdf"/>
+   </request-map>
+	<request-map uri="IndividualAttendanceReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.attendance.IndividualEmployeeAttendance" invoke="generateReport"/>
+        <response name="success" type="view" value="IndividualAttendanceReport.pdf"/>
+   </request-map>
+	<request-map uri="DepartmentAttendanceReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.attendance.DepartmentAttendanceReport" invoke="generateReport"/>
+        <response name="success" type="view" value="DepartmentAttendanceReport.pdf"/>
+   </request-map>
+	<!-- ExtraOvertimeStatement end-->
+	
+	<!--View Mappings -->
+	
+	<!--AttendanceReports  -->
+	<view-map name="DepartmentAttendanceReport.pdf" type="jasperreportspdf" page="/humanres/reports/attendance/DepartmentWiseAttendance.jrxml" content-type="application/pdf" encoding="none" info=""/>
+	<view-map name="IndividualAttendanceReport.pdf" type="jasperreportspdf" page="/humanres/reports/attendance/IndividualAttendanceReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+	<view-map name="IndividualAttendanceReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#IndividualAttendanceReport"></view-map>
+	<view-map name="UserAttendaceReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#UserAttendaceReport"></view-map>
+	<view-map name="DepartmentAttendanceReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DepartmentAttendanceReport"></view-map>
+	<view-map name="DailyAttendanceViewReport.pdf" type="jasperreportspdf" page="/humanres/reports/attendance/AttendanceReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+	<view-map name="DailyAttendanceViewForm" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyAttendanceViewForm"></view-map>
+	<view-map name="AttendanceReports" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#AttendanceReports"></view-map>
+	<view-map name="DailyAbsentReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyAbsentReport"></view-map>
+	<view-map name="DailyAbsentReportpdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyAbsentReportpdf" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="DailyAbsentReport1" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyAbsentReport1"></view-map>
+    <!--DailyMonthlyAbsenteeism  -->
+	<view-map name="DailyMonthlyAbsenteeism" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyMonthlyAbsenteeism"></view-map>
+	<view-map name="DailyMonthlyAbsenteeismPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyMonthlyAbsenteeismPdf" content-type="application/pdf" encoding="none"></view-map>
+
+	<!--DailyLateReport  -->
+	<view-map name="DailyLateReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyLateReport"></view-map>
+	
+	<view-map name="DailyLateReport1" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyLateReport1"></view-map>
+	
+	<view-map name="DailyLateReportPdf1" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyLateReportPdf1" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!--Manpower Position Report  -->
+	<view-map name="ManpowerPositionReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ManpowerPositionReport"></view-map>
+	
+	<view-map name="ManpowerPositionReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ManpowerPositionReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!-- Monthly Late,Absent,Leave,HalfDay Report  -->
+	<view-map name="MonthlyLateAbsentLeaveHalfDay" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyLateAbsentLeaveHalfDay"></view-map>
+
+	<view-map name="MonthlyLateAbsentLeaveHalfDayPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyLateAbsentLeaveHalfDayPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!-- Monthly Earlyout Report  -->
+	<view-map name="DailyEarlyoutReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyEarlyoutReport"></view-map>
+
+	<view-map name="DailyEarlyoutReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyEarlyoutReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+		
+	<!-- Leave Summery Report Permanent  -->
+	<!-- <view-map name="LeaveSummeryReportPermanent" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#LeaveSummeryReportPermanent"></view-map>
+	
+	<view-map name="LeaveSummeryReportPermanentPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#LeaveSummeryReportPermanentPdf" content-type="application/pdf" encoding="none"></view-map> -->
+	
+	
+	<!--OverTimeReport  -->
+	<view-map name="OverTimeReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#OverTimeReport"></view-map>
+	
+	<!--LeaveSummeryReportProbition  -->
+	<!-- <view-map name="LeaveSummeryReportProbition" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#LeaveSummeryReportProbition"></view-map>
+	<view-map name="ProbitionLeaveReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ProbitionLeaveReportPdf" content-type="application/pdf" encoding="none"></view-map> -->
+	
+	<view-map name="LeaveSummeryReportDesignation" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#LeaveSummeryReportDesignation"></view-map>
+	<view-map name="DesignationLeaveReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DesignationLeaveReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	
+	<!--MonthlyAttendanceBonusReport  -->
+	<view-map name="MonthlyAttendanceBonusReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyAttendanceBonusReport"></view-map>
+	
+	<!--YearlyAttendanceBonusReport  -->
+	<view-map name="YearlyAttendanceBonusReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#YearlyAttendanceBonusReport"></view-map>
+	
+	<!--Attendance2daysReport  -->
+	<view-map name="Attendance2daysReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#Attendance2daysReport"></view-map>
+	<view-map name="TwoDaysReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#TwoDaysReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!--ThreeDaysReportPdf  -->
+	<view-map name="Attendance3daysReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#Attendance3daysReport"></view-map>
+	<view-map name="ThreeDaysReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ThreeDaysReportPdf" content-type="application/pdf" encoding="none"></view-map>	
+	
+	<!--SectionWiseStrenth  -->
+	<view-map name="SectionWiseStrenth" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#SectionWiseStrenth"></view-map>
+	<view-map name="SectionWiseReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#SectionWiseReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!--InAttendanceMissing  -->
+	<view-map name="InAttendanceMissing" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#InAttendanceMissing"></view-map>
+	<view-map name="InAttenMissingReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#InAttenMissingReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!--OutAttendanceMissing  -->
+	<view-map name="OutAttendanceMissing" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#OutAttendanceMissing"></view-map>
+    <view-map name="OutAttenMissingReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#OutAttenMissingReportPdf" content-type="application/pdf" encoding="none"></view-map>
+		
+	<!--Lost Card Info  -->
+    <view-map name="LostCardInfo" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#LostCardInfo"></view-map>
+    <view-map name="LostCardInfoPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#LostCardInfoPdf" content-type="application/pdf" encoding="none"></view-map>
+	<!--JobCard  -->
+	<view-map name="JobCard" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#JobCard"></view-map>
+	<view-map name="JobCardReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#JobCardReportPdf" content-type="application/pdf" encoding="none"></view-map>
+
+	<!-- TiffinReport -->
+	<view-map name="TiffinReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#TiffinReport"></view-map>
+	<view-map name="TiffinReportpdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#TiffinReportpdf" content-type="application/pdf" encoding="none"></view-map>
+		
+	<!--NewEmplStatusReport  -->
+	<view-map name="NewEmplStatusReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#NewEmplStatusReport"></view-map>
+	<view-map name="NewEmplStatusReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#NewEmplStatusReportPdf" content-type="application/pdf" encoding="none"></view-map>
+
+	<!-- DailyMonthlyMigration -->
+    <view-map name="DailyMonthlyMigration" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyMonthlyMigration"></view-map>
+	<view-map name="DailyMonthlyMigrationpdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#DailyMonthlyMigrationpdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!--NewEmplStatusReport  -->
+	<view-map name="ResignedEmployeeReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ResignedEmployeeReport"></view-map>
+	<view-map name="ResignedEmployeeReportPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ResignedEmployeeReportPdf" content-type="application/pdf" encoding="none"></view-map>
+	<!--OTHolidayAndCostReport  -->
+ 	<view-map name="OTHolidayAndCostReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#OTHolidayAndCostReport"></view-map>
+	<view-map name="OTHolidayAndCostReportpdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#OTHolidayAndCostReportpdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!-- MonthlyTiffinBillSummary -->
+	<view-map name="MonthlyTiffinBillSummary" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyTiffinBillSummary"></view-map>
+	<view-map name="MonthlyTiffinBillSummarypdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyTiffinBillSummarypdf" content-type="application/pdf" encoding="none"></view-map>
+    <!-- HolidayBenefitReport -->
+	<view-map name="HolidayBenefitReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#HolidayBenefitReport"></view-map>
+	<!-- MonthlyAttendanceSummary  start -->
+	<view-map name="MonthlyAttendanceSummary" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyAttendanceSummary"></view-map>
+	<!-- MonthlyAttendanceSummaryPdf -->
+	<view-map name="MonthlyAttendanceSummaryPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#MonthlyAttendanceSummaryPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+   <!-- HolidayBenefitReport -->
+	<view-map name="HolidayBenefitReport" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#HolidayBenefitReport"></view-map>
+	<view-map name="findHolidayBenefitReport" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findHolidayBenefitReport" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="HolidayOtLedger" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#HolidayOtLedger"></view-map>
+	<view-map name="findHolidayOtLedgerReport" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findHolidayOtLedgerReport" content-type="application/pdf" encoding="none"></view-map>	
+	<view-map name="HolidayWorkSummery" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#HolidayWorkSummery"></view-map>
+	<view-map name="findHolidayWorkSummery" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findHolidayWorkSummery" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="AttendanceBonus" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#AttendanceBonus"></view-map>
+	<view-map name="findAttendanceBonus" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findAttendanceBonus" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="OvertimeStatement" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#OvertimeStatement"></view-map>
+	<view-map name="findOvertimeStatement" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findOvertimeStatement" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="ExtraOvertimeSummary" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimeSummary"></view-map>
+	<view-map name="findExtraOvertimeSummary" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findExtraOvertimeSummary" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="SalaryManpower" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#SalaryManpower"></view-map>
+	<view-map name="findSalaryManpower" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findSalaryManpower" content-type="application/pdf" encoding="none"></view-map>
+	<view-map name="SalaryOtSummery" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#SalaryOtSummery"></view-map>
+	<view-map name="findSalaryOtSummery" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findSalaryOtSummery" encoding="none"></view-map>
+	<view-map name="RecruitAbsenteeismMigration" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#RecruitAbsenteeismMigration"></view-map>
+	<view-map name="findRecruitAbsenteeismMigration" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#findRecruitAbsenteeismMigration" content-type="application/pdf" encoding="none"></view-map>
+	
+	
+	<view-map name="ExtraOvertimeStatement" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimeStatement"></view-map>
+	<view-map name="ExtraOvertimeStatementPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimeStatementPdf" content-type="application/pdf" encoding="none"></view-map>
+		
+	<!-- ExtraOvertimePaymentSheet  start -->
+	<view-map name="ExtraOvertimePaymentSheet" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimePaymentSheet"></view-map>
+	<!-- ExtraOvertimePaymentSheet PDF -->
+	<view-map name="ExtraOvertimePaymentSheetPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimePaymentSheetPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+	<!-- ExtraOvertimePaymentSheetLedger  start -->
+	<view-map name="ExtraOvertimePaymentSheetLedger" type="screen" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimePaymentSheetLedger"></view-map>
+	<!-- ExtraOvertimePaymentSheetLedgerPdf PDF -->
+	<view-map name="ExtraOvertimePaymentSheetLedgerPdf" type="screenfop" page="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml#ExtraOvertimePaymentSheetLedgerPdf" content-type="application/pdf" encoding="none"></view-map>
+	
+</site-conf>

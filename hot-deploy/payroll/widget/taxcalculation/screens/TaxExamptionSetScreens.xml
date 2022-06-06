@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    
+    <screen name="PayrollItemListForExamption">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Tax Condition Create"/>
+                <set field="headerItem" value="TaxCalculation"/>
+                <set field="tabButtonItem" value="TaxExamptionSet"/>
+                <entity-one entity-name="PayrollItem" value-field="payrollItem"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu location="component://payroll/widget/PayrollMenus.xml" name="TaxCalculationMenus"/>
+                        <screenlet title="Payroll Item Tax Examption List">
+                            <section>
+                                <widgets>
+                                    <include-form name="PayrollItemListForExamption" location="component://payroll/widget/taxcalculation/forms/TaxExamptionSetForms.xml"/> 
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditPayrollItemForExamption">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Tax Condition Update"/>
+                <set field="headerItem" value="TaxCalculation"/>
+                <set field="tabButtonItem" value="TaxExamptionSet"/>
+                <set field="payrollItemTypeId" from-field="parameters.payrollItemTypeId"/>
+                <entity-one entity-name="PayrollItem" value-field="payrollItem"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu location="component://payroll/widget/PayrollMenus.xml" name="TaxCalculationMenus"/>
+                        <screenlet title="Payroll Item Tax Examption Configuration">
+                            <section>
+                                <widgets>
+                                    <include-form name="EditPayrollItemForExamption" location="component://payroll/widget/taxcalculation/forms/TaxExamptionSetForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    
+</screens>

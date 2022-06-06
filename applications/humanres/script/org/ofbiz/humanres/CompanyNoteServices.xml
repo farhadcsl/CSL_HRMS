@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+        
+       
+    <!-- Company Notice  -->
+    <simple-method method-name="CreateEmpNote" short-description="Create Emp Note">
+        <make-value entity-name="CompanyNote" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <sequenced-id sequence-name="CompanyNote" field="newEntity.companyNoteId"/>        
+        <if-empty field="newEntity.activeStatus">
+        	<set field="newEntity.activeStatus" default-value="active"/>
+        </if-empty>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+		<if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+        	<set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value=" Company Notice Successfully Created"/>
+    </simple-method>
+	<simple-method method-name="deleteOrgEmpNote" short-description="Delete Company Notice">
+        <entity-one entity-name="CompanyNote" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Company Notice Successfully Deleted"/>
+    </simple-method>
+    <simple-method method-name="UpdateOrgEmpNote" short-description="Update Company Notice">
+        <entity-one entity-name="CompanyNote" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>        
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Company Notice Successfully Updated"/>
+    </simple-method>  
+    
+</simple-methods>

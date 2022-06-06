@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+     
+     
+   <form name="ListPositionTemplateAssign" type="multi" target="updatePositionTemplateAssign" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PositionSalTempAssign"><order-by field-name="emplPositionTypeId"/></entity-condition>
+        </actions>
+        
+        <row-actions>
+	        <entity-one value-field="salaryTemplate" entity-name="SalaryTemplate">
+            	<field-map field-name="salaryTemplateId" from-field="salaryTemplateId"/> 
+            </entity-one>
+             <entity-one value-field="emplPositionType" entity-name="EmplPositionType">
+             	<field-map field-name="emplPositionTypeId" from-field="emplPositionTypeId"/> 
+             </entity-one>
+        </row-actions>
+        <field name="emplPositionTypeId" title="Position Id"><display/></field>
+        <field name="emplPositionTypeName" title="Position Name"><display description="${emplPositionType.description}"/></field>
+        <field name="salaryTemplateId" title="Salary Template Id"><display/></field>
+        <field name="salaryTemplateName" title="Salary Template Name"><display description="${salaryTemplate.salaryTemplateName}"/></field>
+        <field name="comments" title="Description"><display/></field>
+        <field name="isActive" title="Value"><hidden/></field>
+        
+         <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditPositionTemplateAssignExt" description="Edit" also-hidden="false">
+               <parameter param-name="salaryTemplateId"/>
+                <parameter param-name="emplPositionTypeId"/>
+                <parameter param-name="comments"/>
+                <parameter param-name="isActive"/>   
+            </hyperlink>
+        </field>
+               
+          <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deletePositionTemplateAssign" request-confirmation="true"> 
+                <parameter param-nEditTemplateBasicSalaryStepAssigname="salaryTemplateId"/> 
+                <parameter param-name="emplPositionTypeId"/> 
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPositionTemplateAssign" type="single" target="createPositionTemplateAssign" header-row-style="header-row" default-table-style="basic-table">     
+        
+        <field name="emplPositionTypeId" title="Employee Position Type Id" required-field="true" tooltip="Required">
+            <drop-down >
+            <auto-complete/>
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType">
+                    <entity-order-by field-name="emplPositionTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="salaryTemplateId" title="Salary Template" tooltip="Required" required-field="true">
+            <drop-down >
+            <auto-complete/>
+                <entity-options description="${salaryTemplateName}" key-field-name="salaryTemplateId" entity-name="SalaryTemplate">
+                    <entity-order-by field-name="salaryTemplateId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="isActive" title="Value"><hidden value="Y"/></field>
+        <field name="comments" title="Description" required-field="true" tooltip="Required"><textarea/></field>
+        <field name="submitButton" title="Submit">
+            <submit/>
+        </field>
+    </form>
+ 
+    <form name="UpdatePositionTemplateAssignExt" type="single" target="updatePositionTemplateAssignExt" header-row-style="header-row" default-table-style="basic-table">     
+        <field name="emplPositionTypeId"><display/></field>
+        <field name="salaryTemplateId"><display/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="comments" title="Description" required-field="true" tooltip="Required"><textarea/></field>
+         <field name="submitButton" title="Update">
+            <submit/>
+        </field>
+    </form>
+     
+
+</forms>

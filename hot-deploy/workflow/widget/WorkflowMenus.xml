@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+   <!--  <menu name="MainAppBar" title="${uiLabelMap.WorkflowApplication}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+    -->     
+    <menu name="MainAppBar" title="workflow Manager" default-menu-item-name="main" id="app-navigation" type="simple"
+        default-selected-style="selected" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="headerItem">
+   
+    <menu-item name="main" title="${uiLabelMap.CommonMain}">
+         <condition>
+				<if-compare operator="equals" value="admin" field="userLogin.partyId"/>
+			</condition>
+        <link target="main1"/>
+        
+        </menu-item>
+        <!-- <menu-item name="LeaveConfig" title="Leave"><link target="LeaveConfig"/></menu-item> -->
+        <menu-item name="LeaveConfig" title="Leave">
+        	<link target="main"/>
+        </menu-item>
+        <menu-item name="PerformanceAppraisalConfig" title="Preformance Appraisal">
+         <condition>
+				<if-compare operator="equals" value="admin" field="userLogin.partyId"/>
+			</condition>
+        	<link target="PerfApprProcessStructureSetup"/>
+        </menu-item>
+        <menu-item name="TrainingAndDevelopmentWorkflow" title="Training And Developemnt">
+         <condition>
+				<if-compare operator="equals" value="admin" field="userLogin.partyId"/>
+			</condition>
+        	<link target="TrainingAndDevelopmentProcessStructureSetup"/>
+        </menu-item> 
+    </menu>
+   
+   
+    <menu name="Leave" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Leave Workflow Process Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        
+       <!--  <menu-item name="configSetup" title="Setup">
+            <link target="LeaveConfig"/>
+        </menu-item>   --> 
+        <menu-item name="leaveProcessStructureSetup" title="Leave Process Structure Setup">
+            <link target="leaveProcessStructureSetup"/>
+        </menu-item>   
+        <menu-item name="partyProcessAssign" title="Employee WorkProcess Assign">
+            <link target="FindPartyProcess"/>
+        </menu-item>    
+    </menu> 
+    
+    <menu name="PerformanceAppraisalMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Performance Appraisal Workflow Process Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        
+        <menu-item name="perfApprProcessStructureSetup" title="Performance Appraisal Structure Setup">
+            <link target="PerfApprProcessStructureSetup"/>
+        </menu-item>   
+        <menu-item name="PerfApprPartyProcessAssign" title="Employee WorkProcess Assign">
+            <link target="PerfApprPartyProcessAssign"/>
+        </menu-item>    
+    </menu> 
+    
+    <menu name="TrainingAndDevelopmentMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Training And Development Workflow Process" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        
+        <menu-item name="TrainingAndDevelopmentProcessStructureSetup" title="Training And Development Structure Setup">
+            <link target="TrainingAndDevelopmentProcessStructureSetup"/>
+        </menu-item>   
+        <menu-item name="TrainingAndDevelopmentPartyProcessAssign" title="Employee WorkProcess Assign">
+            <link target="TrainingAndDevelopmentPartyProcessAssign"/>
+        </menu-item>    
+    </menu> 
+    
+	 <menu name="LinkForAddProcessStep">		
+		<menu-item name="addProcessStep" title="">
+			<link style="addCompanyScreenLet" id="addProcessStepBtn">
+				<image src="/flatgrey/images/custom/add-16.png" id="addProcessStepBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu> 
+	
+	 <menu name="LinkForAddPerfApprProcessStep">		
+		<menu-item name="addPerfApprProcessStep" title="">
+			<link style="addCompanyScreenLet" id="addPerfApprProcessStepBtn">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPerfApprProcessStepBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu> 
+	
+    <menu name="BackLinkForLeaveStep">
+        <menu-item name="Back" title="Back">
+            <link target="DetailsLeaveProcessStructureSetup">
+                <parameter param-name="processStrId" from-field="parameters.processStrId"/>
+                <parameter param-name="processName" from-field="parameters.processName"/>
+                <parameter param-name="description" from-field="parameters.strDescription"/>
+                <parameter param-name="isActive" from-field="parameters.strIsActive"/>
+                <parameter param-name="fromDate" from-field="parameters.strFromDate"/> 
+            	
+            </link>
+        </menu-item>
+    </menu>
+</menus>

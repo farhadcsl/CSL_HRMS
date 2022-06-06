@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="NotificationMapForProcessStep">
+        <section>
+            <actions>
+                <set field="headerItem" value="LeaveConfig"/>
+            	<set field="tabButtonItem" value="leaveProcessStructureSetup"/>
+            	<set field="stepId" from-field="parameters.stepId"/>
+                <set field="processName" from-field="parameters.processName"/>
+                <set field="strDescription" from-field="parameters.strDescription"/>
+                <set field="strIsActive" from-field="parameters.strIsActive"/>
+                <set field="strFromDate" from-field="parameters.strFromDate"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="WorkflowCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	                    <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="Leave"/>
+	                    <screenlet title="Add New Notification Map" navigation-menu-name="BackLinkForLeaveStep">
+	                    	<include-menu location="component://workflow/widget/WorkflowMenus.xml" name="BackLinkForLeaveStep"/>
+	                    	<include-form location="component://workflow/widget/leave/forms/LeaveNotificationMapForms.xml" name="AddLeaveNotificationMap"/>
+	                    </screenlet>
+                    	<screenlet title="Notification Map List">
+	                    	<include-form location="component://workflow/widget/leave/forms/LeaveNotificationMapForms.xml" name="ListLeaveNotificationMap"/>
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

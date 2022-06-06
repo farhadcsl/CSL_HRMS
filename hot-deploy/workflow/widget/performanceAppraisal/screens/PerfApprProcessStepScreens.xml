@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="NewPerfApprProcessStepSetup">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Payroll Information"/>
+                <set field="processStrId" from-field="parameters.processStrId"/>
+                <entity-one entity-name="ProcessSteps" value-field="processSteps"/>
+            </actions>
+            <widgets>
+                <screenlet>
+                    <section>
+                        <widgets>
+                                 <include-form name="NewPerfApprProcessStepSetup" location="component://workflow/widget/performanceAppraisal/forms/PerfApprPrecessStepForms.xml"/> 
+                        </widgets>
+                    </section>
+                </screenlet>
+            </widgets>
+        </section>
+	</screen>
+    <screen name="EditPerfApprProcessStepSetup">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Payroll Information"/>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="perfApprProcessStructureSetup"/>
+                <set field="processStrId" from-field="parameters.processStrId"/>
+                <entity-one entity-name="ProcessSteps" value-field="processSteps"/>
+            </actions>
+            <widgets>
+             	<decorator-screen name="WorkflowCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	                    <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <screenlet title="Create New Wordflow For Performance Appraisal">
+	                    	<include-form name="EditPerfApprProcessStepSetup" location="component://workflow/widget/performanceAppraisal/forms/PerfApprPrecessStepForms.xml"/>
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+	</screen>
+</screens>

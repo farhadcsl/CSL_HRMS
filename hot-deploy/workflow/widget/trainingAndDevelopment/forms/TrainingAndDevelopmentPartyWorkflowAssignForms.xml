@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	
+ 
+ 
+  	<form name="FindTrainingAndDevelopmentPartyWorkflowAssign" type="single" target="TrainingAndDevelopmentPartyProcessAssign" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="processTypeId"><hidden value="PerformanceAppraisal"></hidden></field>
+        <field name="employeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListTrainingAndDevelopmentPartyWorkflowAssign" type="multi" list-name="listIt" use-row-submit="true" 
+     	paginate-target="FindTrainingAndDevelopmentPartyWorkflowAssign"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+  		<actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="ProcessPartyCtx"/>
+                <field-map field-name="entityName" value="ProcessParty"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions> 
+        
+        <row-actions>
+        	<entity-and entity-name="ProcessStructure" list="processStructureList">
+            	<field-map field-name="processStrId" from-field="processStrId"/>
+        	</entity-and>
+        </row-actions>
+		<field name="processTypeId" title="Structure Type"><hidden/></field>
+        <!-- <field name="partyId" ><hidden/></field> -->
+		<field name="partyId" title="Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="employeeId" title="Employee Id"><display></display></field>
+        <field name="processStrId" title="Process Structure Id"><hidden></hidden></field>
+        <field name="processName" title="Structure Name">
+			<display description="${processStructureList[0].processName}"></display>
+		</field>
+        <field name="comments"><display></display></field>
+        <field name="dateAdded"><display></display></field>
+        <field name="isActive"><display></display></field>
+        
+        <field name="activeInactiveLink" title="Active" widget-style="buttontext" use-when="${isActive =='Y'}">
+            <hyperlink also-hidden="false" description="De-Active" target="statusChangePartyTrainingAndDevelopmentProcess"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="processTypeId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="processStrId"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+        <field name="activeInactiveLink" title="Active" widget-style="buttontext" use-when="${isActive =='N'}">
+            <hyperlink also-hidden="false" description="Active" target="statusChangePartyTrainingAndDevelopmentProcess"> 
+             	<parameter param-name="partyId"/> 
+                <parameter param-name="processTypeId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="processStrId"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+    </form>
+    
+    
+    <form name="NewTrainingAndDevelopmentPartyWorkflowAssign" type="single" target="createTrainingAndDevelopmentPartyWorkflowAssign" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="processStructure">
+       <field name="employeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+       <field name="processStrId" title="Structure Id">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${processName}" key-field-name="processStrId" entity-name="ProcessStructure">
+                   
+                    <entity-constraint name="processType" operator="equals" value="PerformanceAppraisal"/>
+                     <entity-order-by field-name="processStrId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+         <field name="comments" ><textarea/></field>
+         <field name="processTypeId"><hidden value="PerformanceAppraisal"></hidden></field>
+        <field name="submitButton" title="Assign" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+</forms>

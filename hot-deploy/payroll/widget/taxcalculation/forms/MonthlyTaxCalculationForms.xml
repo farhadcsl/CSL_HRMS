@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+
+
+    <form name="AllPersonTaxCalculation" type="single" target="setAllPartyMonthlyTaxableAmount" header-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="searchButton" title="Calculate All Employee Monthly Tax Amount" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+        
+    </form>
+
+    <form name="AllEmployeeTaxPayrollIntregration" type="single" target="setAllEmployeeTaxPayrollIntregration" header-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="searchButton" title="Disable Tax Intregration" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    
+    <form name="PartyTaxInfoList" type="multi"  odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PersonPayrollInfo">
+            	<order-by field-name="partyId"/>
+            </entity-condition>
+        </actions>        
+        <row-actions>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and>        
+        </row-actions>
+        <field name="employeeId"><display/></field>  
+        <field name="payGradeId"><hidden/></field>  
+        <field name="salaryLevelId"><hidden/></field>  
+        <field name="salaryTemplateId"><hidden/></field>  
+        <field name="basicSalaryStepId"><hidden/></field>  
+        <field name="taxPayerTypeId"><hidden/></field> 
+        <field name="comments"><hidden/></field>    
+		<field name="partyId" title="Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="monthlyTaxAmount"><display/></field>
+        <field name="isTaxApply"><display/></field>
+        <field name="isActive"><display description="${groovy: if(isActive=='Y') return 'YES' ; if(isActive=='N') return 'No'}"/></field>
+      
+        
+        <field name="configureLink" title="Tax " widget-style="buttontext">
+     		    <hyperlink also-hidden="false" description="Configure" target="setIndivisualPartyMonthlyTaxableAmount"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="payGradeId"/> 
+                <parameter param-name="salaryLevelId"/> 
+                <parameter param-name="salaryTemplateId"/> 
+                <parameter param-name="basicSalaryStepId"/> 
+                <parameter param-name="taxPayerTypeId"/> 
+                <parameter param-name="monthlyTaxAmount"/> 
+                <parameter param-name="isTaxApply"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+        
+        <field name="disableLink" title="Tax " widget-style="buttontext"  use-when="${isTaxApply =='N'}">
+     		    <hyperlink also-hidden="false" description="Enable" target="IndivisualTaxPayrollIntregration"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="payGradeId"/> 
+                <parameter param-name="salaryLevelId"/> 
+                <parameter param-name="salaryTemplateId"/> 
+                <parameter param-name="basicSalaryStepId"/>
+                <parameter param-name="taxPayerTypeId"/> 
+                <parameter param-name="monthlyTaxAmount"/> 
+                <parameter param-name="isTaxApply"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+        <field name="disableLink" title="Tax " widget-style="buttontext"  use-when="${isTaxApply =='Y'}">
+     		    <hyperlink also-hidden="false" description="Disable" target="IndivisualTaxPayrollIntregration"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="payGradeId"/> 
+                <parameter param-name="salaryLevelId"/> 
+                <parameter param-name="salaryTemplateId"/> 
+                <parameter param-name="basicSalaryStepId"/>
+                <parameter param-name="taxPayerTypeId"/> 
+                <parameter param-name="monthlyTaxAmount"/> 
+                <parameter param-name="isTaxApply"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+    </form>       
+           
+ </forms>

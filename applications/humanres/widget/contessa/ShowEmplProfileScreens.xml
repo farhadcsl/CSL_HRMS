@@ -1,0 +1,2388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+        
+        <screen name="Party">
+        <section>
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="parameters.partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <entity-and entity-name="PartyNameHistory" list="partyNameHistoryList">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <order-by field-name="-changeDate"/>
+                </entity-and>
+                <entity-one entity-name="PartyAndGroup" value-field="lookupGroup">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-one entity-name="PartyAndPerson" value-field="lookupPerson">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-and list="partyContentList" entity-name="PartyContent">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <field-map field-name="partyContentTypeId" value="LGOIMGURL"/>
+                    <order-by field-name="-fromDate"/>
+                </entity-and>
+                <entity-and list="presentAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="POSTAL_ADDRESS"/>
+				</entity-and>
+				 <entity-and list="permanentAddress" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>
+				</entity-and>
+				 <entity-and list="mailingAddress" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="MAILING_ADDRESS"/>
+				</entity-and>
+				<entity-and list="emergencyAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>				
+				<field-map field-name="contactMechTypeId" value="EMERGENCY_ADDRESS"/>				
+				</entity-and>
+				<entity-and list="telecomnumberlist" entity-name="PartyAndTelecomNumber">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<!-- <field-map field-name="contactMechTypeId" value="TELECOM_NUMBER"/> -->
+				</entity-and>
+				<entity-and list="emaillist" entity-name="PartyAndContactMech">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="presentAddressList" entity-name="PartyAndPostalAddress">
+			 	<field-map field-name="partyId" value="${parameters.partyId}"/>
+			 	<field-map field-name="contactMechTypeId" value="CHANGE_POSTAL"/>
+			</entity-and> 
+			<entity-and list="emergencyContactList" entity-name="PartyAndPostalAddress">
+			 <field-map field-name="contactMechTypeId" value="CHANGE_EMERGENCY"/>
+			</entity-and>
+			<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+             </entity-and>
+             
+              
+               <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+                <set field="partyContentId" from-field="partyContentList[0].contentId"/>
+                <set field="partyContent" value="${groovy: partyContentId!=null?&quot;/content/control/stream?contentId=&quot; + partyContentId : &quot;&quot;}"/>
+                <set field="partyGroupLogoLinkUrl" from-field="partyContent" default-value="${lookupGroup.logoImageUrl}" global="true"/>
+                <set field="personalImage" from-field="partyContent"/>
+            </actions>
+            <widgets>
+                 <section>
+                    <condition>
+                        <not><if-empty field="lookupPerson"/></not>
+                    </condition>
+                    <widgets>
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="PARTYMGR" action="_GRP_UPDATE"/>
+                                    <if-compare-field field="parameters.partyId" operator="equals" to-field="userLogin.partyId"/>
+                                    <if-has-permission permission="HUMANRES" action="_ADMIN" />
+                                </or>
+                            </condition>
+                           	<!-- added for admin view -->
+                           	<widgets>
+                               <screenlet title="${uiLabelMap.PartyPersonalInformation}" >
+                               		
+                               
+                                        
+                                    <section>
+                                    	<condition>
+                                    		<if-compare operator="equals" value="CHANGE_APPROVED" field="statusId"/>
+                                    	</condition>
+                                    	<widgets>
+                                    		<!-- TODO: UpdatePersonalInformation form not found in component://humanres/widget/forms/EmployeeForms.xml location -->
+                                    		 <include-form name="UpdatePersonalInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                                    		 
+                                    	</widgets>
+                                    </section>
+                                    <include-form name="PersonalInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                                    <platform-specific>
+	                              <html><html-template location="component://humanres/webapp/humanres/humanres/personalInformationCustomField.ftl"/></html>
+	                    	</platform-specific>
+                                   <section>
+                                        <condition>
+                                            <not><if-empty field="partyNameHistoryList"/></not>
+                                        </condition>
+                                        <widgets>
+                                            <include-form name="ViewPartyPersonHistory" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                            </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <screenlet title="${uiLabelMap.PartyPersonalInformation}" id="PartyPersonalInformationPanel">
+                                    <!-- <include-form name="ViewPartyPerson" location="component://party/widget/partymgr/PartyForms.xml"/> -->
+                                    <include-form name="PersonalInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <not><if-empty field="partyNameHistoryList"/></not>
+                                        </condition>
+                                        <widgets>
+                                            <include-form name="ViewPartyPersonHistory" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </fail-widgets>
+                        </section>
+                    </widgets>
+                </section> 
+                
+            </widgets>
+        </section>
+    </screen>
+    <screen name="PartyEdit">
+        <section>
+            <actions>
+            <set field="headerItem" value="EmplProfile"/>
+            <set field="tabButtonItem" value="BasicInfo"/>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="parameters.partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <entity-and entity-name="PartyNameHistory" list="partyNameHistoryList">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <order-by field-name="-changeDate"/>
+                </entity-and>
+                <entity-one entity-name="PartyAndGroup" value-field="lookupGroup">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-one entity-name="PartyAndPerson" value-field="lookupPerson">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-and list="partyContentList" entity-name="PartyContent">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <field-map field-name="partyContentTypeId" value="LGOIMGURL"/>
+                    <order-by field-name="-fromDate"/>
+                </entity-and>
+                <entity-and list="presentAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="POSTAL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="permanentAddress" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>
+				</entity-and>
+				 <entity-and list="mailingAddress" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="MAILING_ADDRESS"/>
+				</entity-and>
+				<entity-and list="emergencyAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>				
+				<field-map field-name="contactMechTypeId" value="EMERGENCY_ADDRESS"/>				
+				</entity-and>
+				<entity-and list="telecomnumberlist" entity-name="PartyAndTelecomNumber">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<!-- <field-map field-name="contactMechTypeId" value="TELECOM_NUMBER"/> -->
+				</entity-and>
+				<entity-and list="emaillist" entity-name="PartyAndContactMech">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="presentAddressList" entity-name="PartyAndPostalAddress">
+			 	<field-map field-name="partyId" value="${parameters.partyId}"/>
+			 	<field-map field-name="contactMechTypeId" value="CHANGE_POSTAL"/>
+			</entity-and> 
+			<entity-and list="emergencyContactList" entity-name="PartyAndPostalAddress">
+			 <field-map field-name="contactMechTypeId" value="CHANGE_EMERGENCY"/>
+			</entity-and>
+			<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+             </entity-and>
+             <entity-and entity-name="PartyIdentification" list="partyIdentificationBGMEAId">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                     <field-map field-name="partyIdentificationTypeId" value="BGMEAId"/><!-- is required -->
+              </entity-and>
+           
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+                <set field="partyContentId" from-field="partyContentList[0].contentId"/>
+                <set field="partyContent" value="${groovy: partyContentId!=null?&quot;/content/control/stream?contentId=&quot; + partyContentId : &quot;&quot;}"/>
+                <set field="partyGroupLogoLinkUrl" from-field="partyContent" default-value="${lookupGroup.logoImageUrl}" global="true"/>
+                <set field="personalImage" from-field="partyContent"/>
+            </actions>
+           
+             <widgets>
+                <decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Basic Information" navigation-menu-name="personUpdateContessaForLoginEmpl" id="PartyPersonalInformationPanel">
+                               		<include-menu name="personUpdateContessaForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/>
+                                
+                           <include-form name="basicInfo" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                             <platform-specific>
+	                              <html><html-template location="component://humanres/webapp/humanres/humanres/customFieldShow.ftl"/></html>
+	                    	</platform-specific>
+                       </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+            </widgets>
+            </section>
+            </screen>
+    <screen name="PartyForGeneral">
+        <section>
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="parameters.partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <entity-and entity-name="PartyNameHistory" list="partyNameHistoryList">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <order-by field-name="-changeDate"/>
+                </entity-and>
+                <entity-one entity-name="PartyAndGroup" value-field="lookupGroup">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-one entity-name="PartyAndPerson" value-field="lookupPerson">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/><!-- is required -->
+                </entity-one>
+                <entity-and list="partyContentList" entity-name="PartyContent">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <field-map field-name="partyContentTypeId" value="LGOIMGURL"/>
+                    <order-by field-name="-fromDate"/>
+                </entity-and>
+                <entity-and list="presentAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="POSTAL_ADDRESS"/>
+				</entity-and>
+				<entity-and list="emergencyAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>				
+				<field-map field-name="contactMechTypeId" value="EMERGENCY_ADDRESS"/>				
+				</entity-and>
+				<entity-and list="presentAddressList" entity-name="PartyAndPostalAddress">
+			 	<field-map field-name="partyId" value="${parameters.partyId}"/>
+			 	<field-map field-name="contactMechTypeId" value="CHANGE_POSTAL"/>
+			</entity-and>
+			<entity-and list="emergencyContactList" entity-name="PartyAndPostalAddress">
+			 <field-map field-name="contactMechTypeId" value="CHANGE_EMERGENCY"/>
+			</entity-and>
+			<entity-and list="telecomnumberlist" entity-name="PartyAndTelecomNumber">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<!-- <field-map field-name="contactMechTypeId" value="TELECOM_NUMBER"/> -->
+			</entity-and>
+			<entity-and list="emaillist" entity-name="PartyAndContactMech">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+			</entity-and>
+			<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+             </entity-and>
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+                <set field="partyContentId" from-field="partyContentList[0].contentId"/>
+                <set field="partyContent" value="${groovy: partyContentId!=null?&quot;/content/control/stream?contentId=&quot; + partyContentId : &quot;&quot;}"/>
+                <set field="partyGroupLogoLinkUrl" from-field="partyContent" default-value="${lookupGroup.logoImageUrl}" global="true"/>
+                <set field="personalImage" from-field="partyContent"/>
+            </actions>
+            <widgets>
+                 <section>
+                    <condition>
+                        <not><if-empty field="lookupPerson"/></not>
+                    </condition>
+                    <widgets>
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="PARTYMGR" action="_GRP_UPDATE"/>
+                                    <if-compare-field field="parameters.partyId" operator="equals" to-field="userLogin.partyId"/>
+                                   
+                                </or>
+                            </condition>
+                            	<!-- added for admin view -->
+                            	<widgets>
+                            		
+                               <screenlet title="${uiLabelMap.PartyPersonalInformation}" navigation-menu-name="personUpdate" id="PartyPersonalInformationPanel">
+                              <!-- <include-menu name="personUpdate" location="component://party/widget/partymgr/PartyMenus.xml"/> -->
+                               
+                                          <!--  <include-menu name="personUpdate" location="component://party/widget/partymgr/PartyMenus.xml"/> -->
+                                    <!-- <include-form name="ViewPartyPerson" location="component://party/widget/partymgr/PartyForms.xml"/> -->
+                                    <include-form name="PersonalInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <not><if-empty field="partyNameHistoryList"/></not>
+                                        </condition>
+                                        <widgets>
+                                            <include-form name="ViewPartyPersonHistory" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                            </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <screenlet title="${uiLabelMap.PartyPersonalInformation}" id="PartyPersonalInformationPanel">
+                                    <!-- <include-form name="ViewPartyPerson" location="component://party/widget/partymgr/PartyForms.xml"/> -->
+                                    <include-form name="PersonalInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <not><if-empty field="partyNameHistoryList"/></not>
+                                        </condition>
+                                        <widgets>
+                                            <include-form name="ViewPartyPersonHistory" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </fail-widgets>
+                        </section>
+                    </widgets>
+                </section> 
+                <section>
+                    <condition>
+                        <not><if-empty field="lookupGroup"/></not>
+                    </condition>
+                    <widgets>
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_GRP_UPDATE"/>
+                               </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyPartyGroupInformation}" navigation-menu-name="groupUpdate" id="PartyGroupInformationPanel">
+                                    <include-menu name="groupUpdate" location="component://party/widget/partymgr/PartyMenus.xml"/>
+                                    <include-form name="ViewProttayPartyGroup" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <not><if-empty field="partyNameHistoryList"/></not>
+                                        </condition>
+                                        <widgets>
+                                            <include-form name="ViewPartyGroupHistory" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <screenlet title="${uiLabelMap.PartyPartyGroupInformation}" id="PartyGroupInformationPanel">
+                                    <include-form name="ViewProttayPartyGroup" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <not><if-empty field="partyNameHistoryList"/></not>
+                                        </condition>
+                                        <widgets>
+                                            <include-form name="ViewPartyGroupHistory" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </fail-widgets>
+                        </section>
+                    </widgets>
+                </section>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- Party Find Screen -->
+    <screen name="findparty">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindParty"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="findparty"/>
+
+                <service service-name="findParty" auto-field-map="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <!-- do check for PARTYMGR, _VIEW permission -->
+                            <condition>
+                                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+                            </condition>
+                            <widgets>
+                                <platform-specific>
+                                    <html><html-template location="component://party/webapp/partymgr/party/findparty.ftl"/></html>
+                                </platform-specific>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3" text="${uiLabelMap.PartyMgrViewPermissionError}"/>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- Party Profile Screens -->
+
+    <screen name="contessaViewprofile">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleViewPartyProfile"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="labelTitleProperty" value="PartyTaxAuthInfos"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/js/PartyProfileContent.js" global="true"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/ViewProfile.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="component://humanres/widget/contessa/PartyCommonScreens.xml">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <and>
+                                    <if-empty field="partyId"/>
+                                    <not><if-empty field="parameters.telno"/></not>
+                                </and>
+                            </condition>
+                            <actions>
+                                <service service-name="findPartyFromTelephone" auto-field-map="true" result-map="telnoMap"/>
+                                <entity-one entity-name="Party" value-field="party">
+                                    <field-map field-name="partyId" from-field="telnoMap.partyId"/>
+                                </entity-one>
+                                <set field="parameters.partyId" from-field="party.partyId"/>
+                            </actions>
+                            <widgets/>
+                        </section>
+                        <section>
+                            <condition>
+                                <and>
+                                    <if-empty field="partyId"/>
+                                    <not><if-empty field="parameters.email"/></not>
+                                </and>
+                            </condition>
+                            <actions>
+                                <service service-name="findPartyFromEmailAddress" result-map="emailMap">
+                                    <field-map field-name="address" from-field="parameters.email"/>
+                                </service>
+                                <entity-one entity-name="Party" value-field="party">
+                                    <field-map field-name="partyId" from-field="emailMap.partyId"/>
+                                </entity-one>
+                                <set field="parameters.partyId" from-field="party.partyId"/>
+                            </actions>
+                            <widgets/>
+                        </section>
+                        <section>
+                            <condition>
+                                <not><if-empty field="party"/></not>
+                            </condition>
+                            <widgets>
+                                <section>
+                                    <condition>
+                                        <if-compare field="showOld" operator="equals" value="true" type="Boolean"/>
+                                    </condition>
+                                    <widgets>
+                                        <container style="button-bar button-style-2">
+                                            <link target="viewprofile" text="${uiLabelMap.PartyHideOld}">
+                                                <parameter param-name="partyId" from-field="party.partyId"/>
+                                            </link>
+                                        </container>
+                                    </widgets>
+                                    <fail-widgets>
+                                        <container style="button-bar button-style-2">
+                                            <link target="viewprofile" text="${uiLabelMap.PartyShowOld}">
+                                                <parameter param-name="partyId" from-field="party.partyId"/>
+                                                <parameter param-name="SHOW_OLD" value="true"/>
+                                            </link>
+                                        </container>
+                                    </fail-widgets>
+                                </section>
+                                <section>
+                                    <widgets>
+                                        <include-portal-page id="PartyProfile"/>
+                                    </widgets>
+                                </section>
+                            </widgets>
+                            <fail-widgets>
+                                <container>
+                                    <label style="h3">${uiLabelMap.PartyNoPartyFoundWithPartyId}: ${parameters.partyId}</label>
+                                </container>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="viewroles">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleViewPartyRole"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="viewroles"/>
+                <set field="labelTitleProperty" value="PartyMemberRoles"/>
+                <entity-condition entity-name="RoleTypeAndParty" list="partyRoles">
+                    <condition-list combine="and">
+                        <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+                        <condition-expr field-name="roleTypeId" operator="not-equals" value="_NA_"/>
+                    </condition-list>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PartyMemberRoles}" navigation-form-name="ViewPartyRoles">
+                            <include-form name="ViewPartyRoles" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_UPDATE"/>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyAddToRole}">
+                                    <container>
+                                        <label style="h2">${uiLabelMap.PartyAddToMainRole}</label>
+                                        <include-form name="AddPartyMainRole" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        <container id="addPartySecondaryRole"/>
+                                    </container>
+                                    <label style="h2">${uiLabelMap.PartyAddToRoleViewAll}</label>
+                                    <include-form name="AddPartyRole" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+                            </condition>
+                            <actions>
+                                <entity-condition entity-name="RoleType" list="parentRoleList">
+                                    <condition-expr field-name="parentTypeId" operator="equals" from-field="nullField"/>
+                                    <order-by field-name="description"/>
+                                </entity-condition>
+                            </actions>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyNewRoleType}">
+                                    <include-form name="AddRoleType" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="AddPartySecondaryRoles">
+        <section>
+            <actions>
+                <property-map map-name="uiLabelMap" resource="CommonUiLabels"/>
+                <property-map map-name="uiLabelMap" resource="PartyUiLabels"/>
+            </actions>
+            <widgets>
+                <label style="h2">${uiLabelMap.PartyAddToSecondRole}</label>
+                <include-form name="AddPartySecondaryRoles" location="component://party/widget/partymgr/PartyForms.xml"/>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="linkparty">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PartyLink"/>
+                <set field="headerItem" value="link"/>
+                <set field="tabButtonItem" value="linkparty"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_UPDATE"/>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyLink}">
+                                    <label text="${uiLabelMap.PartyLinkExplanation}"></label>
+                                    <include-form name="PartyLink" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3" text="${uiLabelMap.PartyPermissionError}"/>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditPartyRelationships">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPartyRelationships"/>
+                <set field="tabButtonItem" value="EditPartyRelationships"/>
+                <set field="labelTitleProperty" value="PartyRelationships"/>
+                <set field="headerItem" value="find"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="Party" value-field="party"/>
+                <entity-condition entity-name="RoleType" list="roleTypes">
+                    <order-by field-name="description"/>
+                    <order-by field-name="roleTypeId"/>
+                </entity-condition>
+                <entity-condition entity-name="RoleTypeAndParty" list="roleTypesForCurrentParty">
+                 <condition-expr field-name="partyId" from-field="partyId"/>
+                 <order-by field-name="description"/>
+                 <order-by field-name="roleTypeId"/>
+                </entity-condition>
+                <entity-condition entity-name="PartyRelationshipType" list="relateTypes">
+                    <order-by field-name="description"/>
+                    <order-by field-name="partyRelationshipTypeId"/>
+                </entity-condition>
+                <entity-condition entity-name="PartyRelationship" list="partyRelationships">
+                    <condition-list combine="or">
+                        <condition-expr field-name="partyIdTo" from-field="partyId"/>
+                        <condition-expr field-name="partyIdFrom" from-field="partyId"/>
+                    </condition-list>
+                    <order-by field-name="partyIdTo"/>
+                    <order-by field-name="partyRelationshipTypeId"/>
+                    <order-by field-name="-fromDate"/>
+                </entity-condition>
+                <entity-condition entity-name="SecurityGroup" list="securityGroups"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PartyRelationships}" navigation-form-name="ListPartyRelationships">
+                            <include-form name="ListPartyRelationships" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <container style="lefthalf">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyNewRelationshipType}">
+                                    <include-form name="AddPartyRelationshipType" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        </container>
+                        <container style="righthalf">
+                        <screenlet title="${uiLabelMap.PartyAddOtherRelationship}">
+                            <include-form name="AddOtherPartyRelationship" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        </container>
+                        <container style="clear"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="viewvendor">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleViewVendorParty"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="viewvendor"/>
+
+                <set field="labelTitleProperty" value="PartyVendorInformation"/>
+
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="Party" value-field="party"/>
+                <entity-one entity-name="Vendor" value-field="vendor"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PartyVendorInformation}">
+                            <include-form name="EditVendor" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditPartyAttribute">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPartyAttribute"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="viewvendor"/>
+
+                <set field="labelTitleProperty" value="PartyAttribute"/>
+
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="attrName" from-field="parameters.attrName"/>
+                <entity-one entity-name="Party" value-field="party"/>
+                <entity-one entity-name="PartyAttribute" value-field="attribute"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PartyAttribute}">
+                            <include-form name="EditPartyAttribute" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditPartyTaxAuthInfos">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPartyTaxAuthInfos"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="EditPartyTaxAuthInfos"/>
+                <set field="labelTitleProperty" value="PartyTaxAuthInfos"/>
+
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="Party" value-field="party"/>
+                <entity-and entity-name="PartyTaxAuthInfo" list="partyTaxInfos">
+                    <field-map field-name="partyId"/>
+                    <order-by field-name="taxAuthGeoId"/>
+                    <order-by field-name="taxAuthPartyId"/>
+                    <order-by field-name="fromDate"/>
+                </entity-and>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddPartyTaxAuthInfospanel" title="${uiLabelMap.PageTitleAddPartyTaxAuthInfos}" collapsible="true">
+                            <include-form name="AddPartyTaxAuthInfo" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <include-form name="UpdatePartyTaxAuthInfo" location="component://party/widget/partymgr/PartyForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="editShoppingList">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleShoppingList"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="editShoppingList"/>
+
+                <set field="labelTitleProperty" value="PartyShoppingLists"/>
+
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/EditShoppingList.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html><html-template location="component://party/webapp/partymgr/party/editShoppingList.ftl"/></html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="editcontactmech">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditContactMech"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="editcontactmech"/>
+
+                <set field="labelTitleProperty" value="PageTitleEditContactMech"/>
+
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/HasPartyPermissions.groovy"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/EditContactMech.groovy"/>
+
+                <set field="dependentForm" value="editcontactmechform"/>
+                <set field="paramKey" value="countryGeoId"/>
+                <set field="mainId" value="countryGeoId"/>
+                <set field="dependentId" value="stateProvinceGeoId"/>
+                <set field="requestName" value="getAssociatedStateList"/>
+                <set field="responseName" value="stateList"/>
+                <set field="dependentKeyName" value="geoId"/>
+                <set field="descName" value="geoName"/>
+                <set field="selectedDependentOption" from-field="mechMap.postalAddress.stateProvinceGeoId" default-value="_none_"/>
+            </actions>
+            <widgets>
+               <decorator-screen name="CommonPartyDecorator" location="component://party/widget/partymgr/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-compare field="hasViewPermission" operator="equals" value="true" type="Boolean"/>
+                                    <if-compare field="hasPcmCreatePermission" operator="equals" value="true" type="Boolean"/>
+                                    <if-compare field="hasPcmUpdatePermission" operator="equals" value="true" type="Boolean"/>
+                                    <if-compare-field field="parameters.partyId" operator="equals" to-field="userLogin.partyId"/>
+                                    <not><if-empty field="mechMap.partyContactMech"/></not>
+                                </or>
+                            </condition>
+                            <widgets>
+                                <platform-specific>
+                                    <html>
+                                        <html-template location="component://common/webcommon/includes/setDependentDropdownValuesJs.ftl"/>
+                                        <html-template location="component://party/webapp/partymgr/party/editcontactmech.ftl"/>
+                                    </html>
+                                </platform-specific>
+                            </widgets>
+                            <fail-widgets>
+                                <container style="button-bar">
+                                    <link target="backHome" text="[${uiLabelMap.CommonBack}]" style="smallSubmit"/>
+                                </container>
+                                <container>
+                                    <label style="h3">${uiLabelMap.PartyMsgContactNotBelongToYou}</label>
+                                </container>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditPerson">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPersonalInformation"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="headerItem" value="find"/>
+                <set field="labelTitleProperty" value="PageTitleEditPersonalInformation"/>
+
+                <set field="donePage" from-field="parameters.DONE_PAGE" default-value="viewprofile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="PartyAndPerson" value-field="personInfo"/>
+            </actions>
+            <widgets>
+                
+               <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PageTitleEditPersonalInformation}">
+                            <include-form name="EditPerson" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditPartyGroup">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditGroupInformation"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="headerItem" value="find"/>
+                <set field="labelTitleProperty" value="PageTitleEditGroupInformation"/>
+
+                <set field="donePage" from-field="parameters.DONE_PAGE" default-value="viewprofile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="PartyAndGroup" value-field="partyGroup"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PageTitleEditGroupInformation}">
+                            <include-form name="EditPartyGroup" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditUserLogin">
+        <section>
+            <actions>
+                <set field="titleProperty" value="UserLoginUpdateSecuritySettings"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="labelTitleProperty" value="UserLoginUpdateSecuritySettings"/>
+                <set field="updateUserLoginSecurityURI" value="ProfileUpdateUserLoginSecurity"/>
+                <set field="updatePasswordURI" value="ProfileUpdatePassword"/>
+                <set field="cancelPage" from-field="parameters.CANCEL_PAGE" default-value="viewprofile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="userLoginId" from-field="parameters.userLoginId"/>
+                <entity-one entity-name="UserLogin" value-field="editUserLogin"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <container style="page-title">
+                            <label text="${uiLabelMap.UserLoginUpdateSecuritySettings} - ${userLoginId}"/>
+                        </container>
+                        <include-form name="updateUserLoginSecurity" location="component://common/widget/SecurityForms.xml"/>
+                        <screenlet title="${uiLabelMap.UserLoginChangePassword}">
+                            <include-form name="updatePassword" location="component://common/widget/SecurityForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CreateUserLogin">
+        <section>
+            <actions>
+                <set field="titleProperty" value="CreateUserLogin"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="labelTitleProperty" value="CreateUserLogin"/>
+                <set field="cancelPage" from-field="parameters.CANCEL_PAGE" default-value="viewprofile"/>
+                <set field="createUserLoginURI" value="ProfileCreateUserLogin"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.CreateUserLogin}">
+                            <include-form name="AddUserLogin" location="component://common/widget/SecurityForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditUserLoginSecurityGroups">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditUserLoginSecurityGroups"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="cancelPage" from-field="parameters.CANCEL_PAGE" default-value="viewprofile"/>
+                <set field="addUserLoginSecurityGroupURI" value="ProfileAddUserLoginToSecurityGroup"/>
+                <set field="removeUserLoginSecurityGroupURI" value="ProfileRemoveUserLoginFromSecurityGroup"/>
+                <set field="updateUserLoginSecurityGroupURI" value="ProfileUpdateUserLoginToSecurityGroup"/>
+                <set field="userLoginId" from-field="parameters.userLoginId"/>
+                <entity-one entity-name="UserLogin" value-field="editUserLogin"/>
+                <set field="partyId" from-field="parameters.partyId" default-value="${editUserLogin.partyId}"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddUserLoginSecurityGroupsPanel" title="${uiLabelMap.AddUserLoginToSecurityGroup}" collapsible="true">
+                            <include-form name="AddUserLoginSecurityGroup" location="component://common/widget/SecurityForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListUserLoginSecurityGroups" location="component://common/widget/SecurityForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="AddPartyNote">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleNewPartyNote"/>
+                <set field="tabButtonItem" value="viewprofile"/>
+                <set field="labelTitleProperty" value="PageTitleNewPartyNote"/>
+
+                <set field="donePage" from-field="parameters.DONE_PAGE" default-value="EmployeeProfile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+            </actions>
+            <widgets>
+                <!-- <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}"> -->
+                 <decorator-screen name="CommonPartyDecorator" location="component://party/widget/partymgr/CommonScreens.xml">  
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="NotesNavigationMenu"/>
+                        <screenlet title="${uiLabelMap.PageTitleNewNote}">
+                            <include-form name="AddPartyNote" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditPartyRates">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPartyRates"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="EditPartyRates"/>
+                <set field="labelTitleProperty" value="PageTitleEditPartyRates"/>
+
+                <set field="partyId" from-field="parameters.partyId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddPartyRatesPanel" title="${uiLabelMap.PageTitleEditPartyRates}" collapsible="true">
+                            <include-form name="AddPartyRate" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPartyRates" location="component://party/widget/partymgr/PartyForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="ViewSegmentRoles">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleViewPartySegmentRoles"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="ViewSegmentRoles"/>
+
+                <set field="labelTitleProperty" value="ViewSegmentRoles"/>
+
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="Party" value-field="party"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddSegmentRolePanel" title="${uiLabelMap.PageTitleAddPartySegmentRoles}" collapsible="true">
+                            <include-form name="AddSegmentRole" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListSegmentRoles" location="component://party/widget/partymgr/PartyForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- Create New Party Screen -->
+    <screen name="CreateNewParty">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleCreateNewPartyDetail"/>
+                <set field="headerItem" value="find"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyCreateNewParty}">
+                                    <include-menu location="component://party/widget/partymgr/PartyMenus.xml" name="create-new-party"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.PartyMgrCreatePermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- New Customer Party Screen -->
+    <screen name="NewCustomer">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PartyCreateNewCustomer"/>
+                <set field="headerItem" value="find"/>
+                <set field="target" value="createCustomer"/>
+                <set field="previousParams" from-field="_PREVIOUS_PARAMS_" from-scope="user"/>
+                <property-to-field field="defaultCountryGeoId" resource="general" property="country.geo.id.default" default="USA"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+                            </condition>
+                            <actions>
+                                <!-- fields for setDependentDropdownValuesJs.ftl -->
+                                <set field="dependentForm" value="NewUser"/>
+                                <set field="paramKey" value="countryGeoId"/>
+                                <set field="mainId" value="USER_COUNTRY"/>
+                                <set field="dependentId" value="USER_STATE"/>
+                                <set field="requestName" value="getAssociatedStateList"/>
+                                <set field="responseName" value="stateList"/>
+                                <set field="dependentKeyName" value="geoId"/>
+                                <set field="descName" value="geoName"/>
+                                <set field="selectedDependentOption" value="_none_"/>
+                            </actions>
+                            <widgets>
+                                <platform-specific><html><html-template location="component://common/webcommon/includes/setDependentDropdownValuesJs.ftl"/></html></platform-specific>
+                                <screenlet title="${uiLabelMap.PartyCreateNewCustomer}">
+                                    <include-form name="NewUser" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.PartyMgrCreatePermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- New Prospect Party Screen -->
+    <screen name="NewProspect">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PartyCreateNewProspect"/>
+                <set field="headerItem" value="find"/>
+                <set field="displayPassword" value="Y"/>
+                <set field="target" value="createProspect"/>
+                <set field="previousParams" from-field="_PREVIOUS_PARAMS_" from-scope="user"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+                            </condition>
+                            <actions>
+                                <!-- fields for setDependentDropdownValuesJs.ftl -->
+                                <set field="dependentForm" value="NewUser"/>
+                                <set field="paramKey" value="countryGeoId"/>
+                                <set field="mainId" value="USER_COUNTRY"/>
+                                <set field="dependentId" value="USER_STATE"/>
+                                <set field="requestName" value="getAssociatedStateList"/>
+                                <set field="responseName" value="stateList"/>
+                                <set field="dependentKeyName" value="geoId"/>
+                                <set field="descName" value="geoName"/>
+                                <set field="selectedDependentOption" value="_none_"/>
+                            </actions>
+                            <widgets>
+                                <platform-specific><html><html-template location="component://common/webcommon/includes/setDependentDropdownValuesJs.ftl"/></html></platform-specific>
+                                <screenlet title="${uiLabelMap.PartyCreateNewProspect}">
+                                    <include-form name="NewUser" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.PartyMgrCreatePermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- New Emplyee Party Screen -->
+    <screen name="NewEmployee">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PartyCreateNewCustomer"/>
+                <set field="headerItem" value="find"/>
+                <set field="displayPassword" value="Y"/>
+                <set field="target" value="createEmployee"/>
+                <set field="previousParams" from-field="_PREVIOUS_PARAMS_" from-scope="user"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+                            </condition>
+                            <actions>
+                                <!-- fields for setDependentDropdownValuesJs.ftl -->
+                                <set field="dependentForm" value="NewUser"/>
+                                <set field="paramKey" value="countryGeoId"/>
+                                <set field="mainId" value="USER_COUNTRY"/>
+                                <set field="dependentId" value="USER_STATE"/>
+                                <set field="requestName" value="getAssociatedStateList"/>
+                                <set field="responseName" value="stateList"/>
+                                <set field="dependentKeyName" value="geoId"/>
+                                <set field="descName" value="geoName"/>
+                                <set field="selectedDependentOption" value="_none_"/>
+                            </actions>
+                            <widgets>
+                                <platform-specific><html><html-template location="component://common/webcommon/includes/setDependentDropdownValuesJs.ftl"/></html></platform-specific>
+                                <screenlet title="${uiLabelMap.PartyCreateNewEmployee}">
+                                    <include-form name="NewUser" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.PartyMgrCreatePermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- Address Match Map Screen -->
+    <screen name="AddressMatchMap">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleAddressMatchMap"/>
+                <set field="headerItem" value="addrmap"/>
+                <entity-condition entity-name="AddressMatchMap" list="addressMatchMaps">
+                    <order-by field-name="sequenceNum"/>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html><html-template location="component://party/webapp/partymgr/party/addressMatchMap.ftl"/></html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="FindAddressMatch">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleAddressMatches"/>
+                <set field="headerItem" value="addrmap"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/FindMatches.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html><html-template location="component://party/webapp/partymgr/party/findMatches.ftl"/></html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- Party Content Screen -->
+    <screen name="EditPartyContents">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListContent"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="PartyContents"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="contentId" from-field="parameters.contentId"/>
+                <entity-one entity-name="Content" value-field="content"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator"  location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PageTitleListContent}">
+                            <container>
+                                <link target="EditPartyContents" text="${uiLabelMap.CommonCreateNew}" style="smallSubmit">
+                                    <parameter param-name="partyId"/>
+                                </link>
+                            </container>
+                            <include-form name="ListPartyContents" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.PageTitleAddPartyContent}">
+                            <include-form name="AddPartyContent" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="editCarrierAccount">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitlePartyCarrierAccount"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PartyShipperAccount}">
+                            <include-form name="EditCarrierAccount" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditPartyResumes">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResEditPartyResume"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="EditPartyResumes"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="resumeId" from-field="parameters.resumeId"/>
+                <set field="partyResumeCtx.resumeId" from-field="parameters.resumeId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="EditPartyResumePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.PartyParty} ${uiLabelMap.HumanResPartyResume}" collapsible="true">
+                            <include-form name="EditPartyResume" location="component://humanres/widget/forms/PartyResumeForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPartyResumes" location="component://humanres/widget/forms/PartyResumeForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="PartyFinancialHistory">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PartyFinancialHistory"/>
+                <set field="headerItem" value="accountsMain"/>
+                <set field="tabButtonItem" value="FinancialHistory"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="Party" value-field="party"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h1" text="${uiLabelMap.PartyFinancialHistory}"/>
+                        <section>
+                            <actions>
+                                <entity-condition entity-name="InvoiceAndApplAndPayment" list="ListInvoicesApplPayments">
+                                    <condition-list combine="and">
+                                        <condition-list combine="or">
+                                            <condition-list combine="and">
+                                                <condition-expr field-name="partyId" from-field="partyId"/>
+                                                <condition-expr field-name="partyIdFrom" from-field="defaultOrganizationPartyId"/>
+                                            </condition-list>
+                                            <condition-list combine="and">
+                                                <condition-expr field-name="partyId" from-field="defaultOrganizationPartyId"/>
+                                                <condition-expr field-name="partyIdFrom" from-field="partyId"/>
+                                            </condition-list>
+                                        </condition-list>
+                                        <condition-expr field-name="statusId" operator="not-equals" value="INVOICE_IN_PROCESS"/>
+                                        <condition-expr field-name="statusId" operator="not-equals" value="INVOICE_CANCELLED"/>
+                                        <condition-expr field-name="statusId" operator="not-equals" value="INVOICE_WRITEOFF"/>
+                                    </condition-list>
+                                </entity-condition>
+                            </actions>
+                            <widgets>
+                                <section>
+                                    <condition>
+                                        <not><if-empty field="ListInvoicesApplPayments"/></not>
+                                    </condition>
+                                    <actions>
+                                        <set field="actualCurrency" value="false" type="Boolean"/>
+                                        <set field="actualCurrencyUomId" from-field="defaultOrganizationPartyCurrencyUomId"/>
+                                    </actions>
+                                    <widgets>
+                                        <screenlet title="${uiLabelMap.AccountingInvoicesApplPayments}" navigation-form-name="Invoices">
+                                            <include-form name="ListInvoicesApplPayments" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                            <section>
+                                                <condition>
+                                                    <and>
+                                                        <not><if-empty field="party.preferredCurrencyUomId"/></not>
+                                                        <if-compare-field field="defaultOrganizationPartyCurrencyId" operator="not-equals" to-field="party.preferredCurrencyUomId"/>
+                                                    </and>
+                                                </condition>
+                                                <actions>
+                                                    <set field="actualCurrency" value="true" type="Boolean"/>
+                                                    <set field="actualCurrencyUomId" from-field="party.preferredCurrencyUomId"/>
+                                                </actions>
+                                                <widgets>
+                                                    <label style="h2" text="${uiLabelMap.PartyCurrency}"></label>
+                                                    <include-form name="ListInvoicesApplPayments" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                                </widgets>
+                                            </section>
+                                        </screenlet>
+                                    </widgets>
+                                </section>
+                            </widgets>
+                        </section>
+                        <section>
+                            <actions>
+                                <set field="actualCurrency" value="false" type="Boolean"/>
+                                <set field="actualCurrencyUomId" from-field="defaultOrganizationPartyCurrencyUomId"/>
+                            </actions>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyInvoicesNotApplied}" navigation-form-name="partyFinancialHistoryInvoicesN">
+                                    <include-form name="ListUnAppliedInvoices" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <and>
+                                                <not><if-empty field="party.preferredCurrencyUomId"/></not>
+                                                <if-compare-field field="defaultOrganizationPartyCurrencyUomId" operator="not-equals" to-field="party.preferredCurrencyUomId"/>
+                                            </and>
+                                        </condition>
+                                        <actions>
+                                            <set field="actualCurrency" value="true" type="Boolean"/>
+                                            <set field="actualCurrencyUomId" from-field="party.preferredCurrencyUomId"/>
+                                        </actions>
+                                        <widgets>
+                                            <label style="h2" text="${uiLabelMap.PartyCurrency}"></label>
+                                            <include-form name="ListUnAppliedInvoices" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <section>
+                            <actions>
+                                <set field="actualCurrency" value="false" type="Boolean"/>
+                                <set field="actualCurrencyUomId" from-field="defaultOrganizationPartyCurrencyId"/>
+                            </actions>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyPaymentsNotApplied}" navigation-form-name="partyFinancialHistoryPaymentsN">
+                                    <include-form name="ListUnAppliedPayments" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <and>
+                                                <not><if-empty field="party.preferredCurrencyUomId"/></not>
+                                                <if-compare-field field="defaultOrganizationPartyCurrencyId" operator="not-equals" to-field="party.preferredCurrencyUomId"/>
+                                            </and>
+                                        </condition>
+                                        <actions>
+                                            <set field="actualCurrency" value="true" type="Boolean"/>
+                                            <set field="actualCurrencyUomId" from-field="party.preferredCurrencyUomId"/>
+                                        </actions>
+                                        <widgets>
+                                            <label style="h2" text="${uiLabelMap.PartyCurrency}"></label>
+                                            <include-form name="ListUnAppliedPayments" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <section>
+                            <actions>
+                                <set field="actualCurrency" value="false" type="Boolean"/>
+                                <set field="actualCurrencyUomId" from-field="defaultOrganizationPartyCurrencyUomId"/>
+                            </actions>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.PartyFinancialSummary}${defaultOrganizationPartyId}" navigation-form-name="partyFinancialSummary">
+                                    <include-form name="partyFinancialSummary" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                    <section>
+                                        <condition>
+                                            <and>
+                                                <not><if-empty field="party.preferredCurrencyUomId"/></not>
+                                                <if-compare-field field="defaultOrganizationPartyCurrencyUomId" operator="not-equals" to-field="party.preferredCurrencyUomId"/>
+                                            </and>
+                                        </condition>
+                                        <actions>
+                                            <set field="actualCurrency" value="true" type="Boolean"/>
+                                            <set field="actualCurrencyUomId" from-field="party.preferredCurrencyUomId"/>
+                                        </actions>
+                                        <widgets>
+                                            <label style="h2" text="${uiLabelMap.PartyCurrency}"></label>
+                                            <include-form name="partyFinancialSummary" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <section>
+                            <actions>
+                                <script location="component://accounting/webapp/accounting/WEB-INF/actions/payment/BillingAccounts.groovy"/>
+                            </actions>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.AccountingBillingAccount}">
+                                    <include-form name="PartyBillingAccount" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <section>
+                            <actions>
+                                <script location="component://order/webapp/ordermgr/WEB-INF/actions/return/ReturnHeader.groovy"/>
+                            </actions>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.OrderOrderReturns}">
+                                    <include-form name="PartyReturns" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="Preferences">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleViewPartyPreferences"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="preferences"/>
+                <set field="partyId"  from-field="parameters.partyId"/>
+                <entity-and entity-name="EnumTypeChildAndEnum" list="enumTypeChildAndEnums">
+                    <field-map field-name="parentEnumTypeId" value="USER_PREF_GROUPS"/>
+                </entity-and>
+                <entity-and entity-name="UserLogin" list="userLogins">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                </entity-and>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <iterate-section entry="userLogin" list="userLogins">
+                            <section>
+                                <actions>
+                                    <set field="userPrefUserLoginId" from-field="userLogin.userLoginId"/>
+                                </actions>
+                                <widgets>
+                                    <screenlet title="${uiLabelMap.CommonPreferences} ${uiLabelMap.CommonFor} userLogin: ${userPrefUserLoginId}" >
+                                        <include-form name="ListPreference" location="component://party/widget/partymgr/PartyForms.xml"/>
+                                    </screenlet>
+                                </widgets>
+                            </section>
+                        </iterate-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="PartyGeoLocation">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitlePartyGeoLocation"/>
+                <set field="tabButtonItem" value="PartyGeoLocation"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/PartyGeoLocation.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <not><if-empty field="geoChart"/></not>
+                            </condition>
+                            <widgets>
+                                <container style="button-bar">
+                                    <link target="addGeoLocation" text="${uiLabelMap.CommonUpdate}" style="buttontext">
+                                        <parameter param-name="partyId" from-field="parameters.partyId"/>
+                                    </link>
+                                </container>
+                                <label>${uiLabelMap.CommonLatitude} ${latestGeoPoint.latitude}</label>
+                                <label>${uiLabelMap.CommonLongitude} ${latestGeoPoint.longitude}</label>
+                                <label>${uiLabelMap.CommonElevation} ${latestGeoPoint.elevation} ${elevationUomAbbr}</label>
+                                <include-screen name="geoChart" location="component://common/widget/CommonScreens.xml"/>
+                            </widgets>
+                            <fail-widgets>
+                                <container style="button-bar">
+                                    <link target="addGeoLocation" text="${uiLabelMap.CommonCreateNew}" style="buttontext create">
+                                        <parameter param-name="partyId" from-field="parameters.partyId"/>
+                                    </link>
+                                </container>
+                                <include-screen name="geoChart" location="component://common/widget/CommonScreens.xml"/>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditGeoLocation">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitlePartyGeoLocation"/>
+                <set field="tabButtonItem" value="PartyGeoLocation"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/GetGeoLocation.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html><html-template location="component://party/webapp/partymgr/party/editGeoLocation.ftl"/></html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CreateUserNotification">
+        <section>
+            <actions>
+                <set field="title" value="${uiLabelMap.MyPortalCustRequestNotificationMailCreation}"/>
+            </actions>
+            <widgets>
+                <platform-specific><html><html-template location="component://party/templates/email/CreatePartyNotification.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- PartyIdentification Screen -->
+    <screen name="ListPartyIdentifications">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListPartyIdentifications"/>
+                <set field="headerItem" value="find"/>
+                <set field="tabButtonItem" value="viewidentifications"/>
+
+                <set field="labelTitleProperty" value="PartyIdentification"/>
+
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="Party" value-field="party" use-cache="true"/>
+                <entity-one entity-name="PartyIdentification" value-field="partyIdentification"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PartyPartyIdentificationList}">
+                             <include-form name="listPartyIdentification" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.PartyPartyIdentification}" navigation-menu-name="newPartyIdentification" id="PartyIdentificationCreationPanel">
+                             <include-menu name="newPartyIdentification" location="component://party/widget/partymgr/PartyMenus.xml"/>
+                             <include-form name="editPartyIdentification" location="component://party/widget/partymgr/PartyForms.xml"/>
+                         </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="ViewProductStoreRoles">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductStoreRoles"/>
+                <set field="headerItem" value="store"/>
+                <set field="tabButtonItem" value="FindProductStoreRoles"/>
+                <set field="labelTitleProperty" value="ProductProductStoreRoles"/>
+                <set field="parameters.fromDate" from-field="parameters.fromDate" type="Timestamp"/>
+                <entity-one entity-name="ProductStoreRole" value-field="productStoreRole" auto-field-map="true"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PageTitleEditProductStoreRoles}">
+                            <include-form name="EditProductStoreRole" location="component://party/widget/partymgr/PartyForms.xml"/>
+                        </screenlet>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindProductStoreRole" location="component://party/widget/partymgr/PartyForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListProductStoreRole" location="component://party/widget/partymgr/PartyForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="postalAddressHtmlFormatter">
+        <section>
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="postalAddressTemplateSuffix" value=".ftl"/>
+                <set field="addressTemplatePath" value="${sys:getProperty('ofbiz.home')}/applications/party/webapp/partymgr/party/contactmechtemplates/"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/GetPostalAddressTemplate.groovy"/>
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://party/webapp/partymgr/party/contactmechtemplates/${postalAddressTemplate}"/>
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="postalAddressPdfFormatter">
+        <section>
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="postalAddressTemplateSuffix" value=".fo.ftl"/>
+                <set field="addressTemplatePath" value="${sys:getProperty('ofbiz.home')}/applications/party/webapp/partymgr/party/contactmechtemplates/"/>
+                <script location="component://party/webapp/partymgr/WEB-INF/actions/party/GetPostalAddressTemplate.groovy"/>
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://party/webapp/partymgr/party/contactmechtemplates/${postalAddressTemplate}"/>
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditContessaPerson">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPersonalInformation"/>
+                <set field="tabButtonItem" value="BasicInfo"/>
+                <set field="headerItem" value="EmplProfile"/>
+                <set field="labelTitleProperty" value="PageTitleEditPersonalInformation"/>
+				
+                <set field="donePage" from-field="parameters.DONE_PAGE" default-value="viewprofile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="PartyAndPerson" value-field="personInfo"/>
+                <entity-and list="presentAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="POSTAL_ADDRESS"/>
+				</entity-and>
+				 <entity-and list="permanentAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>
+				</entity-and>
+				<entity-and list="mailingAddress" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="MAILING_ADDRESS"/>
+				</entity-and>
+				<entity-and list="telecomnumberlist" entity-name="PartyAndTelecomNumber">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<!-- <field-map field-name="contactMechTypeId" value="TELECOM_NUMBER"/> -->
+				</entity-and>
+				<entity-and list="emaillist" entity-name="PartyAndContactMech">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="EMAIL_ADDRESS"/>
+				</entity-and>
+				<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             </entity-and>
+            
+              
+              
+              
+             
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+            </actions>
+            <widgets>
+                
+               <decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    
+                        <screenlet title="${uiLabelMap.PageTitleEditPersonalInformation}">
+                           <!--  <include-form name="EditContessaPerson" location="component://humanres/widget/forms/EmplProfileForms.xml"/> -->
+	                        <platform-specific>
+	                              <html><html-template location="component://humanres/webapp/humanres/humanres/emplBasicInfoUpdateRequisition.ftl"/></html>
+	                    	</platform-specific>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="currentEmploymentStatusProfileView">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Currect Employment Status" />
+				<set field="headerItem" value="Employees"/>
+				<set field="tabButtonItem" value="CurrectEmploymentStatus" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<include-form name="CurrentEmploymentStatus" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+			</widgets>
+		</section>
+	</screen>
+    
+    <!-- <screen name="currectEmploymentStatus">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Currect Employment Status" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="CurrectEmploymentStatus" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="${uiLabelMap.PageTitleEditPersonalInformation}">
+							<include-form name="CurrentEmploymentStatus" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen> -->
+	
+	<screen name="currectEmploymentStatus">
+		<section>
+			<actions>
+			<set field="tabButtonItem" value="CurrectEmploymentStatus" />
+				<service service-name="getCurrentPartyEmploymentData"
+					auto-field-map="true" result-map="employmentData" />
+					<set field="roleTypeIdTo" value="${employmentData.employment.roleTypeIdTo}" />
+					<set field="partyIdFrom" value="${employmentData.employment.partyIdFrom}" />
+					<set field="partyIdTo" value="${parameters.partyId}" />
+					<entity-and list="employments" entity-name="Employment">
+					  <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+					</entity-and>
+					<set field="employment11" value="${employments[0]}"/>
+					
+					
+					<set field="fromDates" value="${employments[0].fromDate}"/>
+					<set field="thruDate" value="${employments[0].thruDate}"/>
+					
+					<set field="fromDate" value="${employmentData.employment.fromDate}" type="Timestamp"/>
+					<set field="employmentType" value="${employments[0].employmentType}"/>
+					<!-- added for ftl -->
+					<entity-and list="parties1" entity-name="Party">
+						<field-map field-name="partyId" value="${partyIdTo}"/>
+					</entity-and>
+					<set field="statusTypeId" from-field="${employmentData.emplPosition.emplPositionId}" />
+            		 <entity-and entity-name="StatusItem" list="statusList" >
+						<field-map field-name="statusId"
+							value="${parties1[0].statusId}" />
+					</entity-and>
+
+					<set field="statId" from-field="statusList[0].statusId" />
+		 			<set field="statDescription" from-field="statusList[0].description"/>
+		 			<entity-and list="partyNameViews" entity-name="PartyNameView">
+		 				<field-map field-name="partyId" from-field="employmentData.employment.partyIdFrom"/>
+		 			</entity-and>
+		 			<entity-and entity-name="EmplPositionAndFulfillment" list="emplPositionAndFulfillments" >
+            	<field-map field-name="employeePartyId" from-field="partyIdTo"/>
+            			<field-map field-name="partyId" from-field="partyIdFrom"/>
+        		</entity-and>
+		 			<set field="groupName" from-field="partyNameViews[0].groupName"/>
+		 			<set field="dateofjoin" value="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(fromDates)}"/>
+		 			<!-- <set field="terminationDate" value="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(thruDate)}"/> -->
+		 			<set field="statDescription" value="${bsh:org.ofbiz.humanres.ProfileWorker.getFormattedStatus(statDescription)}"/>
+		 			<set field="partyId" from-field="userPreferences.ORGANIZATION_PARTY" />
+		 			<set field="orgUnitId" from-field="employmentData.emplPosition.partyId" />
+		 			<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/breadcrumborgunit.groovy" />  
+		 		
+			</actions>
+			<widgets>
+                
+               <decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    
+                        <screenlet title="Current Employment Status">
+                            
+	                         <platform-specific>
+	                              <html><html-template location="component://humanres/webapp/humanres/humanres/currentEmploymentDataForAdmin.ftl"/></html>
+	                    	</platform-specific>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+			
+		</section>
+	</screen>
+	<!--=================================== Job Description ================================================  -->
+    <screen name="currentJobDescription">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Job Description" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="CurrentJobDescription" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-and list="emplRes" entity-name="ContessaEmplResponsibility">
+				<field-map field-name="partyId" from-field="partyId"/>
+				</entity-and>
+				
+				<entity-and list="emplPositionFulf" entity-name="EmplPositionAndFulfillment">
+				<field-map field-name="employeePartyId" from-field="partyId"/>
+				</entity-and>
+				<entity-and list="emplPositionResponsibilities" entity-name="EmplPositionResponsibility">
+				<field-map field-name="emplPositionId" from-field="emplPositionFulf[0].emplPositionId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Employee Specific Job Description List"  navigation-menu-name="currentJobDescriptionUpdateForLoginEmpl" id="PartyPersonalInformationPanel">
+                          	<!-- <include-menu name="currentJobDescriptionUpdateForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/> -->
+							<include-form name="ProfileListEmplPositionResponsibilityInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+						</screenlet>
+						<screenlet title="Employee Position Job Description List">
+                          	
+							<include-form name="EmplPositionResponsibilityInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                  </screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+    <screen name="editCurrentJobDescription">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Job Description" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="CurrentJobDescription" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-and list="emplRes" entity-name="ContessaEmplResponsibility">
+				<field-map field-name="partyId" from-field="partyId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Edit Current Job Description"  >
+							<include-form name="EditCurrentJobDescription" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+						</screenlet>
+						<screenlet title="Employee Specific Job Discription List"  >
+							<include-form name="ListCurrentJobDescription" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="EditEmplPositionResponsibilities">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListEmplPositionResponsibilities"/>
+                <set field="tabButtonItem" value="EditEmplPositionResponsibilities"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddEmplPositionResponsibilityPanel" title="${uiLabelMap.HumanResAddEmplPositionResponsibility}" collapsible="true">
+                            <include-form name="AddEmplPositionResponsibility" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListEmplPositionResponsibilities" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--=============================== End ==============================================  -->
+
+    <screen name="employmentHistory">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Employment History" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="EmploymentHistory" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-and list="employmentList" entity-name="Employment">
+            			<field-map field-name="partyIdTo" value="${parameters.partyId}"/>
+            		</entity-and>
+            	 
+            	 	<service service-name="getCurrentPartyEmploymentData"
+					auto-field-map="true" result-map="employmentData" />
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Employment History" navigation-menu-name="employmentHistoryUpdate" id="PartyPersonalInformationPanel">
+                        	<!-- <include-menu name="employmentHistoryUpdate" location="component://humanres/widget/HumanresMenus.xml"/> -->
+							<include-form name="EmploymentHistory" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                       </screenlet>
+                        <screenlet title="Previous Employment History (Verified List)"  id="PartyPersonalInformationPanel">
+                        	<include-form name="VerifiedPreviousEmploymentHistory" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                       </screenlet>
+                        <screenlet title="Previous Employment History (Not Verified List)" navigation-menu-name="previousEmploymentHistoryMenuForLoginEmpl" id="PartyPersonalInformationPanel">
+                        	<include-menu name="previousEmploymentHistoryMenuForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/>
+                        	<include-form name="NotVerifiedPreviousEmploymentHistory" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+							<!-- <include-form name="NotVerifiedPreviousEmploymentHistory" location="component://humanres/widget/forms/PartyQualForms.xml"/> -->
+                       </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+    <screen name="editEmploymentHistory">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Job Description" />
+				<set field="headerItem" value="Employees"/>
+				<set field="tabButtonItem" value="EmploymentHistory" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Edit Employment History"  >
+							<include-form name="EditEmploymentHistory" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+    <screen name="addPreviousEmploymentHistory">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Job Description" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="EmploymentHistory" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Add Previous Employment History"  >
+							<!-- <include-form name="addPreviousEmploymentHistory" location="component://humanres/widget/forms/PartyQualForms.xml"/> -->
+							<include-form name="addPreviousEmploymentHistory" location="component://humanres/widget/forms/EmplProfileForms.xml"/> 
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	 <screen name="emergencyContactsAndNomaineeInformationOverallprofile">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Emergency Contacts And Nomainee Information" />
+				<set field="headerItem" value="Employees"/>
+				<set field="tabButtonItem" value="EmergencyContactsAndNomaineeInformation" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-one value-field="emergencyContact" entity-name="EmergencyAndNomineeInfo">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-one>
+			</actions>
+			<widgets>
+				
+                        <screenlet title="Emergency Contacts And Nomainee Information">
+                        	
+							<include-form name="EmergencyContactsAndNomaineeInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                       </screenlet>
+                    
+			</widgets>
+		</section>
+	</screen>
+    <screen name="emergencyContactsAndNomaineeInformation">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Emergency Contacts And Nomainee Information" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="EmergencyContactsAndNomaineeInformation" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-one value-field="emergencyContact" entity-name="EmergencyAndNomineeInfo">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-one>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Emergency Contacts And Nomainee Information" navigation-menu-name="emergencyContactsAndNomaineeInformationUpdateForLoginEmpl" id="PartyPersonalInformationPanel">
+                        	<include-menu name="emergencyContactsAndNomaineeInformationUpdateForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/>
+							<include-form name="EmergencyContactsAndNomaineeInformation" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                       </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+    <screen name="editEmergencyContactsAndNomaineeInformation">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Job Description" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="EmergencyContactsAndNomaineeInformation" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-one value-field="emergencyContact" entity-name="EmergencyAndNomineeInfo">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-one>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Edit Emergency Contacts And Nomainee Information"  >
+							<include-form name="EditEmergencyContactsAndNomaineeInformation" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+    <screen name="trainingInfo">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Training Info" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="TrainingInfo" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Training Information">
+							<include-form name="simpleListTrainingStatusProfileInfo" location="component://humanres/widget/forms/PersonTrainingForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<!-- ==========================Professional Certificates ====================================-->
+	<screen name="professionalCertificates">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Professional Certificates" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="ProfessionalCertificates" />
+				<entity-condition list="professionalBack" entity-name="ProfQual">
+				<condition-list combine="and">
+					<condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+					<condition-expr field-name="verifStatusId" operator="equals" value="PQV_VERIFIED"/>
+				</condition-list>
+				</entity-condition>	
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Verified Professional Certificate">
+                        	<include-form name="ProfessionalCertificates" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                       </screenlet>
+                       <screenlet title=" Professional Certificate List (Not Verified)" navigation-menu-name="professionalCertificatesAddForLoginEmpl" id="PartyPersonalInformationPanel">
+                        	<include-menu name="professionalCertificatesAddForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/>
+							<include-form name="ProfessionalCertificatesNotVerify" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                       </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+    <screen name="editProfessionalCertificates">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Professional Certificates" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="ProfessionalCertificates" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Add New Professional Certificates"  >
+							<include-form name="AddProfQuals" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!--===============================content=================================  -->
+ <screen name="content">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Content" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="content"/>
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-screen name="ContentForNormalUser" location="component://party/widget/partymgr/ProfileScreens.xml"/>
+						<include-screen name="ContentProfile" location="component://party/widget/partymgr/ProfileScreens.xml" />
+																
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>	
+	<!-- ========================Education Background=========================== -->
+	
+	 <screen name="educationBackground">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Education Background" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="EducationBackground" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<entity-condition list="educationalBack" entity-name="PartyQual">
+				<condition-list combine="and">
+				<condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+				<condition-expr field-name="verifStatusId" operator="equals" value="PQV_VERIFIED"/>
+				</condition-list>
+				</entity-condition>	 
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Education Background (Verified)">
+							<include-form name="EducationBackground" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                       </screenlet>
+                       
+                       <screenlet title="Education Background (Not Verified List)" navigation-menu-name="educationBackgroundUpdateForLoginEmpl" id="PartyPersonalInformationPanel">
+                        <include-menu name="educationBackgroundUpdateForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/>
+							<include-form name="EducationBackgroundNotVerified" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                       </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+		
+    <screen name="editEducationBackground">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Job Description" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="EducationBackground" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Edit Education Background"  >
+							<!-- <include-form name="AddPartyQualForProfile" location="component://humanres/widget/forms/PartyQualForms.xml"/> -->
+							<include-form name="AddPartyQualForProfile" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<!-- ================================Logistic Support==================================== -->
+	
+	 <screen name="logisticSupport">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Logistic Support" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="LogisticSupport" />
+					 
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Assigned Logistic List">
+                           <include-form name="AssignedlogisticSupport" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                       </screenlet>
+                       <screenlet title="Logistic List (Assignment Pending)" navigation-menu-name="logisticSupportAddForLoginEmpl" id="PartyPersonalInformationPanel">
+                            <include-menu name="logisticSupportAddForLoginEmpl" location="component://humanres/widget/EmplProfileMenus.xml"/>
+							<include-form name="logisticSupport" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                       </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+		
+    <screen name="editlogisticSupport">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Current Logistics Description" />
+				<set field="headerItem" value="EmplProfile"/>
+				<set field="tabButtonItem" value="LogisticSupport" />
+				<set field="partyId" from-field="parameters.partyId"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Add New Logistics"  >
+							<include-form name="editlogisticSupport" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+<screen name="detailLogisticForProfile">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Logistics Detail" />
+				<set field="headerItem" value="Employees"/>
+				<set field="tabButtonItem" value="LogisticSupport" />
+				<set field="partyId" from-field="parameters.partyId"/>
+				<set field="issueId" from-field="parameters.issueId"/>
+				<entity-one value-field="logisticsDetail" entity-name="LogisticsItem">
+				<field-map field-name="issueId" from-field="issueId"/>
+				<!-- <field-map field-name="partyId" from-field="partyId"/> -->
+				</entity-one>
+			</actions>
+			<widgets>
+				<decorator-screen name="EmployeeDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<screenlet title="Add New Logistics"  >
+							<include-form name="detailLogisticForProfile" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	 <screen name="Notes">
+        <section>
+            <actions>
+            <set field="tabButtonItem" value="notes"/>
+            <set field="headerItem" value="EmplProfile"/>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="partyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+                <entity-and entity-name="PartyNoteView" list="notes">
+                    <field-map field-name="targetPartyId" from-field="partyId"/>
+                    <order-by field-name="-noteDateTime"/>
+                </entity-and>
+            </actions>
+            <widgets>
+          <decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+                <platform-specific>
+                    <html>
+                        <html-template location="component://humanres/webapp/humanres/humanres/NotesOfLoginEmpl.ftl"/>
+                    </html>
+                </platform-specific>
+                </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="AddPartyNote">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleNewPartyNote"/>
+                <set field="tabButtonItem" value="notes"/>
+                <set field="labelTitleProperty" value="PageTitleNewPartyNote"/>
+
+                <set field="donePage" from-field="parameters.DONE_PAGE" default-value="viewprofile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+                        <screenlet title="${uiLabelMap.PageTitleNewPartyNote}">
+                          <include-form name="AddPartyNote" location="component://humanres/widget/forms/EmplProfileForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="CurrentEmploymentDataForAdmin">
+		<section>
+			<actions>
+				<service service-name="getCurrentPartyEmploymentData"
+					auto-field-map="true" result-map="employmentData" />
+					<set field="roleTypeIdTo" value="${employmentData.employment.roleTypeIdTo}" />
+					<set field="partyIdFrom" value="${employmentData.employment.partyIdFrom}" />
+					<set field="partyIdTo" value="${parameters.partyId}" />
+					<entity-and list="employments" entity-name="Employment">
+					  <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+					</entity-and>
+					<set field="employment11" value="${employments[0]}"/>
+					
+					
+					<set field="fromDates" value="${employments[0].fromDate}"/>
+					<set field="thruDate" value="${employments[0].thruDate}"/>
+					
+					<set field="fromDate" value="${employmentData.employment.fromDate}" type="Timestamp"/>
+					<set field="employmentType" value="${employments[0].employmentType}"/>
+					<!-- added for ftl -->
+					<entity-and list="parties1" entity-name="Party">
+						<field-map field-name="partyId" value="${partyIdTo}"/>
+					</entity-and>
+					<set field="statusTypeId" from-field="${employmentData.emplPosition.emplPositionId}" />
+            		 <entity-and entity-name="StatusItem" list="statusList" >
+						<field-map field-name="statusId"
+							value="${parties1[0].statusId}" />
+					</entity-and>
+
+					<set field="statId" from-field="statusList[0].statusId" />
+		 			<set field="statDescription" from-field="statusList[0].description"/>
+		 			<entity-and list="partyNameViews" entity-name="PartyNameView">
+		 				<field-map field-name="partyId" from-field="employmentData.employment.partyIdFrom"/>
+		 			</entity-and>
+		 			<entity-and entity-name="EmplPositionAndFulfillment" list="emplPositionAndFulfillments" >
+            	<field-map field-name="employeePartyId" from-field="partyIdTo"/>
+            			<field-map field-name="partyId" from-field="partyIdFrom"/>
+        		</entity-and>
+		 			<set field="groupName" from-field="partyNameViews[0].groupName"/>
+		 			<set field="dateofjoin" value="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(fromDates)}"/>
+		 			<!-- <set field="terminationDate" value="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(thruDate)}"/> -->
+		 			<set field="statDescription" value="${bsh:org.ofbiz.humanres.ProfileWorker.getFormattedStatus(statDescription)}"/>
+		 			<set field="partyId" from-field="userPreferences.ORGANIZATION_PARTY" />
+		 			<set field="orgUnitId" from-field="employmentData.emplPosition.partyId" />
+		 			<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/breadcrumborgunit.groovy" />  
+		 		
+			</actions>
+			
+			<!-- <condition>
+					<if-compare operator="not-equals" value="admin" field="emplId"/>
+			</condition> -->
+			<widgets>
+			
+		
+				<platform-specific>
+					<html>
+						<html-template location="component://humanres/webapp/humanres/humanres/currentEmploymentDataForAdmin.ftl" />
+					</html>
+				</platform-specific>
+			
+			</widgets>
+			<!-- <fail-widgets>
+			render the ftl if the userId is admin
+			<screenlet title="${uiLabelMap.HumanResCurrentEmploymentData} ${emplId}">
+				<include-form name="CurrentEmploymentDataForAdmin" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+			</screenlet>
+			</fail-widgets> -->
+			
+		</section>
+	</screen>
+	
+	<screen name="UpdateUserLoginPassword">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Reset User Password"/>
+               <set field="headerItem" value="EmplProfile"/>
+                <set field="tabButtonItem" value="UpdateUserLoginPassword"/>
+                <set field="labelTitleProperty" value="Reset User Password"/>
+                <!-- <set field="updateUserLoginSecurityURI" value="ProfileUpdateUserLoginSecurity"/> -->
+                <set field="updatePasswordURI" value="ProfileUpdatePassword"/>
+                <set field="cancelPage" from-field="parameters.CANCEL_PAGE" default-value="viewprofile"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="userLoginId" from-field="parameters.userLoginId"/>
+                <entity-one entity-name="UserLogin" value-field="editUserLogin"/>
+            </actions>
+            <widgets>
+                <!-- <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}"> -->
+                <decorator-screen name="EmployeeProfileDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="${uiLabelMap.UserLoginChangePassword}">
+                            <container style="page-title">
+                           		<!--  <label text="Change User Login Password For - ${userLogin.partyId}"/> -->
+                        	</container>
+                            <include-form name="updatePassword" location="component://humanres/widget/forms/EmployeeForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	
+
+</screens>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeLeaveHistory_subreport2" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="88b84c3a-d427-4a46-8bc6-01d559699c04">
+	<property name="ireport.zoom" value="1.2722928551174568"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="fromDate" class="java.lang.String"/>
+	<field name="thruDate" class="java.lang.String"/>
+	<field name="emplLeaveReasonTypeId" class="java.lang.String"/>
+	<field name="numberOfDays" class="java.lang.String"/>
+	<field name="leaveStatus" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="23">
+			<staticText>
+				<reportElement x="7" y="1" width="106" height="20" uuid="1691577f-4430-4be0-b251-eda0ef52d9b6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="1" width="135" height="20" uuid="a3155216-db27-49f9-bb51-5ba812aec35e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="335" y="1" width="72" height="20" uuid="79ba28da-e7bd-4473-95b1-cf2f7a6ec871"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Of Days]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="1" width="100" height="20" uuid="ea44d7a9-0e44-4c43-b2f8-310ddf0d4bbb"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[  To Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="1" width="110" height="20" uuid="7f83afad-e89d-4f6b-bc6b-ac2e618f7a26"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reason Type]]></text>
+			</staticText>
+			<line>
+				<reportElement x="5" y="22" width="545" height="1" uuid="cb01731f-2d35-4893-9049-78eb0c344b84"/>
+			</line>
+			<line>
+				<reportElement x="6" y="-1" width="545" height="1" uuid="9f4594f6-ff6f-4beb-a5d2-d41bcb23c38f"/>
+			</line>
+			<line>
+				<reportElement x="5" y="-1" width="1" height="23" uuid="c786c2a5-615e-4a06-bc02-74d32576ffc5"/>
+			</line>
+			<line>
+				<reportElement x="550" y="0" width="1" height="23" uuid="c6005c7c-eb92-4573-bb52-842ee5f06c29"/>
+			</line>
+			<line>
+				<reportElement x="113" y="0" width="1" height="22" uuid="84f8fcc4-0306-49ca-bcad-c82066b20fc9"/>
+			</line>
+			<line>
+				<reportElement x="216" y="0" width="1" height="22" uuid="8478922d-4fc9-4234-8f3b-6d962bb6451b"/>
+			</line>
+			<line>
+				<reportElement x="332" y="0" width="1" height="22" uuid="262e8fc1-46d9-4ad8-88d2-9cfc91b2897e"/>
+			</line>
+			<line>
+				<reportElement x="409" y="0" width="1" height="22" uuid="098dd3a4-99e9-4594-9097-8387ef9cade0"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="3" width="106" height="20" uuid="c73dec30-5077-4b86-b8e3-be7ce2d170b8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="3" width="72" height="20" uuid="08210a8e-3371-4f40-94a5-d101efe19351"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numberOfDays}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="3" width="135" height="20" uuid="7750ff7f-0866-406d-add5-91fba21798a5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{leaveStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="3" width="100" height="20" uuid="7bd3080f-a758-4439-8140-e45780af09f7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{thruDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="3" width="110" height="20" uuid="99761e95-2b0d-4527-b6b5-26a936ef8af4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{emplLeaveReasonTypeId}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="5" y="25" width="545" height="1" uuid="e8fdf426-dd18-477e-8c2a-3ac145ee9e68"/>
+			</line>
+			<line>
+				<reportElement x="550" y="-1" width="1" height="27" uuid="96c182b2-e684-4da0-a07d-6de30eb89666"/>
+			</line>
+			<line>
+				<reportElement x="5" y="-1" width="1" height="26" uuid="e6d4ec29-b81b-40c9-9b5f-13eae20a6198"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entity-engine-xml>
+ <GlAccount accountCode="3000000" accountName="LIABILITIES" description="Liabilities" glAccountClassId="LIABILITY" glAccountId="3000000" glAccountTypeId="LONG_TERM_LIABILITY" glResourceTypeId="MONEY" parentGlAccountId="" postedBalance="0.0"/>
+ <GlAccount accountCode="5000000" accountName="EXPENSES" description="Expenses" glAccountClassId="EXPENSE" glAccountId="5000000" glAccountTypeId="EXPENSE" glResourceTypeId="MONEY" parentGlAccountId="" postedBalance="0.0"/>  
+ <GlAccount accountCode="5000085" accountName="OFFICE &amp; ADMINISTRATIVE OVERHEAD" description="Office &amp; Administrative Overhead" glAccountClassId="COGS_EXPENSE" glAccountId="5000085" glAccountTypeId="EXPENSE" glResourceTypeId="MONEY" parentGlAccountId="5000000" postedBalance="0.0"/>
+ <GlAccount accountCode="3000006" accountName="CURRENT LIABILITIES" description="Current Liabilities" glAccountClassId="CURRENT_LIABILITY" glAccountId="3000006" glAccountTypeId="CUSTOMER_CREDIT" glResourceTypeId="MONEY" parentGlAccountId="3000000" postedBalance="0.0"/>
+<GlAccount accountCode="3000050" accountName="ACCRUED EXPENSES" description="Accrued Expenses" glAccountClassId="CURRENT_LIABILITY" glAccountId="3000050" glAccountTypeId="CUSTOMER_CREDIT" glResourceTypeId="MONEY" parentGlAccountId="3000006" postedBalance="0.0"/>
+<GlAccount accountCode="5000102" accountName="SALARY &amp; ALLOWANCES" description="Salary &amp; Allowances" glAccountClassId="COGS_EXPENSE" glAccountId="5000102" glAccountTypeId="EXPENSE" glResourceTypeId="MONEY" parentGlAccountId="5000085" postedBalance="0.0"/>
+ 
+   <GlAccount parentGlAccountId="3000050" glAccountId="321000" accountCode="321000" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="ACCRUED PAYROLL"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321200" accountCode="321200" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING SALARY EXPENSE"                                       description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321300" accountCode="321300" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING BASIC SALARY"                                       description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321400" accountCode="321400" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING FESTIVAL BONUS"                               description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321500" accountCode="321500" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING HOUSE_RENT"                                   description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321600" accountCode="321600" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING MEDICAL ALLOWANCE"                            description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321700" accountCode="321700" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING TRANSPORT"                                           description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321800" accountCode="321800" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING FOOD"                                           description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="321900" accountCode="321900" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING MOBILE"                                       description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322000" accountCode="322000" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING OVER TIME"                            description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322100" accountCode="322100" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING OTHER ALLOWANCE"                 description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322200" accountCode="322200" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING ARREARS DEDUCTION"                 description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322300" accountCode="322300" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING RECREATION ALLOWANCE"                description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322400" accountCode="322400" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING OTHER YEARLY"                           description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322500" accountCode="322500" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING CONTRIBUTORY PROVIDENT FUND"                  description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322600" accountCode="322600" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING GRATUITY FUND"                             description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322700" accountCode="322700" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING SERVICE BENEFIT"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322800" accountCode="322800" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING ATTENDANCE BONUS"                           description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="322900" accountCode="322900" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING ARREARS"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323000" accountCode="323000" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING OTHER DEDUCTIONS"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323100" accountCode="323100" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING STAMP"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323200" accountCode="323200" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING LA"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323300" accountCode="323300" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING CONVEYANCE"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323400" accountCode="323400" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING ENTERTAINMENT"                              description="" postedBalance="0.0"/>
+    <!--<GlAccount parentGlAccountId="221000" glAccountId="223500" accountCode="223500" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING LOAN"                              description="" postedBalance="0.0"/>-->
+    <GlAccount parentGlAccountId="321000" glAccountId="323500" accountCode="323500" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING EXTRA OVERTIME"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323600" accountCode="323600" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING HOLIDAY OVERTIME"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323700" accountCode="323700" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING ABSENT"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="321000" glAccountId="323800" accountCode="323800" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING LEAVE WITHOUT PAY"                              description="" postedBalance="0.0"/>
+	<GlAccount parentGlAccountId="321000" glAccountId="323900" accountCode="323900" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING PROVIDENT FUNDL"                              description="" postedBalance="0.0"/>
+ 	<GlAccount parentGlAccountId="321000" glAccountId="324000" accountCode="324000" glAccountClassId="CURRENT_LIABILITY"    glAccountTypeId="CURRENT_LIABILITY" glResourceTypeId="MONEY" accountName="OUTSTANDING COMPANY PROVIDENT FUNDL"                              description="" postedBalance="0.0"/>
+  
+  
+  
+  
+  <GlAccount parentGlAccountId="5000102" glAccountId="502000" accountCode="502000" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="SALARY EXPENSE"                                           description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502100" accountCode="502100" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="BASIC SALARY"                                             description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502200" accountCode="502200" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="FESTIVAL BONUS"                                           description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502300" accountCode="502300" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="HOUSE_RENT"                                               description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502400" accountCode="502400" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="MEDICAL ALLOWANCE"                                        description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502500" accountCode="502500" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="TRANSPORT"                                                       description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502600" accountCode="502600" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="FOOD"                                                       description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502700" accountCode="502700" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="MOBILE"                                                   description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502800" accountCode="502800" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="OVER TIME"                                                description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="502900" accountCode="502900" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="OTHER ALLOWANCE"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503000" accountCode="503000" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="ARREARS DEDUCTION"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503100" accountCode="503100" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="RECREATION ALLOWANCE"                                     description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503200" accountCode="503200" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="OTHER YEARLY"                                             description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503300" accountCode="503300" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="CONTRIBUTORY PROVIDENT FUND"                              description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503400" accountCode="503400" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="GRATUITY FUND"                                            description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503500" accountCode="503500" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="SERVICE BENEFIT"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503600" accountCode="503600" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="ATTENDANCE BONUS"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503700" accountCode="503700" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="ARREARS"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503800" accountCode="503800" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="CONVEYANCE"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="502000" glAccountId="503900" accountCode="503900" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="ENTERTAINMENT"                                          description="" postedBalance="0.0"/>
+
+    <GlAccount parentGlAccountId="5000102" glAccountId="504000" accountCode="504000" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="INCOME TAX"                                               description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="5000102" glAccountId="505000" accountCode="505000" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="PAYROLL DEDUCTIONS FROM GROSS"                            description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505100" accountCode="505100" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="PROVIDENT FUNDL"                                          description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505200" accountCode="505200" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="LA"                                                       description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505300" accountCode="505300" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="STAMP"                                                    description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505400" accountCode="505400" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="WORKER DEVELOPMENT FUND"                                  description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505500" accountCode="505500" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="INCOME TAX"                                               description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505600" accountCode="505600" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="MOBILE DEDUCTION"                                         description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505700" accountCode="505700" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="OTHER DEDUCTIONS"                                         description="" postedBalance="0.0"/>
+
+    <GlAccount parentGlAccountId="505000" glAccountId="505800" accountCode="505800" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="EXTRA OVERTIME"                                         description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="505900" accountCode="505900" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="HOLIDAY OVERTIME"                                         description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="506000" accountCode="506000" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="ABSENT"                                         description="" postedBalance="0.0"/>
+    <GlAccount parentGlAccountId="505000" glAccountId="506100" accountCode="506100" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="LEAVE WITHOUT PAY"                                         description="" postedBalance="0.0"/>
+   <GlAccount parentGlAccountId="505000" glAccountId="506200" accountCode="506200" glAccountClassId="SGA_EXPENSE"          glAccountTypeId=""                  glResourceTypeId="MONEY" accountName="COMPANY CONTRIBUTION PROVIDENT FUNDL"                                          description="" postedBalance="0.0"/>
+   
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="3000006" fromDate="2001-01-01 00:00:00.0"/>
+ <GlAccountOrganization organizationPartyId="CSL" glAccountId="5000102" fromDate="2001-01-01 00:00:00.0"/>
+  <GlAccountOrganization organizationPartyId="CSL" glAccountId="502000" fromDate="2001-01-01 00:00:00.0"/>
+  <GlAccountOrganization organizationPartyId="CSL" glAccountId="505000" fromDate="2001-01-01 00:00:00.0"/>
+  <GlAccountOrganization organizationPartyId="CSL" glAccountId="3000050" fromDate="2001-01-01 00:00:00.0"/>
+   <GlAccountOrganization organizationPartyId="CSL" glAccountId="321000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321200" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321300" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321400" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321500" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321600" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321700" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321800" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="321900" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322100" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322200" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322300" fromDate="2001-01-01 00:00:00.0"/>
+  <GlAccountOrganization organizationPartyId="CSL" glAccountId="322400" fromDate="2001-01-01 00:00:00.0"/> 
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322500" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322600" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322700" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322800" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="322900" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="323000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="323100" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="323200" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="323300" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="323400" fromDate="2001-01-01 00:00:00.0"/>
+
+    
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502100" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502200" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502300" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502400" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502500" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502600" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502700" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502800" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="502900" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503100" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503200" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503300" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503400" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503500" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503600" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503700" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503800" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="503900" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="504000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505000" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505100" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505200" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505300" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505400" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505500" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505600" fromDate="2001-01-01 00:00:00.0"/>
+    <GlAccountOrganization organizationPartyId="CSL" glAccountId="505700" fromDate="2001-01-01 00:00:00.0"/>
+   
+   <InvoiceItemType category="M" createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" defaultGlAccountId="502100" description="Payroll Basic" invoiceItemTypeId="PAYROLL_BASIC" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" parentTypeId="PAYROL_EARN_HOURS"/>
+   <InvoiceItemTypeGlAccount createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" glAccountId="321300" invoiceItemTypeId="PAYROLL_BASIC" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" organizationPartyId="CSL"/>
+   <PayrollItem createdStamp="2015-08-05 09:34:05.0" createdTxStamp="2015-08-05 09:34:05.0" description="Basic Salary" invoiceItemTypeId="PAYROLL_BASIC" lastUpdatedStamp="2015-08-05 09:34:05.0" lastUpdatedTxStamp="2015-08-05 09:34:05.0" name="Basic Salary" payrollItemTypeId="BASIC" payrollType="V" isActive="Y"/>
+   
+   
+   <InvoiceItemType category="M" createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" defaultGlAccountId="505100" description="Provident Fundl" invoiceItemTypeId="PAYROLL_EM_PROVIDENT" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" parentTypeId="PAYROL_DD_FROM_GROSS"/>
+   <InvoiceItemTypeGlAccount createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" glAccountId="323900" invoiceItemTypeId="PAYROLL_EM_PROVIDENT" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" organizationPartyId="CSL"/>
+   <PayrollItem createdStamp="2015-08-05 09:34:05.0" createdTxStamp="2015-08-05 09:34:05.0" description="PF Contribution" invoiceItemTypeId="PAYROLL_EM_PROVIDENT" lastUpdatedStamp="2015-08-05 09:34:05.0" lastUpdatedTxStamp="2015-08-05 09:34:05.0" name="PF Contribution" payrollItemTypeId="EMPL_PF_INV" payrollType="V" isActive="Y"/>
+    
+   <InvoiceItemType category="M" createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" defaultGlAccountId="503300" description="Contributory Provident Fund" invoiceItemTypeId="PAYROLL_CM_PROVIDENT" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" parentTypeId="PAYROL_EARN_HOURS"/>
+   <InvoiceItemTypeGlAccount createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" glAccountId="322500" invoiceItemTypeId="PAYROLL_CM_PROVIDENT" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" organizationPartyId="CSL"/>
+   <PayrollItem createdStamp="2015-08-05 09:34:05.0" createdTxStamp="2015-08-05 09:34:05.0" description="Company PF Contribution" invoiceItemTypeId="PAYROLL_CM_PROVIDENT" lastUpdatedStamp="2015-08-05 09:34:05.0" lastUpdatedTxStamp="2015-08-05 09:34:05.0" name="Company PF Contribution" payrollItemTypeId="COMP_PF_INV" payrollType="V" isActive="Y"/>
+    
+    <InvoiceItemType category="M" createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" defaultGlAccountId="506200" description="Company Contributory PF" invoiceItemTypeId="PAYROLL_CCM_PF" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" parentTypeId="PAYROL_DD_FROM_GROSS"/>
+   	<InvoiceItemTypeGlAccount createdStamp="2015-08-03 14:51:40.0" createdTxStamp="2015-08-03 14:51:40.0" glAccountId="324000" invoiceItemTypeId="PAYROLL_CCM_PF" lastUpdatedStamp="2015-08-03 14:51:40.0" lastUpdatedTxStamp="2015-08-03 14:51:40.0" organizationPartyId="CSL"/>
+   	<PayrollItem createdStamp="2015-08-05 09:34:05.0" createdTxStamp="2015-08-05 09:34:05.0" description="Company PF Contribution" invoiceItemTypeId="PAYROLL_CCM_PF" lastUpdatedStamp="2015-08-05 09:34:05.0" lastUpdatedTxStamp="2015-08-05 09:34:05.0" name="Company PF Contribution" payrollItemTypeId="COMP_CPF_INV" payrollType="V" isActive="Y"/>
+    
+     </entity-engine-xml> 

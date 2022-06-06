@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	
+    
+    <form name="ListLeaveNotificationMap" type="list" list-name="processStepNotificationsList" use-row-submit="true" title="" target="updatePayrollPayGrade"
+     	paginate-target="NotificationMapForProcessStep" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+  		<actions>
+  			<entity-and entity-name="ProcessStepNotifications" list="processStepNotificationsList">  				
+				<field-map field-name="stepId" from-field="stepId" />
+  			</entity-and>
+  		</actions>
+  		
+        <field name="processStrId" title="Process Structure Id"><display></display></field>
+        <field name="stepId" title="Step Id"><display></display></field>
+        <field name="notificationId" title="Notification Id"><display></display></field>
+        <field name="stepFilter" title="Step Filter"><display></display></field>
+        <field name="notificationId" title="Notification Id"><display></display></field>
+        <field name="notifiedPerson" title="Notified Employee"><display></display></field>
+        <field name="notifiedParty" title="Notified Party"><hidden/></field>
+		<field name="notifiedParty" title="Notifier Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="description"><display></display></field>
+        <field name="dateAdded"><display></display></field>
+        
+        <field name="deleteLink" title="" widget-style="buttontext">
+            <hyperlink target="deleteLeaveNotificationMap" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="stepId"/>
+                <parameter param-name="notificationId"/>
+            </hyperlink>
+        </field> 
+    </form>
+    
+    <form name="AddLeaveNotificationMap" type="single" target="createLeaveNotificationMap" title=""
+       header-row-style="header-row" 
+       default-table-style="basic-table" default-map-name="processStructure">
+       <field name="processStrId" title="Structure Id"><display/></field>
+        <field name="stepId" title="Step Id"><display/></field>
+       <!-- <field name="stepId" tooltip="${uiLabelMap.CommonRequired}"  widget-style="required" title="Step Id"> <text/></field> -->
+        <field name="stepFilter" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" title="Filter"><text/></field>
+        
+        <field name="stepFilter">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LEAVE_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="notifiedPerson" title="Notified Employee"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="description" ><textarea/></field>
+        <field name="submitButton" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+    	
+    </form>
+    
+    
+</forms>

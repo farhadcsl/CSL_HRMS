@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="PayslipMonth">
+        <section>
+            <actions>
+                <set field="headerItem" value="payslip"/>
+               <entity-and list="userLoginHeader" entity-name="UserLogin">
+               <field-map field-name="partyId" from-field="partyId"/>
+               </entity-and>
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                  
+                        <section>
+                            <condition>
+                                <if-compare-field operator="equals" field="parameters.partyId" to-field="userLogin.partyId" />
+                            </condition>
+                            <widgets>
+                                <screenlet id="SalaryProcessNewSalaryProcessInitiation" title="View Payslip" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="payslipMonth" location="component://humanres/widget/payslip/PayslipForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="viewSalaryPayslip">
+        <section>
+            <actions>
+            <set field="headerItem" value="payslip"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="monthNumber" from-field="parameters.monthNumber"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="year" from-field="${parameters.year}"/>
+                 <set field="tabButtonItem" value="ExtProMod"/>
+                 <set field="totalSalary" from-field="parameters.totalSalary"/>
+          <entity-condition list="emplTempSalaryOptBen" entity-name="EmplFinalSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="fiscalYear" operator="equals" value="${parameters.year}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="B"/>
+		            </condition-list>
+          </entity-condition>
+             <entity-condition list="emplTempSalaryOptDed" entity-name="EmplFinalSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="fiscalYear" operator="equals" value="${parameters.year}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="D"/>
+		            </condition-list>
+            </entity-condition> 
+           <!--  <set field="eligiblePayableBenefitMap" from-field="parameters.eligiblePayableBenefitMap"/>
+            <set field="eligiblePayableDedMap" from-field="parameters.eligiblePayableDedMap"/> -->
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="emplDetail" title="Employee Information" collapsible="true">
+                                        <include-form name="EmployeeInfo" location="component://humanres/widget/payslip/PayslipForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-left">
+                                    <screenlet title="Earnings">
+                                  
+                                 
+                                        <include-form name="employeeEarnings" location="component://humanres/widget/payslip/PayslipForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-right">
+                                    <screenlet title="Deductions">
+                                   
+                                     
+                                        <include-form name="employeeDeductions" location="component://humanres/widget/payslip/PayslipForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="leftclear">
+                                    <screenlet title="Net Total">
+                                        <include-form name="NetPayAdmin" location="component://humanres/widget/payslip/PayslipForms.xml"/>
+                                        
+                                    </screenlet>
+                                    <include-form name="convertToPdf" location="component://humanres/widget/payslip/PayslipForms.xml"/>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+    </screens>

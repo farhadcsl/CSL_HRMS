@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+<form name="payslipMonth" type="single" target="viewSalaryPayslip" odd-row-style="header-row" default-table-style="basic-table">
+       <actions>
+          <set field="partyId" from-field="parameters.partyId"/>
+       </actions>
+       
+        <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+         <field name="partyId" parameter-name="partyId">
+            <hidden/>
+        </field>
+        
+        <field name="fiscalYear" title="Year" tooltip="e.g.2008" parameter-name="fiscalYear">
+            <text/>
+        </field>
+        <field name="searchButton" title="Show" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    
+    <form name="EmployeeInfo" target="updateBenefits" type="single" >
+   <actions>
+   <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+   
+   </actions>
+  	<field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="name">
+       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+  </form>
+    
+     <form name="employeeEarnings" type="list" list-name="emplTempSalaryOptBen" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	
+  	<field name="payrollItemTypeId" title="Benefit Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="partyId"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amounts">
+  		<display/> 
+  	</field>
+  
+  </form>
+  
+  <form name="employeeDeductions" type="list" list-name="emplTempSalaryOptDed" target="EmployeePayslipReport.pdf"  odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	<field name="payrollItemTypeId" title="Deduction Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amaounts">
+  		<display/> 
+  	</field>
+ 
+  	
+  </form>
+  
+  <form name="NetPayAdmin" type="single"  >
+  <actions>
+	 <entity-and entity-name="EmployeeSalaryFinal" list="employeeSalaryFinal">
+	 	<field-map field-name="partyId" value="${parameters.partyId}"/>
+	 </entity-and>
+  </actions>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="partyId"><hidden/></field>
+
+  	<field name="totalSalary" title="Net Payable">
+  		<display currency="BDT" description="${employeeSalaryFinal[0].totalSalary}"/>
+  	</field>
+  	 </form>
+  	<form name="convertToPdf" type="single" target="GeneratePayslipReport" >
+  		<actions>
+	       
+            <entity-and entity-name="UserLogin"  list="userLogin">
+            	<field-map field-name="partyId" value="${partyId}"/>
+        	</entity-and>	        
+        </actions>
+  		<field name="monthNumber"><hidden/></field>
+  		<field name="year"><hidden/></field>
+  		<field name="partyId"><hidden/></field>
+  		<field name="employeeId"><hidden value="${userLogin[0].userLoginId}"/></field>
+   		<!-- <field name="searchButton" title="Export To PDF" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field> -->
+         <field name="submitButton" title="Export Report" widget-style="smallSubmit">
+    <submit button-type="button"/>
+    </field>
+  
+  	</form>
+  
+   
+  
+   </forms>

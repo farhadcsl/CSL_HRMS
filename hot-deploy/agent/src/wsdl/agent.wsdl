@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ACTAtekAgent"
+ targetNamespace="http://www.hectrix.com/ACTAtekAgent.service"
+ xmlns:tns="http://www.hectrix.com/ACTAtekAgent.service"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="http://www.hectrix.com/ACTAtekAgent.xsd"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- WSDL File for Agent Communication -->
+
+<types>
+
+ <schema targetNamespace="http://www.hectrix.com/ACTAtekAgent.xsd"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns1="http://www.hectrix.com/ACTAtekAgent.xsd"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <simpleType name="eventType">
+   <restriction base="xsd:string">
+    <enumeration value="UNKNOWN"/>
+    <enumeration value="IN"/>
+    <enumeration value="OUT"/>
+    <enumeration value="F1"/>
+    <enumeration value="F2"/>
+    <enumeration value="F3"/>
+    <enumeration value="F4"/>
+    <enumeration value="F5"/>
+    <enumeration value="F6"/>
+    <enumeration value="F7"/>
+    <enumeration value="F8"/>
+    <enumeration value="F9"/>
+    <enumeration value="F10"/>
+    <enumeration value="ID-UNKNOWN"/>
+    <enumeration value="REJECTED"/>
+    <enumeration value="ID-RESERVED"/>
+    <enumeration value="RESET-ALL"/>
+    <enumeration value="RESET-ACC"/>
+    <enumeration value="RESET-DEVICE"/>
+    <enumeration value="RESET-PASSWORD"/>
+    <enumeration value="RESET-DEFAULT"/>
+    <enumeration value="SYSTEM-LOGIN"/>
+    <enumeration value="ADMIN-LOGIN"/>
+    <enumeration value="USER-LOGIN"/>
+    <enumeration value="NETWORK-CHANGE"/>
+    <enumeration value="PATCHED"/>
+    <enumeration value="BACKUP-DB"/>
+    <enumeration value="RESTORE-DB"/>
+    <enumeration value="SYSTEM-RSVD"/>
+    <enumeration value="ENROLL-USER"/>
+    <enumeration value="REMOTE-DOOR-OPEN"/>
+    <enumeration value="REMOVE-USER"/>
+    <enumeration value="SUSPEND-USER"/>
+    <enumeration value="EDIT-EVENT"/>
+    <enumeration value="RESET-ADMIN-PW"/>
+    <enumeration value="ADMIN-RSVDIT"/>
+    <enumeration value="F11"/>
+    <enumeration value="F12"/>
+    <enumeration value="F13"/>
+    <enumeration value="F14"/>
+    <enumeration value="F15"/>
+    <enumeration value="F16"/>
+    <enumeration value="F17"/>
+    <enumeration value="F18"/>
+    <enumeration value="F19"/>
+    <enumeration value="F20"/>
+    <enumeration value="F21"/>
+    <enumeration value="F22"/>
+    <enumeration value="F23"/>
+    <enumeration value="F24"/>
+    <enumeration value="F25"/>
+    <enumeration value="F26"/>
+    <enumeration value="F27"/>
+    <enumeration value="F28"/>
+    <enumeration value="F29"/>
+    <enumeration value="F30"/>
+    <enumeration value="F31"/>
+    <enumeration value="F32"/>
+    <enumeration value="F33"/>
+    <enumeration value="F34"/>
+    <enumeration value="F35"/>
+    <enumeration value="F36"/>
+    <enumeration value="F37"/>
+    <enumeration value="F38"/>
+    <enumeration value="F39"/>
+    <enumeration value="F40"/>
+    <enumeration value="SCHEDULE-DOOR-OPEN"/>
+    <enumeration value="SCHEDULE-DOOR-CLOSE"/>
+    <enumeration value="SCHEDULE-BELL-ON"/>
+    <enumeration value="DOOR-IS-OPENED"/>
+    <enumeration value="DOOR-IS-CLOSED"/>
+    <enumeration value="CASE-IS-OPENED"/>
+    <enumeration value="CASE-IS-CLOSED"/>
+   </restriction>
+  </simpleType>
+
+  <complexType name="Log">
+   <sequence>
+     <element name="logID" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="userID" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+     <element name="trigger" type="ns1:eventType" minOccurs="1" maxOccurs="1"/>
+     <element name="terminalSN" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sender" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="photoPart" type="ns1:PhotoPart" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="PhotoPart">
+   <sequence>
+     <element name="hasPhoto" type="xsd:boolean" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="photoData" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="eLog">
+   <sequence>
+     <element name="encryptedLog" type="xsd:base64Binary" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="photo" type="ns1:PhotoPart" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="eLogArray">
+   <sequence>
+     <element name="elogs" type="ns1:eLog" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <!-- operation request element -->
+  <element name="log">
+   <complexType>
+    <sequence>
+     <element name="magic" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="unencryptedLog" type="ns1:Log" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="logResponse">
+   <complexType>
+    <sequence>
+     <element name="status" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="encryptLog">
+   <complexType>
+    <sequence>
+     <element name="encryptedLog" type="xsd:base64Binary" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="photo" type="ns1:PhotoPart" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="encryptLogResponse">
+   <complexType>
+    <sequence>
+     <element name="status" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="encryptLogMultiple">
+   <complexType>
+    <sequence>
+     <element name="encryptedLogs" type="ns1:eLogArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="encryptLogMultipleResponse">
+   <complexType>
+    <sequence>
+     <element name="status" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="sync">
+   <complexType>
+    <sequence>
+     <element name="magic" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="registrationID" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="syncResponse">
+   <complexType>
+    <sequence>
+     <element name="status" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+ </schema>
+
+</types>
+
+<message name="logRequest">
+ <part name="parameters" element="ns1:log"/>
+</message>
+
+<message name="logResponse">
+ <part name="parameters" element="ns1:logResponse"/>
+</message>
+
+<message name="encryptLogRequest">
+ <part name="parameters" element="ns1:encryptLog"/>
+</message>
+
+<message name="encryptLogResponse">
+ <part name="parameters" element="ns1:encryptLogResponse"/>
+</message>
+
+<message name="encryptLogMultipleRequest">
+ <part name="parameters" element="ns1:encryptLogMultiple"/>
+</message>
+
+<message name="encryptLogMultipleResponse">
+ <part name="parameters" element="ns1:encryptLogMultipleResponse"/>
+</message>
+
+<message name="syncRequest">
+ <part name="parameters" element="ns1:sync"/>
+</message>
+
+<message name="syncResponse">
+ <part name="parameters" element="ns1:syncResponse"/>
+</message>
+
+<portType name="ACTAtekAgentPortType">
+ <operation name="log">
+  <documentation>Log coming from ACTAtek</documentation>
+  <input message="tns:logRequest"/>
+  <output message="tns:logResponse"/>
+ </operation>
+ <operation name="encryptLog">
+  <documentation>Encrypted Log coming from ACTAtek</documentation>
+  <input message="tns:encryptLogRequest"/>
+  <output message="tns:encryptLogResponse"/>
+ </operation>
+ <operation name="encryptLogMultiple">
+  <documentation>Multiple Encrypted Log coming from ACTAtek</documentation>
+  <input message="tns:encryptLogMultipleRequest"/>
+  <output message="tns:encryptLogMultipleResponse"/>
+ </operation>
+ <operation name="sync">
+  <documentation>Sync Request from ACTAtek</documentation>
+  <input message="tns:syncRequest"/>
+  <output message="tns:syncResponse"/>
+ </operation>
+</portType>
+
+<binding name="ACTAtekAgent" type="tns:ACTAtekAgentPortType">
+ <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="log">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="encryptLog">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="encryptLogMultiple">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="sync">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="ACTAtekAgent">
+ <documentation>WebService API for ACTAtek Agent</documentation>
+ <port name="ACTAtekAgent" binding="tns:ACTAtekAgent">
+  <SOAP:address location="http://www.hectrix.com/ACTAtekAgent.wsdl"/>
+ </port>
+</service>
+
+</definitions>

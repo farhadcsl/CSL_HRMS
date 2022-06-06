@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8d47f328-75e9-43d4-b17d-9544a808d85d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/sumon/CSl-ERP/csl/applications/humanres/webapp/humanres/humanres/reports/attendance/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportsDirPath" class="java.lang.String"/>
+	<field name="fromDate" class="java.lang.String"/>
+	<field name="thruDate" class="java.lang.String"/>
+	<field name="individualemployeeAttendanceList" class="java.util.List"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="totalWorkingDay" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="164" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="21" width="488" height="21" uuid="0d085d18-204d-4c31-9fcb-b20dfe05b7af"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[House No: 450 ,Road No: 31, Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="0" width="401" height="21" uuid="7419bc68-d649-42a8-bc0a-b22975a29ba1"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Computer Services Limited ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="42" width="572" height="1" uuid="e8032b30-bead-4955-8dde-aae1a041ec74"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="47" width="572" height="22" uuid="7d348cbe-64a7-43c4-b7ea-0ed9b73026c8"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Individual Employee Attendance Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="118" width="12" height="20" uuid="9d59113d-5eb6-4f68-a2b0-5d2e0eea3c56"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="72" width="12" height="20" uuid="5a81dccd-94b0-4e58-9477-49fc729cccab"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="118" width="100" height="20" uuid="0f0139ec-a808-4a48-96ff-606d4a41a8e1"/>
+				<text><![CDATA[To Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="72" width="100" height="20" uuid="2286465a-733a-45fc-9d1e-c781a6296ab0"/>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="94" width="12" height="20" uuid="ebd7a963-91f4-4faf-b5e9-2439c4ba8f6d"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="94" width="100" height="20" uuid="a942da9a-1e03-454f-953d-f931334d9edd"/>
+				<text><![CDATA[From Date]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="137" y="94" width="226" height="20" uuid="5892a46a-fcc1-4e37-a014-f878a64329a7"/>
+				<textFieldExpression><![CDATA[$F{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="137" y="118" width="226" height="20" uuid="f89e692a-ac2b-41dd-b408-597a79eb9e06"/>
+				<textFieldExpression><![CDATA[$F{thruDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="416" y="71" width="132" height="20" uuid="a8363798-914b-4148-9fe3-6c647332f7d0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="72" width="226" height="20" uuid="19ab83eb-486c-46fc-8abb-c282d3929824"/>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="141" width="100" height="20" uuid="666f601f-7992-4977-9dbe-ccf4db530267"/>
+				<text><![CDATA[Total Working Day]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="141" width="12" height="20" uuid="39585152-a571-4c45-9b7a-c7a2678da36c"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="137" y="141" width="226" height="20" uuid="7edc0df4-36fa-4d4c-8a33-363db2715ab7"/>
+				<textFieldExpression><![CDATA[$F{totalWorkingDay}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<subreport>
+				<reportElement x="10" y="0" width="157" height="31" uuid="dc127e30-43ef-4925-8233-91aa9630537f"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+            ($F{individualemployeeAttendanceList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportsDirPath} + "/IndividualAttendanceReport_List.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="462" y="5" width="80" height="20" uuid="bf794478-a65c-47a7-95d2-d65cce636d55"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="542" y="5" width="27" height="20" uuid="b977ed26-9544-4c27-9813-b6bd8acd30c0"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

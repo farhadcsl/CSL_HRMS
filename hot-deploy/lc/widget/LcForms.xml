@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+ <form name="FindPi" type="single" target="FindPi"
+        odd-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="LcPi" default-field-type="find"/>
+          <field name="piId" tooltip="${uiLabelMap.CommonRequired}"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="FindLc" type="single" target="FindLc"
+        odd-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="LcBank" default-field-type="find"/>
+          <field name="piId" tooltip="${uiLabelMap.CommonRequired}"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="FindTt" type="single" target="FindTt"
+        odd-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="LcPi" default-field-type="find"/>
+          <field name="piId" tooltip="${uiLabelMap.CommonRequired}"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+     <!-- <form name="CreatePi" type="single" target="createNewPi"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="piNo"  required-field="true"><text/></field>
+        <field name="date"  required-field="true"><date-time type="date"/></field>
+        <field name="amount" tooltip="Plz input number" widget-style="number"><text/></field>
+        <field name="currency" tooltip="${uiLabelMap.CommonRequired}"><text/></field>
+        <field name="beneficiary" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="goodsDescription" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><textarea/></field>
+        <field name="shipmentBy" title="Shipment By">
+            <drop-down allow-empty="true">
+                <option key="Air" description="Air"/>
+                <option key="Ship" description="Ship"/>
+            </drop-down>
+        </field>
+        <field name="status" title="">
+            <drop-down allow-empty="true">
+                <option key="TT" description="TT"/>
+                <option key="LC" description="LC"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" ><submit/></field>
+    </form> -->
+    <form name="CreatePiForm" type="single" target="createNewPi"
+        header-row-style="header-row" default-table-style="basic-table">
+       
+        <field name="piNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="piId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="date" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="amount" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="currency" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="beneficiary" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="goodsDescription" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><textarea/></field>
+        <field name="shipmentBy" title="Shipment By">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="Air" description="Air"/>
+                <option key="Ship" description="Ship"/>
+            </drop-down>
+        </field>
+        <field name="status" title="">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="TT" description="TT"/>
+                <option key="LC" description="LC"/>
+            </drop-down>
+        </field>
+      <!--   <field name="dateAdded" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field> -->
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" ><submit/></field>
+    </form>
+    <form name="CreateTt" type="single" target="CreateNewTt"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="piId" title="Pi No" required-field="true">
+             <drop-down allow-empty="true" required-field="true" tooltip="${uiLabelMap.CommonRequired}">
+             <auto-complete/>
+                <entity-options entity-name="LcPi" key-field-name="piId" description="${piNo}">
+                <entity-constraint name="status" operator="equals" value="TT"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="ttId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="ttNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="ttCost" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="date" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+       <!--  <field name="dateAdded" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field> -->
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" ><submit/></field>
+    </form>
+     <form name="editTt" type="single" target="updateTt"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="piId" title="Pi No" required-field="true" tooltip="${uiLabelMap.CommonRequired}">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcPi" key-field-name="piId" description="${piNo}">
+                <entity-constraint name="status" operator="equals" value="TT"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="ttId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="ttNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="ttCost" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="date" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+       <!--  <field name="dateAdded" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field> -->
+        <field name="submitButton" title="Update" ><submit/></field>
+    </form>
+     <form name="TtList" type="multi" list-name="listIt" target="updateEmplPositionType" paginate-target="FindTt"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="lcCtx"/>
+                <field-map field-name="entityName" value="LcTt"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions><entity-and entity-name="LcPi" list="lcPi">
+        <field-map field-name="piId" from-field="piId"/>
+        </entity-and></row-actions>
+        <field name="ttId" title="ttId"><hidden/></field>
+        <field name="ttNo" title="TT No"><display/></field>
+        <field name="piId" title="Pi No" ><display description="${lcPi[0].piNo}"></display></field>
+        <field name="ttCost" title="tt Cost"><display/></field>
+        <field name="date" title="date"><display/></field>
+        <field name="dateAdded" title="dateAdded"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editTt" description="Edit" also-hidden="false">
+                <parameter param-name="ttId"/>
+                <parameter param-name="ttNo"/>
+                <parameter param-name="piId"/>
+                <parameter param-name="ttCost"/>
+                <parameter param-name="date"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+       
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteTt" description="${uiLabelMap.CommonDelete}" also-hidden="false" confirmation-message="Do you want to delete?">
+                <parameter param-name="ttId"/>
+            </hyperlink>
+        </field>
+         <field name="viewLink" title="View" widget-style="buttontext">
+            <hyperlink target="TtView" description="View" also-hidden="false">
+                <parameter param-name="ttId"/>
+                <parameter param-name="ttNo"/>
+                <parameter param-name="piId"/>
+                <parameter param-name="ttCost"/>
+                <parameter param-name="date"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+       </form>
+       <form name="TtView" type="single"   header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+         <entity-and entity-name="LcTt" list="lcTt">
+        <field-map field-name="ttId" from-field="ttId"/>
+        </entity-and>
+        <entity-and entity-name="LcPi" list="lcPi">
+        <field-map field-name="piId" value="${lcTt[0].piId}"/>
+        </entity-and>
+        </actions>
+        <field name="ttId" title="ttId"><hidden/></field>
+        <field name="piId" title="Pi No" ><display description="${lcPi[0].piNo}"></display></field>
+        <field name="ttNo" title="ttNo"><display description="${lcTt[0].ttNo}"></display></field>
+        <field name="ttCost" title="ttCost"><display description="${lcTt[0].ttCost}"></display></field>
+        <field name="date" title="date"><display description="${lcTt[0].date}"></display></field>
+        <field name="dateAdded" title="dateAdded"><display description="${lcTt[0].dateAdded}"></display></field>
+    </form>
+    <form name="PiList" type="multi" list-name="listIt" paginate-target="FindLc"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="lcCtx"/>
+                <field-map field-name="entityName" value="LcPi"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="piId" title="Pi Id"><hidden/></field>
+        <field name="piNo" title="Pi No"><display/></field>
+        <field name="date" title="Date"><display/></field>
+        <field name="amount" title="Amount"><display/></field>
+        <field name="currency" title="Currency"><display/></field>
+        <field name="beneficiary" title="Beneficiary"><display/></field>
+        <field name="goodsDescription" title="Goods Description"><display/></field>
+        <!-- <field name="shipmentType" title="Shipment Type"><display/></field> -->
+        <field name="shipmentBy" title="Shipment By"><display/></field>
+        <!-- <field name="actualShipmentDate" title="Actual hipment Date"><display/></field>
+        <field name="eta" title="ETA"><display/></field> -->
+        <field name="status" title="Status"><display/></field>
+        <field name="dateAdded" title="Date Added"><display/></field>
+        <field name="viewLink" title="View" widget-style="buttontext">
+            <hyperlink target="viewLc" description="View" also-hidden="false">
+                <parameter param-name="piId"/>
+                <parameter param-name="piNo"/>
+                <parameter param-name="date"/>
+                <parameter param-name="amount"/>
+                <parameter param-name="currency"/>
+                <parameter param-name="beneficiary"/>
+                <parameter param-name="goodsDescription"/>
+                <parameter param-name="shipmentBy"/>
+                <parameter param-name="status"/> 
+            </hyperlink>
+        </field>
+        <field name="editLink" title="${uiLabelMap.CommonEdit}" widget-style="buttontext">
+            <hyperlink target="editPi" description="${uiLabelMap.CommonEdit}" also-hidden="false">
+                <parameter param-name="piId"/>
+                <parameter param-name="piNo"/>
+                <parameter param-name="date"/>
+                <parameter param-name="amount"/>
+                <parameter param-name="currency"/>
+                <parameter param-name="beneficiary"/>
+                <parameter param-name="goodsDescription"/>
+                <parameter param-name="shipmentBy"/>
+                <parameter param-name="status"/> 
+            </hyperlink>
+        </field>
+         <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePi" description="${uiLabelMap.CommonDelete}" also-hidden="false"  confirmation-message="Do you want to delete?">
+                <parameter param-name="piId"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="editPi" type="single" target="updatePi" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="piId" title="Pi Id"><hidden/></field>
+        <field name="piNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="date" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="amount" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="currency" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="beneficiary" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="goodsDescription" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><textarea/></field>
+        <!-- <field name="shipmentBy" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field> -->
+        <field name="shipmentBy" title="Shipment By">
+            <drop-down allow-empty="true">
+                <option key="Air" description="Air"/>
+                <option key="Ship" description="Ship"/>
+            </drop-down>
+        </field>
+        <field name="status" title="Type">
+            <drop-down allow-empty="true">
+                <option key="TT" description="TT"/>
+                <option key="LC" description="LC"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" ><submit/></field>
+    </form>
+    <form name="viewLc" type="single"   header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="piId" title="Pi Id"><hidden/></field>
+        <field name="piNo" title="Pi No"><display/></field>
+        <field name="date" title="Date"><display/></field>
+        <field name="amount" title="Amount"><display/></field>
+        <field name="currency" title="Currency"><display/></field>
+        <field name="beneficiary" title="Beneficiary"><display/></field>
+        <field name="goodsDescription" title="Goods Description"><display/></field>
+        <field name="shipmentBy" title="Shipment By"><display/></field>
+        <field name="status" title="Status"><display/></field>
+      
+    </form>
+    <form name="CreateLcForm" type="single" target="NewLcCreate" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="piId" title="Pi No" required-field="true" tooltip="${uiLabelMap.CommonRequired}">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcPi" key-field-name="piId" description="${piNo}">
+                <entity-constraint name="status" operator="equals" value="LC"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="lcNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="date" title="Date" required-field="true"><date-time type="date"/></field>
+        <field name="cost" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="lcExpiryDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="lastShipmentDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="lcExpiryDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+         <field name="shipmentType" title="Shipment Type">
+            <drop-down allow-empty="true">
+                <option key="FOB" description="FOB"/>
+                <option key="CFR" description="CFR"/>
+            </drop-down>
+        </field>
+        <field name="actualShipmentDate" title="Actual Shipment Date" required-field="true"><date-time type="date"/></field>
+        <field name="eta" title="ETA" required-field="true"><date-time type="date"/></field>
+        <field name="issuingBank">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcBankInfo" key-field-name="lcBankInfoId" description="${bankName}">
+                </entity-options>
+            </drop-down>
+        </field>
+         <field name="shiperName">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcShiperInfo" key-field-name="lcShiperId" description="${shiperName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="insuranceCompanyName">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcInsuranceCoverNote" key-field-name="lcInsuranceCoverNoteId" description="${insuranceCompanyName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="insuranceCoverNote" title="Insurance Cover Note" required-field="true"><text/></field>
+       <!--  <field name="dateAdded" title="Date" required-field="true"><date-time type="date"/></field> -->
+        <field name="submitButton" title="Create" ><submit/></field>
+    </form>
+     <form name="LcList" type="multi" list-name="listIt" target="updateEmplPositionType" paginate-target="FindLc"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="lcCtx"/>
+                <field-map field-name="entityName" value="LcBank"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions><entity-and entity-name="LcPi" list="lcPi">
+        <field-map field-name="piId" from-field="piId"/>
+        </entity-and></row-actions>
+        <field name="lcId" title="lcId"><hidden/></field>
+        <field name="piId" title="Pi No"><display description="${lcPi[0].piNo}"></display></field>
+        <field name="lcNo" title="LC No"><display/></field>
+        <field name="date" title="date"><display/></field>
+        <field name="cost" title="Cost"><display/></field>
+        <field name="lcExpiryDate" title="lcExpiryDate"><display/></field>
+        <field name="lastShipmentDate" title="Last Shipment Date"><display/></field>
+        <field name="lcExpiryDate" title="LC Expiry Date"><display/></field>
+        <field name="shipmentType" title="Shipment Type"><display/></field>
+        <field name="actualShipmentDate" title="Actual Shipment Date"><display/></field>
+        <field name="eta" title="eta"><display/></field>
+        <field name="issuingBank" title="Issuing Bank"><display/></field>
+        <field name="shiperName" title="Shiper Name"><display/></field>
+        <field name="insuranceCompanyName" title="Insurance Company Name"><display/></field>
+        <field name="insuranceCoverNote" title="Insurance Cover Note"><display/></field>
+        <field name="dateAdded" title="dateAdded"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditLc" description="Edit" also-hidden="false">
+                <parameter param-name="lcId"/>
+                <parameter param-name="piId"/>
+                <parameter param-name="lcNo"/>
+                <parameter param-name="cost"/>
+                <parameter param-name="lcExpiryDate"/>
+                <parameter param-name="lastShipmentDate"/>
+                <parameter param-name="lcExpiryDate"/>
+                <parameter param-name="shipmentType"/>
+                <parameter param-name="actualShipmentDate"/>
+                <parameter param-name="eta"/>
+                <parameter param-name="issuingBank"/>
+                <parameter param-name="insuranceCoverNote"/>
+                <parameter param-name="insuranceCompanyName"/>
+                <parameter param-name="shiperName"/>
+                <parameter param-name="dateAdded"/> 
+            </hyperlink>
+        </field>
+       
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteLc" description="${uiLabelMap.CommonDelete}" also-hidden="false"  confirmation-message="Do you want to delete?">
+                <parameter param-name="lcId"/>
+            </hyperlink>
+        </field>
+         <field name="viewLink" title="View" widget-style="buttontext">
+            <hyperlink target="LcView" description="View" also-hidden="false">
+                <parameter param-name="lcId"/>
+                <parameter param-name="piId"/>
+                <parameter param-name="lcNo"/>
+                <parameter param-name="cost"/>
+                <parameter param-name="lcExpiryDate"/>
+                <parameter param-name="lastShipmentDate"/>
+                <parameter param-name="lcExpiryDate"/>
+                <parameter param-name="shipmentType"/>
+                <parameter param-name="actualShipmentDate"/>
+                <parameter param-name="eta"/>
+                <parameter param-name="issuingBank"/>
+                <parameter param-name="insuranceCoverNote"/>
+                <parameter param-name="insuranceCompanyName"/>
+                <parameter param-name="shiperName"/>
+                <parameter param-name="dateAdded"/> 
+            </hyperlink>
+        </field>
+       </form>
+        <form name="EditLc" type="single" target="UpdateLc" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <actions><entity-and entity-name="LcPi" list="lcPi">
+        <field-map field-name="piId" from-field="piId"/>
+        </entity-and></actions>
+        <field name="lcId" title="lcId"><hidden/></field>
+        <field name="piId" title="Pi No" required-field="true" tooltip="${uiLabelMap.CommonRequired}"><display description="${lcPi[0].piNo}"></display></field>
+        <field name="lcNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="date" title="Date" required-field="true"><date-time type="date"/></field>
+        <field name="cost" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="lcExpiryDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="lastShipmentDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="lcExpiryDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+         <field name="shipmentType" title="Shipment Type">
+            <drop-down allow-empty="true">
+                <option key="FOB" description="FOB"/>
+                <option key="CFR" description="CFR"/>
+            </drop-down>
+        </field>
+        <field name="actualShipmentDate" tooltip="Actual Shipment Date" required-field="true"><date-time type="date"/></field>
+        <field name="eta" title="ETA" required-field="true"><date-time type="date"/></field>
+        <field name="issuingBank">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcBankInfo" key-field-name="lcBankInfoId" description="${bankName}">
+                </entity-options>
+            </drop-down>
+        </field>
+         <field name="shiperName">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcShiperInfo" key-field-name="lcShiperId" description="${shiperName}">
+                </entity-options>
+            </drop-down>
+        </field>
+       <field name="insuranceCompanyName">
+             <drop-down allow-empty="true">
+             <auto-complete/>
+                <entity-options entity-name="LcInsuranceCoverNote" key-field-name="lcInsuranceCoverNoteId" description="${insuranceCompanyName}">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="insuranceCoverNote" title="Insurance Cover Note" required-field="true"><text/></field>
+        <field name="submitButton" title="Upadate" ><submit/></field>
+    </form>
+       <form name="LcView" type="single"   header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+        <entity-and entity-name="LcBank" list="LcBank">
+        <field-map field-name="lcId" from-field="lcId"/>
+        </entity-and>
+        <entity-and entity-name="LcPi" list="lcPi">
+        <field-map field-name="piId" value="${LcBank[0].piId}"/>
+        </entity-and>
+        </actions>
+        <field name="lcId" title="lcId"><hidden/></field>
+        <field name="piId" title="Pi No" ><display description="${lcPi[0].piNo}"></display></field>
+        <field name="lcNo" title="lcNo"><display description="${LcBank[0].lcNo}"></display></field>
+        <field name="cost" title="cost"><display description="${LcBank[0].cost}"></display></field>
+        <field name="lcExpiryDate" title="lcExpiryDate"><display description="${LcBank[0].lcExpiryDate}"></display></field>
+        <field name="lastShipmentDate" title="lastShipmentDate"><display description="${LcBank[0].lastShipmentDate}"></display></field>
+        <field name="lcExpiryDate" title="lcExpiryDate"><display description="${LcBank[0].lcExpiryDate}"></display></field>
+        <field name="shipmentType" title="shipmentType"><display description="${LcBank[0].shipmentType}"></display></field>
+        <field name="actualShipmentDate" title="actualShipmentDate"><display description="${LcBank[0].actualShipmentDate}"></display></field>
+        <field name="eta" title="eta"><display description="${LcBank[0].eta}"></display></field>
+        <field name="issuingBank" title="issuingBank"><display description="${LcBank[0].issuingBank}"></display></field>
+        <field name="insuranceCoverNote" title="Insurance Cover Note"><display description="${LcBank[0].insuranceCoverNote}"></display></field>
+        <field name="shiperName" title="shiperName"><display description="${LcBank[0].shiperName}"></display></field>
+        <field name="dateAdded" title="dateAdded"><display description="${LcBank[0].dateAdded}"></display></field>
+      
+    </form>
+    <form name="Reoort" type="single" target="LcReport.pdf" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date"><date-time type="date"/></field>
+     	<field name="thruDate" id-name="thruDate" title="To Date"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="Show Report" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+     <form name="addLcCreatepopup" type="single" target="LcNoteCreate" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="lcNoteId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="lcId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="title" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="description" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><textarea/></field>
+        <field name="dateAdded" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="submitButton" title="Create" ><submit/></field>
+    </form>
+    <form name="addTtCreatePopUp" type="single" target="TtNoteCreate" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="ttNoteId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="ttId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="title" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="description" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><textarea/></field>
+        <field name="dateAdded" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="submitButton" title="Create" ><submit/></field>
+    </form>
+     <form name="ListLcCreatepopup" type="multi" list-name="lcNote" paginate-target="LcView"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="lcNoteId" title="lcNoteId"><hidden/></field>
+        <field name="lcId" title="Lc No"><hidden/></field>
+        <field name="title" title="title"><display/></field>
+        <field name="description" title="description"><display/></field>
+        <field name="dateAdded" title="dateAdded"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteLcNotepopup" description="${uiLabelMap.CommonDelete}" also-hidden="false"  confirmation-message="Do you want to delete?">
+                <parameter param-name="lcNoteId"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="ListTtCreatepopup" type="multi" list-name="ttNote" paginate-target="TtView"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="ttNoteId" title="ttNoteId"><hidden/></field>
+        <field name="ttId" title="ttId"><hidden/></field>
+        <field name="title" title="title"><display/></field>
+        <field name="description" title="description"><display/></field>
+        <field name="dateAdded" title="dateAdded"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteTtNotepopup" description="${uiLabelMap.CommonDelete}" also-hidden="false" confirmation-message="Do you want to delete?">
+                <parameter param-name="ttNoteId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="editLcPopUp" type="single" target="updateLcPopUp"  default-map-name="lcBank"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="lcId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="lcNo" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="piId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="cost" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="lcExpiryDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="lastShipmentDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="lcExpiryDate" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><date-time type="date"/></field>
+        <field name="submitButton" title="Update" ><submit/></field>
+    </form>
+    
+     
+    <form name="RequisitionLcDocumentList" type="list" list-name="requisitionDocuments" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="LcAndContent" value-field="document">
+			</entity-one>
+			<property-to-field resource="mimetype" property="${document.mimeTypeId}" field="imageType" />
+		</row-actions>
+		<field name="image" title=" ">
+			<image value="${imageType}" />
+		</field>
+		<field name="contentName" title="Title" widget-style="documentTitleEditor">
+			<display>
+				<in-place-editor url="renameImage" ok-text="..." cancel-text="X" saving-text="Updating..." text-between-controls=" " form-class-name="inplaceeditor">
+					<simple-editor />
+					<field-map field-name="contentId" from-field="contentId" />
+				</in-place-editor>
+			</display>
+		</field>
+		<field name="piId"><hidden/></field>
+		
+		<field name="contentId"><hidden/></field>
+		<field name="partyContentTypeId"><hidden/></field>
+		<field name="fromDate"><hidden/></field>
+		
+		<field name="delete" title=" " widget-style="buttontext">
+			<hyperlink target="removeLcRequisitionDocuments" description="delete">
+				
+				<parameter param-name="piId"/>
+				
+		        <parameter param-name="contentId"/>
+		        <parameter param-name="fromDate"/>
+			</hyperlink>
+		</field>
+		<field name="show" title=" " widget-style="buttontext">
+			<hyperlink target-window="_blank" target-type="content" target="img/${contentName}?imgId=${dataResourceId}" description="download"></hyperlink>
+		</field>
+	</form>
+</forms>

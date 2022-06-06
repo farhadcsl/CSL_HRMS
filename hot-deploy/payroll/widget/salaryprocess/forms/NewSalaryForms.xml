@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+
+ <form name="SalaryProcessNewSalaryProcessInitiation" type="single" target="NewSalary" odd-row-style="header-row" default-table-style="basic-table">
+        <field name="partyIdFrom" title="Select Company" tooltip="Required" parameter-name="partyIdFrom">
+            <drop-down allow-empty="false" no-current-selected-key="${defaultOrganizationPartyId}">
+                <entity-options description="${groupName}" entity-name="PartyAcctgPrefAndGroup" key-field-name="partyId">
+                    <entity-order-by field-name="groupName"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="monthDescription" title="Description" parameter-name="monthDescription">
+            <textarea/>
+        </field>
+        <field name="bonusProcess" title="Process Existing Bonus" parameter-name="bonusCheck">
+        	<check/>
+        </field>
+         <field name="arrearProcess" title="Process Existing Arrear" parameter-name="arrearCheck">
+        	<check/>
+        </field>
+        
+        <field name="searchButton" title="Initiate" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+ <form name="SalaryProcessPendingSalaryProcessAdmin" target="EditSalary" type="list" use-row-submit="true" list-name="pendingList" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+     <field name="companyName" title="Compnay Name" parameter-name="companyName">
+            <display description="${companyName}"/>
+        </field>
+        
+        </form>
+  
+    
+    <form name="ExistingSalaryMonthSelect" type="single" target="ViewSalaryList" odd-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+       
+        
+        <field name="searchButton" title="View" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+     <form name="NewSalaryOverallSalarySummary"  target="finalProcessSalaryForAct" type="single" default-map-name="monthlyTotalSalary" odd-row-style="header-row" default-table-style="basic-table">
+        <actions>
+    
+        <set field="finalMonthlyNetPay" from-field="finalMonthlyNetPay"/>
+		<set field="totalListEmplint" from-field="totalListEmplint"/>
+        </actions>
+        <field name="monthName"  position="1">
+           <display description="${parameters.monthName}"/>
+        </field>
+        
+       <field name="fiscalYear" title="Year">
+            <display/>
+        </field>
+         <field name="processId">
+            <hidden/>
+        </field>
+         <field name="monthNumber">
+            <hidden/>
+        </field>
+         <field name="companyId"><hidden/></field>
+        <!-- <field name="totalSalary"  position="1">
+           <display/>
+        </field>
+       <field name="totalEmployee"  position="2">
+           <display/>
+        </field> -->
+        <field name="totalSalary"  position="1">
+           <display description="${finalMonthlyNetPay}"/>
+        </field>
+       <field name="totalEmployee"  position="2">
+           <display description="${totalListEmplint}"/>
+        </field>
+        <field name="submitButton" title="Process Payroll" widget-style="smallSubmit">
+            <submit/>
+        </field>
+    </form>
+   <form name="FindSalaryDetailView" type="single" target="FindNewSalary">
+     
+    <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+    
+        <field name="employeeId" title="Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+        <field name="processId">
+            <hidden/>
+        </field>
+        <field name="monthNumber">
+            <hidden/>
+        </field>
+        <field name="fiscalYear">
+            <hidden/>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+        <field name="partyId"><hidden/></field>
+    
+   
+    </form>
+     <form name="ListFindNewSalary" target="UpdateSalaryList" title="" list-name="listIt" type="multi" paginate-target="FindNewSalary" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+        <actions>
+         <set field="monthNumber" from-field="parameters.monthNumber"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="EligibleEmployee"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+         <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+            <hidden value="Y"/>
+        </field>
+        <field name="isSalary" title="Select" event="onClick" action="">
+            <check/>
+        </field>
+        <field name="companyId"><hidden/></field>
+
+                <field name="processId"><display/></field>
+        <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+       <field name="totalSalary"><display/></field>
+       <field name="name">
+       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+        <field name="fiscalYear">
+            <hidden value="${fiscalYear}"/>
+        </field>
+        <field name="monthNumber">
+            <hidden/>
+        </field>
+         <field name="detail" title="Detail" widget-style="buttontext" parameter-name="partyId">
+            <hyperlink also-hidden="false" description="Detail View" target="emplDetailSalaryItems">
+                <parameter param-name="partyId" from-field="partyId"/>
+                <parameter param-name="processId" from-field="processId"/>
+               
+                <parameter param-name="monthNumber" value="${monthNumber}"/>
+               
+                <parameter param-name="year" value="${fiscalYear}"/>
+            </hyperlink>
+        </field>
+        <field name="details" title="Remove From List" widget-style="buttontext" parameter-name="partyId">
+            <hyperlink also-hidden="false" description="Remove" target="RemoveFromSalaryList">
+                <parameter param-name="partyId"/>
+               	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber"/>
+               <parameter param-name="year" value="${fiscalYear}"/>
+               <parameter param-name="companyId"/>
+            </hyperlink>
+        </field>
+         
+        <field name="submitButton" title="Update List" widget-style="smallSubmit">
+            <submit request-confirmation="true"/>
+        </field>
+        
+        
+    </form>
+   
+    <form name="NewSalaryDetailViewlist" type="multi" list-name="eligibleEmployee" target="UpdateSalaryList" paginate-target="findEmployeeFromSalaryList" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" > 
+      <actions>
+      <set field="monthNumber" from-field="parameters.monthNumber"/>
+     
+      </actions>
+        
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+     <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+            <hidden value="Y"/>
+        </field>
+        <field name="isSalary" title="Select" >
+            <check/>
+        </field>
+        <field name="companyId"><display default-value="${companyId}"/></field>
+        <field name="processId"><display/></field>
+        <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+        <field name="totalSalary"><display/></field>
+        <field name="monthNumber"><hidden/></field>
+        <field name="name">
+        <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+        <field name="detail" title="Detail" widget-style="buttontext" parameter-name="partyId">
+            <hyperlink also-hidden="false" description="Detail View" target="emplDetailSalaryItems">
+                <parameter param-name="partyId"/>
+                <parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber"/>
+               
+                <parameter param-name="year" value="${fiscalYear}"/>
+            </hyperlink>
+        </field>
+         <field name="details" title="Remove From List" widget-style="buttontext" parameter-name="partyId">
+            <hyperlink also-hidden="false" description="Remove" target="RemoveFromSalaryList">
+                <parameter param-name="partyId"/>
+               	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber"/>
+               <parameter param-name="year" value="${fiscalYear}"/>
+               <parameter param-name="companyId"/>
+            </hyperlink>
+        </field>
+        
+    <field name="submitButton" title="Update List" widget-style="smallSubmit">
+            <submit request-confirmation="true"/>
+        </field> 
+        
+    </form> 
+    
+    
+    
+    
+    </forms>

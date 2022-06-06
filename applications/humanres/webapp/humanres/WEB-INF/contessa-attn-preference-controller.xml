@@ -1,0 +1,404 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+ 	
+	<description> Human Resources Manager Attendance Manage Module Site Configuration File</description>
+
+	<!--   view handlers   -->
+	<handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler" />
+	
+	
+	
+	<!--   Start DesignationPreference   -->
+	<request-map uri="DesignationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DesignationPreference" />
+	</request-map>
+	
+	<request-map uri="AddDesignationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AddDesignationPreference" />
+		<response name="error" type="view" value="AddDesignationPreference"></response>
+	</request-map>
+	
+	<request-map uri="EditDesignationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditDesignationPreference" />
+	</request-map>
+	
+	<request-map uri="ViewDesignationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewDesignationPreference" />
+	</request-map>
+	
+	<request-map uri="AddDesignationPreferences">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addDesignationPreference"/>
+		<response name="success" type="request-redirect" value="DesignationPreference" />
+	</request-map>
+	<request-map uri="UpdateDesignationPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateDesignationPreference"/>
+		<response name="success" type="request-redirect" value="DesignationPreference" />
+	</request-map>
+	
+	<request-map uri="DesignationPositions">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DesignationPositions" />
+	</request-map>
+	<request-map uri="PositionsBatchAssignment">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="PositionsBatchAssignment" />
+	</request-map>
+	
+	<request-map uri="AddPositionIntoDesignationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AddPositionIntoDesignationPreference" />
+	</request-map>
+	
+	<request-map uri="AddBatchPositionIntoDesignationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AddBatchPositionIntoDesignationPreference" />
+	</request-map>
+	<request-map uri="addPosition">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addPosition"/>
+		<response name="success" type="request-redirect" value="DesignationPositions">
+			<redirect-parameter name="designationPreferenceId"/>
+		</response>
+	</request-map>
+	
+	<request-map uri="updatePosition">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="updatePosition">
+		</response>
+	</request-map>
+	
+	<request-map uri="updateEmpPosition">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateEmpPosition"/>
+		<response name="success" type="request-redirect" value="DesignationPositions">
+			<redirect-parameter name="designationPreferenceId"/>
+		</response>
+		<response name="error" type="view" value="DesignationPositions" />
+	</request-map>
+	
+	<request-map uri="addBatchPosition">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addBatchPosition"/>
+		<response name="success" type="request-redirect" value="PositionsBatchAssignment">
+			<redirect-parameter name="designationPreferenceId"/>
+		</response>
+	</request-map>
+	
+	<!--   End DesignationPreference   -->
+	
+	<!--   For Attendance Preference   -->
+	<request-map uri="AttendancePreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AttendancePreference" />
+	</request-map>
+	
+	<!--   Start Employee Preference   -->
+	<request-map uri="EmployeePreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EmployeePreference" />
+	</request-map>
+	
+	<request-map uri="EditEmpPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditEmpPreference" />
+	</request-map>
+	
+	<request-map uri="ViewEmpPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewEmpPreference" />
+	</request-map>
+	
+	<request-map uri="AddEmpAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addEmpAttenPreference"/>
+		<response name="success" type="request-redirect" value="EmployeePreference" />
+		<response name="error" type="view" value="EmployeePreference" />
+	</request-map>
+	
+	<request-map uri="UpdateEmpAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateEmpAttenPreference"/>
+		<response name="success" type="request-redirect" value="EmployeePreference" />
+		<response name="error" type="view" value="EmployeePreference" />
+	</request-map>
+	<!--   End Employee Preference   -->
+	
+	<!--   Start Day Preference   -->
+	<request-map uri="DayPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DayPreference" />
+	</request-map>
+	
+	<request-map uri="EditDayPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditDayPreference" />
+	</request-map>
+	
+	<request-map uri="AddDayAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addDayAttenPreference"/>
+		<response name="success" type="request-redirect" value="DayPreference" />
+		<response name="error" type="view" value="DayPreference" />
+	</request-map>
+	
+	<request-map uri="ViewDayPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewDayPreference" />
+	</request-map>
+	
+	<request-map uri="UpdateDayAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateDayAttenPreference"/>
+		<response name="success" type="request-redirect" value="DayPreference" />
+		<response name="error" type="view" value="DayPreference" />
+	</request-map>
+	<!--   End Day Preference   -->
+	
+	
+	<!--   Start Organization Preference   -->
+	<!--   For Organization Preference  -->
+	<request-map uri="OrganizationPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="OrganizationPreference" />
+	</request-map>
+	
+	<!--   For Add Organization Preference  -->
+	<request-map uri="AddOrgAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addOrgAttenPreference"/>
+		<response name="success" type="request-redirect" value="OrganizationPreference" />
+		<response name="error" type="view" value="OrganizationPreference" />
+	</request-map>
+	<!--   For Edit/Update Organization Preference  -->
+	<request-map uri="updateOrgAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateOrgAttenPreference"/>
+		<response name="success" type="request-redirect" value="OrganizationPreference" />
+		<response name="error" type="view" value="OrganizationPreference" />
+	</request-map>
+	<!--   For Edit Organization Preference  -->
+	<request-map uri="EditOrgPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditOrgPreference" />
+	</request-map>
+	<!--   For View Organization Preference  -->
+	<request-map uri="ViewOrgPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewOrgPreference" />
+	</request-map>
+	<!--   End Organization Preference   -->
+	
+	<!--   Start Roster Preference   -->
+	<!--   For RosterPreference  -->
+	<request-map uri="RosterPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="RosterPreference" />
+	</request-map>
+	 <!--   For Add Roster Preference  -->
+	<request-map uri="AddRosterAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addRosterAttenPreference"/>
+		<response name="success" type="request-redirect" value="RosterPreference" />
+		<response name="error" type="view" value="RosterPreference" />
+	</request-map>
+	
+	<!--   For Edit/Update Roster Preference  -->
+	<request-map uri="UpdateRosterAttenPreference">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateRosterAttenPreference"/>
+		<response name="success" type="request-redirect" value="RosterPreference" />
+		<response name="error" type="view" value="RosterPreference" />
+	</request-map>
+	<!--   For EditRoster Preference  -->
+	<request-map uri="EditRosterPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditRosterPreference" />
+	</request-map>
+	<!--   For ViewRoster Preference  -->
+	<request-map uri="ViewRosterPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewRosterPreference" />
+	</request-map>
+	<!--   For SwapRosterPreference   -->
+	<request-map uri="SwapRosterPreference">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="SwapRosterPreference" />
+	</request-map>
+	<!--   For SwapRoster   -->
+	<request-map uri="SwapRoster">
+		<security https="true" auth="true" />
+		<event type="service" invoke="SwapRoster"></event>
+		<response name="success" type="request-redirect" value="RosterPreference">
+		</response>
+	</request-map>
+	
+	<!--   For SwapSingleEmpBtnRoster   -->
+	<request-map uri="SwapSingleEmpBtnRoster">
+		<security https="true" auth="true" />
+		<event type="service" invoke="SwapSingleEmpBtnRoster"></event>
+		<response name="success" type="request-redirect" value="RosterEmployees">
+			<redirect-parameter name="rosterPreferenceId"/>
+		 	<redirect-parameter name="rosterName"/>
+		 	<redirect-parameter name="rosterPrefRevision"/>
+		</response>
+	</request-map>
+	
+		<!--   For SwapEmployeeBtnRoster   -->
+	<request-map uri="SwapEmployeeBtnRoster">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="SwapEmployeeBtnRoster" />
+	</request-map>
+	
+	<!--   For View employee in this Roster  -->
+	<request-map uri="RosterEmployees">
+		<security https="true" auth="true" />    
+		<response name="success" type="view" value="RosterEmployees" />
+	</request-map>
+	
+	<request-map uri="AddEmployeeIntoRoster">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AddEmployeeIntoRoster" />
+	</request-map>
+	
+	<!--   For add roster employee  -->
+	<request-map uri="addRosterEmployee">
+		<security https="true" auth="true" />
+		<event type="service" invoke="addRosterEmployee"/>
+		<response name="success" type="request-redirect" value="RosterEmployees">
+			<redirect-parameter name="rosterPreferenceId"/>
+		 	<redirect-parameter name="rosterName"/>
+		 	<redirect-parameter name="rosterPrefRevision"/>
+		</response>
+		<response name="error" type="view" value="RosterEmployees" />
+	</request-map>
+	
+	<request-map uri="AssignBatchEmployees">
+		<security https="true" auth="true" />    
+		<response name="success" type="view" value="AssignBatchEmployees" />
+	</request-map>
+	
+	<!--   For delete roster employee  -->
+	<request-map uri="deleteRosterEmployee">
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteRosterEmployee"/>
+		<response name="success" type="request-redirect" value="RosterEmployees">
+		 	<redirect-parameter name="rosterPreferenceId"/>
+		 	<redirect-parameter name="rosterName"/>
+		 	<redirect-parameter name="rosterPrefRevision"/>
+		</response>
+		<response name="error" type="view" value="RosterEmployees" />
+	</request-map>
+	
+	<!--   For UpdateRosterEmployee  -->
+	<request-map uri="UpdateEmployee">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="UpdateEmployee" />
+
+	</request-map>
+	
+	<!--   For UpdateRosterEmployee  -->
+	<request-map uri="updateRosterEmployee">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateRosterEmployee"/>
+		<response name="success" type="request-redirect" value="RosterEmployees">
+			<redirect-parameter name="rosterPreferenceId"/>
+		 	<redirect-parameter name="rosterName"/>
+		 	<redirect-parameter name="rosterPrefRevision"/>
+		</response>
+		<response name="error" type="view" value="RosterEmployees" />
+
+	</request-map>
+	
+	
+	<!--   End Roster Preference   -->
+
+	<!--   Assign Batch Employee for roster   -->
+   <request-map uri="assignBatchEmployee">
+		<security https="true" auth="true" />
+		<event type="service" invoke="assignBatchEmployee"/>
+		<response name="success" type="request-redirect" value="AssignBatchEmployees">
+		 	<redirect-parameter name="rosterPreferenceId"/>
+		 	<redirect-parameter name="rosterName"/>
+		 	<redirect-parameter name="rosterPrefRevision"/>
+		</response>
+		<response name="error" type="view" value="AssignBatchEmployees" />
+	</request-map>
+	
+	<request-map uri="AssignBatchEmployees">
+		<security https="true" auth="true" />    
+		<response name="success" type="view" value="AssignBatchEmployees" />
+	</request-map>
+	<request-map uri="deleteRosterBatchEmployee">
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteRosterEmployee"/>
+		<response name="success" type="request-redirect" value="AssignBatchEmployees" />
+		<response name="error" type="view" value="AssignBatchEmployees" />
+	</request-map>
+	
+	<request-map uri="deleteDesigPosBatch">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteDesigPosBatch"/>
+        <response name="success" type="view" value="PositionsBatchAssignment"/>
+    </request-map>
+    
+    <request-map uri="deleteEmployeePreference">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteEmployeePreference"/>
+        <response name="success" type="view" value="EmployeePreference"/>
+    </request-map>
+	
+	<!--   Start Attendance Preference   -->
+	<view-map name="AttendancePreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AttendancePreference"></view-map>
+	
+	<!--   Start Employee Preference   -->
+	<view-map name="EmployeePreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#EmployeePreference"></view-map>
+	<view-map name="EditEmpPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddEmployeePreference"></view-map>
+	<view-map name="ViewEmpPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#EmpPreferenceDetail"></view-map>
+	<!--   End Employee Preference   -->
+	
+	<!--   Start Day Preference   -->
+	<view-map name="DayPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#DayPreference"></view-map>
+	<view-map name="EditDayPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddDayPreference"></view-map>
+	<view-map name="ViewDayPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#DayPreferenceDetail"></view-map>
+	<!--   End Day Preference   -->
+	
+	<!--   Start Organization Preference   -->
+	<view-map name="OrganizationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#OrganizationPreference"></view-map>
+	<view-map name="EditOrgPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddOrgPreference"></view-map>
+	<view-map name="ViewOrgPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#OrgPreferenceDetail"></view-map>
+	<!--   End Organization Preference   -->
+	
+	<!--   Start Roster Preference   -->
+	<view-map name="RosterPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#RosterPreference"></view-map>
+	<view-map name="EditRosterPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddRosterPreference"></view-map>
+	<view-map name="ViewRosterPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#RosterPreferenceDetail"></view-map>
+	<view-map name="SwapRosterPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#SwapRosterPreference"></view-map>
+	<view-map name="SwapEmployeeBtnRoster" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#SwapEmployeeBtnRoster"></view-map>
+	<view-map name="RosterEmployees" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#RosterEmployees"></view-map>
+	<view-map name="AddEmployeeIntoRoster" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddEmployee"></view-map>
+	<view-map name="UpdateEmployee" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#UpdateEmployee"></view-map>
+	<!--   End Roster Preference   -->
+	
+	<!--   Start Designation Preference   -->
+	<view-map name="DesignationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#DesignationPreference"></view-map>
+	<view-map name="AddDesignationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddDesignationPreference"></view-map>
+	<view-map name="EditDesignationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddDesignationPreference"></view-map>
+	<view-map name="ViewDesignationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#ViewDesignationPreference"></view-map>
+	<view-map name="DesignationPositions" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#DesignationPositions"></view-map>
+	<view-map name="PositionsBatchAssignment" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#PositionsBatchAssignment"></view-map>
+	<view-map name="AddPositionIntoDesignationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddPositionIntoDesignationPreference"></view-map>
+	<view-map name="AddBatchPositionIntoDesignationPreference" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AddBatchPositionIntoDesignationPreference"></view-map>
+	<view-map name="updatePosition" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#updatePosition"></view-map>
+	<!--   End Designation Preference   -->
+	
+	<!--   Start Batch Assign Roster Preference   -->
+	<view-map name="AssignBatchEmployees" type="screen" page="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml#AssignBatchEmployees"></view-map>
+	
+	
+	<!--   Start Attendance Preference   -->
+</site-conf>

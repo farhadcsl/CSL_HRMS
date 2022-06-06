@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+   
+<!-- Logistics Requisition -->
+     <!-- <request-map uri="logisticsRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewLogisticRequisition"/>
+    </request-map> -->
+     <request-map uri="logisticsRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+    </request-map>  
+    <request-map uri="FindLogisticRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+    </request-map>
+    <request-map uri="deleteLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteLogisticsRequisition"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+        <response name="error" type="view" value="FindLogisticRequisition"/>
+    </request-map>    
+    <request-map uri="AddLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddLogisticsRequisition"/>
+    </request-map>  
+    <request-map uri="EditLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditLogisticsRequisition"/>
+    </request-map>
+    <request-map uri="updateLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateLogisticsRequisition"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+    </request-map> 
+    <request-map uri="createLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createLogisticsRequisition"/>
+        <response name="success" type="view" value="logisticSupport"/>
+    </request-map> 
+    <request-map uri="approveLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="approveLogisticsRequisition"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+    </request-map> 
+     <request-map uri="CancelLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="CancelLogisticsRequisition"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+    </request-map> 
+    
+    <request-map uri="issueLogistics">
+        <security https="true" auth="true"/>
+       
+        <response name="success" type="view" value="issueLogistics"/>
+    </request-map>
+     <request-map uri="issueLogisticsRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="issueLogisticsRequisition"/>
+        <response name="success" type="view" value="FindLogisticRequisition"/>
+    </request-map> 
+    <request-map uri="logisticsApprove">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLogisticApproval"/>
+    </request-map>
+    <request-map uri="FindLogisticsApprove">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLogisticsApprove"/>
+    </request-map> 
+    
+    
+     <request-map uri="DetailLogistics">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DetailLogistics"/>
+    </request-map>
+    
+    
+    
+    
+    
+    
+    <request-map uri="profileBasicInfoChangeRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="profileBasicInfoChangeRequisition"/>
+    </request-map>
+    
+    <request-map uri="FindProfileBasicInfoChangeRequisition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="profileBasicInfoChangeRequisition"/>
+    </request-map> 
+    
+    <request-map uri="confirmProfileBasicInfoChangeRequisition">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.EmployeeService" invoke="confirmProfileBasicInfoChangeRequisition"/>
+        <response name="success" type="view" value="profileBasicInfoChangeRequisition"/>
+        <response name="error" type="view" value="profileBasicInfoChangeRequisition"/>
+    </request-map>
+    <request-map uri="denyProfileBasicInfoChangeRequisition">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.EmployeeService" invoke="denyProfileBasicInfoChangeRequisition"/>
+        <response name="success" type="view" value="profileBasicInfoChangeRequisition"/>
+        <response name="error" type="view" value="profileBasicInfoChangeRequisition"/>
+    </request-map>
+    
+    <request-map uri="confirmAllProfileChangeRequiest">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.EmployeeService" invoke="confirmAllProfileChangeRequiest"/>
+        <response name="success" type="view" value="profileBasicInfoChangeRequisition"/>
+        <response name="error" type="view" value="profileBasicInfoChangeRequisition"/>
+    </request-map>
+    
+    
+    <view-map name="profileBasicInfoChangeRequisition" type="screen" page="component://humanres/widget/ProfileInfoUpgradeRequisitionScreens.xml#profileBasicInfoChangeRequisition"/>
+   
+    <view-map name="DetailLogistics" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#DetailLogistics"/>
+   
+    <view-map name="NewLogisticRequisition" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#NewLogisticRequisition"/>
+    <view-map name="EditLogisticsRequisition" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#EditLogisticsRequisition"/>
+    <view-map name="FindLogisticRequisition" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#FindLogisticRequisition"/>
+    <view-map name="AddLogisticsRequisition" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#AddLogisticsRequisition"/>
+    <view-map name="FindLogisticApproval" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#FindLogisticApproval"/>
+    <view-map name="issueLogistics" type="screen" page="component://humanres/widget/Logistics/RequisitionScreens.xml#issueLogistics"/>
+    
+ 
+ 
+ </site-conf>

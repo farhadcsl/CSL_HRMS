@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Workflow Component." permissionId="WORKFLOW_VIEW"/>
+    <SecurityPermission description="Create operations in the Workflow Component." permissionId="WORKFLOW_CREATE"/>
+    <SecurityPermission description="Update operations in the Workflow Component." permissionId="WORKFLOW_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Workflow Component." permissionId="WORKFLOW_DELETE"/>
+    <SecurityPermission description="ALL operations in the Workflow Component." permissionId="WORKFLOW_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="WORKFLOW_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="WORKFLOW_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="WORKFLOW_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="WORKFLOW_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="WORKFLOW_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="WORKFLOW_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="WORKFLOW_ADMIN"/>
+    <SecurityGroup groupId="WORKFLOW" description="Workflow admin" />
+    <SecurityGroupPermission groupId="WORKFLOW" permissionId="OFBTOOLS_VIEW"/>
+    <SecurityGroupPermission groupId="WORKFLOW" permissionId="WORKFLOW_ADMIN"/>
+    <SecurityGroupPermission groupId="WORKFLOW" permissionId="WORKFLOW_CREATE"/>
+    <SecurityGroupPermission groupId="WORKFLOW" permissionId="WORKFLOW_DELETE"/>
+    <SecurityGroupPermission groupId="WORKFLOW" permissionId="WORKFLOW_UPDATE"/>
+    <SecurityGroupPermission groupId="WORKFLOW" permissionId="WORKFLOW_VIEW"/>
+	<SecurityGroupPermission groupId="WORKFLOW" permissionId="PARTYMGR_VIEW"/>
+</entity-engine-xml>

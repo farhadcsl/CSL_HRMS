@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Payroll Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+    
+    <service name="updateBenefits" engine="java"  location="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="updateBenefits" auth="true">
+    	<attribute name="amounts" type="String" mode="IN" optional="false"/>
+        <attribute name="monthNumber" type="String" mode="INOUT" optional="false"/>
+         <attribute name="processId" type="String" mode="INOUT" optional="true"/>
+         <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+         <attribute name="payrollItemTypeId" type="String" mode="IN" optional="true"/>
+         
+    </service>
+    <service name="updateDeductions" engine="java"  location="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="updateDeductions" auth="true">
+    	<attribute name="amount" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="monthNumber" type="String" mode="INOUT" optional="false"/>
+         <attribute name="processId" type="String" mode="IN" optional="true"/>
+         <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+         <attribute name="payrollItemTypeId" type="String" mode="IN" optional="true"/>
+         
+    </service>
+    
+    <service name="updateSalaryList" engine="java" auth="true" location="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="updateSalaryList" >
+        
+        <attribute name="isSalary" mode="IN" type="String" optional="true"/>
+        <attribute name="companyId" mode="IN" type="String"/>
+        <attribute name="monthNumber" mode="IN" type="String"/>
+        <attribute name="partyId" mode="IN" type="String"/>
+        <!-- <attribute name="fiscalYear" mode="IN" type="String" optional="true"/> -->
+       <attribute name="processId" mode="IN" type="String" optional="true"/>
+    </service>
+      <service name="updateIncrementList" engine="java" auth="true" location="org.ofbiz.incrementProcess.IncrementAllEvents" invoke="updateIncrementList" >
+        
+        <attribute name="incrementFlag" mode="IN" type="String" optional="true"/>
+        <attribute name="partyId" mode="IN" type="String"/>
+       <attribute name="incrementAmount" mode="INOUT" type="String" optional="true"/>
+       <attribute name="calculationMode" mode="INOUT" type="String" optional="true"/>
+       
+    </service>
+    <service name="updateSalaryACCList" engine="java" auth="true" location="org.ofbiz.accountsprocess.AccountSalaryEvents" invoke="updateSalaryAccountsList" >
+        
+        <attribute name="isSalary" mode="IN" type="String" optional="true"/>
+        <attribute name="companyId" mode="IN" type="String"/>
+        <attribute name="monthNumber" mode="IN" type="String"/>
+        <attribute name="partyId" mode="IN" type="String"/>
+        <!-- <attribute name="fiscalYear" mode="IN" type="String" optional="true"/> -->
+       <attribute name="processId" mode="IN" type="String" optional="true"/>
+    </service>
+    
+    <service name="updateCheckArrerList" engine="java" auth="true" location="org.ofbiz.incrementProcess.ArrearEvents" invoke="updateCheckArrerList" >
+        
+        <attribute name="listActive" mode="IN" type="String" optional="true"/>
+        <attribute name="partyId" mode="IN" type="String"/>
+       <attribute name="monthNo" mode="INOUT" type="String" optional="true"/>
+       
+       
+    </service>
+    
+    </services>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+        
+        
+    <screen name="AddPayrollItemType">
+        <section>                        
+            <actions>
+               <set field="tabButtonItem" value="PayrollItem"/>
+               <set field="titleProperty" value=" Item Type"/>
+               <set field="payrollItemTypeId" from-field="parameters.payrollItemTypeId"/>
+               <entity-one entity-name="PayrollItem" value-field="payrollItemType" />
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="AddPayrollItemTypePanel" title="Add Payroll Item" collapsible="true">
+                            <include-form name="AddPayrollItemType" location="component://payroll/widget/configuration/forms/PayrollItemForms.xml"/>
+                        </screenlet>
+                        <screenlet id="ListPayrollItemTypePanel" title="Payroll Item List" collapsible="true">
+                        	<include-form name="ListPayrollItemType" location="component://payroll/widget/configuration/forms/PayrollItemForms.xml"/>
+                    	</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    <screen name="EditPayrollItemType">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="PayrollItem"/>
+                <set field="titleProperty" value="PageTitleEditPayrollItemType"/>
+                <set field="payrollItemTypeId" from-field="parameters.payrollItemTypeId"/>
+                <entity-one entity-name="PayrollItem" value-field="payrollItemType" />
+                <set field="payrollItemTypeCtx" from-field="parameters"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="EditPayrollItemTypePanel" title="Update Payroll Item" collapsible="true">
+                            <include-form name="EditPayrollItemType" location="component://payroll/widget/configuration/forms/PayrollItemForms.xml"/>
+                        </screenlet> 
+                        <include-form name="ListPayrollItemType" location="component://payroll/widget/configuration/forms/PayrollItemForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+
+
+
+</screens>

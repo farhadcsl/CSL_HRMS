@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+       
+    <form name="ListTaxPayerSetup" type="multi" target="updatePayrollItemType" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PersonPayrollInfo"><order-by field-name="partyId"/></entity-condition>
+        </actions>        
+        <row-actions>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        <field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and>        
+        </row-actions>
+        <field name="employeeId"><display/></field>   
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+       <!--  <field name="payGradeId"><display/></field> -->        
+		<field name="payGradeId" title="Salary Grade"><hidden/>
+			<!-- <display-entity entity-name="PayGrade" description="${payGradeName}" key-field-name="payGradeId"></display-entity> -->
+		</field> 
+		<field name="salaryLevelId" title="Salary Level"><hidden/>
+			<!-- <display-entity entity-name="PayrollLevel" description="${levelName}" key-field-name="levelId"></display-entity> -->
+		</field>    
+		<field name="salaryTemplateId" title="Salary Template"><hidden/>
+			<!-- <display-entity entity-name="SalaryTemplate" description="${salaryTemplateName}" key-field-name="salaryTemplateId"></display-entity> -->
+		</field>   
+		<field name="basicSalaryStepId" title="Basic Salary Step"><hidden/>
+			<!-- <display-entity entity-name="BasicSalaryStep" description="${basicSalaryStepName}" key-field-name="basicSalaryStepId"></display-entity> -->
+		</field>
+		<field name="taxPayerTypeId" title="Tax Payer Type">
+			<display-entity entity-name="TaxCalculationType" description="${taxCalculationTypeTitle}" key-field-name="taxCalculationTypeId"></display-entity>
+		</field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><display description="${groovy: if(isActive=='Y') return 'YES' ; if(isActive=='N') return 'No'}"/></field>
+      
+        
+        <field name="configureLink" title="Configure" widget-style="buttontext">
+     		    <hyperlink also-hidden="false" description="Configure" target="configureTaxPayerSetup"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="payGradeId"/> 
+                <parameter param-name="salaryLevelId"/> 
+                <parameter param-name="salaryTemplateId"/> 
+                <parameter param-name="basicSalaryStepId"/> 
+                <parameter param-name="taxPayerTypeId"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+    </form>       
+           
+    <form name="ConfigureTaxPayerSetup" type="single" target="updateTaxPayerSetup" header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><hidden/></field>        
+         <field name="employeeId" title="Employee Id"><display/></field>    
+        <field name="payGradeId" title="Salary Grade"><hidden/></field> 
+        <field name="salaryLevelId" title="Salary Level"><hidden/></field>    
+        <field name="salaryTemplateId" title="Salary Template"><hidden/></field> 
+        <field name="basicSalaryStepId" title="Basic Salary Step"><hidden/></field> 
+         
+        <field name="taxPayerTypeId" title="Tax Payer Group">        
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${taxCalculationTypeTitle}" key-field-name="taxCalculationTypeId" entity-name="TaxCalculationType">
+                    <entity-order-by field-name="taxCalculationTypeId" />
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="comments" title="Comments"><textarea/></field>
+        <field name="isActive" title="Status"><hidden/></field> 
+        <field name="dateAdded" title="Date Added"><hidden/></field> 
+   
+        <field name="submitButton" title="Configure" widget-style="buttontext"><submit /></field>
+    </form>
+</forms>

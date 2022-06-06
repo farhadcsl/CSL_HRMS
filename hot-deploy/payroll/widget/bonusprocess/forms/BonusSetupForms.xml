@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+   
+   
+     <form name="FindPartyBonus" type="single" target="FindPartyBonus" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        
+        <auto-fields-entity entity-name="PartyBonusStatus" default-field-type="find"/>
+        <field name="employeeId" title="Employee Id" position="1"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="bonusId">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${bonusName}" key-field-name="bonusId" entity-name="BonusType">
+                    <entity-order-by field-name="bonusId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="bonusId"><text></text></field>
+        <field name="bonusMonth" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="bonusYear" title="Year"><text/></field> 
+        <!-- <auto-fields-service service-name="createPayGrade" default-field-type="find"/> -->
+        <field name="isActive"><hidden/></field>
+        <field name="isProcess"><hidden/></field>
+        <field name="isPayroll"><hidden/></field>
+        <field name="comments"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="amount"><hidden/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+ 
+    
+    <form name="ListPartyBonus" type="multi" list-name="listIt" use-row-submit="true" title="" target="updatePayrollPayGrade"
+     	paginate-target="FindPartyBonus"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="PartyBonusStatusCtx"/>
+                <field-map field-name="entityName" value="PartyBonusStatus"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+	        <set field="monthNumber" from-field="parameters.bonusMonth"/>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and>
+	        <entity-and entity-name="BonusType" list="bonusTypeList">
+                    <entity-order-by field-name="bonusId"/>
+            </entity-and>	        
+        </row-actions>
+        <field name="partyName" title="Employee Id">
+        	<display description="${userLogin[0].userLoginId}"></display>     
+        </field>
+        <field name="partyId" title="Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="bonusId" title="Bonus Type"><display description="${bonusTypeList[0].bonusName}"></display></field>
+        <field name="bonusMonth"><display description="${bsh:org.ofbiz.salaryprocess.SalaryUtils.getMonthName(bonusMonth)}"/></field>
+        <field name="bonusYear"><display></display></field>
+        <field name="amount"><display></display></field>
+        <field name="comments"><display></display></field>
+        <field name="dateAdded"><display></display></field>
+        <!-- <field name="isActive"><display></display></field> -->
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="Edit" target="EditPartyBonusSetup"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="bonusId"/> 
+                <parameter param-name="bonusMonth"/> 
+                <parameter param-name="bonusYear"/> 
+                <parameter param-name="amount"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+        <field name="activeInactiveLink" title="Process" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="Process" target="processPartyBonus"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeeId"/> 
+                <parameter param-name="bonusId"/> 
+                <parameter param-name="bonusMonth"/> 
+                <parameter param-name="bonusYear"/> 
+                <parameter param-name="amount"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+        
+    </form>
+    
+    <form name="NewPartyBonusSetup" type="single" target="createPartyBonusSetup" header-row-style="header-row" default-table-style="basic-table">
+        <field name="employeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>        
+        <field name="bonusId">
+            <drop-down >
+            <auto-complete/>
+                <entity-options description="${bonusName}" key-field-name="bonusId" entity-name="BonusType">
+                    <entity-order-by field-name="bonusId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="bonusMonth" tooltip="*" title="Select Month" parameter-name="monthNumber">
+            <drop-down>
+            <auto-complete/>
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="bonusYear" title="Year" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text mask="9999"/></field>        
+        <field name="comments" title="Comments"><textarea/></field>
+   
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="EditPartyBonusSetup" type="single" target="updatePartyBonusSetup" header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="Party Id"><hidden/></field>   
+        <field name="employeeId" title="EmployeeId Id"><display></display></field>        
+         <field name="bonusId">
+            <drop-down>
+                <entity-options description="${bonusName}" key-field-name="bonusId" entity-name="BonusType">
+                    <entity-order-by field-name="bonusId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="bonusMonth" tooltip="*" title="Select Month" parameter-name="monthNumber">
+            <drop-down >
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="bonusYear" title="Year"  required-field="true" ><text/></field>        
+        <field name="comments" title="Comments"><textarea/></field>
+        <field name="isActive" title="Status"><hidden/></field> 
+        <field name="dateAdded" title="Date Added"><hidden/></field> 
+   
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+ 
+ <form name="BonusProcess" type="single" target="bonusProcessForAllEmployee" header-row-style="header-row" default-table-style="basic-table">
+        <!-- <field name="employeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field> -->
+        <field name="bonusId" tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${bonusId}" key-field-name="bonusId" entity-name="BonusType">
+                    <entity-order-by field-name="bonusId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="bonusMonth" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="bonusMonth">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="bonusYear" title="Year" tooltip="Put Correct fiscal Year on the field" required-field="true" ><text mask="9999"/></field>        
+        
+        <field name="submitButton" title="Process" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="BonusProcessForAllEmpl" type="single" target="createPartyBonusSetupForAllEmpl" header-row-style="header-row" default-table-style="basic-table">
+        <field name="bonusId" tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${bonusId}" key-field-name="bonusId" entity-name="BonusType">
+                    <entity-order-by field-name="bonusId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="bonusMonth" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        <field name="bonusYear" title="Year" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><text mask="9999"/></field>        
+        
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+</forms>

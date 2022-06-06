@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Human Resources Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+<service name="approveRequisition" engine="java" default-entity-name="JobRequisition"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="approveOrRejectRequisition" auth="true">
+        <description>Approve Job Requisition</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        
+        <attribute name="jobRequisitionId" type="String" mode="IN" optional="false"/>
+        <attribute name="requisitionAction" type="String" mode="IN" optional="true"/>
+        
+        
+     </service>
+     
+      <service name="uploadRequisitionContentFile" engine="group" transaction-timeout="300">
+        <description>Upload and attach a file to a party</description>
+        <group>
+            <invoke name="createContentFromUploadedFile" result-to-context="true"/>
+           <!--  <invoke name="createPartyRequisitionContent"/> -->
+            <invoke name="addRequisitionContent"/>
+        </group>
+    </service>
+     <service name="addRequisitionContent" engine="simple"
+        location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml"
+        invoke="createRequisitionContent"
+        default-entity-name="RequisitionContent" auth="true">
+        <description>Create BudgetContent</description>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <override name="contentId" optional="true" />
+        <override name="fromDate" optional="true"/>
+    </service>
+    
+     <service name="uploadcvRequisitionContentFile" engine="group" transaction-timeout="300">
+        <description>Upload and attach a file to a party</description>
+        <group>
+            <invoke name="createContentFromUploadedFile" result-to-context="true"/>
+           <!--  <invoke name="createPartyRequisitionContent"/> -->
+            <invoke name="addcvRequisitionContent"/>
+        </group>
+    </service>
+    
+    <service name="addcvRequisitionContent" engine="simple"
+        location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml"
+        invoke="createCvRequisitionContent"
+        default-entity-name="CvContent" auth="true">
+        <description>Create BudgetContent</description>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <override name="contentId" optional="true" />
+        <override name="fromDate" optional="true"/>
+    </service>
+    
+     <service name="getApplyingApplicantInfo" engine="java" default-entity-name="EmploymentAppAndOrganization"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="findApplicant" auth="true">
+        <description>Find Applicant</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <attribute name="orgPartyId" mode="IN" type="String" optional="true"/>
+		<attribute name="applicationId" mode="IN" type="String" optional="true"/>
+		<attribute name="firstName" mode="IN" type="String" optional="true"/>
+		<attribute name="lastName" mode="IN" type="String" optional="true"/>
+		<attribute name="fatherName" mode="IN" type="String" optional="true"/>
+		<attribute name="spouseName" mode="IN" type="String" optional="true"/>
+		<attribute name="jobRequisitionId" mode="IN" type="String" optional="true"/>
+		<attribute name="statusId" mode="IN" type="String" optional="true"/>
+		<attribute name="fromDate" mode="IN" type="String" optional="true"/>
+		<attribute name="toDate" mode="IN" type="String" optional="true"/>
+		<attribute name="listIt" type="List" mode="OUT" optional="true"/>			
+    </service>
+    
+    <service name="createApplicant" engine="java"                              
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="createApplicant" auth="false" default-entity-name="EmploymentApp">
+        <description>Create an Applicant</description>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>
+       <attribute name="jobRequisitionId" type="String" mode="IN" optional="true"/>
+       <attribute name="partyId" type="String" mode="OUT" optional="true"/>
+       <attribute name="preferredCurrencyUomId" type="String" mode="IN" optional="true"/>
+       <attribute name="partyTypeId" type="String" mode="IN" optional="true"/>
+       <attribute name="userLoginId" type="String" mode="IN" optional="true"/>
+       <attribute name="description" type="String" mode="IN" optional="true"/>
+       <attribute name="externalId" type="String" mode="IN" optional="true"/>
+       <attribute name="nationalid" type="String" mode="IN" optional="true"/>
+       <attribute name="bloodgroup" type="String" mode="IN" optional="true"/>
+       <attribute name="statusId" type="String" mode="IN" optional="true"/>
+       <attribute name="infoString" type="String" mode="IN" optional="true"/>
+       <attribute name="firstName" type="String" mode="IN" optional="true"/>
+       <attribute name="middleName" type="String" mode="IN" optional="true"/>
+       <attribute name="lastName" type="String" mode="IN" optional="true"/>
+       <attribute name="fatherName" type="String" mode="IN" optional="true"/>
+       <attribute name="spouseName" type="String" mode="IN" optional="true"/>
+       <attribute name="mothersMaidenName" type="String" mode="IN" optional="true"/>
+       <attribute name="religion" type="String" mode="IN" optional="true"/>
+       <attribute name="birthDate" type="Date" mode="IN" optional="true"/>
+       <attribute name="birthCertificateNo" type="String" mode="IN" optional="true"/>
+       <attribute name="gender" type="String" mode="IN" optional="true"/>
+       <attribute name="maritalStatus" type="String" mode="IN" optional="true"/>
+       <attribute name="address1" type="String" mode="IN" optional="true"/>
+       <attribute name="contactNumber" type="String" mode="IN" optional="true"/>
+       <attribute name="address2" type="String" mode="IN" optional="true"/>
+       <attribute name="city1" type="String" mode="IN" optional="true"/>
+       <attribute name="country1" type="String" mode="IN" optional="true"/>
+       <attribute name="address3" type="String" mode="IN" optional="true"/>
+       <attribute name="city2" type="String" mode="IN" optional="true"/>
+       <attribute name="country2" type="String" mode="IN" optional="true"/>
+    
+       <attribute name="passportNumber" type="String" mode="IN" optional="true"/>
+       <attribute name="drivingLicenseNo" type="String" mode="IN" optional="true"/>
+       <attribute name="employeeId" type="String" mode="IN" optional="true"/>
+  		<attribute name="referenceEmployeeId" type="String" mode="IN" optional="true"/>
+        <attribute name="referenceDetails" type="String" mode="IN" optional="true"/>
+	 </service>
+	 <service name="updateApplicantInfo" engine="java"                              
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="updateApplicant" auth="false" default-entity-name="EmploymentApp">
+        <description>Update an Applicant</description>
+       <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>
+       <attribute name="jobRequisitionId" type="String" mode="IN" optional="true"/>
+       <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+       <attribute name="preferredCurrencyUomId" type="String" mode="IN" optional="true"/>
+       <attribute name="partyTypeId" type="String" mode="IN" optional="true"/>
+       <attribute name="userLoginId" type="String" mode="IN" optional="true"/>
+       <attribute name="description" type="String" mode="IN" optional="true"/>
+       <attribute name="externalId" type="String" mode="IN" optional="true"/>
+       <attribute name="nationalid" type="String" mode="IN" optional="true"/>
+       <attribute name="bloodgroup" type="String" mode="IN" optional="true"/>
+       <attribute name="statusId" type="String" mode="IN" optional="true"/>
+       <attribute name="infoString" type="String" mode="IN" optional="true"/>
+       <attribute name="firstName" type="String" mode="IN" optional="true"/>
+       <attribute name="middleName" type="String" mode="IN" optional="true"/>
+       <attribute name="lastName" type="String" mode="IN" optional="true"/>
+       <attribute name="fatherName" type="String" mode="IN" optional="true"/>
+       <attribute name="spouseName" type="String" mode="IN" optional="true"/>
+       <attribute name="mothersMaidenName" type="String" mode="IN" optional="true"/>
+       <attribute name="religion" type="String" mode="IN" optional="true"/>
+       <attribute name="birthDate" type="Date" mode="IN" optional="true"/>
+       <attribute name="birthCertificateNo" type="String" mode="IN" optional="true"/>
+       <attribute name="gender" type="String" mode="IN" optional="true"/>
+       <attribute name="maritalStatus" type="String" mode="IN" optional="true"/>
+       <attribute name="address1" type="String" mode="IN" optional="true"/>
+       <attribute name="contactNumber" type="String" mode="IN" optional="true"/>
+       <attribute name="address2" type="String" mode="IN" optional="true"/>
+       <attribute name="city1" type="String" mode="IN" optional="true"/>
+       <attribute name="country1" type="String" mode="IN" optional="true"/>
+       <attribute name="address3" type="String" mode="IN" optional="true"/>
+       <attribute name="city2" type="String" mode="IN" optional="true"/>
+       <attribute name="country2" type="String" mode="IN" optional="true"/>
+    
+       <attribute name="passportNumber" type="String" mode="IN" optional="true"/>
+       <attribute name="drivingLicenseNo" type="String" mode="IN" optional="true"/>
+       <attribute name="employeeId" type="String" mode="IN" optional="true"/>
+  		<attribute name="referenceEmployeeId" type="String" mode="IN" optional="true"/>
+        <attribute name="referenceDetails" type="String" mode="IN" optional="true"/>
+	 </service>
+	 
+	 <service name="updateApplicantJoiningDate" engine="java" default-entity-name="EmploymentApp"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="updateApplicantJoiningDate" auth="true">
+        <description>Update applicant Joining Date</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="joiningDate" type="Timestamp" mode="IN" optional="true"/>
+        <attribute name="onProbation" type="String" mode="IN" optional="true"/>
+     </service>
+     
+     <service name="updateStatus" engine="java" default-entity-name="EmploymentApp"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="updateStatus" auth="true">
+        <description>Update applicant Status</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="applyingPartyId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="jobRequisitionId" type="String" mode="IN" optional="true"/>
+        <attribute name="requisitionAction" type="String" mode="IN" optional="false" />
+     </service>
+     <service name="updateApplicantStatus" engine="java" default-entity-name="EmploymentApp"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="updateApplicantStatus" auth="true">
+        <description>Update applicant status</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        
+        <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="orgPartyId" type="String" mode="IN" optional="false"/>
+        <attribute name="statusId" type="String" mode="IN" optional="true"/> 
+        <attribute name="userLoginId" type="String" mode="IN" optional="true"/>
+        <attribute name="issuedBy" type="String" mode="IN" optional="true"/>
+        <attribute name="cardId" type="String" mode="IN" optional="true"/>   
+        <attribute name="employmentType" type="String" mode="IN" optional="true"/>         
+        <attribute name="isIssuedAppointmentLetter" type="String" mode="IN" optional="true"/>      
+     </service>
+     <service name="processDiscardApplicant" engine="java" default-entity-name="EmploymentApp"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="processDiscardApplicant" auth="true">
+        <description>Discard applicant</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="discardFlag" type="String" mode="IN" optional="false"/> 
+        <attribute name="discardReason" type="String" mode="IN" optional="true"/>    
+     </service>
+     
+      <service name="createApplicantQual" engine="simple" default-entity-name="PartyQual"
+            location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="createApplicantQual" auth="true">
+        <description>Create a Party Qualification entry</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>
+    </service>
+     <service name="removePartyApplicantContent" engine="simple" default-entity-name="PartyContent"
+            location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="removePartyApplicantContent" auth="true">
+        <description>Remove a PartyContent record</description>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="true"/>
+    </service>
+     <service name="createApplicantNote" engine="java"
+            location="org.ofbiz.party.party.PartyServices" invoke="createPartyNote" auth="true">
+        <description>Create a note item and associate with a party. If a noteId is passed, creates an assoication to that note instead.</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="noteName" type="String" mode="IN" optional="true"/>
+        <attribute name="noteId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="note" type="String" mode="IN" optional="true"/>
+        <attribute name="partyId" type="String" mode="OUT" optional="true"/>        
+    </service>
+    <service name="updateApplicantQual" engine="simple" default-entity-name="PartyQual"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="updateApplicantQual" auth="true">
+        <description>Update Qualification of Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>
+    </service>
+    <service name="deleteApplicantQual" default-entity-name="PartyQual" engine="simple"
+                location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="deleteApplicantQual" auth="true">
+        <description>Delete an AgreementTerm</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes include="pk" mode="IN" optional="true"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    
+    <service name="changeJoingDate" engine="java" default-entity-name="Employment"
+            location="org.ofbiz.humanres.recruitment.RecruitmentServices" invoke="changeJoingDate" auth="true">
+        <description>Change Joining Date</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        
+        <attribute name="changeDate" type="Timestamp" mode="INOUT" optional="true"/>
+        <attribute name="partyIdTo" type="String" mode="INOUT" optional="true"/>
+     </service> 
+     
+     <service name="terminateEmployee" engine="simple" default-entity-name="Employment"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="terminateEmployee" auth="true">
+        
+        <description>Terminate Employment</description>
+        
+        <attribute name="partyId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="terminationReasonId" type="String" mode="IN" optional="true"/>
+        <attribute name="terminationTypeId" type="String" mode="IN" optional="true"/>
+        <attribute name="tdate" mode="IN" type="Timestamp"></attribute>
+        
+    </service>
+    
+    <service name="createApplicantSalaryNegotiation" engine="simple" location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" 
+     	default-entity-name="ApplicantSalarySetup" invoke="createApplicantSalaryNegotiation" auth="true">
+        <description>Create applicant Salary Negotiation</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="payGradeId" type="String" mode="IN" optional="true"/>
+        <attribute name="levelId" type="String" mode="IN" optional="true"/>
+        <attribute name="salaryTemplateId" type="String" mode="IN" optional="true"/>
+        <attribute name="basicSalaryStepId" type="String" mode="IN" optional="true"/>
+        <attribute name="dateAdded" type="Timestamp" mode="IN" optional="true"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>        
+     </service>
+    
+    <service name="updateApplicantSalaryNegotiation" engine="simple" location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" 
+     default-entity-name="ApplicantSalarySetup" invoke="updateApplicantSalaryNegotiation" auth="true">
+        <description>Update applicant Salary Negotiation</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="payGradeId" type="String" mode="IN" optional="true"/>
+        <attribute name="salaryLevelId" type="String" mode="IN" optional="true"/>
+        <attribute name="salaryTemplateId" type="String" mode="IN" optional="true"/>
+        <attribute name="basicSalaryStepId" type="String" mode="IN" optional="true"/>
+        <attribute name="dateAdded" type="Timestamp" mode="IN" optional="true"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>
+        
+     </service>
+     
+     
+    
+ 	<!-- CvBank -->
+    
+    <service name="createCvBank" engine="simple" default-entity-name="CvBank"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="createCvBank" auth="true">
+        <description>Create CvBank</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+     <service name="updateCvBank" engine="simple" default-entity-name="CvBank"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="updateCvBank" auth="true">
+        <description>Update a Interview Record</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteCvBank" engine="simple" default-entity-name="CvBank"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="deleteCvBank" auth="true">
+        <description>Delete a Interview Record</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+   <!-- Cv Bank Note -->
+        
+    <service name="createCvBankNotes" engine="simple" default-entity-name="CvBankNote"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="createCvBankNotes" auth="true">
+        <description>Create Cv Bank Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="deleteCvBankNotes" engine="simple" default-entity-name="CvBankNote"
+             location="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="deleteCvBankNotes" auth="true">
+        <description>Delete a Cv Bank Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <attribute name="cvBankId" mode="INOUT" type="String"></attribute>
+        
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+        
+    </services>

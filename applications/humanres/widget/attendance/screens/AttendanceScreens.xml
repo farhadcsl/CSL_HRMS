@@ -1,0 +1,1453 @@
+<!-- This is for all the screens related to attendance structures e.g. company, 
+	Building, Floor, Gate, Device and Employee -->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="FindDailyAttendanceLog">
+        <section>
+            <actions>
+                <set field="titleProperty" value="${uiLabelMap.CommonFind} ${uiLabelMap.HumanResEmployee}"/>
+                <set field="headerItem" value="attendance"/>
+                <set field="tabButtonItem" value="DailyAttendanceLog"/>
+                <set field="DailyAttendanceCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="StructureActionMenu" />
+                        <decorator-section name="menu-bar">
+                        	<link target="AttendanceDataImport" text="Attendance Data Import" style="buttontext create"/>
+                         </decorator-section>
+                         <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+	                         <decorator-section name="search-options">
+	                             <include-form name="FindDailyAttendanceLog" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+	                         </decorator-section>
+	                         <decorator-section name="search-results">
+	                            <include-form name="ListDailyAttendanceLog" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+	                         </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+	<screen name="AttendanceMainDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" /> 
+				<!-- <set field="tabButtonItem" value="structure" /> -->
+				<!-- <set field="tabButtonItem" value="profile" /> -->
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+					
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="AttendanceReportDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						<include-menu name="ReportsMenus" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="locaInformation">
+		<section>
+			<widgets>
+				<screenlet name="Companies" title="${organizationTitle} Information">
+					<section>
+						<condition>
+							<if-compare operator="equals" value="Company" field="selection" />
+						</condition>
+						<widgets>
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="CompanyInformation" />
+						</widgets>
+						<fail-widgets>
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="LocationInformation" />
+						</fail-widgets>
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="empInformation">
+		<section>
+			<widgets>
+				<screenlet name="Companies" title="Employee's Information">
+					<section>
+
+						<widgets>
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="EmployeeInformation" />
+						</widgets>
+
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="EmpCurrentStatus">
+		<section>
+			<actions>
+			
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/getCurrenEmpStatus.groovy" />	
+				
+			</actions>
+			<widgets>
+				<screenlet name="Companies" title="Employee's Current Status">
+					<section>
+
+						<widgets>
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="EmployeeCurrentStatus" />
+						</widgets>
+
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="DeviceCurrentEmpStatus">
+		<section>
+			<actions>
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/getCurrenDeviceEmpStatus.groovy" />
+	
+			</actions>
+			<widgets>
+				<include-form location="component://humanres/widget/attendance/forms/AttendanceForms.xml" name="DeviceCurrentEmpStatus" />
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="EmployeesCurrentStatus">
+		<section>
+			<actions>
+			
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/getChildLocation.groovy" />
+					
+				
+			</actions>
+			<widgets>
+				<screenlet name="Companies" title="Employees Current Status">
+					<section>
+
+						<widgets>
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="EmployeesCurrentStatus" />
+						</widgets>
+
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="ImportEmployeeLog">
+
+		<section>
+			<actions>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="tabButtonItem" value="import" /> 
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+			</actions>
+			<widgets>
+					<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+				<include-screen name="PopupActions" />
+				<include-screen name="GlobalActions" location="component://common/widget/CommonScreens.xml" />
+				<platform-specific>
+					<html>
+						<html-template location="component://humanres/webapp/humanres/humanres/organization/employeeLog_import.ftl" />
+					</html>
+				</platform-specific>
+						</decorator-section>
+			</decorator-screen>
+			</widgets>
+		</section>
+
+	</screen>
+	
+	
+	
+	<screen name="GolobalCurrentEmpInfo">
+
+		<section>
+		
+			<actions>
+			
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="tabButtonItem" value="profile1" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/getCurrenGolobalEmpStatus.groovy" />
+			</actions>
+			<widgets>
+			
+				<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="AttendanceCurrentEmpInfo" />
+				
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="AttendanceCurrentEmpInfo">
+		<section>
+			<actions>	
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="tabButtonItem" value="profile1" /> 
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+				<screenlet name="Companies" title="Employees Current Status" id="AttendanceCurrentEmpInfo">
+					<section>
+
+						<widgets>
+						
+							<container id="golobalCurrentEmpInfodiv">
+									<include-screen name="GolobalCurrentEmpInfo"/>
+							</container>
+					
+						</widgets>
+
+					</section>
+				</screenlet>
+				</decorator-section></decorator-screen>
+			</widgets>
+			
+		</section>
+	</screen>
+	
+
+	<screen name="devInformation">
+		<section>
+			<widgets>
+				<screenlet name="Companies" title="${organizationTitle} Information">
+					<section>
+
+						<widgets>
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="DeviceInformation" />
+						</widgets>
+
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+
+
+
+
+	<!-- Main Screen For Attendance Information Management -->
+	<screen name="structure">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="tabButtonItem" value="profile" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<set field="orgId" value="${orgId}" />
+
+			</actions>
+			<widgets>
+
+				<section>
+					<condition>
+						<!-- If selected Organization Id is "Company", it determines that Mother 
+							Group is selected -->
+						<if-compare operator="equals" value="Company"
+							field="userPreferences.ORGANIZATION_PARTY" />
+					</condition>
+					<!-- ============================== GROUP ==================================== -->
+					<widgets>
+						<include-screen name="AttendanceGroup" />
+					</widgets>
+					<!-- ============================== COMPANY ==================================== -->
+					<fail-widgets>
+
+						<section>
+							<condition>
+								<and>
+									<if-empty field="isBuilding" />
+									<if-empty field="isFloor" />
+									<if-empty field="isGate" />
+									<if-empty field="isDevice" />
+									<if-empty field="isEmployee" />
+
+								</and>
+
+								<!-- <if-compare operator="equals" value="BUILDING" field="isBuilding"/> -->
+							</condition>
+							<widgets>
+								<include-screen name="Company" />
+							</widgets>
+
+							<fail-widgets>
+
+								<section>
+									<condition>
+										<and>
+											<if-empty field="isFloor" />
+											<if-empty field="isGate" />
+											<if-empty field="isDevice" />
+											<if-empty field="isEmployee" />
+										</and>
+									</condition>
+
+									<widgets>
+										<!-- ======================Building================ -->
+										<include-screen name="Building" />
+									</widgets>
+									<fail-widgets>
+										<section>
+											<condition>
+												<and>
+													<if-empty field="isGate" />
+													<if-empty field="isDevice" />
+													<if-empty field="isEmployee" />
+												</and>
+											</condition>
+											<widgets>
+												<!-- ======================Floor================ -->
+												<include-screen name="Floor" />
+											</widgets>
+
+											<fail-widgets>
+
+
+												<section>
+													<condition>
+														<and>
+															<if-empty field="isDevice" />
+															<if-empty field="isEmployee" />
+														</and>
+													</condition>
+													<widgets>
+														<!-- ======================Gate================ -->
+														<include-screen name="Gate" />
+													</widgets>
+													<fail-widgets>
+														<section>
+															<condition>
+																<if-empty field="isEmployee" />
+															</condition>
+															<widgets>
+																<!-- ======================Device================ -->
+																<include-screen name="Device" />
+															</widgets>
+															<fail-widgets>
+																<!-- ======================Device================ -->
+																
+																<include-screen name="Employee" />
+															</fail-widgets>
+														</section>
+
+													</fail-widgets>
+												</section>
+											</fail-widgets>
+										</section>
+									</fail-widgets>
+								</section>
+							</fail-widgets>
+						</section>
+
+					</fail-widgets>
+				</section>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+	<screen name="AttendanceGroup">
+		<section>
+			<actions>
+				<set field="headerItem" value="attendance" />
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+
+						<screenlet>
+								
+						</screenlet>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="BuildingListToRefresh">
+		<section>
+			<actions>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<set field="terminalId" value="${terminalId}" />
+			
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="buildingList" entity-name="Location">
+					<field-map field-name="locationTypeId" value="Building" />
+					<field-map field-name="partyId" value="${orgId.partyId}" />
+				</entity-and>
+			</actions>
+			<widgets>
+				<container>
+					<include-form
+						location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+						name="BuildingList" />
+				</container>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="BuildingList">
+		<section>
+			<actions>
+			
+			</actions>
+			<widgets>
+
+				<screenlet name="Companies" title="Buildings"
+					navigation-menu-name="AddLocation">
+					<container id="addLocationPopUp"></container>
+					<include-menu
+						location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+						name="AddLocation" />
+
+						<container  id="buildingListdiv">
+								<include-screen name="BuildingListToRefresh" />
+						</container>
+
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="Company">
+		<section>
+			<widgets>
+				<section>
+					<actions>
+					
+						<set field="organizationChildListTitle" value="Buildings" />
+						<set field="organizationTitle" value="Company" />
+						<set field="LocationTitle" value="Buildings" />
+						<set field="NumberofTitle" value="Number of Floors" />
+
+						<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+						<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+						<script
+								location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+						<script
+								location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+
+					</actions>
+					<widgets />
+				</section>
+				<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<container style="profile-full">
+							<include-screen name="breadcrumb" />
+						</container>
+						<container style="profile-left">
+							<include-screen name="locaInformation" />
+							<include-screen name="BuildingList" />
+						</container>
+						<container style="profile-right">
+							<container id="employeesCurrentStatusdiv">
+											<include-screen name="EmployeesCurrentStatus" />
+							</container>
+							
+						</container>
+					</decorator-section>
+
+				</decorator-screen>
+			</widgets>
+
+		</section>
+	</screen>
+	
+
+	<screen name="FloorListToRefresh">
+		<section>
+			<actions>
+				
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<set field="terminalId" value="${terminalId}" />
+				
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="floorList" entity-name="Location">
+					<field-map field-name="locationTypeId" value="Floor" />
+					<field-map field-name="partyId" value="${orgId.partyId}" />
+					<field-map field-name="parentLocationId" from-field="currentLocationId" /> 
+				</entity-and>
+			</actions>
+			<widgets>
+				<container>
+					<include-form
+						location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+						name="FloorList" />
+				</container>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="FloorList">
+		<section>
+			<actions>
+			
+			</actions>
+			<widgets>
+
+				<screenlet name="Companies" title="Floors"
+					navigation-menu-name="AddLocation">
+					<container id="addLocationPopUp">
+					</container>
+					<include-menu
+						location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+						name="AddLocation" />
+
+						<container  id="floorListdiv">
+								<include-screen name="FloorListToRefresh" />
+						</container>
+
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+
+
+	<!-- Main Screen For Building Information Management -->
+	<screen name="Building">
+		<section>
+
+			<widgets>
+				<section>
+					<actions>
+						<set field="organizationChildListTitle" value="Floors" />
+						<set field="organizationTitle" value="Building" />
+						<set field="LocationTitle" value="Floors" />
+						<set field="NumberofTitle" value="Number of Gates" />
+						
+						<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+						<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+						<script
+								location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+						<script
+								location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+						<set field="terminalId" value="${terminalId}" />
+
+					</actions>
+					<widgets />
+				</section>
+				<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<container style="profile-full">
+							<include-screen name="breadcrumb" />
+						</container>
+						<container style="profile-left">
+							<include-screen name="locaInformation" />
+							<include-screen name="FloorList" />
+						</container>
+						<container style="profile-right">
+										<container id="employeesCurrentStatusdiv">
+											<include-screen name="EmployeesCurrentStatus" />
+										</container>
+						</container>
+					</decorator-section>
+
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+	<screen name="GateListToRefresh">
+		<section>
+			<actions>
+				
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<set field="terminalId" value="${terminalId}" />
+			
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="gateList" entity-name="Location">
+					<field-map field-name="locationTypeId" value="Gate" />
+					<field-map field-name="partyId" value="${orgId.partyId}" />
+					<field-map field-name="parentLocationId" from-field="currentLocationId" />
+				</entity-and>
+			</actions>
+			<widgets>
+				<container>
+					<include-form
+						location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+						name="GateList" />
+				</container>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="GateList">
+		<section>
+			<actions>
+			
+			</actions>
+			<widgets>
+
+				<screenlet name="Companies" title="Gates"
+					navigation-menu-name="AddLocation">
+					<container id="addLocationPopUp"></container>
+					<include-menu
+						location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+						name="AddLocation" />
+
+						<container  id="gateListdiv">
+								<include-screen name="GateListToRefresh" />
+						</container>
+
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<!-- Main Screen For Floor Information Management -->
+	<screen name="Floor">
+		<section>
+
+			<widgets>
+				<section>
+					<actions>
+						<set field="organizationChildListTitle" value="Gates" />
+						<set field="organizationTitle" value="Floor" />
+						<set field="LocationTitle" value="Gates" />
+						<set field="NumberofTitle" value="Number of Devices" />
+
+					</actions>
+					<widgets />
+				</section>
+				<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<container style="profile-full">
+							<include-screen name="breadcrumb" />
+						</container>
+						<container style="profile-left">
+							<include-screen name="locaInformation" />
+							
+							<include-screen name="GateList" />
+
+						</container>
+						<container style="profile-right">
+										<container id="employeesCurrentStatusdiv">
+											<include-screen name="EmployeesCurrentStatus" />
+										</container>
+						</container>
+					</decorator-section>
+
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+	
+	<screen name="DeviceListToRefresh">
+		<section>
+			<actions>
+				
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+					
+			   
+				<set field="terminalId" value="${terminalId}" />
+
+			
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="deviceList" entity-name="Location">
+					<field-map field-name="locationTypeId" value="Device" />
+					<field-map field-name="partyId" value="${orgId.partyId}" />
+					<field-map field-name="parentLocationId" from-field="currentLocationId" />
+				</entity-and>
+			</actions>
+			<widgets>
+				<container>
+					<include-form
+						location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+						name="DeviceList" />
+				</container>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="DeviceList">
+		<section>
+			<actions>
+			
+			</actions>
+			<widgets>
+
+				<screenlet name="Companies" title="Devices"
+					navigation-menu-name="AddDevice">
+					<container id="addDevicePopUp"></container>
+					<include-menu
+						location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+						name="AddDevice" />
+
+							<container id="deviceListdiv">
+								<include-screen name="DeviceListToRefresh" />
+							</container>
+
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<!-- Main Screen For Gate Information Management -->
+	<screen name="Gate">
+		<section>
+			<widgets>
+				<section>
+					<actions>
+						<set field="organizationChildListTitle" value="Devices" />
+						<set field="organizationTitle" value="Gate" />
+						<set field="LocationTitle" value="Devices" />
+						<set field="NumberofTitle" value="Number of Employees" />
+						<set field="Unregister" value="Unregister" />
+
+					</actions>
+					<widgets />
+				</section>
+				<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<container style="profile-full">
+							<include-screen name="breadcrumb" />
+						</container>
+						<container style="profile-left">
+							<include-screen name="locaInformation" />
+							<include-screen name="DeviceList" />
+
+						</container>
+						<container style="profile-right">
+									<container id="employeesCurrentStatusdiv">
+											<include-screen name="EmployeesCurrentStatus" />
+									</container>
+						</container>
+					</decorator-section>
+
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+
+
+
+	<screen name="EmployeeListToRefresh">
+		<section>
+			<actions>
+				
+			<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+					
+				<set field="terminalId" value="${terminalId}" />
+				
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+				
+				<entity-and list="employeeList" entity-name="Location">
+					<field-map field-name="locationTypeId" value="Employee" />
+					<field-map field-name="partyId" value="${orgId.partyId}" />
+					<field-map field-name="parentLocationId" from-field="currentLocationId" />
+				</entity-and>
+			</actions>
+			<widgets>
+				<container>
+					<include-form
+						location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+						name="EmployeeList" />
+				</container>
+			</widgets>
+		</section>
+	</screen>
+
+
+	<screen name="EmployeeList">
+		<section>
+			<actions>
+		
+			</actions>
+			<widgets>
+
+				<screenlet name="Companies" title="Employees"
+					navigation-menu-name="AddLocation">
+					<container id="addLocationPopUp"></container>
+					<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddLocation" />
+
+					<container id="employeesdiv">
+								<include-screen name="EmployeeListToRefresh" />
+					</container>
+
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+
+
+
+	<!-- Main Screen For Device Information Management -->
+	<screen name="Device">
+		<section>
+			<widgets>
+				<section>
+					<actions>
+						<set field="organizationChildListTitle" value="Employees" />
+						<set field="organizationTitle" value="Device" />
+						<set field="LocationTitle" value="Employees" />
+						<set field="NumberofTitle" value="Unregister" />
+						<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+						<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+						<script
+								location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+						<script
+								location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				</actions>
+					<widgets />
+				</section>
+				<decorator-screen name="AttendanceMainDecorator" location="${decorator}">
+					<decorator-section name="body">
+						<container style="profile-full" id="div1">
+							<include-screen name="breadcrumb" />
+						</container>
+						<container style="profile-left" id="div2">
+							<include-screen name="devInformation" />
+							<include-screen name="EmployeeList" />
+						</container>
+	
+						<container style="profile-right">
+							<container id="employeesCurrentStatusdiv">
+								<include-screen name="EmployeesCurrentStatus" />
+							</container>
+	
+							<screenlet name="Companies" title="Current Status" navigation-menu-name="MaximizeAndMinimize">
+								<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="MaximizeAndMinimize" />
+								<container id="deviceCurrentEmpStatusdiv">
+									<include-screen name="DeviceCurrentEmpStatus" />
+								</container>
+							</screenlet>
+						</container>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+	<screen name="AttendanceListToRefresh">
+		<section>
+			<actions>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+					
+				<set field="terminalId" value="${terminalId}" />
+				
+		
+				
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+			
+				<entity-and list="employeeattendanceList" entity-name="EmployeeLog">
+					<field-map field-name="userLoginId" value="${userId}" />
+					<order-by field-name="logtimeStamp DESC" />
+				</entity-and>
+			</actions>
+			<widgets>
+				<container>
+					<include-form
+						location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+						name="EmployeeAttendanceList" />
+				</container>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+	<screen name="AttendanceList">
+		<section>
+			<actions>
+		
+			</actions>
+			<widgets>
+
+				<screenlet name="Companies" title="Employees Log"
+					navigation-menu-name="AddLocation">
+
+					<container id="employeelogdiv">
+								<include-screen name="AttendanceListToRefresh" />
+					</container>
+
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+
+	<!-- Main Screen For Employee Information Management -->
+	<screen name="Employee">
+		<section>
+			<widgets>
+				<section>
+					<actions>
+					
+					
+						<set field="organizationChildListTitle" value="Attendance List" />
+						<set field="organizationTitle" value="Employees" />
+						<set field="LocationTitle" value="" />
+						<set field="NumberofTitle" value="" />
+					
+					</actions>
+					<widgets />
+				</section>
+				<decorator-screen name="AttendanceMainDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<container style="profile-full">
+							<include-screen name="breadcrumb" />
+						</container>
+						<container style="profile-left">
+							<include-screen name="empInformation" />
+							
+							<include-screen name="AttendanceList" />
+							
+						</container>
+						
+						<container style="profile-right">
+								<container id="empCurrentStatusdiv">
+											<include-screen name="EmpCurrentStatus" />
+								</container>
+						</container>
+					</decorator-section>
+				</decorator-screen>
+				
+			</widgets>
+		</section>
+	</screen>
+
+	<!-- A Simple Decorator for Popups -->
+	<screen name="PopupActions">
+		<section>
+			<actions>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="HRResUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="contessaOrgResUiLabels"
+					map-name="uiLabelMap" global="true" />
+				<property-map resource="contessaCommonUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="PartyUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="AccountingUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="OrderUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="WorkEffortUiLabels" map-name="uiLabelMap"
+					global="true" />
+			</actions>
+			<widgets />
+		</section>
+	</screen>
+
+	<screen name="AddLocationPopup">
+		<section>
+			<actions>
+
+				<!-- Determining Division/Department/Section -->
+
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+					
+			   
+				<set field="orgId" value="${orgId.partyId}" />
+				<set field="terminalId" value="${terminalId}" />
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" />
+				<include-screen name="GlobalActions"
+					location="component://common/widget/CommonScreens.xml" />
+				<section>
+					<condition>
+						<and>
+							<!-- from company window -->
+							<if-empty field="isBuilding" />
+							<if-empty field="isFloor" />
+							<if-empty field="isGate" />
+							<if-empty field="isDevice" />
+						</and>
+					</condition>
+					<widgets>
+						<!-- ======================Building================ -->
+						<screenlet title="Create New Building">
+							<include-form
+								location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+								name="FormForAddBuilding" />
+						</screenlet>
+					</widgets>
+					<fail-widgets>
+						<!-- from division window -->
+						<section>
+							<condition>
+								<and>
+									<if-empty field="isFloor" />
+									<if-empty field="isGate" />
+									<if-empty field="isDevice" />
+								</and>
+							</condition>
+							<widgets>
+								<screenlet title="Create New Floor">
+									<include-form
+										location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+										name="FormForAddFloor" />
+								</screenlet>
+							</widgets>
+							<fail-widgets>
+								<section>
+									<condition>
+										<and>
+											<if-empty field="isGate" />
+											<if-empty field="isDevice" />
+										</and>
+									</condition>
+									<widgets>
+										<screenlet title="Create New Gate">
+											<include-form
+												location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+												name="FormForAddGate" />
+										</screenlet>
+									</widgets>
+									<fail-widgets>
+
+										<section>
+											<condition>
+
+
+												<if-empty field="isDevice" />
+
+											</condition>
+											<widgets>
+												<!-- <screenlet title="Create New Device"> -->
+
+												<screenlet title="Register New Device">
+
+													<include-form
+														location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+														name="FormForAddDevice" />
+												</screenlet>
+											</widgets>
+											<fail-widgets>
+												<screenlet title="Register New Employee">
+													<include-form
+														location="component://humanres/widget/attendance/forms/AttendanceForms.xml"
+														name="FormForAddEmployee" />
+												</screenlet>
+											</fail-widgets>
+										</section>
+									</fail-widgets>
+								</section>
+
+							</fail-widgets>
+						</section>
+
+					</fail-widgets>
+				</section>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="breadcrumb">
+		<section>
+			<actions>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompanyName.groovy" />
+
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/breadcrumb.groovy" />
+			</actions>
+			<widgets>
+				<platform-specific>
+					<html>
+						<html-template
+							location="component://humanres/webapp/humanres/humanres/attendance/breadcrumb.ftl" />
+					</html>
+				</platform-specific>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<!-- Add employee Log By Hr admin -->
+	<screen name="AddEmployeeLog">
+		<section>
+			<actions>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="tabButtonItem" value="emplog" /> <!-- Action Menu -->
+				<set field="decorator" value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceMainDecorator" location="${decorator}">
+				<decorator-section name="body">
+				<screenlet title="Employee Log Manually">
+				<include-form location="component://humanres/widget/attendance/forms/AttendanceForms.xml" name="AddEmployeeLogForm" />
+				</screenlet>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="ViewAttendanceForm">
+        <section>
+            <actions>
+                <set field="headerItem" value="attendance"/>
+                <set field="tabButtonItem" value="DailyAttendanceLog"/>                               
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="StructureActionMenu" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+		                         
+                            <screenlet title="View Daily Attendence" navigation-menu-name="DailyAttendanceLog">
+	                        	                
+		                    	<include-form name="ViewAttendanceForm" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+		                    </screenlet> 
+                                
+                      
+	                
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditTimeAttendanceForm">
+        <section> 
+           <actions>
+                <set field="headerItem" value="attendance"/>
+                <set field="tabButtonItem" value="DailyAttendanceLog"/>                               
+            </actions>           
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="StructureActionMenu" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+		                
+                        <screenlet title="Edit Daily Attendence" navigation-menu-name="DailyAttendanceLog">
+                            <include-form name="EditTimeAttendanceForm" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+
+
+<screen name="EmplAttendanceList">
+		<section>
+			<actions>
+				<set field="entityName" value="DailyAttendance"/>
+				<set field="requestParameters" from-field="parameters"/>
+				<set field="parameters.sortField" from-field="parameters.sortField" default-value="dateOfAttendance DESC"/>
+				<!-- <entity-and list="list" entity-name="DailyAttendance">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="processStatus" value="Data Loaded"/>
+				</entity-and>  -->
+				<entity-condition entity-name="DailyAttendance" list="list">
+                    <condition-list combine="and">
+                        <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+                        <condition-expr field-name="processStatus" operator="equals" value="Data Loaded"/>
+                        <condition-expr field-name="attendanceStatus" operator="not-equals" value="Present"/>
+                    </condition-list>
+                    <order-by field-name="${parameters.sortField}"/>
+                </entity-condition> 
+			</actions>
+			<widgets>
+				<screenlet title="Employee Attendance List" navigation-menu-name="AddRequisition">
+				<container id="addAttendanceCommentsPopUp"></container>
+					<section>
+						<widgets>
+							<include-form name="EmplAttendanceList" location="component://humanres/widget/attendance/forms/AttendanceForms.xml" />
+						</widgets>
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="EmployeeAttendanceCommentsPopUp">
+		<section>
+            <actions>
+            </actions>
+            <widgets>
+                <screenlet title="Employee Comments">
+	                <section>
+	                    <widgets>
+	                        <include-form name="EmployeeAttendanceCommentsPopUp" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+	                    </widgets>
+	                </section>
+             	</screenlet>
+            </widgets>
+        </section>
+	</screen>
+	<screen name="EmplSupervisorCommentsList">
+		<section>
+			<actions>
+				<set field="entityName" value="DailyAttendance"/>
+				<set field="requestParameters" from-field="parameters"/>
+				<entity-and list="list" entity-name="DailyAttendance">
+					<field-map field-name="supervisorPartyId" value="${parameters.partyId}"/>
+					<field-map field-name="processStatus" value="Forward To Reporting"/>
+				</entity-and>
+			</actions>
+			<widgets>
+				<screenlet title="Supervisor Attendance Review List" navigation-menu-name="AddRequisition">
+				<container id="addSupervosorCommentsPopUp"></container>
+					<section>
+						<widgets>
+							<include-form name="EmplSupervisorCommentsList" location="component://humanres/widget/attendance/forms/AttendanceForms.xml" />
+						</widgets>
+					</section>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="SupervisorAttendanceCommentsPopUp">
+		<section>
+            <actions>
+            	<set field="employeeId" from-field="parameters.employeeId"/>
+		        <entity-one entity-name="Person" value-field="personInfo">
+		        	<field-map field-name="partyId" from-field="parameters.partyId"/>
+		        </entity-one> 
+            </actions>
+            <widgets>
+                <screenlet title="Supervisor Comments">
+	                <section>
+	                    <widgets>
+	                        <include-form name="SupervisorAttendanceCommentsPopUp" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+	                    </widgets>
+	                </section>
+             	</screenlet>
+            </widgets>
+        </section>
+	</screen>
+	<!-- DailyAttendanceLogComments -->
+	
+	<screen name="DailyAttendanceLogComments">
+        <section>
+            <actions>
+                <set field="titleProperty" value="${uiLabelMap.CommonFind} ${uiLabelMap.HumanResEmployee}"/>
+                <set field="headerItem" value="attendance"/>
+                <set field="tabButtonItem" value="DailyAttendanceLogWithComments"/>
+                <set field="parameters.processStatus" value="Approved by supervisor" ></set>
+                <set field="DailyAttendanceCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="StructureActionMenu" />
+                        
+                         <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+	                         <decorator-section name="search-options">
+	                             <include-form name="FindDailyAttendanceLogComments" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+	                         </decorator-section>
+	                         <decorator-section name="search-results">
+	                            <include-form name="ListDailyAttendanceLogComments" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+	                         </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="ViewDailyAttendanceLogComments">
+        <section>
+            <actions>
+                <set field="headerItem" value="attendance"/>
+                <set field="tabButtonItem" value="DailyAttendanceLogWithComments"/>                               
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="StructureActionMenu" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+		                         
+                            <screenlet title="View Daily Attendence" navigation-menu-name="DailyAttendanceLog">
+	                        	                
+		                    	<include-form name="ViewDailyAttendanceLogComments" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+		                    </screenlet> 
+                                
+                      
+	                
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditDailyAttendanceLogComments">
+        <section> 
+           <actions>
+                <set field="headerItem" value="attendance"/>
+                <set field="tabButtonItem" value="DailyAttendanceLogWithComments"/>                               
+            </actions>           
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="StructureActionMenu" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+		                
+                        <screenlet title="Edit Daily Attendence" navigation-menu-name="DailyAttendanceLog">
+                            <include-form name="EditDailyAttendanceLogComments" location="component://humanres/widget/attendance/forms/AttendanceForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+	
+</screens>

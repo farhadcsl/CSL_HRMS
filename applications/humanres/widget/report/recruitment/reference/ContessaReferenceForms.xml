@@ -1,0 +1,129 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    
+   <form name="FindNewReference" type="single" target="FindReferenceCVForm">
+        
+        <auto-fields-entity entity-name="ReferenceCv" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="referenceId"><hidden/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form> 
+    
+    <form name="ListNewReference" type="multi" list-name="listIt" use-row-submit="true" separate-columns="true" 
+    	target="updatePartyQualExt?partyId=${partyId}" paginate-target="FindReferenceCVForm"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+      
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="memberCtx"/>
+                <field-map field-name="entityName" value="ReferenceCv"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            
+        </actions>
+        <field name="referenceId" title="Reference Id"><display ></display></field>
+        <field name="applicantName" title="Applicant Name"><display/></field>
+        <field name="referedPosition" ><display/></field>
+        <field name="referedDepartment" ><display/></field>
+        <field name="priority" ><display/></field>
+        <field name="referdBy" ><display/></field>
+        <field name="dateAdded" ><display/></field>        
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field>
+        
+        <field name="ViewLink" title="View" widget-style="buttontext">
+            <hyperlink target="ViewReferenceForm" description="View" also-hidden="false">
+                <parameter param-name="referenceId"/>
+                <parameter param-name="applicantName"/>
+                <parameter param-name="referedPosition"/>
+                <parameter param-name="referedDepartment"/>
+                <parameter param-name="priority"/>
+                <parameter param-name="referdBy"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="description"/>
+            </hyperlink>
+        </field>
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditReference" description="Edit" also-hidden="false">
+            	<parameter param-name="referenceId"/>
+                <parameter param-name="applicantName"/>
+                <parameter param-name="referedPosition"/>
+                <parameter param-name="referedDepartment"/>
+                <parameter param-name="priority"/>
+                <parameter param-name="referdBy"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="description"/>
+                
+                
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteReferance" confirmation-message="You want to delete Resident ${residentName} " description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="referenceId"/>
+            </hyperlink>
+        </field>-->
+        
+       <!--  <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field> -->
+    </form>
+    
+    <form name="NewReferenceForm" type="single" target="createReference"
+        header-row-style="header-row" default-table-style="basic-table">
+        
+        
+        <field name="applicantName" title="Applicant Name" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="referedPosition" title="Refered Position" tooltip="${uiLabelMap.}" ><text/></field>        
+        <field name="referedDepartment" title="Refered Department" tooltip="${uiLabelMap.}" ><text/></field>        
+        <field name="priority" title="Priority" tooltip="${uiLabelMap.}" >
+        	<drop-down>
+        		<auto-complete/>
+	        	<option key="H" description="High" />
+	        	<option key="M" description="Medium"/>
+	        	<option key="L" description="Low"/>
+        	</drop-down>
+        </field>
+        <field name="referdBy" title="Referd By" ><text/></field>        
+        <field name="comments" title="Description" ><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+    
+    <form name="EditReference" type="single" target="updateReference" default-map-name="skillType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="referenceId"><display></display></field>
+        <field name="applicantName" title="applicantName" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>        
+        <field name="referedPosition" title="referedPosition"><text/></field>
+        <field name="referedDepartment" title="referedDepartment" ><text/></field>
+        <field name="priority" title="priority"  ><text/></field>        
+        <field name="referdBy" title="referdBy"  ><text/></field>
+        <field name="dateAdded" title="dateAdded" ><text/></field>
+        <field name="comments" title="description" ><text/></field>
+               
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+    </form>
+    <form name="EditReferenceForm" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="referenceId"><display></display></field>
+        <field name="applicantName" ><display/></field>
+        <field name="referedPosition" ><display/></field>
+        <field name="priority" ><display/></field>
+        <field name="referdBy" ><display/></field>
+        <field name="dateAdded" ><display/></field>
+        <field name="referedDepartment" ><display/></field>
+        <field name="comments" title="${uiLabelMap.CommonDescription}"  ><display/></field>
+        
+    </form>
+    
+    
+    <form name="ContentForUserForm" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="referenceId"><file></file></field>
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+    </form>
+    
+    </forms>

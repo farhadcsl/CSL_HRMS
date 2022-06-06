@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="arrearProcess">
+        <section>
+            <actions>
+                <set field="headerItem" value="IncrementManagement"/>
+                <set field="tabButtonItem" value="ArrearProcess"/>
+             </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                      
+                        <section>
+                           
+                            <widgets>
+                                <screenlet id="ArrearInitiate" title="Initiate Arrear Process" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="generalArrearProcess" location="component://payroll/widget/increment/forms/ArrearProcessingForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="arrearProcessInitiate">
+        <section>
+            <actions>
+                <set field="headerItem" value="IncrementManagement"/>
+                <set field="monthNo" from-field="parameters.monthNo"/>
+               <set field="fiscalYear" from-field="parameters.fiscalYear"/>
+               <set field="tabButtonItem" value="ArrearProcess"/>
+            <!--  <entity-and list="listIt" entity-name="ArrearStatus">
+            	 <field-map field-name="arrearFlag" value="Y"/>
+             </entity-and> -->
+            <entity-and list="listIt" entity-name="ArrearStatus">
+            	<field-map field-name="arrearFlag" value="Y"/>
+            </entity-and>
+			</actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                     <screenlet id="arrearlist" title="Arrear Information" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="arrearinfo" location="component://payroll/widget/increment/forms/ArrearProcessingForms.xml"/>
+                                  </widgets>
+                            </section>
+                        </screenlet> 
+                        <screenlet id="listEmpl" title="Employee List" collapsible="true">
+                            <section>
+                                <widgets>
+                                        <include-form name="FindEmployeeForArrear" location="component://payroll/widget/increment/forms/ArrearProcessingForms.xml"/>
+                                        <include-form name="eligibleEmplDetailViewlist" location="component://payroll/widget/increment/forms/ArrearProcessingForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                      </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen> 
+    
+    
+    <screen name="FindArrearSalary">
+        <section>
+            <actions>
+               
+                
+              <set field="headerItem" value="IncrementManagement"/>
+                <set field="monthNo" from-field="parameters.monthNo"/>
+               <set field="fiscalYear" from-field="parameters.fiscalYear"/>
+               <set field="tabButtonItem" value="ArrearProcess"/>
+               
+             
+
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                 
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                        <screenlet id="CreatePayrollTypePanel2" title="${uiLabelMap.DetailView}" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="FindEmployeeForArrear" location="component://payroll/widget/increment/forms/ArrearProcessingForms.xml"/>
+                                    <include-form name="eligibleEmplDetailViewlist" location="component://payroll/widget/increment/forms/ArrearProcessingForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>   
+</screens>

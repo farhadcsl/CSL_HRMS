@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    
+    <form name="CreateBank" type="single" target="createBankinfo"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="lcBankInfoId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="bankName" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="bankAddress"><text/></field>
+        <field name="description"><text/></field>
+        <field name="submitButton" title="Create" ><submit/></field>
+    </form>
+    <form name="ListBank" type="multi"  paginate-target="deletebankinfo"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+            <actions>
+            <entity-condition entity-name="LcBankInfo"><order-by field-name="lcBankInfoId"/></entity-condition>
+        </actions>
+        <field name="lcBankInfoId" title="lcBankInfoId"><hidden/></field>
+        <field name="bankName" title="Bank Name"><display/></field>
+        <field name="bankAddress" title="Bank Address"><display/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteListBank" description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="lcBankInfoId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="CreateInsuranceInfo" type="single" target="createInsurance"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="lcInsuranceCoverNoteId" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><hidden/></field>
+        <field name="insuranceCompanyName" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="insuranceAddress"><text/></field>
+        <field name="description"><text/></field>
+        <field name="submitButton" title="Create" ><submit/></field>
+    </form>
+    <form name="ListInsuranceInfo" type="multi"  paginate-target="deletebankinfo"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+            <actions>
+            <entity-condition entity-name="LcInsuranceCoverNote"><order-by field-name="lcInsuranceCoverNoteId"/></entity-condition>
+        </actions>
+        <field name="lcInsuranceCoverNoteId" title="lcBankInfoId"><hidden/></field>
+        <field name="insuranceCompanyName" title="Insurance Company Name"><display/></field>
+        <field name="insuranceAddress" title="Insurance Address"><display/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteListInsurance" description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="lcInsuranceCoverNoteId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+     <form name="CreateShiperInfo" type="single" target="createShiper"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="lcShiperId"  required-field="true"><hidden/></field>
+        <field name="shiperName" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="shiperAddress"><text/></field>
+        <field name="description" ><text/></field>
+        <field name="submitButton" title="Create" ><submit/></field>
+    </form>
+    <form name="ListShiperInfo" type="multi"  paginate-target="CreateShiperInfo"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+            <actions>
+            <entity-condition entity-name="LcShiperInfo"><order-by field-name="lcShiperId"/></entity-condition>
+        </actions>
+        <field name="lcShiperId" title="lcBankInfoId"><hidden/></field>
+        <field name="shiperName" title="Insurance Company Name"><display/></field>
+        <field name="shiperAddress" title="Cover Note No"><display/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteListIShiper" description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="lcShiperId"/>
+            </hyperlink>
+        </field>
+    </form>
+</forms>

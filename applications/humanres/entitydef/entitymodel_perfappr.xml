@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>Performance Appraisal  Related Entity</description>
+    <version>1.0</version>
+    
+    
+	<entity entity-name="PerfReviewType"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Review Item Type">
+      	<field name="perfReviewTypeId" type="id-ne"></field>
+      	<field name="perfReviewTypeName" type="name"></field>
+      	<field name="behaviorIndicators" type="comment"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+      	<prim-key field="perfReviewTypeId"/>
+    </entity>
+    
+	<entity entity-name="PerfApRatingType"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Rating Type">
+      	<field name="perfApRatingTypeId" type="id-ne"></field>
+      	<field name="perfApRatingTypeName" type="name"></field>
+      	<field name="perfApRatingScore" type="id-ne"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+      	<prim-key field="perfApRatingTypeId"/>
+    </entity>
+    
+    <entity entity-name="PerfApprKpi"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal KPI Item Type">
+      	<field name="perfApprKpiId" type="id-ne"></field>
+      	<field name="perfApprKpiName" type="name"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="description" type="description"></field>
+      	<prim-key field="perfApprKpiId"/>
+    </entity>
+    <entity entity-name="PerfApprDevReq"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Development Requirement">
+      	<field name="perfApprDevReqId" type="id-ne"></field>
+      	<field name="perfApprDevReqName" type="name"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="description" type="description"></field>
+      	<prim-key field="perfApprDevReqId"/>
+    </entity>
+    <entity entity-name="PerfApprType"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Type Entity">
+      	<field name="perfApprTypeId" type="id-ne"></field>
+      	<field name="perfApprTypeName" type="name"></field>
+		<field name="description" type="description"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+      	<prim-key field="perfApprTypeId"/>
+    </entity>
+    <entity entity-name="ObjectiveType"
+            package-name="org.ofbiz.humanres.ability"
+            title="Objective Type Entity">
+      	<field name="objectiveTypeId" type="id-ne"></field>
+      	<field name="objectiveTypeName" type="name"></field>
+		<field name="description" type="description"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+      	<prim-key field="objectiveTypeId"/>
+    </entity>
+    
+    <entity entity-name="PerfApprProcess"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Process Entity">
+      <field name="processId" type="id-ne"></field>
+      <field name="partyId" type="id-ne"></field>
+      <field name="perfApprTypeId" type="id-ne"></field>
+      <field name="startDate" type="date-time"></field>
+      <field name="endDate" type="date-time"></field>
+      <field name="title" type="name"></field>
+      <field name="description" type="description"></field>
+      <field name="statusId" type="short-varchar"></field>
+      <field name="isActive" type="indicator"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <field name="workflowProcessId" type="id-ne"></field>
+      
+      <field name="stepPartyId" type="id-ne"></field>
+      <field name="firstApprovarId" type="id-ne"></field>
+      <field name="secondApprovarId" type="id-ne"></field>
+      <field name="thirdApprovarId" type="id-ne"></field>
+      <field name="firstApprovarStatus" type="id-ne"></field>
+      <field name="partyStatus" type="id-ne"></field>
+      <field name="secondApprovarStatus" type="id-ne"></field>
+      <field name="thirdApprovarStatus" type="id-ne"></field>
+      <field name="firstApprovarComments" type="comment"></field>
+      <field name="partyComments" type="comment"></field>
+      <field name="secondApprovarComments" type="comment"></field>
+      <field name="thirdApprovarComments" type="comment"></field>
+      <prim-key field="processId"/>
+      <prim-key field="partyId"/>
+      <prim-key field="perfApprTypeId"/>
+      
+      <relation type="one" fk-name="PA_PROC_PRTY" rel-entity-name="Party">
+        <key-map field-name="partyId"/>
+      </relation>
+      <relation type="one" fk-name="PA_PROC_TYPE" rel-entity-name="PerfApprType">
+        <key-map field-name="perfApprTypeId"/>
+      </relation>
+    </entity>
+    
+    
+    <entity entity-name="PerfApprBusinessKpi"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Process Entity">
+      <field name="processId" type="id-ne"></field>
+      <field name="dataId" type="id-ne"></field>
+      <field name="objectiveDesc" type="description"></field>
+      <field name="perfIndicator" type="short-varchar"></field>
+      <field name="ratingId" type="id-ne"></field>
+      <field name="weight" type="floating-point"></field>
+      <field name="objectiveTypeId" type="id-ne"></field>
+      <field name="achivementPercentage" type="floating-point"></field>
+      <field name="comments" type="comment"></field>
+      <field name="isActive" type="indicator"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <prim-key field="processId"/>
+      <prim-key field="dataId"/>
+      
+      <relation type="one" fk-name="BUSI_KPI_PA" rel-entity-name="PerfApprProcess">
+        <key-map field-name="processId" rel-field-name="processId"/>
+      </relation>
+      <relation type="one" fk-name="BUSI_KPI_RATING" rel-entity-name="PerfApRatingType">
+        <key-map field-name="ratingId" rel-field-name="perfApRatingTypeId"/>
+      </relation>
+      <relation type="one" fk-name="BUSI_KPI_OBJ_TYP" rel-entity-name="ObjectiveType">
+        <key-map field-name="objectiveTypeId" rel-field-name="objectiveTypeId"/>
+      </relation>
+    </entity>
+    
+    <entity entity-name="PerfApprBehaviourKpi"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Process Entity">
+      <field name="processId" type="id-ne"></field>
+      <field name="dataId" type="id-ne"></field>
+      <field name="kpiItemId" type="id-ne"></field>
+	  <field name="kpiItemDescription" type="description"></field>
+      <field name="perfIndicator" type="short-varchar"></field>
+      <field name="ratingId" type="id-ne"></field>
+      <field name="weight" type="floating-point"></field>
+      <field name="comments" type="comment"></field>
+      <field name="isActive" type="indicator"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <prim-key field="processId"/>
+      <prim-key field="dataId"/>
+      
+      <relation type="one" fk-name="BEHAV_KPI_PA" rel-entity-name="PerfApprProcess">
+        <key-map field-name="processId" rel-field-name="processId"/>
+      </relation>
+      <relation type="one" fk-name="BEHAV_KPI_RATING" rel-entity-name="PerfApprKpi">
+        <key-map field-name="kpiItemId" rel-field-name="perfApprKpiId"/>
+      </relation>
+      <relation type="one" fk-name="BEH_KPI_RATING_TYP" rel-entity-name="PerfApRatingType">
+        <key-map field-name="ratingId" rel-field-name="perfApRatingTypeId"/>
+      </relation>
+    </entity>
+    
+    <entity entity-name="PerfApprDevelopmentPlan"
+            package-name="org.ofbiz.humanres.ability"
+            title="Performance Appraisal Process Entity">
+      <field name="processId" type="id-ne"></field>
+      <field name="dataId" type="id-ne"></field>
+      <field name="developmentRequirementId" type="id-ne"></field>
+	  <field name="objective" type="description"></field>
+      <field name="byWhen" type="short-varchar"></field>
+      <field name="ratingId" type="id-ne"></field>
+      <field name="statusId" type="id-ne"></field>
+      <field name="comments" type="comment"></field>
+      <field name="isActive" type="indicator"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <prim-key field="processId"/>
+      <prim-key field="dataId"/>
+      
+      <relation type="one" fk-name="DEV_PLN_PA" rel-entity-name="PerfApprProcess">
+        <key-map field-name="processId" rel-field-name="processId"/>
+      </relation>
+      <relation type="one" fk-name="DEV_PLN_DEV_REQ" rel-entity-name="PerfApprDevReq">
+        <key-map field-name="developmentRequirementId" rel-field-name="perfApprDevReqId"/>
+      </relation>
+      <relation type="one" fk-name="DEV_PLN_RATING" rel-entity-name="PerfApRatingType">
+        <key-map field-name="ratingId" rel-field-name="perfApRatingTypeId"/>
+      </relation>
+    </entity>
+    
+    <entity entity-name="PartyPerfApprWorkflow"
+            package-name="org.ofbiz.humanres.ability"
+            title="Employee Performance Appraisal Wordflow Map">
+      	<field name="partyId" type="id-ne"></field>
+      	<field name="employeeId" type="id-ne"></field>
+      	<field name="firstLevelApprover" type="id-ne"></field>
+      	<field name="secondLevelApprover" type="id-ne"></field>
+      	<field name="thirdLevelApprover" type="id-ne"></field>
+		<field name="description" type="description"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+      	<prim-key field="partyId"/>
+      	
+      <relation type="one" fk-name="PAR_PA_WF_PRTY" rel-entity-name="Party">
+        <key-map field-name="partyId"/>
+      </relation>
+      <!-- <relation type="one" fk-name="PAR_PA_WF_PRTY" rel-entity-name="Party">
+        <key-map field-name="firstLevelApprover"/>
+      </relation>
+      <relation type="one" fk-name="PAR_PA_WF_PRTY" rel-entity-name="Party">
+        <key-map field-name="secondLevelApprover"/>
+      </relation>
+      <relation type="one" fk-name="PAR_PA_WF_PRTY" rel-entity-name="Party">
+        <key-map field-name="thirdLevelApprover"/>
+      </relation> -->
+    </entity>
+    
+</entitymodel>

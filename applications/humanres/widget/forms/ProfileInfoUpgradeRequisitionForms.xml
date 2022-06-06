@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    
+    <form name="FindProfileBasicInfoChangeRequisition" type="single" target="FindProfileBasicInfoChangeRequisition" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="employeeId" title="Employee Id" position="1"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        
+       <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListProfileBasicInfoChangeRequisition" type="multi" list-name="basicInfoUpdateRequList" title="" target="confirmAllProfileChangeRequiest" paginate-target="FindProfileBasicInfoChangeRequisition"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="basicInfoUpdateRequList">
+                <field-map field-name="inputFields" from-field="basicInfoUpdateRequCtx"/>
+                <field-map field-name="entityName" value="BasicInfoUpdateRequ"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        	<entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>     
+        </row-actions> 
+        <field name="requisitionId" ><display/></field>
+        <!-- <field name="partyId" ><hidden/></field>
+        <field name="employeeId" title="Employee Id">  
+           <display description="${ulList[0].userLoginId}"></display>
+        </field> -->
+        
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${middleName} ${lastName} ( ${ulList[0].userLoginId} )" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="contactMechTypeId" ><hidden/></field>
+        <field name="tableName" ><hidden/></field>
+        <field name="fieldName" ><display/></field>
+        <field name="fieldCurrentValue" title="Current value"><display/></field>
+        <field name="fieldUpdatedValue" title="Updated Value"><display/></field>
+        <field name="comments" ><text></text></field>
+        
+        <field name="confirmLink" title="Confirm" widget-style="buttontext">
+            <hyperlink target="confirmProfileBasicInfoChangeRequisition" description="Confirm" also-hidden="false" 
+            	request-confirmation="true" confirmation-message="Do you want to change ${fieldName} ${fieldCurrentValue} to ${fieldUpdatedValue} for Employee ${${ulList[0].userLoginId}}">
+                <parameter param-name="requisitionId"/>
+            </hyperlink>
+        </field>
+        <field name="denyLink" title="Deny" widget-style="buttontext">
+            <hyperlink target="denyProfileBasicInfoChangeRequisition" description="Deny" also-hidden="false">
+                <parameter param-name="requisitionId"/>
+            </hyperlink>
+        </field>
+        
+        
+        <field name="submitButton" title="Submit all" widget-style="smallSubmit">
+        	<submit/>
+        </field>
+    </form>
+</forms>

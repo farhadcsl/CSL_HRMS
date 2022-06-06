@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+     
+    <form name="ListPartyTrainingRequestDetails" type="list" list-name="partyTrainingRequestDetailsList" use-row-submit="true" title=""
+     	 target="updatePartyTrainingRequestDetails" paginate-target="FindPartyTrainingRequestDetails"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+      	<field name="requestDetailsId"><display/></field>
+        <field name="expenseId"><display/></field>
+        <field name="amount"><display/></field>
+        <field name="description"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink  target="EditPartyTrainingRequestDetails" description="Edit" also-hidden="false">
+                <parameter param-name="requestId"/>
+                <parameter param-name="partyId"/>
+                <parameter param-name="trainingOfferId"/>
+                <parameter param-name="requestDetailsId"/>
+                <parameter param-name="expenseId"/>
+                <parameter param-name="amount"/>
+                <parameter param-name="description"/>
+                <parameter param-name="comments"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="" widget-style="buttontext">
+            <hyperlink target="deletePartyTrainingRequestDetails" description="Delete" also-hidden="false" request-confirmation="true">
+                <parameter param-name="requestId"/>
+                <parameter param-name="partyId"/>
+                <parameter param-name="trainingOfferId"/>
+                <parameter param-name="requestDetailsId"/>
+                <parameter param-name="expenseId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="NewPartyTrainingRequestDetails" type="single" target="createPartyTrainingRequestDetails"
+        header-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="requestId"><display/></field>
+        <field name="trainingOfferId"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="expenseId">
+            <drop-down allow-empty="false">
+                 <entity-options entity-name="TrainingExpenseType" key-field-name="expenseId" description="${expenseName}"> 
+                 </entity-options>
+            </drop-down>
+        </field>
+        <field name="amount" title="Amount" widget-style="required"><text/></field>
+        <field name="description" title="Description" ><textarea/></field>
+        <field name="comments" title="Comments"><textarea/></field>
+     
+        <field name="submitButton" title="Create" widget-style="smallSubmit"><submit button-type="button"/></field>
+       
+    </form>
+    
+    <form name="EditPartyTrainingRequestDetails" type="single" target="updatePartyTrainingRequestDetails"
+        header-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="requestDetailsId"><display/></field>
+        <field name="requestId"><display/></field>
+        <field name="trainingOfferId"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="expenseId">
+            <drop-down allow-empty="false">
+                 <entity-options entity-name="TrainingExpenseType" key-field-name="expenseId" description="${expenseName}"> 
+                 </entity-options>
+            </drop-down>
+        </field>
+        <field name="amount" title="Amount" widget-style="required"><text/></field>
+        <field name="description" title="Description" ><textarea/></field>
+        <field name="comments" title="Comments"><textarea/></field>
+     
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+       
+    </form>
+</forms>

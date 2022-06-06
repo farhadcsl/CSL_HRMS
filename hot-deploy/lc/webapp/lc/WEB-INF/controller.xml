@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+
+    <description>Lc Component Site Configuration File</description>
+      <handler name="datavision" type="view" class="org.ofbiz.webapp.view.DataVisionViewHandler"/>
+    <handler name="jasperreportspdf" type="view" class="org.ofbiz.webapp.view.JasperReportsPdfViewHandler"/>
+    <handler name="jasperreportsxml" type="view" class="org.ofbiz.webapp.view.JasperReportsXmlViewHandler"/>
+    <request-map uri="FindPi">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPi"/>
+    </request-map>
+     <request-map uri="FindLc">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLc"/>
+    </request-map>
+      <request-map uri="FindTt">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindTt"/>
+    </request-map>
+    <request-map uri="CreatePi">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreatePi"/>
+    </request-map>
+    <request-map uri="CreateTt">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreateTt"/>
+    </request-map>
+    <request-map uri="CreateNewTt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="CreateNewTt"/>
+        <response name="success" type="view" value="FindTt"/>
+    </request-map>
+    <request-map uri="CreateBank">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreateBank"/>
+    </request-map>
+     <request-map uri="addLcCreatepopup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="addLcCreatepopup"/>
+    </request-map>
+    <request-map uri="CreateLc">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="createLc"/>
+    </request-map>
+     <request-map uri="UpdateLc">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="UpdateLc"/>
+        <response name="success" type="view" value="LcView"/>
+    </request-map>
+    <request-map uri="updateTt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateTt"/>
+        <response name="success" type="view" value="TtView"/>
+    </request-map>
+    <request-map uri="deleteTt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTt"/>
+        <response name="success" type="request-redirect-noparam" value="FindTt"/>
+    </request-map>
+    <request-map uri="TtView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="TtView"/>
+    </request-map>
+    <request-map uri="NewLcCreate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="addLcCreate"/>
+        <response name="success" type="view" value="FindLc"/>
+    </request-map>
+     <request-map uri="editPi">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editPi"/>
+    </request-map>
+    <request-map uri="editTt">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editTt"/>
+    </request-map>
+     <request-map uri="createNewPi">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createNewPi"/>
+        <response name="success" type="view" value="FindPi"/>
+    </request-map>
+     <request-map uri="updatePi">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePi"/>
+        <response name="success" type="view" value="FindPi"/>
+    </request-map>
+    
+    <request-map uri="deletePi">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePi"/>
+        <response name="success" type="request-redirect-noparam" value="FindPi"/>
+    </request-map>
+    <request-map uri="deleteLc">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteLc"/>
+        <response name="success" type="request-redirect-noparam" value="FindLc"/>
+    </request-map>
+     <request-map uri="EditLc">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditLc"/>
+    </request-map>
+    <request-map uri="viewLc">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="viewLc"/>
+    </request-map>
+    <request-map uri="LcView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LcView"/>
+    </request-map>
+     <request-map uri="LcNoteCreate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="LcNoteCreate"/>
+        <response name="success" type="view" value="LcView"/>
+    </request-map>
+     <request-map uri="deleteLcNotepopup">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteLcNotepopup"/>
+        <response name="success" type="view-last" value="LcView"/>
+    </request-map>
+    
+     <request-map uri="editLcPopUp">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLc"/>
+    </request-map>
+    <request-map uri="updateLcPopUp">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateLcPopUp"/>
+        <response name="success" type="view" value="viewLc"/>
+    </request-map>
+    <request-map uri="createBankinfo">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createBankinfo"/>
+        <response name="success" type="view-last-noparam" value="CreateBank"/>
+    </request-map>
+    <request-map uri="deleteListBank">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteListBank"/>
+        <response name="success" type="view-last-noparam" value="CreateBank"/>
+    </request-map>
+    <!-- LcBankInfo -->
+    
+    <request-map uri="CreateInsuranceInfo">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreateInsuranceInfo"/>
+    </request-map>
+    <request-map uri="createInsurance">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createInsurance"/>
+        <response name="success" type="view" value="CreateInsuranceInfo"/>
+    </request-map>
+    <request-map uri="deleteListInsurance">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteListInsurance"/>
+        <response name="success" type="view" value="CreateInsuranceInfo"/>
+    </request-map>
+    <request-map uri="FindLcBankInfo">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="lcBankInfo"/>
+    </request-map>
+    <request-map uri="createShiper">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createShiper"/>
+        <response name="success" type="view" value="CreateShiperInfo"/>
+    </request-map>
+    <request-map uri="deleteListIShiper">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteListIShiper"/>
+        <response name="success" type="view" value="CreateShiperInfo"/>
+    </request-map>
+     <request-map uri="addTtCreatePopUp">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="addTtCreatePopUp"/>
+    </request-map>
+    <request-map uri="TtNoteCreate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="TtNoteCreate"/>
+        <response name="success" type="view" value="TtView"/>
+    </request-map>
+    <request-map uri="deleteTtNotepopup">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTtNotepopup"/>
+        <response name="success" type="view-last" value="TtView"/>
+    </request-map>
+     <request-map uri="CreateShiperInfo">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreateShiperInfo"/>
+    </request-map>
+    <!-- lc Upload file -->
+    <request-map uri="uploadlcRequisitionContent">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="uploadlcRequisitionContent" />
+	</request-map>
+	 <request-map uri="Reoort">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="Reoort" />
+	</request-map>
+	
+	<request-map uri="uploadtotalLcRequisitionContent">
+		<security auth="true" https="true" />
+		<event type="service" invoke="uploadlcRequisitionContentFile" />
+		 <response name="success" type="request-redirect" value="viewLc" >
+		 <redirect-parameter name="piId"/>
+		 </response>
+		
+		<response name="error" type="view" value="viewLc" />
+	</request-map>
+	<request-map uri="removeLcRequisitionDocuments">
+    	<security auth="true" https="true"/>
+    	<event type="simple" path="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="RemoveLcContentOfRequisition"/>
+    	 <response name="success" type="request" value="viewLc" >
+		 <redirect-parameter name="piId"/>
+		 </response>
+    	<response name="error" type="view" value="viewLc"/>
+    </request-map>
+     <request-map uri="img">
+        <security auth="false" https="false"/>
+        <event type="java" path="org.ofbiz.content.data.DataEvents" invoke="serveContessaImage"/>
+        <response name="success" type="none"/>
+        <response name="error" type="request" value="main"/>
+    </request-map>
+    	
+	<request-map uri="LcReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.report.LcReport" invoke="generateReport" />   
+        <response name="success" type="view" value="LcReport.pdf"/>      
+    </request-map>
+	<view-map name="uploadlcRequisitionContent" type="screen" page="component://lc/widget/LcScreens.xml#uploadlcRequisitionContent" />
+    
+    <request-map uri="main"><security https="true" auth="true"/><response name="success" type="view" value="main"/></request-map>
+    
+    <!-- View Mappings -->
+     <view-map name="main" type="screen" page="component://lc/widget/LcScreens.xml#main"/>
+     <view-map name="LcReport.pdf" type="jasperreportspdf" page="/lc/reports/LcReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+     <view-map name="Reoort" type="screen" page="component://lc/widget/LcScreens.xml#Reoort"/>
+     <view-map name="FindTt" type="screen" page="component://lc/widget/LcScreens.xml#FindTt"/>
+     <view-map name="EditLc" type="screen" page="component://lc/widget/LcScreens.xml#EditLc"/>
+     <view-map name="addTtCreatePopUp" type="screen" page="component://lc/widget/LcScreens.xml#addTtCreatePopUp"/>
+     <view-map name="TtView" type="screen" page="component://lc/widget/LcScreens.xml#TtView"/>
+     <view-map name="LcView" type="screen" page="component://lc/widget/LcScreens.xml#LcView"/>
+     <view-map name="editLcPopUp" type="screen" page="component://lc/widget/LcScreens.xml#editLcPopUp"/>
+     <view-map name="FindPi" type="screen" page="component://lc/widget/LcScreens.xml#FindPi"/>
+     <view-map name="FindLc" type="screen" page="component://lc/widget/LcScreens.xml#FindLc"/> 
+     <view-map name="CreateTt" type="screen" page="component://lc/widget/LcScreens.xml#CreateTt"/>
+     <view-map name="CreatePi" type="screen" page="component://lc/widget/LcScreens.xml#CreatePi"/>
+     <view-map name="editTt" type="screen" page="component://lc/widget/LcScreens.xml#editTt"/>
+     <view-map name="editPi" type="screen" page="component://lc/widget/LcScreens.xml#editPi"/>
+     <view-map name="viewLc" type="screen" page="component://lc/widget/LcScreens.xml#viewLc"/>
+     <view-map name="LcNoteCreate" type="screen" page="component://lc/widget/LcScreens.xml#LcView"/>
+     <view-map name="addLcCreatepopup" type="screen" page="component://lc/widget/LcScreens.xml#addLcCreatepopup"/>
+     <view-map name="createLc" type="screen" page="component://lc/widget/LcScreens.xml#CreateLc"/>
+     <view-map name="CreateBank" type="screen" page="component://lc/widget/LcBankInfoScreens.xml#CreateBank"/>
+     <view-map name="lcBankInfo" type="screen" page="component://lc/widget/LcBankInfoScreens.xml#FindLcBankInfo"/>
+     <view-map name="CreateInsuranceInfo" type="screen" page="component://lc/widget/LcBankInfoScreens.xml#CreateInsuranceInfo"/>
+     <view-map name="CreateShiperInfo" type="screen" page="component://lc/widget/LcBankInfoScreens.xml#CreateShiperInfo"/>
+</site-conf>

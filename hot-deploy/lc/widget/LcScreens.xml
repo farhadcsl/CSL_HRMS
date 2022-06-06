@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="main">
+        <section>
+            <actions>
+                <set field="headerItem" value="main"/><!-- this highlights the selected menu-item with name "main" -->
+            </actions>
+            <widgets>
+                <decorator-screen name="LcCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+<screen name="FindPi">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find PI"/>
+                <set field="headerItem" value="lc"/>
+                <set field="tabButtonItem" value="Pi"/>
+                <set field="lcCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="CreatePi" text="Create PI" style="buttontext create"/>
+                                </container>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindPi" location="component://lc/widget/LcForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="PiList" location="component://lc/widget/LcForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindLc">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find LC"/>
+                <set field="headerItem" value="lc"/>
+                <set field="tabButtonItem" value="Lc"/>
+                <set field="lcCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="CreateLc" text="Create Lc" style="buttontext create"/>
+                                </container>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindLc" location="component://lc/widget/LcForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="LcList" location="component://lc/widget/LcForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="FindTt">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find TT"/>
+                <set field="headerItem" value="lc"/>
+                <set field="tabButtonItem" value="Tt"/>
+                <set field="lcCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="CreateTt" text="Create TT" style="buttontext create"/>
+                                </container>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindTt" location="component://lc/widget/LcForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="TtList" location="component://lc/widget/LcForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CreatePi">
+        <section>
+            <actions>
+                 <set field="headerItem" value="lc"/>
+                 <set field="tabButtonItem" value="Pi"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                        <screenlet id="CreatePi" title="Create PI">
+                            <include-form name="CreatePiForm" location="component://lc/widget/LcForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="CreateTt">
+        <section>
+            <actions>
+                 <set field="headerItem" value="lc"/>
+                 <set field="tabButtonItem" value="Tt"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                        <screenlet id="CreateTT" title="Create TT">
+                            <include-form name="CreateTt" location="component://lc/widget/LcForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="addTtCreatePopUp">
+        <section>
+            <actions>
+                 <set field="headerItem" value="lc"/>
+                 <set field="tabButtonItem" value="Tt"/>
+                 <set field="piId" from-field="parameters.piId"/>
+                 <set field="lcCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                        <screenlet id="addTtCreatePopUp" title="TT Note">
+                            <include-form name="addTtCreatePopUp" location="component://lc/widget/LcForms.xml"/>
+                        </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="editTt">
+        <section>
+            <actions>
+                <set field="headerItem" value="lc"/>
+                <set field="ttId" from-field="parameters.ttId"/>
+                <set field="lcCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="CreateLc" title="Edit TT">
+                            <include-form name="editTt" location="component://lc/widget/LcForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="editPi">
+        <section>
+            <actions>
+                <set field="headerItem" value="lc"/>
+                <set field="piId" from-field="parameters.piId"/>
+                <set field="lcCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="CreateLc" title="Edit PI">
+                            <include-form name="editPi" location="component://lc/widget/LcForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+      <screen name="viewLc">
+        <section>
+            <actions>
+                <set field="headerItem" value="lc"/>
+                <set field="piId" from-field="parameters.piId"/>
+                <set field="lcCtx" from-field="parameters"/>
+                <entity-one value-field="cvBankInfo" entity-name="LcPi">
+                	 <field-map field-name="piId" from-field="parameters.piId"/>
+                </entity-one>
+                <set field="piNo" value="${cvBankInfo.piNo}"/>
+                <set field="date" value="${cvBankInfo.date}"/>
+                <set field="dateAdded" value="${cvBankInfo.dateAdded}"/>
+                <set field="amount" value="${cvBankInfo.amount}"/>
+                <set field="currency" value="${cvBankInfo.currency}"/>
+                <set field="beneficiary" value="${cvBankInfo.beneficiary}"/>
+                <set field="goodsDescription" value="${cvBankInfo.goodsDescription}"/>
+                <set field="shipmentBy" value="${cvBankInfo.shipmentBy}"/>
+                <set field="shipmentType" value="${cvBankInfo.shipmentType}"/>
+                <set field="actualShipmentDate" value="${cvBankInfo.actualShipmentDate}"/>
+                <set field="eta" value="${cvBankInfo.eta}"/>
+                <set field="issuingBank" value="${cvBankInfo.issuingBank}"/>
+                <set field="insuranceCoverNote" value="${cvBankInfo.insuranceCoverNote"/>
+                <set field="status" value="${cvBankInfo.status}"/>
+                
+                <entity-condition list="lcBank" entity-name="LcBank">
+							<condition-list>
+								<condition-expr field-name="piId" from-field="piId" />
+							</condition-list>
+				</entity-condition>
+				<entity-condition list="requisitionDocuments" entity-name="LcAndContent">
+							<condition-list>
+								<condition-expr field-name="piId" from-field="piId" />
+							</condition-list>
+				</entity-condition>
+            </actions>          
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <container style="profile-left">
+                        <screenlet id="ViewLc" title="View PI">
+                            <include-form name="viewLc" location="component://lc/widget/LcForms.xml"/>
+                        </screenlet>
+                     </container>
+                     <container style="profile-right">
+                         
+                         	 <include-screen name="requisitionDocumentList"/>
+                          
+                 	 </container>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="LcView">
+        <section>
+        <actions>
+                 <set field="headerItem" value="lc"/>
+                 <set field="lcId" from-field="parameters.lcId"/>
+                 <set field="piId" from-field="parameters.piId"/>
+                 <set field="lcCtx" from-field="parameters"/>
+                 <set field="tabButtonItem" value="Lc"/>
+                 <entity-condition list="lcNote" entity-name="LcNote">
+							<condition-list>
+								<condition-expr field-name="lcId" from-field="lcId" />
+							</condition-list>
+				</entity-condition>
+            </actions>
+              <widgets>
+             <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                       <container style="profile-left">
+                 <screenlet id="LcView" title="View Lc" navigation-menu-name="LcCreate">
+                 <container id="addLcCreatePopUp"></container>
+	                        <include-menu name="LcCreate" location="component://humanres/widget/HumanresMenus.xml"/>
+                     <include-form name="LcView" location="component://lc/widget/LcForms.xml"/>
+                     <include-form name="ListLcCreatepopup" location="component://lc/widget/LcForms.xml"/>
+                 </screenlet>
+                 </container>
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="TtView">
+        <section>
+        <actions>
+                 <set field="headerItem" value="lc"/>
+                 <set field="ttId" from-field="parameters.ttId"/>
+                 <set field="piId" from-field="parameters.piId"/>
+                 <set field="lcCtx" from-field="parameters"/>
+                 <set field="tabButtonItem" value="Tt"/>
+                 <entity-condition list="ttNote" entity-name="TtNote">
+							<condition-list>
+								<condition-expr field-name="ttId" from-field="ttId" />
+							</condition-list>
+				</entity-condition>
+            </actions>
+              <widgets>
+             <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                       <container style="profile-left">
+                 <screenlet id="TtView" title="View TT" navigation-menu-name="TtCreate">
+                 <container id="addTtCreatePopUp"></container>
+                  <include-menu name="TtCreate" location="component://humanres/widget/HumanresMenus.xml"/>
+                     <include-form name="TtView" location="component://lc/widget/LcForms.xml"/>
+                     <include-form name="ListTtCreatepopup" location="component://lc/widget/LcForms.xml"/>
+                 </screenlet>
+                 </container>
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="CreateLc">
+        <section>
+        <actions>
+                <set field="headerItem" value="lc"/> 
+                <set field="tabButtonItem" value="Lc"/>
+            </actions>
+              <widgets>
+             <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                 <screenlet id="CreateLc" title="Create Lc">
+                     <include-form name="CreateLcForm" location="component://lc/widget/LcForms.xml"/>
+                 </screenlet>
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="Reoort">
+        <section>
+        <actions>
+                <set field="headerItem" value="reoort"/>
+                 <set field="piId" from-field="parameters.lcId"/>
+                 <set field="lcCtx" from-field="parameters"/>
+                 <set field="tabButtonItem" value="Lc"/>
+            </actions>
+              <widgets>
+             <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                 <screenlet id="CreateLc" title="Reoort Lc">
+                     <include-form name="Reoort" location="component://lc/widget/LcForms.xml"/>
+                 </screenlet>
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+      </screen>
+     <screen name="EditLc">
+        <section>
+        <actions>
+                <set field="headerItem" value="lc"/>
+                 <set field="piId" from-field="parameters.lcId"/>
+                 <set field="lcCtx" from-field="parameters"/>
+                 <set field="tabButtonItem" value="Lc"/>
+            </actions>
+              <widgets>
+             <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://lc/widget/LcMenus.xml" name="LcMenus"/>
+                 <screenlet id="CreateLc" title="Edit Lc">
+                     <include-form name="EditLc" location="component://lc/widget/LcForms.xml"/>
+                 </screenlet>
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+      </screen>
+    <screen name="addLcCreatepopup">
+        <section>
+            <widgets>
+                 <screenlet id="CreateLc" title="Create Lc">
+                     <include-form name="addLcCreatepopup" location="component://lc/widget/LcForms.xml"/>
+                 </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="editLcPopUp">
+        <section>
+            <actions>
+                <set field="headerItem" value="lc"/>
+                <set field="lcId" from-field="parameters.lcId"/>
+                <set field="lcCtx" from-field="parameters"/>
+                <entity-one entity-name="LcBank" value-field="lcBank"/>
+            </actions>
+            <widgets>
+               <screenlet id="UpdateLc" title="Update Lc">
+                   <include-form name="editLcPopUp" location="component://lc/widget/LcForms.xml"/>
+               </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+   	<screen name="requisitionDocumentList">
+	
+		<section>
+			<widgets>
+				<screenlet name="documents" title="Requisition Documents " id="documents" navigation-menu-name="AddlcRequisitionDocument">
+					<container id="addDocumentlcRequisitionPopUp"></container>
+					<include-menu location="component://lc/widget/LcMenus.xml" name="AddlcRequisitionDocument" />
+					<include-form location="component://lc/widget/LcForms.xml" name="RequisitionLcDocumentList" />
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="uploadlcRequisitionContent">
+		<section>
+			<actions>
+				 <entity-one entity-name="PartyGroup" value-field="company">
+					<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_UNIT" />
+				</entity-one> 
+				<set field="piId" from-field="parameters.piId"/>				
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+				<set field="partyContentTypeId" value="INTERNAL" />
+				<set field="uploadTitle" value="Upload Document" />
+				
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" />
+				<platform-specific>
+					<html>
+						<html-template location="component://humanres/webapp/humanres/humanres/recruitment/RequisitionLcContent.ftl" />
+					</html>
+				</platform-specific>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="PopupActions">
+		<section>
+			<actions>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true" />
+				
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="AccountingUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="OrderUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="WorkEffortUiLabels" map-name="uiLabelMap" global="true" />
+			</actions>
+			<widgets />
+		</section>
+	</screen>
+</screens>

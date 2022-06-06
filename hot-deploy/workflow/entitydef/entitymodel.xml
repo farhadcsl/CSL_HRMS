@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of Workflow Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+    <entity entity-name="ProcessParty"
+            package-name="org.ofbiz.Workflow"
+            title="Process Structure Entity">
+      <field name="partyId" type="id-ne"></field>
+      <field name="employeeId" type="id-ne"></field>
+      <field name="processStrId" type="id-ne"></field>
+      <field name="processTypeId" type="id-ne"></field><!-- Static Workflow List  -->
+	  <field name="comments" type="id-long"></field>
+	  <field name="isActive" type="indicator"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <prim-key field="partyId"/>
+      <prim-key field="processStrId"/>
+      <relation type="one" fk-name="PROCEPART_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+      <relation type="one" fk-name="PROCEPART_PROSTR" rel-entity-name="ProcessStructure">
+            <key-map field-name="processStrId"/>
+        </relation>
+    </entity>
+    <entity entity-name="ProcessStructure"
+            package-name="org.ofbiz.Workflow"
+            title="Process Structure Entity">
+      <field name="processStrId" type="id-ne"></field>
+      <field name="processType" type="id-ne"></field>
+      <field name="processName" type="name"></field>
+      <field name="fromDate" type="date-time"></field>
+	  <field name="isActive" type="indicator"></field>
+	  <field name="description" type="id-long"></field>
+      <prim-key field="processStrId"/>
+    </entity> 
+    
+    
+    <entity entity-name="ProcessSteps"
+            package-name="org.ofbiz.Workflow"
+            title="Process Steps Entity">
+      <field name="stepId" type="id-ne"></field>
+      <field name="processStrId" type="id-ne"></field>
+      <field name="stepOrder" type="id-ne"></field>
+	   <field name="authPartyId" type="id-ne"></field> 
+	   <field name="authEmployeeId" type="id-ne"></field> 
+	  <field name="isActive" type="indicator"></field>
+	  <field name="description" type="id-long"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <prim-key field="stepId"/>
+      <prim-key field="processStrId"/>
+      <relation type="one" fk-name="PRO_PROSTR_PARID" rel-entity-name="ProcessStructure">
+            <key-map field-name="processStrId"/>
+        </relation>
+    </entity>
+    
+    
+    <entity entity-name="ProcessStepNotifications"
+            package-name="org.ofbiz.Workflow"
+            title="Process Steps Entity">
+      <field name="processStrId" type="id-ne"></field>
+      <field name="stepId" type="id-ne"></field>
+      <field name="notificationId" type="id-ne"></field>
+      <field name="stepFilter" type="id-ne"></field>
+	   <field name="notifiedPerson" type="id-ne"></field> 
+	   <field name="notifiedParty" type="id-ne"></field> 
+	  <field name="description" type="id-long"></field>
+	  <field name="isActive" type="indicator"></field>
+      <field name="dateAdded" type="date-time"></field>
+      <prim-key field="processStrId"/>
+      <prim-key field="stepId"/>
+      <prim-key field="notificationId"/>
+      <relation type="one" fk-name="PROSTPNOT_PROSTR" rel-entity-name="ProcessStructure">
+            <key-map field-name="processStrId"/>
+        </relation>
+      <relation type="one" fk-name="PROSTPNOT_PROSTEP" rel-entity-name="ProcessSteps">
+            <key-map field-name="stepId"/>
+            <key-map field-name="processSteps"/>
+        </relation>
+    </entity>
+    
+	<entity entity-name="WorkflowProcess"
+            package-name="org.ofbiz.workflow.process"
+            title="Party Qualification Entity">
+        <field name="processId" type="id-ne"></field>
+        <field name="processStrId" type="id-ne"></field>
+        <field name="ownerPartyId" type="id-ne"></field>
+        <field name="description" type="id-long"><description>Title of degree or job</description></field>
+        <field name="statusId" type="id"><description>Status e.g. completed, part-time etc.</description></field>
+        <field name="fromDate" type="date-time"></field>
+        <prim-key field="processId"/>
+        <prim-key field="ownerPartyId"/>
+        <relation type="one" fk-name="WORKFLO_PROR_ID" rel-entity-name="ProcessStructure">
+            <key-map field-name="processStrId"/>
+        </relation>
+        <relation type="one" fk-name="WORKFLO_PARTY_ID" rel-entity-name="Party">
+            <key-map field-name="ownerPartyId" rel-field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="WORKFL_PROC_STATUS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>        
+    </entity>
+    
+	<entity entity-name="ProcessStepData"
+            package-name="org.ofbiz.workflow.process"
+            title="Party Qualification Entity">
+       	<field name="processStrId" type="id-ne"></field>
+       	<field name="processStepId" type="id-ne"></field>
+       	<field name="processId" type="id-ne"></field>
+       	<field name="authorizePartyId" type="id-ne"></field>
+       	<field name="statusId" type="id-ne"></field>
+       	<field name="comments" type="id-long"></field>        
+       	<field name="isActive" type="indicator"></field>
+      	<field name="dateAdded" type="date-time"></field>
+      	<prim-key field="processStrId"/>
+      	<prim-key field="processStepId"/>
+      	<prim-key field="processId"/>
+      	<prim-key field="authorizePartyId"/>
+      	
+        <relation type="one" fk-name="PROST_PROSTRUC" rel-entity-name="ProcessStructure">
+            <key-map field-name="processStrId"/>
+        </relation>
+        <relation type="one" fk-name="PRTPS_PROSTEP" rel-entity-name="ProcessSteps">
+            <key-map field-name="processStepId"  rel-field-name="stepId"/>
+        </relation>
+        <relation type="one" fk-name="PRSTPDA_WORKPRS" rel-entity-name="WorkflowProcess">
+            <key-map field-name="processId" />
+        </relation>
+        <relation type="one" fk-name="PRSTPDTA_PARTY" rel-entity-name="Party">
+            <key-map field-name="authorizePartyId" rel-field-name="partyId"/>
+        </relation>
+    </entity>
+    
+    
+    
+    
+     <extend-entity entity-name="EmplLeave">
+        <field name="processId" type="id-ne" />
+        <field name="stepOrder" type="id-ne"></field>
+    </extend-entity>
+</entitymodel>

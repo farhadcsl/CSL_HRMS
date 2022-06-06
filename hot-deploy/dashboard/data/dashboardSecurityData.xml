@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the dashboard Component." permissionId="DASHBOARD_VIEW"/>
+    <SecurityPermission description="Create operations in the dashboard Component." permissionId="DASHBOARD_CREATE"/>
+    <SecurityPermission description="Update operations in the dashboard Component." permissionId="DASHBOARD_UPDATE"/>
+    <SecurityPermission description="Delete operations in the dashboard Component." permissionId="DASHBOARD_DELETE"/>
+    <SecurityPermission description="ALL operations in the dashboard Component." permissionId="DASHBOARD_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="DASHBOARD_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DASHBOARD_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DASHBOARD_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DASHBOARD_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="DASHBOARD_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="DASHBOARD_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="DASHBOARD_ADMIN"/>
+</entity-engine-xml>

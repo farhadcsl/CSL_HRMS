@@ -1,0 +1,1258 @@
+<!-- This is for all the screens related to attendance structures e.g. company, 
+	Building, Floor, Gate, Device and Employee -->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="AttendanceMainDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" /> 
+				<set field="tabButtonItem" value="structure" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+					
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="AttendancePreferenceDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" />
+				<set field="tabButtonItem" value="preference"/>
+				<set field="subTabButtonItem" value="EmployeePreference"/>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						<include-menu name="PreferenceConfigMenus" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="RosterDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+                
+                
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						<include-menu name="rosterConfigMenus" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+						<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="RosterPreIdForm"/>
+					
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="DesignationSingleDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+                
+                
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						<include-menu name="designationSingleMenus" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+						<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="DesignationPreIdForm"/>
+					
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	
+	<screen name="DesignationBatchDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+                
+                
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						<include-menu name="designationBatchMenus" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+						<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="DesignationPreIdForm"/>
+					
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+
+	
+	<screen name="AttendancePreference">
+
+			<section>
+			<actions>	
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="EmployeePreference" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+<!-- 				<entity-and list="empAttenPreferenceList" entity-name="EmployeeAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and> -->		
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/GetEmployeePreferenceList.groovy"/>
+			</actions>
+			<widgets>
+		
+				<decorator-screen name="AttendancePreferenceDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+						<screenlet name="Companies" >
+							<section>
+
+							<widgets>
+								<screenlet name="Companies" title="Employee Preferences"
+									navigation-menu-name="AddPreference">
+					
+									<container id="editEmployeePreference"></container>   
+									<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddPreference" />
+
+									<include-screen name="EmployeePreferenceList"/>
+
+								</screenlet>
+					
+							</widgets>
+
+						</section>
+					</screenlet>
+				</decorator-section>
+				</decorator-screen> 
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<!-- Start Designation Preference -->
+	<screen name="DesignationPreference">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Employee Preference Settings"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DesignationPreference" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->		
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+             
+			</actions>
+			<widgets>
+		
+				<decorator-screen name="AttendancePreferenceDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+					
+				<screenlet name="Companies" title="Designation Preferences"
+					navigation-menu-name="AddDesPreferencemenu">
+					
+					<container id="editDesignationPreference"></container>   
+					<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddDesPreferencemenu" />
+
+					<include-screen name="DesignationPreferenceList"/>
+
+				</screenlet>
+					
+				</decorator-section>
+				</decorator-screen> 
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="AddDesignationPreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+<!--        			<set field="designPrefRevision" from-field="parameters.designPrefRevision"/>
+       			<set field="emplPositionId" from-field="parameters.emplPositionId"/> -->
+                <entity-one entity-name="DesignationPreference" value-field="designationPreference"/>
+			 	<set field="title" from-field="parameters.title"/>
+			    
+			</actions>
+			<widgets>
+			
+			 		<screenlet id="" title="${title}">
+		                            <section>
+		                          
+		                                <widgets>
+		                                 	<include-screen name="PopupActions"/>
+											<include-screen name="GlobalActions"
+													location="component://common/widget/CommonScreens.xml" />
+		                                    <include-form name="DesignationPreferenceForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen> 
+	
+	<screen name="ViewDesignationPreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+       			<!-- <set field="designPrefRevision" from-field="parameters.designPrefRevision"/>
+       			<set field="emplPositionId" from-field="parameters.emplPositionId"/> -->
+                <entity-one entity-name="DesignationPreference" value-field="designationPreference"/>
+			 	<set field="title" from-field="parameters.title"/>
+			    
+			</actions>
+			<widgets>
+			
+			 		<screenlet id="" title="${title}">
+		                            <section>
+		                          
+		                                <widgets>
+		                                 	<include-screen name="PopupActions"/>
+											<include-screen name="GlobalActions"
+													location="component://common/widget/CommonScreens.xml" />
+		                                    <include-form name="DesignationPreferenceVeiwForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen> 
+
+	<screen name="DesignationPreferenceList">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="designationPreferenceList" entity-name="DesignationPreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="DesignationPreferenceList" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	
+	<screen name="PositionsBatchAssignment">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Positions Batch Assignment"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="Designation" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>		
+                <entity-one entity-name="EmployeeAttendancePreference" value-field="empAttendancePreference"/>
+                <set field="pagination" value="PositionsBatchAssignment" />
+			</actions>
+			<widgets>
+		 
+				<decorator-screen name="DesignationBatchDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+                   
+					<screenlet name="Companies" title="Positions Batch Assignment" navigation-menu-name="AddBatchPositionmenu">
+					<container id="addBatchPosition">  </container> 
+					<container id="addPosition">  </container> 			
+					  <include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddBatchPositionmenu" />
+                   	
+					  <include-screen name="DesignationPositionList"/> 
+
+			    	</screenlet>
+			    	
+				</decorator-section>
+				
+				</decorator-screen> 
+				
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="DesignationPositions">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Designation Positions"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="Designation" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>		
+                <entity-one entity-name="EmployeeAttendancePreference" value-field="empAttendancePreference"/>
+                <set field="pagination" value="DesignationPositions" />
+			</actions>
+			<widgets>
+		 
+				<decorator-screen name="DesignationSingleDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+                   
+					<screenlet name="Companies" title="Positions" navigation-menu-name="AddSinglePositionmenu">
+					<container id="addPosition">  </container> 
+									
+					  	<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddSinglePositionmenu" />
+                   	
+						<include-screen name="DesignationPositionList"/> 
+
+			    	</screenlet>
+			    	
+				</decorator-section>
+				
+				</decorator-screen> 
+				
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DesignationPositionList">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="12"/>
+                 <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+<!-- 				<entity-and list="designationPostionList" entity-name="DesignPrefEmplposition">
+					<field-map field-name="designationPreferenceId" from-field="designationPreferenceId"/>
+				</entity-and> -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/GetDesignationPositionList.groovy"/>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="DesignationPositionsForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="AddPositionIntoDesignationPreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="12"/>
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+                
+			 	<entity-one entity-name="DesignPrefEmplposition" value-field="designPrefEmplposition"/>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="AddPositionForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="updatePosition">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="12"/>
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <set field="designEmplposRevesion" from-field="parameters.designEmplposRevesion"/>
+                <entity-one entity-name="DesignPrefEmplposition" value-field="designPrefEmplposition"/>
+			
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="AddPositionForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="AddBatchPositionIntoDesignationPreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="12"/>
+                <set field="designationPreferenceId" from-field="parameters.designationPreferenceId"/>
+			
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="AddBatchPositionForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<!-- End Designation Preference -->
+	
+	<!-- Start Employee Preference -->	
+	<screen name="EmployeePreference">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Employee Preference Settings"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="EmployeePreference" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->		
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+<!-- 				<entity-and list="empAttenPreferenceList" entity-name="EmployeeAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and> -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/GetEmployeePreferenceList.groovy"/>
+			</actions>
+			<widgets>
+		
+				<decorator-screen name="AttendancePreferenceDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+					
+				<screenlet name="Companies" title="Employee Preferences"
+					navigation-menu-name="AddPreference">
+					
+					<container id="editEmployeePreference"></container>   
+					<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddPreference" />
+
+					<include-screen name="EmployeePreferenceList"/>
+
+				</screenlet>
+					
+				</decorator-section>
+				</decorator-screen> 
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="EmpPreferenceDetail">
+		<section>
+			<actions>
+
+             	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="employeePreferenceId" from-field="parameters.employeePreferenceId"/>
+       			<set field="empPrefRevision" from-field="parameters.empPrefRevision"/>
+       			<set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="EmployeeAttendancePreference" value-field="empAttendancePreference"/>
+                
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Employee Preference Details">
+							<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="EmpPreferenceDetail"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="AddEmployeePreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+				<set field="empPrefRevision" from-field="parameters.empPrefRevision"/>
+       			<set field="partyId" from-field="parameters.partyId"/>	
+       			<set field="employeePreferenceId" from-field="parameters.employeePreferenceId"/>
+                <entity-one entity-name="EmployeeAttendancePreference" value-field="empAttendancePreference"/>
+			 	<set field="title" from-field="parameters.title"/>
+			    
+			</actions>
+			<widgets>
+			
+			 		<screenlet id="" title="${title}">
+		                            <section>
+		                          
+		                                <widgets>
+		                                 	<include-screen name="PopupActions"/>
+											<include-screen name="GlobalActions"
+													location="component://common/widget/CommonScreens.xml" />
+		                                    <include-form name="EmployeeAttendancePreferenceForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen> 
+	
+	<screen name="EmployeePreferenceList">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+<!-- 				<entity-and list="empAttenPreferenceList" entity-name="EmployeeAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and> -->
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="EmpAttenPreferenceList" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	<!-- End Employee Preference -->	
+	
+	<!-- Start Day Preference -->	
+	<screen name="DayPreference">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Day Preference Settings"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DayPreference" />
+				 <set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> 	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="dayAttendancePreferenceList" entity-name="DayAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendancePreferenceDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+					
+						
+					<screenlet name="Companies" title="Day Preferences" navigation-menu-name="AddDayPreferencemenu">
+					
+					<container id="editDayPreference"></container>   
+					<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddDayPreferencemenu" />
+
+					<include-screen name="DayPreferenceList"/>
+
+			    	</screenlet>
+					
+				</decorator-section>
+				</decorator-screen> 
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DayPreferenceList">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="dayAttendancePreferenceList" entity-name="DayAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="DayAttenPreferenceList" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="AddDayPreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="dayPreferenceId" from-field="parameters.dayPreferenceId"/>              
+                <entity-one entity-name="DayAttendancePreference" value-field="dayAttendancePreference"/>
+			    <set field="title" from-field="parameters.title"/>
+			    
+			</actions>
+			<widgets>
+			
+			 		<screenlet id="dayAttenPreference"  title="${title}">
+		                            <section>
+		                          
+		                                <widgets>
+		                                 	<include-screen name="PopupActions"/>
+											<include-screen name="GlobalActions"
+													location="component://common/widget/CommonScreens.xml" />
+		                                    <include-form name="DayAttendancePreferenceForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen> 
+	
+	<screen name="DayPreferenceDetail">
+		<section>
+			<actions>
+
+             	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="dayPreferenceId" from-field="parameters.dayPreferenceId"/>
+                <entity-one entity-name="DayAttendancePreference" value-field="dayAttendancePreference"/>
+                
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Day Preference Details">
+							<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="DayPreferenceDetail"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	<!-- End Day Preference -->		
+		
+	<!-- Start Organization Preference -->	
+	<screen name="OrganizationPreference">
+
+			<section>
+			<actions>
+			   <set field="titleProperty" value="Organization Preference Setting"/>	
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="OrganizationPreference" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+					
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="orgAttenPreferenceList" entity-name="OrgAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and>		
+			</actions>
+			<widgets>
+		
+				<decorator-screen name="AttendancePreferenceDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+						
+					<screenlet name="Companies" title="Organization Preferences" navigation-menu-name="AddOrgPreferencemenu">
+					
+					<container id="editOrgPreference"></container>   
+					<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddOrgPreferencemenu" />
+
+					<include-screen name="OrgPreferenceList"/>
+
+			    	</screenlet>
+						
+						
+						
+						
+					
+				</decorator-section>
+				</decorator-screen> 
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+  <screen name="AddOrgPreference">
+
+			<section>
+			<actions>	
+			
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+	       		<set field="organizationPreferencdId" from-field="parameters.organizationPreferencdId"/>
+	       		<set field="orgPrefRevision" from-field="parameters.orgPrefRevision"/>
+	            <entity-one entity-name="OrgAttendancePreference" value-field="orgAttendancePreference"/>
+	            <set field="title" from-field="parameters.title"/> 
+     
+			</actions>
+			<widgets>
+			
+			 		<screenlet id="orgAttenPreference" title="${title}">
+		                            <section>
+		                          
+		                                <widgets>
+		                                
+		                                   <include-screen name="PopupActions"/>
+											<include-screen name="GlobalActions"
+													location="component://common/widget/CommonScreens.xml" />
+		                                    <include-form name="OrganizationPreferenceForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="OrgPreferenceList">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="orgAttenPreferenceList" entity-name="OrgAttendancePreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="OrgAttenPreferenceList" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="OrgPreferenceDetail">
+		<section>
+			<actions>
+			
+             	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+	       		<set field="organizationPreferencdId" from-field="parameters.organizationPreferencdId"/>
+	       		<set field="orgPrefRevision" from-field="parameters.orgPrefRevision"/>
+                <entity-one entity-name="OrgAttendancePreference" value-field="orgAttendancePreference"/>
+              
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Organization Preference Details">
+							<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="OrgPreferenceDetail"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	<!-- End Organization Preference -->	
+	
+	<!-- Start Roster Preference -->
+	<screen name="RosterPreference">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Roster Preference Setting"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="RosterPreference" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+				<set field="rosterId" value="${userPreferences.ATTENDANCE_ROSTERPREFERENCE}"/>	
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>		
+			</actions>
+			<widgets>
+		
+				<decorator-screen name="AttendancePreferenceDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+
+					<screenlet name="Companies" title="Roster Preferences" navigation-menu-name="AddRosPreferencemenu">
+					
+					<container id="editRosterPreference"></container>   
+					<include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddRosPreferencemenu" />
+
+					<include-screen name="RosterPreferenceList"/>
+
+			    	</screenlet>
+				</decorator-section>
+				</decorator-screen> 
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="AddRosterPreference">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+	       		<set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+	       		<set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/>
+	            <entity-one entity-name="AttendanceRosterPreference" value-field="rosterAttendancePreference"/>
+				<set field="title" from-field="parameters.title"/>
+			</actions>
+			
+			<widgets>
+			
+			 		<screenlet id="rosterAttenPreference" title="${title}">
+		                            <section>
+		                          
+		                                <widgets>
+		                                
+		                                   <include-screen name="PopupActions"/>
+											<include-screen name="GlobalActions"
+													location="component://common/widget/CommonScreens.xml" />
+		                                    <include-form name="RosterPreferenceForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="RosterPreferenceList">
+
+			<section>
+			<actions>	
+				
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+				<entity-and list="rosterAttenPreferenceList" entity-name="AttendanceRosterPreference">
+					<field-map field-name="orgPartyId" from-field="orgPartyId"/>
+				</entity-and>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="RosterAttenPreferenceList" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="RosterPreferenceDetail">
+		<section>
+			<actions>
+             	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+	       		<set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/>
+                <entity-one entity-name="AttendanceRosterPreference" value-field="rosterAttendancePreference"/>
+                
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Roster Preference Details">
+							<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="RosterPreferenceDetail"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="SwapRosterPreference">
+		<section>
+			<actions>
+			
+       			<set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+       			<set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/>
+	       		<set field="orgPartyId" from-field="parameters.orgPartyId"/>
+                <set field="rosterName" from-field="parameters.rosterName"/>
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Swap Roster">
+							<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="SwapRosterPreference"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="SwapEmployeeBtnRoster">
+		<section>
+			<actions>
+			
+       			<set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+	       		<set field="orgPartyId" from-field="parameters.orgPartyId"/>
+	       		<set field="partyId" from-field="parameters.partyId"/>
+	       		<set field="rosterEmpRevesion" from-field="parameters.rosterEmpRevesion"/>
+	       		<set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/>
+                <set field="rosterName" from-field="parameters.rosterName"/>
+                <set field="employeeFullName" from-field="parameters.employeeFullName"/>
+                <set field="employeeId" from-field="parameters.employeeId"/>
+            </actions>
+			<widgets>
+					<section>
+						<widgets>
+						<screenlet title="Swap Roster">
+							<include-form location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml" name="SwapEmpBtnRoster"/>
+ 						</screenlet>
+						</widgets>
+					</section>								
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="RosterEmployees">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Roster Employees"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="Roster" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+                <set field="rosterName" from-field="parameters.rosterName"/>
+                <set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>		
+                <entity-one entity-name="EmployeeAttendancePreference" value-field="empAttendancePreference"/>
+			</actions>
+			<widgets>
+		 
+				<decorator-screen name="RosterDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+                   
+					<screenlet name="Companies" title="Roster Employees" navigation-menu-name="AddRosterEmployeemenu">
+					<container id="addRosterEmpContainer">  </container> 
+									
+					  <include-menu location="component://humanres/widget/attendance/menus/AttendanceMenus.xml" name="AddRosterEmployeemenu" />
+                   	
+					<include-screen name="RosterEmployeeList"/> 
+
+			    	</screenlet>
+			    	
+				</decorator-section>
+				
+				</decorator-screen> 
+				
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="AddEmployee">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/> 
+       			<set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/> 
+       			<set field="rosterName" from-field="parameters.rosterName"/> 
+			</actions>
+			<widgets>
+			
+			 		<screenlet  title="Add Employee">
+		                            <section>
+		                          
+		                                <widgets>		                          
+
+		                                    <include-form name="AddEmployeeForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen> 
+	
+	<screen name="UpdateEmployee">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+       			<set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/> 
+       			<set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/> 
+       			<set field="partyId" from-field="parameters.partyId"/> 
+       			<set field="rosterEmpRevesion" from-field="parameters.rosterEmpRevesion"/>
+       			<entity-one value-field="rosterEmployee" entity-name="RosterEmployee" auto-field-map="true">
+       			</entity-one>
+       			<set field="rosterName" from-field="parameters.rosterName"/>
+			</actions>
+			<widgets>
+			
+			 		<screenlet  title="Update Roster Employee">
+		                            <section>
+		                          
+		                                <widgets>		                          
+										
+		                                    <include-form name="UpdateEmployeeForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+		                               
+		                                </widgets>
+		                           
+		                            </section>
+                     </screenlet>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="RosterEmployeeList">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="12"/>
+                
+				<entity-and list="rosterEmployeeList" entity-name="RosterEmployee">
+					<field-map field-name="rosterPreferenceId" from-field="rosterPreferenceId"/>
+					<field-map field-name="rosterPrefRevision" from-field="rosterPrefRevision"/>
+				</entity-and>
+			</actions>
+			<widgets>
+                  		                                   
+		       <include-form name="RosterEmployeeListForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			</widgets>
+			
+		</section>
+
+	</screen>
+	<!-- Start Roster Preference -->
+
+	<!-- A Simple Decorator for Popups -->
+	<screen name="PopupActions">
+		<section>
+			<actions>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="GlobalHRResUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="GlobalOrgResUiLabels"
+					map-name="uiLabelMap" global="true" />
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="PartyUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="AccountingUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="OrderUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="WorkEffortUiLabels" map-name="uiLabelMap"
+					global="true" />
+			</actions>
+			<widgets />
+		</section>
+	</screen>
+
+<screen name="AssignBatchEmployees">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Roster Employees"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="preference" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="Roster" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendancePreferenceScreens.xml" /> <!-- Decorator -->	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+                <set field="rosterPreferenceId" from-field="parameters.rosterPreferenceId"/>
+                <set field="rosterPrefRevision" from-field="parameters.rosterPrefRevision"/>
+                <set field="rosterName" from-field="parameters.rosterName"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>		
+                <entity-one entity-name="EmployeeAttendancePreference" value-field="empAttendancePreference"/>
+			</actions>
+			<widgets>
+		 
+				<decorator-screen name="RosterDecorator"
+					location="${decorator}">
+				
+					<decorator-section name="body">
+                   <screenlet name="Companies" title="Assign Batch Employees Into Roster">
+					<include-form name="BatchAssignForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+
+			    	</screenlet>
+			    	<include-screen name="RosterEmployeeBatchList"/>
+				</decorator-section>
+			    </decorator-screen> 
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="RosterEmployeeBatchList">
+		<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>		
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="12"/>
+                <entity-and list="rosterEmployeeList" entity-name="RosterEmployee">
+					<field-map field-name="rosterPreferenceId" from-field="rosterPreferenceId"/>
+					<field-map field-name="rosterPrefRevision" from-field="rosterPrefRevision"/>
+				</entity-and>
+			</actions>
+			<widgets>
+               <include-form name="RosterEmployeeListForm" location="component://humanres/widget/attendance/forms/AttendancePreferenceForms.xml"/>
+			</widgets>
+			
+		</section>
+
+	</screen>	
+</screens>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AttendanceReport_attendancelist" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="471fb2f5-0df8-429d-8daa-382cc2e95d77">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="attendanceStatus" class="java.lang.String"/>
+	<field name="firstInTime" class="java.lang.String"/>
+	<field name="lastOutTime" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="541" height="1" uuid="b49ef502-9f4c-446a-82c8-fde7b6ff0ec3"/>
+			</line>
+			<line>
+				<reportElement x="0" y="21" width="540" height="1" uuid="5c45c7fc-14db-4d26-b4df-069d93c0e8f1"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="1" width="134" height="20" uuid="f4ef9ce2-91d2-47df-bc26-ef9b37c66c71"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="1" height="20" uuid="5ebddefa-84eb-4a7b-8ca4-e4c89e6d54ba"/>
+			</line>
+			<staticText>
+				<reportElement x="136" y="1" width="134" height="20" uuid="789291c5-cf64-40fa-b00a-02232f862a14"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[First In]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="1" width="134" height="20" uuid="815eec4d-127a-49d1-b015-2a7f8f2e40ea"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Last Out]]></text>
+			</staticText>
+			<line>
+				<reportElement x="135" y="1" width="1" height="20" uuid="8a0bb3cd-7c5e-4996-8be1-2bdb46266778"/>
+			</line>
+			<line>
+				<reportElement x="270" y="1" width="1" height="20" uuid="daede3ca-4b60-4489-9fda-2d7fad832cc5"/>
+			</line>
+			<staticText>
+				<reportElement x="406" y="1" width="134" height="20" uuid="fde9467a-d303-475d-b625-444ffcdc556b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Attendance Status]]></text>
+			</staticText>
+			<line>
+				<reportElement x="405" y="1" width="1" height="20" uuid="7012a7c8-5e4a-48c9-8014-a4e0ac96af61"/>
+			</line>
+			<line>
+				<reportElement x="540" y="1" width="1" height="21" uuid="56b4eead-cd47-48d9-b9ca-e13f6fdc176b"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="133" height="20" uuid="db328404-8b38-43e3-ac20-1a0f1c7aa2e5"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="0" width="133" height="20" uuid="9f808bc5-9c61-49f2-954d-d28f0e90a947"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstInTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="0" width="133" height="20" uuid="db350348-3822-49bc-b13a-80910f74eff9"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lastOutTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="0" width="133" height="20" uuid="9dd2f0d6-6296-4626-b79e-39b33d6ca3f6"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{attendanceStatus}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="540" y="0" width="1" height="20" uuid="90af835b-4bd8-4260-9a1c-d6414b479122"/>
+			</line>
+			<line>
+				<reportElement x="405" y="0" width="1" height="20" uuid="acb6f92d-20a2-4d1f-834c-e32936526b19"/>
+			</line>
+			<line>
+				<reportElement x="270" y="0" width="1" height="20" uuid="cc9aed54-687f-4b12-943e-d9b177b4d87e"/>
+			</line>
+			<line>
+				<reportElement x="135" y="0" width="1" height="20" uuid="795d8c37-5e7b-4d24-8ded-e0f5d81a48c8"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" uuid="27d5e7ad-6fdd-4736-b943-798a0dc059d5"/>
+			</line>
+			<line>
+				<reportElement x="0" y="20" width="541" height="1" uuid="dbe882cf-ae86-4736-87ef-52f73e447d66"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

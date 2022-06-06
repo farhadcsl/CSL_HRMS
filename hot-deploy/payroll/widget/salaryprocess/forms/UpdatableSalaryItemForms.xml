@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+   <form name="EmployeeInfo" target="updateBenefits" type="single" >
+   <actions>
+   <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+   
+   </actions>
+  	<field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="name">
+       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+  </form>
+  
+  
+  
+  
+  
+  <form name="employeeEarnings" type="list" list-name="emplTempSalaryOptBen" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	
+  	<field name="payrollItemTypeId" title="Benefit Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="partyId"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amounts">
+  		<display/> 
+  	</field>
+  	<field name="update" use-when="${payrollItemTypeId != 'BASIC'}">
+  	
+  	 <hyperlink also-hidden="false" target="updateBenefitScreens" image-location="/images/update1.png" >
+                <parameter param-name="partyId" from-field="partyId"/>
+            	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber" from-field="monthNumber"/>
+                 <parameter param-name="amount" from-field="amount"/>
+               <parameter param-name="payrollItemTypeId" from-field="payrollItemTypeId"/>
+                <parameter param-name="year" from-field="year"/>
+            </hyperlink>
+  	</field>
+  	<field name="delete" use-when="${payrollItemTypeId != 'BASIC'}">
+  	
+  	 <hyperlink also-hidden="false" target="DeleteBenefitDedItems" image-location="/images/DeleteRed1.png" >
+                <parameter param-name="partyId" from-field="partyId"/>
+            	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber" from-field="monthNumber"/>
+                <parameter param-name="payrollItemTypeId" from-field="payrollItemTypeId"/>
+                <parameter param-name="year" from-field="year"/>
+            </hyperlink>
+  	</field>
+  </form>
+  
+  
+  
+  
+  <form name="employeeEarningsFroms" type="single" target="updateBenefits">
+  <field name="payrollItemTypeId" title="Benefit Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="partyId"><hidden/></field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  <field name="amount" title="Previous Amount"><display/></field>
+  <field name="NewAmount"><text/></field>
+  <field name="submitButton" title="Update" widget-style="smallSubmit" position="1">
+  
+            <submit button-type="button"/>
+        </field>
+  <field name="back" position="2" widget-style="buttontext" title="Back To Previous">
+  	
+  	 <hyperlink also-hidden="false" description="Back" target="emplDetailSalaryItems">
+               
+                <parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="partyId" from-field="partyId"/>
+                <parameter param-name="monthNumber" value="${monthNumber}"/>
+               	<parameter param-name="year" from-field="year"/>
+            </hyperlink>
+  	</field>
+  </form>
+ 
+ 
+ 
+ 
+ 
+  <form name="employeeDeductions" type="list" list-name="emplTempSalaryOptDed"  odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	<field name="payrollItemTypeId" title="Deduction Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amaounts">
+  		<display/> 
+  	</field>
+  	<field name="update" use-when="${payrollItemTypeId != 'BASIC'}">
+  	
+  	 <hyperlink also-hidden="false" target="updateDeductionScreens" image-location="/images/update1.png" >
+                <parameter param-name="partyId" from-field="partyId"/>
+            	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber" from-field="monthNumber"/>
+                 <parameter param-name="amount" from-field="amount"/>
+               <parameter param-name="payrollItemTypeId" from-field="payrollItemTypeId"/>
+                <parameter param-name="year" from-field="year"/>
+            </hyperlink>
+  	</field>
+  	<field name="delete" use-when="${payrollItemTypeId != 'BASIC'}">
+  	
+  	 <hyperlink also-hidden="false" target="DeleteBenefitDedItems" image-location="/images/DeleteRed1.png" >
+                <parameter param-name="partyId" from-field="partyId"/>
+            	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber" from-field="monthNumber"/>
+                <parameter param-name="payrollItemTypeId" from-field="payrollItemTypeId"/>
+                <parameter param-name="year" from-field="year"/>
+            </hyperlink>
+  	</field>
+  	
+  </form>
+  
+   <form name="employeeDeductionsFroms" type="single" target="updateDeductions">
+  <field name="payrollItemTypeId" title="Deduction Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="partyId"><hidden/></field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  <field name="amount" title="Previous Amount"><display/></field>
+  <field name="NewAmount"><text/></field>
+  <field name="submitButton" title="Update" widget-style="smallSubmit" position="1">
+  
+            <submit button-type="button"/>
+        </field>
+  <field name="back" position="2" widget-style="buttontext" title="Back To Previous">
+  	
+  	 <hyperlink also-hidden="false" description="Back" target="emplDetailSalaryItems">
+               
+                <parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="partyId" from-field="partyId"/>
+                <parameter param-name="monthNumber" value="${monthNumber}"/>
+               	<parameter param-name="year" from-field="year"/>
+            </hyperlink>
+  	</field>
+  </form>
+  
+  
+  <form name="NetPayAdmin" target="ViewSalaryList" type="single"  >
+  <actions>
+  <entity-and entity-name="EligibleEmployee" list="eligibleEmployee">
+  	<field-map field-name="partyId" value="${parameters.partyId}"/>
+  	<field-map field-name="monthNumber" from-field="parameters.monthNumber"/>
+  	<field-map field-name="processId" from-field="parameters.processId"/>
+  </entity-and>
+  </actions>
+  <field name="partyId"><hidden/></field>
+  <field name="monthNumber"><hidden/></field>
+  <field name="processId"><hidden/></field>
+  	<field name="totalSalary" title="Net Payable">
+  		<display currency="BDT" description="${eligibleEmployee[0].totalSalary}"/>
+  	</field>
+  	<field name="submitButton" title="Back" widget-style="smallSubmit" position="1">
+  
+            <submit button-type="button"/>
+        </field>
+  </form>
+  
+  
+  
+  <form name="NewSalaryItemModify" target="AddNewSalaryItems" type="single" >
+   
+  	<field name="partyId"><display/></field>
+  	<field name="year"><display/></field>
+  	<field name="monthNumber"><display/></field>
+  	<field name="processId"><display/></field>
+  	<field name="payrollItemTypeId">
+            <drop-down allow-empty="false">
+                <entity-options description="${name}" key-field-name="payrollItemTypeId" entity-name="PayrollItem">
+                    <entity-order-by field-name="invoiceItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="updateamount" title="Update Amount"><text/></field>
+        <field name="reqPartyId" title="Requested Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+        <field name="comment" required-field="true" tooltip="required"><textarea/></field>
+        
+        <field name="submitButton" title="Add" widget-style="smallSubmit" position="1">
+  
+            <submit button-type="button"/>
+        </field>
+        
+  </form>
+  
+  <form name="NewSalaryItemDDModify" target="AddNewDDSalaryItems" type="single" >
+   
+  	<field name="partyId"><display/></field>
+  	<field name="year"><display/></field>
+  	<field name="monthNumber"><display/></field>
+  	<field name="processId"><display/></field>
+  	<field name="payrollItemTypeId">
+            <drop-down allow-empty="false">
+                <entity-options description="${name}" key-field-name="payrollItemTypeId" entity-name="PayrollItem">
+                    <entity-order-by field-name="invoiceItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="updateamount" title="Update Amount"><text/></field>
+        <field name="reqPartyId" title="Requested Employee Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+            <lookup target-form-name="LookupUserLoginAndPartyDetails"/>
+        </field>
+        <field name="comment" required-field="true" tooltip="required"><textarea/></field>
+        
+        <field name="submitButton" title="Add" widget-style="smallSubmit" position="1">
+  
+            <submit button-type="button"/>
+        </field>
+        
+  </form>
+  
+  
+  
+  </forms>

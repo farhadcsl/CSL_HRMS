@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="SalaryIncrementProcess">
+        <section>
+            <actions>
+                <set field="headerItem" value="IncrementManagement"/>
+                <set field="tabButtonItem" value="GeneralIncrementIndividual"/>
+             </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                      
+                        <section>
+                           
+                            <widgets>
+                                <screenlet id="SalaryProcessIncrementProcessInitiation" title="Increment Process" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="generalIncrementProcess" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="incrementMngAll">
+        <section>
+            <actions>
+                <set field="headerItem" value="IncrementManagement"/>
+                <set field="tabButtonItem" value="GeneralIncrementAll"/>
+             </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                      
+                        <section>
+                           
+                            <widgets>
+                                <screenlet id="SalaryProcessIncrementProcessInitiation" title="Increment Process" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="incrementMngAll" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="updateSalaryIncforAll">
+        <section>
+            <actions>
+                <set field="headerItem" value="IncrementManagement"/>
+                <set field="incrementAmount" from-field="parameters.incrementAmount"/>
+                <set field="calculationMode" from-field="parameters.calculationMode"/>
+                <set field="tabButtonItem" value="GeneralIncrementAll"/>
+             <entity-and list="listIt" entity-name="PersonPayrollInfo"/>
+			</actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                     <screenlet id="updatelist" title="Overall Increment Assignment" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="incrementMngAllinfo" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                  </widgets>
+                            </section>
+                        </screenlet> 
+                        <screenlet id="listEmpl" title="Employee List" collapsible="true">
+                            <section>
+                                <widgets>
+                                        <include-form name="FindIncrementDetailView" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                        <include-form name="eligibleEmplDetailViewlist" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                      </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen> 
+   <screen name="FindIncrementSalary">
+        <section>
+            <actions>
+               <set field="headerItem" value="IncrementManagement"/>
+                
+               <set field="tabButtonItem" value="GeneralIncrementAll"/>
+				<set field="incrementAmount" from-field="parameters.incrementAmount"/>
+                <set field="calculationMode" from-field="parameters.calculationMode"/>
+               
+             
+
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                 
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                        <screenlet id="CreatePayrollTypePanel2" title="${uiLabelMap.DetailView}" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="FindIncrementDetailView" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                    <include-form name="eligibleEmplDetailViewlist" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>   
+    
+     <screen name="generalIncStepOne">
+        <section>
+            <actions>
+            <set field="headerItem" value="IncrementManagement"/>
+            <set field="tabButtonItem" value="GeneralIncrementIndividual"/>
+            <set field="partyId" from-field="parameters.partyId"/>
+          <entity-condition list="emplTempSalaryOptBen" entity-name="EmplPresentSalary">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="B"/>
+		            </condition-list>
+            </entity-condition>
+             <entity-condition list="emplTempSalaryOptDed" entity-name="EmplPresentSalary">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="D"/>
+		            </condition-list>
+            </entity-condition> 
+         
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/increment/menus/IncrementMenu.xml" name="incrementProcessGen"/>
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="emplDetail" title="Employee Information" collapsible="true">
+                                        <include-form name="EmployeeInfo" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-left">
+                                    <screenlet title="Earnings">
+                                    	<include-form name="employeeEarnings" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-right">
+                                    <screenlet title="Deductions">
+                                   		<include-form name="employeeDeductions" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                    </screenlet>
+                                </container>
+                              <container style="leftclear">
+                                    <screenlet title="Increment">
+                                        <include-form name="incrementForm" location="component://payroll/widget/increment/forms/GeneralIncrementForms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+</screens>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>Employee Goals and Kpi Related Entity</description>
+    <version>1.0</version>
+    
+
+    
+    <entity entity-name="EmployeeGoalsAndKpi" package-name="org.ofbiz.humanres.employment"
+		title="Employee Goals And Kpi">
+		<field name="goalsKpiId" type="id-ne"/>
+		<field name="partyId" type="id-ne"/>
+		<field name="employeeId" type="id-ne"/>
+		<field name="managerId" type="id-ne"/>
+		<field name="department" type="short-varchar"/>
+		<field name="goal" type="long-varchar"/>
+		<field name="kpi" type="long-varchar"/>
+		<field name="kpiStatus" type="short-varchar"/>
+		<field name="unit" type="short-varchar"/>
+		<field name="unitRemarks" type="short-varchar"/>
+		<field name="target" type="short-varchar"/>
+		<field name="achievement" type="short-varchar"/>
+		<field name="achievementResult" type="short-varchar"/>
+		<field name="overallResult" type="short-varchar"/>
+		<field name="achievementStatus" type="short-varchar"/>
+		<field name="emploeyeRemarks" type="long-varchar"/>
+		<field name="mgrRemarks" type="long-varchar"/>
+		<field name="kpiDate" type="date-time"/>
+		<field name="divisionOfKpi" type="id-ne"/>
+		<field name="mgrApprStatus" type="short-varchar"/>
+		<field name="param" type="short-varchar"/>
+        <prim-key field="goalsKpiId"/>
+	</entity>
+	
+	<entity entity-name="EmployeeGoalsAndKpiOverallStatus" package-name="org.ofbiz.humanres.employment"
+		title="Employee Goals And Kpi">
+<!-- 		<field name="overallgoalsKpiId" type="id-ne"/> -->
+		<field name="partyId" type="id-ne"/>
+		<field name="employeeId" type="id-ne"/>
+		<field name="managerId" type="id-ne"/>
+		<field name="department" type="short-varchar"/>
+		<field name="overallAchvResult" type="id-ne"/>
+		<field name="overallAchvStatus" type="id-ne"/>
+		<field name="mgrApprStatus" type="short-varchar"/>
+		<field name="mgrRemarks" type="long-varchar"/>
+		<field name="kpiType" type="long-varchar"/>
+<!--         <prim-key field="overallgoalsKpiId"/> -->
+        <prim-key field="partyId"/>
+        <relation type="one" fk-name="OVERALL_STATUS_PRTY" rel-entity-name="EmployeeGoalsAndKpi">
+            <key-map field-name="partyId"/>
+        </relation>
+	</entity>
+	
+	<entity entity-name="DepartmentWiseKpiStatus" package-name="org.ofbiz.humanres.employment"
+		title="Department Wise Kpi Status">
+		<field name="department" type="id-ne"/>
+		<field name="overallDeptResult" type="id-ne"/>
+		<field name="overallDeptStatus" type="id-ne"/>
+		<field name="year" type="short-varchar"/>
+		<field name="month" type="short-varchar"/>
+		<field name="hodStatus" type="short-varchar"/>
+		<field name="remarks" type="long-varchar"/>
+        <prim-key field="department"/>
+<!--         <relation type="one" fk-name="DEPARTMENT_STATUS_PRTY" rel-entity-name="EmployeeGoalsAndKpiOverallStatus"> -->
+<!--             <key-map field-name="department"/> -->
+<!--         </relation> -->
+	</entity>
+	
+	
+<!--    SET FOREIGN_KEY_CHECKS = 0;	 -->
+<!-- 	EMPLOYEE_GOALS_AND_KPI   -->
+<!-- 	EMPLOYEE_GOALS_AND_KPI_OVERALL_STATUS -->
+<!-- 	DEPARTMENT_WISE_KPI_STATUS -->
+<!--    EMPLOYEE_GOALS_AND_KPI_MONTHLY -->
+<!--    EMPLOYEE_G_A_K_OVRL_STAT_MONTHLY -->
+
+	<entity entity-name="EmployeeGoalsAndKpiMonthly" package-name="org.ofbiz.humanres.employment"
+		title="Employee Goals And Kpi Monthly">
+		<field name="mGoalsKpiId" type="id-ne"/>
+		<field name="partyId" type="id-ne"/>
+		<field name="goalsKpiId" type="id-ne"/>
+		<field name="employeeId" type="id-ne"/>
+		<field name="managerId" type="id-ne"/>
+		<field name="department" type="short-varchar"/>
+		<field name="goal" type="long-varchar"/>
+		<field name="kpi" type="long-varchar"/>
+		<field name="unit" type="short-varchar"/>
+		<field name="unitRemarks" type="short-varchar"/>
+		<field name="mTarget" type="short-varchar"/>
+		<field name="mAchievement" type="short-varchar"/>
+		<field name="mAchievementResult" type="short-varchar"/>
+		<field name="mAchievementStatus" type="short-varchar"/>
+		<field name="mKpiDate" type="date-time"/>
+		<field name="mMgrRemarks" type="long-varchar"/>
+		<field name="mMgrApprStatus" type="short-varchar"/>
+		<field name="mMonth" type="short-varchar"/>
+		<field name="mYear" type="short-varchar"/>
+		
+        <prim-key field="mGoalsKpiId"/>
+        <relation type="one" fk-name="MONTHLY_TO_EMPLOYEEGOLASANDKPI" rel-entity-name="EmployeeGoalsAndKpi">
+            <key-map field-name="goalsKpiId"/>
+        </relation>
+	</entity>
+	
+	<entity entity-name="EmployeeGAKOvrlStatMonthly" package-name="org.ofbiz.humanres.employment"
+		title="Monthly Overall Goals And Kpi">
+		<field name="monthYearID" type="id-ne"/>
+		<field name="mGoalsKpiId" type="id-ne"/>
+		<field name="partyId" type="id-ne"/>
+		<field name="employeeId" type="id-ne"/>
+		<field name="managerId" type="id-ne"/>
+		<field name="department" type="short-varchar"/>
+		<field name="mOverallAchvResult" type="id-ne"/>
+		<field name="mOverallAchvStatus" type="id-ne"/>
+		<field name="mgrApprStatus" type="short-varchar"/>
+		<field name="mgrRemarks" type="long-varchar"/>
+		<field name="kpiType" type="long-varchar"/>
+		<field name="mMonth" type="short-varchar"/>
+		<field name="mYear" type="short-varchar"/>
+        <prim-key field="monthYearID"/>
+        <relation type="one" fk-name="OVERALL_STATUS_PRTY" rel-entity-name="EmployeeGoalsAndKpiMonthly">
+            <key-map field-name="partyId"/>
+        </relation>
+	</entity>
+    
+</entitymodel>

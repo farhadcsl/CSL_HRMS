@@ -1,0 +1,220 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+ 	<handler name="datavision" type="view" class="org.ofbiz.webapp.view.DataVisionViewHandler"/>
+    <handler name="jasperreportspdf" type="view" class="org.ofbiz.webapp.view.JasperReportsPdfViewHandler"/>
+    <handler name="jasperreportsxml" type="view" class="org.ofbiz.webapp.view.JasperReportsXmlViewHandler"/>
+          
+     <request-map uri="HRReportCoverPage">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="HRReportCoverPage"/>
+    </request-map> 
+	<request-map uri="FindEmployeeListReport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindEmployeeListReport"/>
+    </request-map> 
+    <request-map uri="EmployeeListReportByParves">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EmployeeListReportByParves"/>
+    </request-map> 
+	<request-map uri="FindEmployeeForLeaveHistory">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindEmployeeForLeaveHistory"/>
+    </request-map> 
+    
+    
+    <request-map uri="AllEmployeeList.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="generateReport"/>
+        <response name="success" type="view" value="AllEmployeeList.pdf"/>
+   </request-map>
+    <request-map uri="EmployeeListByParves.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="generateReportByParves"/>
+        <response name="success" type="view" value="EmployeeListByParves.pdf"/>
+   </request-map>
+	 <request-map uri="EmployeeReport.pdf">
+	        <security https="true" auth="true"/>
+	        <event type="java" path="org.ofbiz.humanres.report.profile.EmployeeReport" invoke="generateReport"/>
+	        <response name="success" type="view" value="EmployeeReport.pdf"/>
+	        <response name="error" type="request-redirect" value="EmployeeProfileReportView"/>
+	</request-map>
+	
+	 <request-map uri="EmployeeProfileReport.pdf">
+	        <security https="true" auth="true"/>
+	        <event type="java" path="org.ofbiz.humanres.report.profile.EmployeeReport" invoke="generateReport"/>
+	        <response name="success" type="view" value="EmployeeProfileReport.pdf"/>
+	</request-map>
+	
+	 <request-map uri="EmployeePayslipReport.pdf">
+	        <security https="true" auth="true"/>
+	        <event type="java" path="org.ofbiz.humanres.report.payslip.PayslipReportEvent" invoke="generateReport"/>
+	        <response name="success" type="view" value="EmployeePayslipReport.pdf"/>
+	</request-map>
+   
+	<request-map uri="PayslipReportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PayslipReportView"/>
+    </request-map> 
+   
+	 <request-map uri="GeneratePayslipReport">
+	        <security https="true" auth="true"/>
+	        <event type="java" path="org.ofbiz.humanres.report.payslip.PayslipReportHelper" invoke="generateReport"/>
+	        <response name="success" type="view" value="PayslipReport"/>
+       		<response name="error" type="view" value="PayslipReportView"/>
+	</request-map>
+	 <request-map uri="EmployeeLeaveHistory.pdf">
+	        <security https="true" auth="true"/>
+	        <event type="java" path="org.ofbiz.humanres.report.leave.LeaveReportHelper" invoke="generateReport"/>
+	        <response name="success" type="view" value="EmployeeLeaveHistory.pdf"/>
+       		<response name="error" type="view" value="FindEmployeeForLeaveHistory"/>
+	</request-map>
+	 <request-map uri="PayrollItemListReport">
+	        <security https="true" auth="true"/>
+	        <event type="java" path="org.ofbiz.humanres.report.ReportHelper" invoke="generatePayrollItemListReport"/>
+	        <response name="success" type="view" value="PayrollItemListReport.pdf"/>
+       		<response name="error" type="view" value="HRReportCoverPage"/>
+	</request-map>
+	<request-map uri="EmployeeProfileReportView">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="EmployeeProfileReportView"/>
+    </request-map> 
+    <request-map uri="publicHoliday">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="publicHoliday"/>
+    </request-map> 
+    
+    <request-map uri="FindPrintReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindPrintReport" />
+	</request-map>
+	 <request-map uri="PrintIndividualReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="PrintIndividualReport" />
+	</request-map>
+	<request-map uri="PrintIndividualMonthlyReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="PrintIndividualMonthlyReport" />
+	</request-map>
+	<request-map uri="PrintIndividualYearlyReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="PrintIndividualYearlyReport" />
+	</request-map>
+		 <request-map uri="ViewDepartmentReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewDepartmentReport" />
+	</request-map>
+     <request-map uri="printMonthlyIndividualReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="genMonthlyIndiReport"/>
+        <response name="success" type="view" value="printMonthlyIndividualReport.pdf"/>
+   </request-map>
+   <request-map uri="printYearlyIndividualReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="genYearlyIndiReport"/>
+        <response name="success" type="view" value="printYearlyIndividualReport.pdf"/>
+   </request-map>
+   <request-map uri="generateDeptWiseReport">
+		<security https="true" auth="true" />
+		<event type="service" invoke="generateDeptWiseReport" />
+		<response name="success" type="request-redirect" value="GenerateDepartementWiseReport"></response>
+		<response name="error" type="request-redirect" value="GenerateDepartementWiseReport"></response>
+	</request-map>
+   	<request-map uri="GenerateDepartementWiseReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="GenerateDepartementWiseReport" />
+	</request-map>
+	<request-map uri="DepartmentWiseMonthlyReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DepartmentWiseMonthlyReport" />
+	</request-map>
+	<request-map uri="generateDeptWiseMonthlyReport.pdf">
+		<security https="true" auth="true" />
+		<event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="generateDeptWiseMonthlyReport"/>
+		<response name="success" type="view" value="generateDeptWiseMonthlyReport.pdf" />
+	</request-map>
+	<request-map uri="DepartmentWiseAnnualReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DepartmentWiseAnnualReport" />
+	</request-map>
+	<request-map uri="genDepartmentWiseAnnualReport.pdf">
+		<security https="true" auth="true" />
+		<event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="generateDeptWiseAnnualReport"/>
+		<response name="success" type="view" value="genDepartmentWiseAnnualReport.pdf" />
+	</request-map>
+	<request-map uri="ViewCompanyReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ViewCompanyReport" />
+	</request-map>
+	<request-map uri="GenerateCompanyWiseReport">
+		<security https="true" auth="true" />
+		<event type="service" invoke="GenerateCompanyWiseReport" />
+		<response name="success" type="request-redirect" value="FindCompWiseReportForm"></response>
+		<response name="error" type="request-redirect" value="FindCompWiseReportForm"></response>
+	</request-map>
+	<request-map uri="FindCompWiseReportForm">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCompWiseReportForm" />
+	</request-map>
+	<request-map uri="genCompWiseReport">
+		<security https="true" auth="true" />
+		<event type="service" invoke="genCompWiseReport" />
+		<response name="success" type="request-redirect" value="FindCompWiseReportForm"></response>
+		<response name="error" type="request-redirect" value="FindCompWiseReportForm"></response>
+	</request-map>
+	<request-map uri="CompanyWiseAnnualReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="CompanyWiseAnnualReport" />
+	</request-map>
+	<request-map uri="Company_Wise_KPI_Annual_Report.pdf">
+		<security https="true" auth="true" />
+		<event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="genCompWiseAnnualReport"/>
+		<response name="success" type="view" value="Company_Wise_KPI_Annual_Report.pdf" />
+	</request-map>
+	<request-map uri="CompanyWiseMonthlyReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="CompanyWiseMonthlyReport" />
+	</request-map>
+	<request-map uri="Company_Wise_KPI_Monthly_Report.pdf">
+		<security https="true" auth="true" />
+		<event type="java" path="org.ofbiz.humanres.report.profile.AllEmployeeSheetDetails" invoke="genCompWiseMonthlyReport"/>
+		<response name="success" type="view" value="Company_Wise_KPI_Monthly_Report.pdf" />
+	</request-map>
+
+    <view-map name="PayslipReportView" type="screen" page="component://humanres/widget/report/payslip/FindPayslipReportScreens.xml#FindPayslipReport"/>
+    <view-map name="EmployeeProfileReportView" type="screen" page="component://humanres/widget/report/leave/EmployeeProfileReportScreen.xml#EmployeeProfileReportScreen"/>
+    <view-map name="publicHoliday" type="screen" page="component://humanres/widget/report/leave/EmployeeProfileReportScreen.xml#publicHoliday"/>
+ 	<view-map name="HRReportCoverPage" type="screen" page="component://humanres/widget/report/HRReportScreens.xml#HRReportCoverPage"/>
+ 	<view-map name="FindEmployeeListReport" type="screen" page="component://humanres/widget/report/profile/EmployeeReportScreens.xml#EmployeeReport"/>
+ 	<view-map name="EmployeeListReportByParves" type="screen" page="component://humanres/widget/report/profile/EmployeeReportScreens.xml#EmployeeReportByParves"/>
+	<view-map name="FindEmployeeForLeaveHistory" type="screen" page="component://humanres/widget/report/leave/EmployeeLeaveReportScreens.xml#FindEmployeeForLeaveHistory"/>
+	<view-map name="EmployeeReport.pdf" type="jasperreportspdf" page="/humanres/reports/profile/EmployeeReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+	<view-map name="EmployeeLeaveHistory.pdf" type="jasperreportspdf" page="/humanres/reports/EmployeeLeaveHistory.jrxml" content-type="application/pdf" encoding="none" info=""/>
+	<view-map name="EmployeeProfileReport.pdf" type="jasperreportspdf" page="/humanres/reports/EmployeeProfileReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+ 	<view-map name="AllEmployeeList.pdf" type="jasperreportspdf" page="/humanres/reports/AllEmployeeListReport.jrxml" content-type="application/pdf" encoding="none" info=""/> 
+   <!--  <view-map name="EmployeePayslipReport.pdf" type="jasperreportspdf" page="/humanres/reports/Employeepayslipreport.jrxml" content-type="application/pdf" encoding="none" info=""/>     -->
+    <view-map name="EmployeePayslipReport.pdf" type="jasperreportspdf" page="/humanres/reports/payroll/payslip.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="PayslipReport" type="jasperreportspdf" page="/humanres/reports/payslip/EmployeePayslip.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="PayrollItemListReport.pdf" type="jasperreportspdf" page="/humanres/reports/PayrollItemList.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="EmployeeListByParves.pdf" type="jasperreportspdf" page="/humanres/reports/EmployeeListByParves.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="FindPrintReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#FindPrintReport" />
+    <view-map name="PrintIndividualReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#PrintIndividualReportHome" />    
+    <view-map name="printMonthlyIndividualReport.pdf" type="jasperreportspdf" page="/humanres/reports/kpi/EmplMonthlyIndiviReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="PrintIndividualMonthlyReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#PrintIndividualReport" />
+    <view-map name="PrintIndividualYearlyReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#PrintIndividualReportYearly" />
+    <view-map name="printYearlyIndividualReport.pdf" type="jasperreportspdf" page="/humanres/reports/kpi/EmplYearlyIndiviReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="ViewDepartmentReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ViewDepartmentReport" />
+    <view-map name="GenerateDepartementWiseReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#GenerateDepartementWiseReport" /> 
+    <view-map name="DepartmentWiseMonthlyReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#DepartmentWiseMonthlyReport" />
+    <view-map name="generateDeptWiseMonthlyReport.pdf" type="jasperreportspdf" page="/humanres/reports/kpi/DeptWiseMonthlyReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="DepartmentWiseAnnualReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#DepartmentWiseAnnualReport" />
+    <view-map name="genDepartmentWiseAnnualReport.pdf" type="jasperreportspdf" page="/humanres/reports/kpi/DeptWiseAnnualReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="ViewCompanyReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ViewCompanyReport" />
+    <view-map name="FindCompWiseReportForm" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#FindCompWiseReportForm" />
+    <view-map name="CompanyWiseAnnualReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#CompanyWiseAnnualReport" />
+    <view-map name="Company_Wise_KPI_Annual_Report.pdf" type="jasperreportspdf" page="/humanres/reports/kpi/CompWiseAnnualReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+    <view-map name="CompanyWiseMonthlyReport" type="screen" page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#CompanyWiseMonthlyReport" />
+    <view-map name="Company_Wise_KPI_Monthly_Report.pdf" type="jasperreportspdf" page="/humanres/reports/kpi/CompWiseMonthlyReport.jrxml" content-type="application/pdf" encoding="none" info=""/>
+</site-conf>
+
+
+

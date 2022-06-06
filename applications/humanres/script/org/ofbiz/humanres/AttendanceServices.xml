@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+
+
+ <!-- Buildings creation for HR Admin for attendance -->
+    <simple-method method-name="createBuilding" short-description="Create a Party Building">
+        <make-value entity-name="Party" value-field="newEntity1"/>
+        <set-pk-fields map="parameters" value-field="newEntity1"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity1"/>
+        <set field="newEntity1.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity1.partyTypeId" value="PARTY_BUILDING"/>
+        
+        <create-value value-field="newEntity1"/>
+        
+        <make-value entity-name="PartyGroup" value-field="newEntity2"/>
+        <set-pk-fields map="parameters" value-field="newEntity2"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity2"/>
+        <set field="newEntity2.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity2.groupName" from-field="parameters.groupName"/>
+        
+        <create-value value-field="newEntity2"/>
+        
+        <make-value entity-name="PartyRole" value-field="newEntity3"/>
+        <set-pk-fields map="parameters" value-field="newEntity3"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity3"/>
+        <set field="newEntity3.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity3.roleTypeId" value="BUILDING"/>
+        
+        <create-value value-field="newEntity3"/>
+        
+        <make-value entity-name="PartyRelationship" value-field="newEntity4"/>
+        <set-pk-fields map="parameters" value-field="newEntity4"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity4"/>
+        <set field="newEntity4.partyIdFrom" from-field="parameters.orgPartyId"/>
+		<!--  <set field="newEntity4.partyIdFrom" value="BGL"/> -->
+        <set field="newEntity4.partyIdTo" from-field="parameters.partyId"/>
+        <set field="newEntity4.partyRelationshipTypeId" value="GROUP_ROLLUP"/>
+        <set field="newEntity4.roleTypeIdFrom" value="INTERNAL_ORGANIZATIO"/>
+        <set field="newEntity4.roleTypeIdTo" from-field="newEntity3.roleTypeId"/>
+        <if-empty field="newEntity4.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity4.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        
+        <create-value value-field="newEntity4"/>
+        
+        <set field="successMessage" value="Building Added Successfully"/>
+    </simple-method>
+    
+    <!-- Floor creation for HR Admin for Attendance-->
+    <simple-method method-name="createFloors" short-description="Create a Party Floor">
+        
+        <make-value entity-name="Party" value-field="newEntity1"/>
+        <set-pk-fields map="parameters" value-field="newEntity1"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity1"/>
+        <set field="newEntity1.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity1.partyTypeId" value="PARTY_FLOOR"/>
+        
+        <create-value value-field="newEntity1"/>
+        
+        <make-value entity-name="PartyGroup" value-field="newEntity2"/>
+        <set-pk-fields map="parameters" value-field="newEntity2"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity2"/>
+        <set field="newEntity2.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity2.groupName" from-field="parameters.groupName"/>
+        
+        <create-value value-field="newEntity2"/>
+        
+        <make-value entity-name="PartyRole" value-field="newEntity3"/>
+        <set-pk-fields map="parameters" value-field="newEntity3"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity3"/>
+        <set field="newEntity3.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity3.roleTypeId" value="FLOOR"/>
+        
+        <create-value value-field="newEntity3"/>
+        
+        <make-value entity-name="PartyRelationship" value-field="newEntity4"/>
+        <set-pk-fields map="parameters" value-field="newEntity4"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity4"/>
+        <set field="newEntity4.partyIdFrom" from-field="parameters.orgPartyId"/>
+        <set field="newEntity4.partyIdTo" from-field="parameters.partyId"/>
+        <set field="newEntity4.partyRelationshipTypeId" value="GROUP_ROLLUP"/>
+        <set field="newEntity4.roleTypeIdFrom" value="BUILDING"/>
+        <set field="newEntity4.roleTypeIdTo" from-field="newEntity3.roleTypeId"/>
+        <if-empty field="newEntity4.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity4.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        
+        <create-value value-field="newEntity4"/>
+        
+        <set field="successMessage" value="Floor Added Successfully"/>
+    </simple-method>
+    
+    <!-- Gate creation for HR Admin for Attendance-->
+    <simple-method method-name="createGates" short-description="Create a Party Gate">
+        
+        <make-value entity-name="Party" value-field="newEntity1"/>
+        <set-pk-fields map="parameters" value-field="newEntity1"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity1"/>
+        <set field="newEntity1.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity1.partyTypeId" value="PARTY_GATE"/>
+        
+        <create-value value-field="newEntity1"/>
+        
+        <make-value entity-name="PartyGroup" value-field="newEntity2"/>
+        <set-pk-fields map="parameters" value-field="newEntity2"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity2"/>
+        <set field="newEntity2.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity2.groupName" from-field="parameters.groupName"/>
+        
+        <create-value value-field="newEntity2"/>
+        
+        <make-value entity-name="PartyRole" value-field="newEntity3"/>
+        <set-pk-fields map="parameters" value-field="newEntity3"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity3"/>
+        <set field="newEntity3.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity3.roleTypeId" value="GATE"/>
+        
+        <create-value value-field="newEntity3"/>
+        
+        <make-value entity-name="PartyRelationship" value-field="newEntity4"/>
+        <set-pk-fields map="parameters" value-field="newEntity4"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity4"/>
+        <set field="newEntity4.partyIdFrom" from-field="parameters.orgPartyId"/>
+        <set field="newEntity4.partyIdTo" from-field="parameters.partyId"/>
+        <set field="newEntity4.partyRelationshipTypeId" value="GROUP_ROLLUP"/>
+        <set field="newEntity4.roleTypeIdFrom" value="FLOOR"/>
+        <set field="newEntity4.roleTypeIdTo" from-field="newEntity3.roleTypeId"/>
+        <set field="newEntity4.statusId" value="GATE_ACTIVATED"/>
+        <if-empty field="newEntity4.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity4.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        
+        <create-value value-field="newEntity4"/>
+        
+        <set field="successMessage" value="Gate Added Successfully"/>
+    </simple-method>
+    
+    <!-- Register Devices for HR Admin for Attendance-->
+    <simple-method method-name="registerDevices" short-description="Register a Party Device">
+        
+        <make-value entity-name="Party" value-field="newEntity1"/>
+        <set-pk-fields map="parameters" value-field="newEntity1"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity1"/>
+        <set field="newEntity1.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity1.partyTypeId" value="PARTY_DEVICE"/>
+        
+        <create-value value-field="newEntity1"/>
+        
+        <make-value entity-name="PartyGroup" value-field="newEntity2"/>
+        <set-pk-fields map="parameters" value-field="newEntity2"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity2"/>
+        <set field="newEntity2.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity2.groupName" from-field="parameters.groupName"/>
+        
+        <create-value value-field="newEntity2"/>
+        
+        <make-value entity-name="PartyRole" value-field="newEntity3"/>
+        <set-pk-fields map="parameters" value-field="newEntity3"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity3"/>
+        <set field="newEntity3.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity3.roleTypeId" value="DEVICE"/>
+        
+        <create-value value-field="newEntity3"/>
+        
+        <make-value entity-name="PartyRelationship" value-field="newEntity4"/>
+        <set-pk-fields map="parameters" value-field="newEntity4"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity4"/>
+        <set field="newEntity4.partyIdFrom" from-field="parameters.orgPartyId"/>
+        <set field="newEntity4.partyIdTo" from-field="parameters.partyId"/>
+        <set field="newEntity4.partyRelationshipTypeId" value="GROUP_ROLLUP"/>
+        <set field="newEntity4.roleTypeIdFrom" value="GATE"/>
+        <set field="newEntity4.roleTypeIdTo" from-field="newEntity3.roleTypeId"/>
+        <set field="newEntity4.statusId" value="DEVICE_REGISTERED"/>
+        <if-empty field="newEntity4.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity4.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        
+        <create-value value-field="newEntity4"/>
+        
+        <set field="successMessage" value="Device Registered Successfully"/>
+    </simple-method>
+    
+    <!-- Eemployee register for HR Admin for Attendance-->
+    <simple-method method-name="registerEmployee" short-description="Create a Party Employee">
+        
+        <make-value entity-name="Party" value-field="newEntity1"/>
+        <set-pk-fields map="parameters" value-field="newEntity1"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity1"/>
+        <set field="newEntity1.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity1.partyTypeId" value="PARTY_EMPLOYEEATTN"/>
+        
+        <create-value value-field="newEntity1"/>
+        
+        <make-value entity-name="PartyGroup" value-field="newEntity2"/>
+        <set-pk-fields map="parameters" value-field="newEntity2"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity2"/>
+        <set field="newEntity2.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity2.groupName" from-field="parameters.groupName"/>
+        
+        <create-value value-field="newEntity2"/>
+        
+        <make-value entity-name="PartyRole" value-field="newEntity3"/>
+        <set-pk-fields map="parameters" value-field="newEntity3"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity3"/>
+        <set field="newEntity3.partyId" from-field="parameters.partyId"/>
+        <set field="newEntity3.roleTypeId" value="EMPLOYEEATTN"/>
+        
+        <create-value value-field="newEntity3"/>
+        
+        <make-value entity-name="PartyRelationship" value-field="newEntity4"/>
+        <set-pk-fields map="parameters" value-field="newEntity4"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity4"/>
+        <set field="newEntity4.partyIdFrom" from-field="parameters.orgPartyId"/>
+        <set field="newEntity4.partyIdTo" from-field="parameters.partyId"/>
+        <set field="newEntity4.partyRelationshipTypeId" value="GROUP_ROLLUP"/>
+        <set field="newEntity4.roleTypeIdFrom" value="DEVICE"/>
+        <set field="newEntity4.roleTypeIdTo" from-field="newEntity3.roleTypeId"/>
+        <set field="newEntity4.statusId" value="EMPL_REGISTERED"/>
+        <if-empty field="newEntity4.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity4.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        
+        <create-value value-field="newEntity4"/>
+        
+        <set field="successMessage" value="Employee Register Successfully"/>
+    </simple-method>
+    
+    
+    <simple-method method-name="UpdateAttendanceForm" short-description="Update ">
+        <entity-one entity-name="DailyAttendance" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>        
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Company Attendance Successfully Updated"/>
+    </simple-method>  
+    <simple-method method-name="UpdateDailyAttendanceLogComments" short-description="Update ">
+        <entity-one entity-name="DailyAttendance" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>        
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Company Daily Attendance Log Comments Successfully Updated"/>
+    </simple-method>  
+
+</simple-methods>

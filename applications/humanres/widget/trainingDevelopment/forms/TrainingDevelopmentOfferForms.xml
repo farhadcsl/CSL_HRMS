@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+ 
+     <form name="FindTrainingOffer" type="single" target="FindTrainingOffer"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="TrainingOffer" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="trainingOfferId"><hidden/></field>
+        <field name="description"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="comments"><hidden/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListTrainingOffer" type="multi" list-name="listIt" use-row-submit="true" target="updateTrainingOffer" paginate-target="FindTrainingOffer" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="TrainingOfferCtx"/>
+                <field-map field-name="entityName" value="TrainingOffer"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            
+        </actions>
+        <field name="trainingOfferId"><display/></field>
+        <field name="trainingTitle"><display/></field>
+        <field name="durationTime"><display/></field>
+        <field name="trainingPlace"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="description"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editTrainingOffer" description="Edit" also-hidden="false">
+                <parameter param-name="trainingOfferId"/>
+                <parameter param-name="trainingTitle"/>
+                <parameter param-name="durationTime"/>
+                <parameter param-name="trainingPlace"/>
+                <parameter param-name="description"/>
+                <parameter param-name="comments"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>                
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="Delete" widget-style="buttontext">
+            <hyperlink target="deleteTrainingOffer" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="trainingOfferId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="NewTrainingOffer" type="single" target="createTrainingOffer" header-row-style="header-row" default-table-style="basic-table">
+        <field name="trainingTitle"><text/></field>
+        <field name="durationTime"><text/></field>
+        <field name="trainingPlace"><text/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="comments"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+    <form name="UpdateTrainingOffer" type="single" target="updateTrainingOffer" header-row-style="header-row" default-table-style="basic-table">
+        <field name="trainingOfferId"><hidden/></field>
+        <field name="trainingTitle"><text/></field>
+        <field name="durationTime"><text/></field>
+        <field name="trainingPlace"><text/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="comments"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+ </forms>

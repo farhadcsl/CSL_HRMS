@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeLeaveHistory" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad207753-e1a1-400c-ae64-2072ef62bacf">
+	<property name="ireport.zoom" value="1.5000000000000033"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="reportsDirPath" class="java.lang.String"/>
+	<field name="employeeId" class="java.lang.String"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="mobileno" class="java.lang.String"/>
+	<field name="designation" class="java.lang.String"/>
+	<field name="leaveHistoryList" class="java.util.List"/>
+	<field name="fromDate" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="76" y="0" width="401" height="21" uuid="c95a4e05-728b-49cf-b308-7af721b4c508"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Computer Services Limited ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="23" width="480" height="20" uuid="44c008e0-1674-4ed2-b539-9cc7d5ecef23"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="43" width="555" height="1" uuid="cb5b6a41-d128-4065-840d-6848ff3c3a1a"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="83" y="2" width="370" height="20" uuid="6a3ddfdc-c49e-45f7-9f3f-3243720f9e1e"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Leave History Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="27" width="109" height="20" uuid="e9119a2d-ebc6-4c5f-aa0e-f0db74e0f7b5"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Id         :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="48" width="109" height="20" uuid="23fa5c36-ad05-4843-8be6-2455176db75b"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name   :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="27" width="274" height="20" uuid="f8e4b998-7983-4b89-8fcd-f279d6490be6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="48" width="274" height="20" uuid="82827d89-9f50-4ecc-ae4a-95180f2f8897"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="70" width="109" height="20" uuid="3493ad51-c688-4438-a4bb-0044c706048b"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone Number     :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="70" width="274" height="20" uuid="b86ab034-9f23-4002-a195-bf480206706c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mobileno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="92" width="109" height="20" uuid="36fbbde4-7b4a-418b-97f5-4b23f4b301eb"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Designation          :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="92" width="274" height="20" uuid="05593b87-d011-43cb-8991-223efce5ce1b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="412" y="92" width="138" height="20" uuid="54d17ea1-7cae-40f9-80d0-e4c21dee4e08"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="44">
+			<subreport>
+				<reportElement x="0" y="0" width="119" height="31" uuid="8f827a4d-061d-4645-86b2-cdad6ec3273f"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+            ($F{leaveHistoryList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportsDirPath} + "/EmployeeLeaveHistory_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="430" y="6" width="80" height="20" uuid="336c7731-6099-42cd-b6e5-da140edb6cea"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="510" y="6" width="40" height="20" uuid="0a0a4b85-dbd6-47a6-b895-63761f2211ab"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="48" splitType="Stretch"/>
+	</summary>
+</jasperReport>

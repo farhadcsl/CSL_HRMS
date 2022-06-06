@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Employee Payroll Setup_subreport1" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6bdfcf1f-5d42-4714-a4d4-db9f5da390a4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="calculationMode" class="java.lang.String"/>
+	<field name="amount" class="java.lang.String"/>
+	<field name="payrollItemName" class="java.lang.String"/>
+	<field name="calculationType" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="1" width="570" height="1" uuid="130b1faf-7d25-47ea-b013-a7c95097cefd"/>
+			</line>
+			<line>
+				<reportElement x="0" y="22" width="572" height="1" uuid="32bc984f-b989-4db8-a2ef-5d9199803e2d"/>
+			</line>
+			<line>
+				<reportElement x="0" y="2" width="1" height="20" uuid="03132ee2-4a41-4bd5-b59d-074f8a7fa400"/>
+			</line>
+			<line>
+				<reportElement x="271" y="2" width="1" height="20" uuid="0328064a-523f-4b7c-84c8-2fdf781be0ba"/>
+			</line>
+			<line>
+				<reportElement x="130" y="2" width="1" height="20" uuid="aae93644-6324-4424-bedb-488b95ffdb6e"/>
+			</line>
+			<line>
+				<reportElement x="571" y="2" width="1" height="20" uuid="d8416b65-ba9c-4eeb-804b-12d4d6f61e48"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="2" width="129" height="20" uuid="18c9960b-fa4e-4426-ac56-4ae1a7ddd54f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payroll Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="2" width="139" height="20" uuid="b0f44c13-fc77-48c9-a659-b6f4b172f0a5"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calculation Mode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="2" width="129" height="20" uuid="c920b4f3-f794-48a7-b053-24821c4d000b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calculation type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="2" width="169" height="20" uuid="19e84d03-2dcc-4c53-b008-d68eb8a50240"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement x="401" y="2" width="1" height="20" uuid="f07b3287-e62f-49be-b53a-8e00cd1c2597"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="197" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="20" width="571" height="1" uuid="9e9157d8-ddff-44d4-acfe-c2cad117bf65"/>
+			</line>
+			<textField>
+				<reportElement x="2" y="0" width="128" height="20" uuid="330a79fa-3044-4fc1-9906-dcdfaf3e7329"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{payrollItemName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" uuid="3e45135e-3c90-4b13-990d-ac9feb7fbafe"/>
+			</line>
+			<line>
+				<reportElement x="130" y="0" width="1" height="20" uuid="23bac9ec-f80b-4814-807c-e3e819f3cae7"/>
+			</line>
+			<line>
+				<reportElement x="271" y="0" width="1" height="20" uuid="47516f96-f58f-4bcc-9342-7c452b027689"/>
+			</line>
+			<line>
+				<reportElement x="571" y="0" width="1" height="21" uuid="e31ed863-d6dc-4715-a9a5-2ff16ff1c5aa"/>
+			</line>
+			<line>
+				<reportElement x="401" y="0" width="1" height="20" uuid="c9c030bc-7194-46d6-be29-00ca14902fb5"/>
+			</line>
+			<textField>
+				<reportElement x="132" y="1" width="139" height="19" uuid="881b40c3-bfc4-4541-aed0-aef0c598c8c0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{calculationMode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="1" width="119" height="19" uuid="accb8c84-bb4b-4523-88c0-cbba0e61f67e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{calculationType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="1" width="137" height="19" uuid="20e55f05-f41b-4c83-95f6-7c902ac9bb60"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+</jasperReport>

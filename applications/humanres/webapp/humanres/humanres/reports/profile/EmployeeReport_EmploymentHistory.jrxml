@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeReport_EmploymentHistory" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e62762c7-dad1-40a5-9f30-9aea05a68d59">
+	<property name="ireport.zoom" value="3.1384283767210035"/>
+	<property name="ireport.x" value="115"/>
+	<property name="ireport.y" value="0"/>
+	<field name="orgName" class="java.lang.String"/>
+	<field name="position" class="java.lang.String"/>
+	<field name="fromDate" class="java.lang.String"/>
+	<field name="thruDate" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="36" y="14" width="182" height="21" uuid="5c2039bd-5308-44dc-b4c6-b9252a82d178"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Professional Certificate]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="37" y="5" width="403" height="1" uuid="8eb63b06-c246-4e32-9625-dca56ff0e943"/>
+			</line>
+			<line>
+				<reportElement x="36" y="5" width="1" height="16" uuid="2ea67600-4101-4fa9-8f30-14cc52d6284b"/>
+			</line>
+			<line>
+				<reportElement x="37" y="21" width="403" height="1" uuid="d8243852-071f-4e78-9a17-f3a36ea001fe"/>
+			</line>
+			<line>
+				<reportElement x="137" y="6" width="1" height="15" uuid="8f0392e9-f445-40b0-aa7a-1715f8c8036e"/>
+			</line>
+			<staticText>
+				<reportElement x="37" y="6" width="100" height="15" uuid="efb73e58-42a8-4bb0-977d-d5783e198787"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Organization]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="6" width="123" height="15" uuid="eba9b6a2-e0c1-4254-ad9a-2a1b679462d9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Position]]></text>
+			</staticText>
+			<line>
+				<reportElement x="261" y="6" width="1" height="15" uuid="4af38b45-0db2-4ff9-ab33-d81232e649fb"/>
+			</line>
+			<line>
+				<reportElement x="350" y="6" width="1" height="15" uuid="36c852fa-c0a7-4998-9e0e-34ce0f2f231a"/>
+			</line>
+			<staticText>
+				<reportElement x="262" y="6" width="88" height="15" uuid="4fc93841-3d40-4c9b-aaf7-697767c7c221"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[From Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="6" width="88" height="15" uuid="7663a7c5-0a38-49bd-b70f-1bf87f73deeb"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[To Date]]></text>
+			</staticText>
+			<line>
+				<reportElement x="439" y="6" width="1" height="15" uuid="d8f55b4d-bb82-4f59-beb1-97b3c4aade4b"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement x="261" y="0" width="1" height="15" uuid="76bc0ba8-dc34-4bd8-8787-5f750747cc40"/>
+			</line>
+			<line>
+				<reportElement x="350" y="-1" width="1" height="15" uuid="989e4158-013d-4510-8c4d-1798446acd22"/>
+			</line>
+			<line>
+				<reportElement x="137" y="0" width="1" height="15" uuid="69160d88-daae-4318-9ae6-019d26794273"/>
+			</line>
+			<line>
+				<reportElement x="439" y="0" width="1" height="16" uuid="a035699f-0833-474b-96b7-080f0d995aea"/>
+			</line>
+			<line>
+				<reportElement x="36" y="-1" width="1" height="16" uuid="4565d887-4a0b-4d52-8c8d-e52c5979b9f0"/>
+			</line>
+			<line>
+				<reportElement x="36" y="15" width="403" height="1" uuid="f31cfef2-912b-4393-805e-13c62f2d7017"/>
+			</line>
+			<textField>
+				<reportElement x="42" y="0" width="95" height="14" uuid="2cac285a-d0d7-4dc2-b14f-a32435423633"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orgName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

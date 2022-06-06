@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+             
+    <description>Human Resources Attendance Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+      
+    <!-- Building creation for HR Admin for attendance -->
+    <service name="createBuilding" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="createBuilding" auth="true">
+		<description>Create a Building</description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		<attribute name="groupName" mode="IN" type="String" optional="false" field-name="groupName"/>
+		<attribute name="orgId" mode="IN" type="String" optional="false" field-name="orgId"/>
+		<attribute name="description" mode="IN" type="String" optional="true" field-name="description"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	<!-- Floor creation for HR Admin for attendance -->
+    <service name="createFloors" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="createFloors" auth="true">
+		<description>Create a Floor</description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		<attribute name="groupName" mode="IN" type="String" optional="false" field-name="groupName"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="orgId" mode="IN" type="String" optional="false" field-name="orgId"/>
+		<attribute name="description" mode="IN" type="String" optional="true" field-name="description"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+    <!-- Gate creation for HR Admin for attendance -->
+    <service name="createGates" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="createGates" auth="true">
+		<description>Create a Gate</description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		<attribute name="groupName" mode="IN" type="String" optional="false" field-name="groupName"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="orgId" mode="IN" type="String" optional="false" field-name="orgId"/>
+		<attribute name="description" mode="IN" type="String" optional="true" field-name="description"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	
+	<!-- Device creation for HR Admin for attendance -->
+	<service name="registerDevices" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="registerDevices" auth="true">
+		<description>Register a Device</description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		<attribute name="deviceType" mode="IN" type="String" optional="false" field-name="deviceType"/>
+		<attribute name="partyId" mode="IN" type="String" optional="false" field-name="partyId"/>
+		<attribute name="terminalIP" mode="IN" type="String" optional="false" field-name="terminalIP"/>
+		<attribute name="pegasusAddress" mode="IN" type="String" optional="true" field-name="pegasusAddress"/>
+		<attribute name="terminalType" mode="IN" type="String" optional="true" field-name="terminalType"/>
+		<attribute name="terminalSN" mode="IN" type="String" optional="true" field-name="terminalSN"/>
+		<attribute name="groupName" mode="IN" type="String" optional="true" field-name="groupName"/>
+		<attribute name="firmewareVersion" mode="IN" type="String" optional="true" field-name="firmewareVersion"/>
+		<attribute name="fliVersion" mode="IN" type="String" optional="true" field-name="fliVersion"/>
+		<attribute name="userName" mode="IN" type="String" optional="true" field-name="userName"/>
+		<attribute name="userPass" mode="IN" type="String" optional="true" field-name="userPass"/>
+		<attribute name="endPointIP" mode="IN" type="String" optional="true" field-name="endPointIP"/>
+		<attribute name="agentVersion" mode="IN" type="String" optional="true" field-name="agentVersion"/>
+		<attribute name="type" mode="IN" type="String" optional="true" field-name="type"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="true" field-name="currentLocationId"/>
+		<attribute name="orgId" mode="IN" type="String" optional="true" field-name="orgId"/>
+		<attribute name="description" mode="IN" type="String" optional="true" field-name="description"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	<!-- Emploee register ot Device for HR Admin for attendance -->
+    <service name="registerEmployee" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="registerEmployee" auth="true">
+		<description>Register a Employee</description>
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />
+		<attribute name="partyId" mode="IN" type="String" optional="false" field-name="partyId"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="terminalSN" mode="IN" type="String" optional="false" field-name="terminalSN"/>
+		<attribute name="orgId" mode="IN" type="String" optional="false" field-name="orgId"/>
+		<attribute name="description" mode="IN" type="String" optional="true" field-name="description"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	<!-- Emploee Un register to Device for HR Admin for attendance -->
+	 <service name="unRegisterEmployee" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="unRegisterEmployee" auth="true">
+		<description>Un Register a Employee</description>
+		<permission-service service-name="humanResManagerPermission" main-action="UPDATE" />
+		<attribute name="userPrefValue" mode="IN" type="String" optional="false" field-name="locationId"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="statusId" mode="IN" type="String" optional="false" field-name="statusId"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+    <!-- Device Un register  for HR Admin for attendance -->
+	 <service name="unRegisterDevice" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="unRegisterDevice" auth="true">
+		<description>Un Register a Device</description>
+		<permission-service service-name="humanResManagerPermission" main-action="UPDATE" />
+		<attribute name="userPrefValue" mode="IN" type="String" optional="false" field-name="locationId"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="statusId" mode="IN" type="String" optional="false" field-name="statusId"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	
+	<service name="updateDeviceStaus" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="updateDeviceStaus" auth="true">
+		<description>Un Register a Device</description>
+		<permission-service service-name="humanResManagerPermission" main-action="UPDATE" />
+		<attribute name="userPrefValue" mode="IN" type="String" optional="false" field-name="locationId"/>
+		<attribute name="firsTimeRegister" mode="IN" type="String" optional="false" field-name="firsTimeRegister"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	<!-- Device Sink and Export data  for HR Admin for attendance -->
+	 <service name="sinkDevice" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="sinkDevice" auth="true">
+		<description>Sink a Device</description>
+		<permission-service service-name="humanResManagerPermission" main-action="UPDATE" />
+		<attribute name="userPrefValue" mode="IN" type="String" optional="false" field-name="locationId"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	 <!-- Device Un register  for HR Admin for attendance -->
+	 <service name="unRegisterGate" engine="java" default-entity-name="Party" location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="unRegisterGate" auth="true">
+		<description>Un Register a Gate</description>
+		<permission-service service-name="humanResManagerPermission" main-action="UPDATE" />
+		<attribute name="userPrefValue" mode="IN" type="String" optional="false" field-name="locationId"/>
+		<attribute name="currentLocationId" mode="IN" type="String" optional="false" field-name="currentLocationId"/>
+		<attribute name="statusId" mode="IN" type="String" optional="false" field-name="statusId"/>
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+	</service>
+	
+	
+	 <service name="updateLocationInfo" engine="java" default-entity-name="Location"
+            location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="updateLocation" auth="true">
+        <description>Update Location Info</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="locationId" type="String" mode="INOUT" optional="false"/>
+         <attribute name="groupName" type="String" mode="IN" optional="false"/>
+        <attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+     </service> 
+     
+      <service name="updateDevice" engine="java" default-entity-name="Location"
+            location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="updateDevice" auth="true">
+        <description>Update Device Info</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="currentLocationId" type="String" mode="INOUT" optional="false" field-name="currentLocationId"/>
+         <attribute name="employeeName" type="String" mode="IN" optional="false"/>
+        <attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+     </service> 
+     
+     
+     <!-- Add employee Log By Hr admin -->
+     <service name="addEmployeeLog" engine="java" default-entity-name="EmployeeLog"
+            location="org.ofbiz.humanres.attendance.AttendanceEvents" invoke="addEmployeeLog" auth="true">
+        <description> Add employee Log </description>
+       <!--  <permission-service service-name="humanResManagerPermission" main-action="CREATE"/> -->
+        <attribute name="logId" type="String" mode="OUT" optional="true"/>
+        <attribute name="userLoginId" type="String" mode="IN" optional="false" />
+        <attribute name="logDate" type="Timestamp" mode="IN" optional="false"/>
+        <attribute name="inTime" type="String" mode="IN" optional="false"/>
+        <attribute name="outTime" type="String" mode="IN" optional="false"/>
+        <attribute name="terminalSN" type="String" mode="IN" optional="true"/>
+        <attribute name="senderTerminal" type="String" mode="IN" optional="true"/>
+       	
+       	<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+     </service> 
+     <service name="UpdateAttendanceForm" engine="simple" default-entity-name="DailyAttendance"
+             location="component://humanres/script/org/ofbiz/humanres/AttendanceServices.xml" invoke="UpdateAttendanceForm" auth="true">
+        <description>Update Attendance </description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service> 
+     <service name="UpdateDailyAttendanceLogComments" engine="simple" default-entity-name="DailyAttendance"
+             location="component://humanres/script/org/ofbiz/humanres/AttendanceServices.xml" invoke="UpdateDailyAttendanceLogComments" auth="true">
+        <description>Update Daily Attendance Log Comments </description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service> 
+    
+</services>

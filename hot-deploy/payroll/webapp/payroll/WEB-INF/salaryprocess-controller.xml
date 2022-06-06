@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+        
+    <handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler"/>
+    <request-map uri="SalaryProcess">
+        <security https="true" auth="true"/>
+       <!--  <event type="java" path="org.ofbiz.humanres.salary.SalaryProcessEvent" invoke="pendingSalaryProcessList"/> -->
+        <response name="success" type="view" value="SalaryProcess"/>
+        <response name="error" type="view" value="SalaryProcess"/>
+    </request-map>
+    <request-map uri="ExtProMod">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="ExtProMod"/>
+        <response name="error" type="view" value="ExtProMod"/>
+    </request-map>
+    
+    
+    <request-map uri="updateSalaryItems">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="updateSalaryItems"/>
+        <response name="error" type="view" value="updateSalaryItems"/>
+    </request-map>
+    <request-map uri="NewSalary">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="newSalaryPrepareList"/>
+        <response name="success" type="view" value="SalaryProcess"/>
+        <response name="error" type="request-redirect-noparam" value="SalaryProcess"/>
+    </request-map>
+       
+    <request-map uri="ViewSalaryList">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="viewMonthlySalaryList"/>
+        <response name="success" type="view" value="detailSalaryProcessList"/>
+        <response name="error" type="request-redirect-noparam" value="ExtProMod"/>
+    </request-map>
+  
+   <request-map uri="emplDetailSalaryItems">
+        <security https="true" auth="true"/>
+        <!--  <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="updateBenAndDedList"/> -->
+       <response name="success" type="view" value="emplDetailSalaryItems"/>
+        <response name="error" type="view" value="ViewSalaryList"/>
+    </request-map>
+    <request-map uri="FindNewSalary">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="findFromMonthlySalaryList"/>
+        <response name="success" type="view" value="FindNewSalary"/>
+      
+    </request-map>
+    <request-map uri="updateBenefits">
+        <security https="true" auth="true"/>
+       <!--  <event type="service" invoke="updateBenefits"></event> -->
+     <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="updateBenefit"/> 
+        <response name="success" type="request-redirect" value="emplDetailSalaryItems">
+        <redirect-parameter name="partyId"/>
+        <redirect-parameter name="monthNumber"/>
+        <redirect-parameter name="year"/>
+        <redirect-parameter name="processId"/>
+        </response>
+      
+    </request-map>
+     <request-map uri="DeleteBenefitDedItems">
+        <security https="true" auth="true"/>
+       <!--  <event type="service" invoke="updateBenefits"></event> -->
+     <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="deleteBenefitItems"/> 
+        <response name="success" type="request-redirect" value="emplDetailSalaryItems">
+        <redirect-parameter name="partyId"/>
+        <redirect-parameter name="monthNumber"/>
+        <redirect-parameter name="year"/>
+        <redirect-parameter name="processId"/>
+        </response>
+      
+    </request-map>
+     <request-map uri="NewSalaryItemModify">
+        <security https="true" auth="true"/>
+     
+         <response name="success" type="view" value="NewSalaryItemModify"/>
+         <response name="error" type="request-redirect" value="emplDetailSalaryItems">
+		         <redirect-parameter name="partyId"/>
+		        <redirect-parameter name="monthNumber"/>
+		        <redirect-parameter name="year"/>
+		        <redirect-parameter name="processId"/>
+         </response>
+      </request-map>
+      <request-map uri="NewSalaryDDItemModify">
+        <security https="true" auth="true"/>
+     
+         <response name="success" type="view" value="NewSalaryItemDDModify"/>
+         <response name="error" type="request-redirect" value="emplDetailSalaryItems">
+		         <redirect-parameter name="partyId"/>
+		        <redirect-parameter name="monthNumber"/>
+		        <redirect-parameter name="year"/>
+		        <redirect-parameter name="processId"/>
+         </response>
+      </request-map>
+      
+      
+      
+      
+    <request-map uri="updateBenefitScreens">
+        <security https="true" auth="true"/>
+     
+         <response name="success" type="view" value="updateBenefitScreens"/>
+         <response name="error" type="view" value="emplDetailSalaryItems"/>
+      </request-map>
+      
+    <request-map uri="updateDeductions">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="updateDeductions"/> 
+        <response name="success" type="request-redirect" value="emplDetailSalaryItems">
+        <redirect-parameter name="partyId"/>
+        <redirect-parameter name="monthNumber"/>
+        <redirect-parameter name="year"/>
+        <redirect-parameter name="processId"/>
+      </response>
+    </request-map>
+    
+    
+    <request-map uri="UpdateSalaryList">
+        <security https="true" auth="true"/>
+        <!-- <event type="java" path="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="updateSalaryList"/> -->
+       <event type="service-multi" invoke="updateSalaryList"/>
+        <response name="success" type="view" value="ExtProMod"/>
+        <response name="error" type="view" value="ExtProMod"/>
+    </request-map>
+     <request-map uri="RemoveFromSalaryList">
+        <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="removeFromSalaryList"/> 
+      <!--  <event type="service-multi" invoke="updateSalaryList"/> -->
+        <response name="success" type="request-redirect" value="ViewSalaryList">
+        <redirect-parameter name="monthNumber"/>
+        </response>
+        <response name="error" type="view" value="ExtProMod"/>
+    </request-map>
+    
+    <request-map uri="updateDeductionScreens">
+        <security https="true" auth="true"/>
+     
+         <response name="success" type="view" value="updateDeductionScreens"/>
+         <response name="error" type="view" value="emplDetailSalaryItems"/>
+      </request-map>
+    <request-map uri="AddNewSalaryItems">
+        <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="addNewSalaryBenefits"></event>
+         
+         <response name="success" type="request-redirect" value="emplDetailSalaryItems">
+		         <redirect-parameter name="partyId"/>
+		        <redirect-parameter name="monthNumber"/>
+		        <redirect-parameter name="year"/>
+		        <redirect-parameter name="processId"/>
+         </response>
+      </request-map>
+    
+    <request-map uri="AddNewDDSalaryItems">
+        <security https="true" auth="true"/>
+     <event type="java" path="org.ofbiz.salaryprocess.UpdateSalaryItems" invoke="addNewDDSalaryItems"></event>
+         
+         <response name="success" type="request-redirect" value="emplDetailSalaryItems">
+		         <redirect-parameter name="partyId"/>
+		        <redirect-parameter name="monthNumber"/>
+		        <redirect-parameter name="year"/>
+		        <redirect-parameter name="processId"/>
+         </response>
+      </request-map>
+      <request-map uri="finalProcessSalaryForAct">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.SalaryProcessForAct" invoke="finalProcessSalary"/>
+        <response name="success" type="view" value="ExtProMod"/>
+        <response name="error" type="view" value="ExtProMod"/>
+    </request-map>
+    
+    <!-- Existing Salary Process for All Employee -->
+    <request-map uri="ExtProcess">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="ExtProcess"/>
+        <response name="error" type="view" value="ExtProcess"/>
+    </request-map>
+     <request-map uri="ViewSalaryProcessList">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.SalaryEvents" invoke="viewMonthlyYearlySalaryList"/>
+        <response name="success" type="view" value="empldetailSalaryProcessList"/>
+        <response name="error" type="request-redirect-noparam" value="ExtProcess"/>
+    </request-map>
+    <request-map uri="statusChangeSalaryProcess">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.SalaryEvents" invoke="salaryProcessStatusChange"/>
+        <response name="success" type="view" value="empldetailSalaryProcessList"/>
+        <response name="error" type="request-redirect-noparam" value="ExtProcess"/>
+    </request-map>
+    <request-map uri="StatusChangeForAllEmpl">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.SalaryEvents" invoke="salaryProcessStatusChangeForAll"/>
+        <response name="success" type="view" value="empldetailSalaryProcessList"/>
+        <response name="error" type="request-redirect-noparam" value="ExtProcess"/>
+    </request-map>
+    <request-map uri="FindEmplNewSalary">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.salaryprocess.SalaryEvents" invoke="findFromMonthlySalaryList"/>
+        <response name="success" type="view" value="FindEmplNewSalary"/>
+    </request-map>
+    
+    <view-map name="NewSalaryItemModify" type="screen" page="component://payroll/widget/salaryprocess/screens/UpdatableSalaryItemScreens.xml#NewSalaryItemModify"/>   
+    <view-map name="NewSalaryItemDDModify" type="screen" page="component://payroll/widget/salaryprocess/screens/UpdatableSalaryItemScreens.xml#NewSalaryItemDDModify"/>   
+    
+     <view-map name="updateBenefitScreens" type="screen" page="component://payroll/widget/salaryprocess/screens/UpdatableSalaryItemScreens.xml#updateBenefitScreens"/>   
+    <view-map name="updateDeductionScreens" type="screen" page="component://payroll/widget/salaryprocess/screens/UpdatableSalaryItemScreens.xml#updateDeductionScreens"/> 
+    <view-map name="updateSalaryItems" type="screen" page="component://payroll/widget/salaryprocess/screens/UpdatableSalaryItemScreens.xml#updateSalaryItemsPop"/>   
+    <view-map name="emplDetailSalaryItems" type="screen" page="component://payroll/widget/salaryprocess/screens/UpdatableSalaryItemScreens.xml#EditSalaryItems"/>   
+      <view-map name="FindNewSalary" type="screen" page="component://payroll/widget/salaryprocess/screens/NewSalaryScreens.xml#FindNewSalary"/>    
+  <view-map name="SalaryProcess" type="screen" page="component://payroll/widget/salaryprocess/screens/NewSalaryScreens.xml#SalaryProcess"/> 
+ <view-map name="ExtProMod" type="screen" page="component://payroll/widget/salaryprocess/screens/NewSalaryScreens.xml#ExtProMod"/>
+  <view-map name="detailSalaryProcessList" type="screen" page="component://payroll/widget/salaryprocess/screens/NewSalaryScreens.xml#detailSalaryProcessList"/>  
+  <view-map name="ExtProcess" type="screen" page="component://payroll/widget/salaryprocess/screens/EmplSalaryProcessConfgScreens.xml#ExtProcess"/>
+  <view-map name="empldetailSalaryProcessList" type="screen" page="component://payroll/widget/salaryprocess/screens/EmplSalaryProcessConfgScreens.xml#empldetailSalaryProcessList"/>
+  <view-map name="FindEmplNewSalary" type="screen" page="component://payroll/widget/salaryprocess/screens/EmplSalaryProcessConfgScreens.xml#FindEmplNewSalary"/>      
+</site-conf>

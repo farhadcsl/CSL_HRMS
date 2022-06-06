@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+        <handler name="datavision" type="view" class="org.ofbiz.webapp.view.DataVisionViewHandler"/>
+	    <handler name="jasperreportspdf" type="view" class="org.ofbiz.webapp.view.JasperReportsPdfViewHandler"/>
+	    <handler name="jasperreportsxml" type="view" class="org.ofbiz.webapp.view.JasperReportsXmlViewHandler"/>
+    
+    
+    
+    <request-map uri="PayrollReportCoverPage">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="PayrollReportCoverPage"/>
+    </request-map>  
+    
+    <request-map uri="BonusSheetReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.report.BonusReport.BonusSheetEvent" invoke="generateReport"/>
+        <response name="success" type="view" value="BonusSheetReport.pdf"/>
+    </request-map>
+     
+    <request-map uri="BonusreportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="BonusreportView"/>
+        <response name="error" type="view" value="BonusreportView"/>        
+    </request-map>  
+    <request-map uri="reportView">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="salarySheetView"/>
+        <response name="error" type="view" value="salarySheetView"/>
+    </request-map>  
+	<request-map uri="activeEmployeeForsalaryPayslip">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="salarySheetView" />
+	</request-map>     
+    <request-map uri="SalarySheet.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.report.salarySheet.SalarySheetEvent" invoke="generateReport"/>
+        <response name="success" type="view" value="SalaryListBank"/>
+    </request-map> 
+         
+    <request-map uri="EmployeeWiseProvidentFundReport">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.report.providentFund.ProvidentFundReportHelper" invoke="generateReport"/>
+        <response name="success" type="view" value="EmployeeWiseProvidentFundReport"/>
+        <response name="error" type="view" value="PayrollReportCoverPage"/>
+    </request-map> 
+    
+    <request-map uri="IndivisualEmployeeProvidentFund.pdf">
+        <security https="true" auth="true"/>
+		<event type="java" path="org.ofbiz.report.providentFund.IndivisualProvidentFundReportHelper" invoke="generateReport"/>
+        <response name="success" type="view" value="IndivisualEmployeeProvidentFund.pdf"/>
+        <response name="error" type="view" value="PayrollReportCoverPage"/>
+    </request-map>
+    <request-map uri="EmployeePayrollSetupReportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EmployeePayrollSetupReportView"/>
+        <response name="error" type="view" value="BonusreportView"/>        
+    </request-map> 
+    
+    <request-map uri="EmployeePayrollSetupReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.report.payrollreport.EmployeePayrollSetupReportHelper" invoke="generateReport"/>
+        <response name="success" type="view" value="EmployeePayrollSetupReport.pdf"/>
+        <response name="error" type="view" value="PayrollReportCoverPage"/>        
+    </request-map> 
+    <request-map uri="EmployeePayslipReportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EmployeePayslipReportView"/>
+        <response name="error" type="view" value="EmployeePayslipReportView"/>        
+    </request-map>   
+    <request-map uri="PayslipForAllEmployeeReportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PayslipForAllEmployeeReportView"/>
+        <response name="error" type="view" value="PayslipForAllEmployeeReportView"/>        
+    </request-map>   
+    <request-map uri="IndivisualEmployeeProvidentFundReportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="IndivisualEmployeeProvidentFundReportView"/>
+        <response name="error" type="view" value="IndivisualEmployeeProvidentFundReportView"/>        
+    </request-map> 
+    <request-map uri="TaxReportView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="TaxReportView"/>
+        <response name="error" type="view" value="TaxReportView"/> 
+    </request-map>   
+    <request-map uri="TaxReport.pdf">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.report.TaxReport.TaxEvent" invoke="generateReport"/>
+        <response name="success" type="view" value="TaxReport.pdf"/>
+    </request-map>
+    
+    <view-map name="TaxReportView" type="screen" page="component://payroll/widget/report/TaxReportScreen.xml#TaxReportScreen"/> 
+    <view-map name="IndivisualEmployeeProvidentFundReportView" type="screen" page="component://payroll/widget/report/IndivisualEmployeeProvidentFundReportScreen.xml#IndivisualEmployeeProvidentFundReportScreen"/> 
+    <view-map name="PayslipForAllEmployeeReportView" type="screen" page="component://payroll/widget/report/PayslipForAllEmployeeReportScreen.xml#PayslipForAllEmployeeReportScreen"/>    
+    <view-map name="BonusreportView" type="screen" page="component://payroll/widget/report/BonusReportScreens.xml#BonusreportScreen"/>     
+    <view-map name="BonusSheetReport.pdf" type="jasperreportspdf" page="/reports/bonusReport/BonusReport.jrxml" content-type="application/pdf" encoding="none" info=""/> 
+          
+    <view-map name="EmployeePayslipReportView" type="screen" page="component://payroll/widget/report/EmployeePayslipReportScreen.xml#EmployeePayslipReportScreen"/>     
+    <view-map name="EmployeePayrollSetupReportView" type="screen" page="component://payroll/widget/report/EmployeePayrollSetupReportScreen.xml#EmployeePayrollSetupReportScreen"/>     
+    <view-map name="PayrollReportCoverPage" type="screen" page="component://payroll/widget/report/PayrollReportScreens.xml#PayrollReportCoverPage"/>
+ 	<view-map name="salarySheetView" type="screen" page="component://payroll/widget/report/SalaryReportScreens.xml#SalarySheetReport"/>   
+	<view-map name="SalaryListBank"  type="jasperreportspdf" page="/reports/SalaryReport.jrxml" content-type="application/pdf" encoding="none"/>
+ 	<view-map name="EmployeePayrollSetupReport.pdf"  type="jasperreportspdf" page="/reports/payrollreport/EmployeePayrollSetup.jrxml" content-type="application/pdf" encoding="none"/>
+    <view-map name="EmployeeWiseProvidentFundReport"  type="jasperreportspdf" page="/reports/providentFund/EmployeeWiseProvidentFundReport.jrxml" content-type="application/pdf" encoding="none"/>
+    <view-map name="IndivisualEmployeeProvidentFund.pdf"  type="jasperreportspdf" page="/reports/providentFund/IndivisualProvidentFundReport.jrxml" content-type="application/pdf" encoding="none"/>
+    <view-map name="TaxReport.pdf" type="jasperreportspdf" page="/reports/taxReport/IndividualTaxReport.jrxml" content-type="application/pdf" encoding="none" info=""/>   
+</site-conf>

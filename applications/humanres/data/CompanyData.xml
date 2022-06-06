@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-engine-xml>
+<!-- <Party partyId="Company" partyTypeId="PARTY_GROUP"/> -->
+    <!-- <PartyGroup partyId="Company" groupName="Contessa"/>
+    IMPORTANT: set INTERNAL_ORGANIZATIO first, otherwise BILL_TO_CUSTOMER will also cause this party group to become an ACCOUNT thanks to CRM's auto assign responsible party
+    <PartyRole partyId="Company" roleTypeId="INTERNAL_ORGANIZATIO"/>
+    <PartyRole partyId="Company" roleTypeId="BILL_FROM_VENDOR"/>
+    <PartyRole partyId="Company" roleTypeId="BILL_TO_CUSTOMER"/>
+    <PartyRole partyId="Company" roleTypeId="_NA_"/>
+    <PartyRole partyId="Company" roleTypeId="PARENT_ORGANIZATION"/>
+    <PartyAcctgPrefAndGroup baseCurrencyUomId="BDT" groupName="Contessa" partyId="Company"/>
+ -->
+<!-- MOTHER COMPANY, GROUP OF COMPANY -->
+    <Party partyId="CSL" partyTypeId="PARTY_GROUP"/>
+    <PartyGroup partyId="CSL" groupName="Computer Services Ltd"/>
+    <!-- IMPORTANT: set INTERNAL_ORGANIZATIO first, otherwise BILL_TO_CUSTOMER will also cause this party group to become an ACCOUNT thanks to CRM's auto assign responsible party -->
+    <PartyRole partyId="CSL" roleTypeId="INTERNAL_ORGANIZATIO"/>
+    <PartyRole partyId="CSL" roleTypeId="BILL_FROM_VENDOR"/>
+    <PartyRole partyId="CSL" roleTypeId="BILL_TO_CUSTOMER"/>
+    <PartyRole partyId="CSL" roleTypeId="_NA_"/>
+    <PartyRole partyId="CSL" roleTypeId="PARENT_ORGANIZATION"/>
+   <!--  <PartyRelationship partyIdFrom="Company" partyIdTo="CSCL" partyRelationshipTypeId="GROUP_ROLLUP" roleTypeIdFrom="_NA_" roleTypeIdTo="_NA_" fromDate="2015-05-13 00:00:00.000"/> -->
+    <PartyAcctgPrefAndGroup baseCurrencyUomId="BDT" groupName="Computer Services Ltd" partyId="CSL"/>
+    
+    
+    <ContactMech contactMechId="POSTAL01" contactMechTypeId="POSTAL_ADDRESS" />
+    <PostalAddress contactMechId="POSTAL01" toName="Computer Services Ltd" attnName="Mr. Muntashir Islam" address1="Computer Services Ltd" address2="Dhaka-1212"
+                   city="Dhaka" stateProvinceGeoId="" countryGeoId="BGD" postalCode="1216"/>
+    <ContactMech contactMechId="PHONE01" contactMechTypeId="TELECOM_NUMBER"/>
+    <TelecomNumber contactMechId="PHONE01" countryCode="880" areaCode="018" contactNumber="14360576"/> 
+  
+    <ContactMech contactMechId="PHONE02" contactMechTypeId="TELECOM_NUMBER"/>
+    <TelecomNumber contactMechId="PHONE02" countryCode="880" areaCode="02" contactNumber="456-7890"/>
+  
+    <ContactMech contactMechId="EMAIL01" contactMechTypeId="EMAIL_ADDRESS" infoString="admin.erp@contessabd.com"/>
+    <ContactMech contactMechId="WEB01" contactMechTypeId="WEB_ADDRESS" infoString="www.contessabd.com"/>
+    
+    <PartyContactMech partyId="CSL" contactMechId="POSTAL01" fromDate="2015-01-01 00:00:00"/>
+    <PartyAcctgPrefAndGroup baseCurrencyUomId="BDT" groupName="Computer Services Ltd" partyId="CSL"/>
+	
+    <PartyContactMechPurpose partyId="CSL" contactMechId="POSTAL01" contactMechPurposeTypeId="BILLING_LOCATION" fromDate="2015-01-01 00:00:00"/>
+    <PartyContactMechPurpose partyId="CSL" contactMechId="POSTAL01" contactMechPurposeTypeId="GENERAL_LOCATION" fromDate="2015-01-01 00:00:00"/>
+    <PartyContactMechPurpose partyId="CSL" contactMechId="POSTAL01" contactMechPurposeTypeId="SHIPPING_LOCATION" fromDate="2015-01-01 00:00:00"/>
+    <PartyContactMechPurpose partyId="CSL" contactMechId="POSTAL01" contactMechPurposeTypeId="PAYMENT_LOCATION" fromDate="2015-01-01 00:00:00"/>
+
+	<PartyContactMech partyId="CSL" contactMechId="PHONE01" fromDate="2015-01-01 00:00:00"/>
+    <PartyContactMechPurpose partyId="CSL" contactMechId="PHONE01" contactMechPurposeTypeId="PRIMARY_PHONE" fromDate="2015-01-01 00:00:00"/>
+
+    <PartyContactMech partyId="CSL" contactMechId="PHONE02" fromDate="2015-01-01 00:00:00"/>
+    <PartyContactMechPurpose partyId="CSL" contactMechId="PHONE02" contactMechPurposeTypeId="FAX_NUMBER" fromDate="2015-01-01 00:00:00"/>
+
+    <PartyContactMechPurpose partyId="CSL" contactMechId="EMAIL01" contactMechPurposeTypeId="PRIMARY_EMAIL" fromDate="2015-01-01 00:00:00"/>
+  	<PartyContactMech partyId="CSL" contactMechId="EMAIL01" fromDate="2015-01-01 00:00:00"/>
+  
+    <PartyContactMech partyId="CSL" contactMechId="WEB01" fromDate="2015-01-01 00:00:00"/>
+    <PartyContactMechPurpose partyId="CSL" contactMechId="WEB01" contactMechPurposeTypeId="PRIMARY_WEB_URL" fromDate="2015-01-01 00:00:00"/>
+
+    
+    </entity-engine-xml>

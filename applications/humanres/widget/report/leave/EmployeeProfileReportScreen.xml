@@ -1,0 +1,40 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+   <screen name="EmployeeProfileReportScreen">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Employee Profile Report"/>
+                <set field="headerItem" value="Report"/>
+            </actions>
+             <widgets>             
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="Employee Profile Report">
+                       		<include-form name="EmployeeProfileReportForms" location="component://humanres/widget/report/leave/EmployeeProfileReportForms.xml"/>
+                      	</screenlet>  
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+     <screen name="publicHoliday">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Employee Profile Report"/>
+                <set field="headerItem" value="EmplProfile"/>
+                <set field="holidayCtx" from-field="parameters"/>
+            </actions>
+             <widgets>             
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="Public Holiday">
+                       		<include-form name="publicHoliday" location="component://humanres/widget/report/leave/EmployeeProfileReportForms.xml"/>
+                      	</screenlet>  
+                      		<include-form name="ListpublicHoliday" location="component://humanres/widget/report/leave/EmployeeProfileReportForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+     
+  </screens>

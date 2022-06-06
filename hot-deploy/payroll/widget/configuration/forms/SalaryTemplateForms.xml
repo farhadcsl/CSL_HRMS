@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+     <form name="FindSalaryTemplates" type="single" target="FindPayrollSalaryTemplate" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <!-- <auto-fields-entity entity-name="SalaryTemplate" default-field-type="find"/>        
+        <auto-fields-service service-name="createSalaryTemplate" default-field-type="find"/> -->
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="comments"><hidden/></field>
+        <field name="salaryTemplateId" ><text></text></field>
+        <field name="salaryTemplateName">
+            <drop-down allow-empty="true"  >
+            	<auto-complete/>
+                <entity-options description="${salaryTemplateName}" key-field-name="salaryTemplateName" entity-name="SalaryTemplate">
+                    <entity-order-by field-name="salaryTemplateId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+ 
+    <form name="ListSalaryTemplates" type="multi" list-name="listIt" use-row-submit="true" title="" target="updatePayrollSalaryTemplate"
+     	paginate-target="FindPayrollSalaryTemplate"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="SalaryTemplateCtx"/>
+                <field-map field-name="entityName" value="SalaryTemplate"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <auto-fields-service default-field-type="display" service-name="updateSalaryTemplate"/>
+        <field name="salaryTemplateId" title="Salary Template Id" widget-style="linktext">
+            <hyperlink also-hidden="true" target="EditPayrollSalaryTemplate" target-type="plain" description="${salaryTemplateId}">
+                <parameter param-name="salaryTemplateId"/>
+            </hyperlink>
+        </field>
+        <!-- <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink target="EditPayrollSalaryTemplate" description="Edit" also-hidden="false">
+                <parameter param-name="salaryTemplateId"/>
+            </hyperlink>
+        </field> -->
+        <field name="detailsLink" title="" widget-style="buttontext">
+            <hyperlink target="DetailsPayrollSalaryTemplate" description="Details" also-hidden="false">
+                <parameter param-name="salaryTemplateId"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="" widget-style="buttontext">
+            <hyperlink target="deletePayrollSalaryTemplate" description="${uiLabelMap.CommonDelete}" also-hidden="false" 
+            request-confirmation="true" confirmation-message="Do you want to delete salary template ${salaryTemplateName} ">
+                <parameter param-name="salaryTemplateId"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="EditSalaryTemplate" type="single" target="updatePayrollSalaryTemplate" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="SalaryTemplate">
+        <alt-target use-when="salaryTemplateId==null" target="createSalaryTemplate"/>
+        <auto-fields-service service-name="updateSalaryTemplate"/>
+        <field use-when="SalaryTemplate!=null" name="salaryTemplateId" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display/></field>
+        <field use-when="SalaryTemplate==null" name="salaryTemplateId"><hidden/></field>
+        <field name="salaryTemplateName" widget-style="required"><text/></field>
+        <field name="comments"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" use-when="SalaryTemplate!=null" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ViewSalaryTemplate" type="single" target="updatePayrollSalaryTemplate" title="" 
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="SalaryTemplate">
+        
+        <actions>
+	        <entity-one value-field="SalaryTemplate" entity-name="SalaryTemplate">
+	        	<field-map field-name="salaryTemplateId" value="${salaryTemplateId}"/>
+	        </entity-one>
+	        
+        </actions>
+        <alt-target use-when="salaryTemplateId==null" target="createPayrollSalaryTemplate"/>
+        <auto-fields-service service-name="updateSalaryTemplate"/>
+        <field  name="salaryTemplateId" ><display/></field>
+        <field  name="salaryTemplateName" ><display /></field>
+        <field  name="comments" ><display/></field>
+    </form>
+    
+    
+    
+ 
+</forms>

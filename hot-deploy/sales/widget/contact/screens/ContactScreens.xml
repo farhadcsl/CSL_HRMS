@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+<screen name="FindContacts">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find Sales Contact"/>
+                <set field="currentUrl" value="FindContacts"/>
+                <set field="headerItem" value="Contact"/>
+                <set field="setContactDescription" value="${groovy:session.setAttribute(&quot;contactDescription&quot;,headerItem)}"/>
+                <set field="removeAccountDescription" value="${groovy:session.removeAttribute(&quot;accountDescription&quot;)}"/>
+                <set field="removeLeadDescription" value="${groovy:session.removeAttribute(&quot;leadDescription&quot;)}"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                   <!--  <decorator-section name="left-column">
+                        <include-screen name="leftbar" location="component://marketing/widget/sfa/CommonScreens.xml"/>
+                    </decorator-section>  -->                   
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <include-menu name="ContactSubTabBar" location="component://sales/widget/contact/ContactMenus.xml"/>
+                                <container style="no-clear">
+                                    <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                        <decorator-section name="search-options">
+                                             <include-menu name="ContactFindTabBar" location="component://sales/widget/contact/ContactMenus.xml"/>
+                                            <include-form name="FindContacts" location="component://sales/widget/contact/forms/ContactForms.xml"/>
+                                        </decorator-section>
+                                        <decorator-section name="search-results">
+                                            <section>
+                                                <condition>
+                                                    <or>
+                                                        <if-empty field="parameters.all"/>
+                                                        <if-compare field="parameters.all" operator="equals" value="true"/>
+                                                    </or>
+                                                </condition>
+                                                <widgets>
+                                                    <!-- list all contacts -->
+                                                    <label style="h1" text="${uiLabelMap.SfaAllContacts}"/>
+                                                      <include-form name="ListContacts" location="component://sales/widget/contact/forms/ContactForms.xml"/> 
+                                                </widgets>
+                                                <fail-widgets>
+                                                    <!-- list my contacts -->
+                                                    <label style="h1" text="${uiLabelMap.SfaMyContacts}"/>
+                                                     <include-form name="ListMyContacts" location="component://sales/widget/contact/forms/ContactForms.xml"/>
+                                                </fail-widgets>
+                                            </section>
+                                        </decorator-section>
+                                    </decorator-screen>
+                                </container>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+        <screen name="NewContact">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleCreateContact"/>
+                <set field="headerItem" value="Contact"/>
+                <property-to-field field="defaultCountryGeoId" resource="general" property="country.geo.id.default" default="USA"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonContactDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.CommonCreate} ${uiLabelMap.SfaContact}">
+                            <include-form name="NewContact" location="component://sales/widget/contact/forms/ContactForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+      <screen name="NewContactFromVCard">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleCreateContactFromVCard"/>
+                <set field="headerItem" value="Contact"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonContactDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Create Contact From VCard">
+                            <container><label style="h3" text="Automatically create a new contact by importing a vCard"/></container>
+                            <include-form  name="NewContactFromVCard" location="component://sales/widget/contact/forms/ContactForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>  
+         <screen name="MergeContacts">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Merge CreateContact"/>
+                <set field="headerItem" value="Contact"/>
+                <set field="tabButtonItem" value="MergeContacts"/>
+                <script location="component://marketing/webapp/sfa/WEB-INF/action/MergeContacts.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonContactDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.SfaMergeContacts}">
+                            <include-form name="MergeContacts" location="component://sales/widget/contact/forms/ContactForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.SfaMergeContacts}">
+                            <section>
+                                <condition>
+                                    <if-compare-field field="parameters.partyIdFrom" operator="not-equals" to-field="parameters.partyIdTo"/>
+                                </condition>
+                                <widgets>
+                                    <platform-specific>
+                                        <html><html-template location="component://sales/webapp/sales/ftlFile/contact/mergeContacts.ftl"/></html>
+                                    </platform-specific>
+                                </widgets>
+                                <fail-widgets>
+                                    <label text="${uiLabelMap.SfaCanNotMergeSameContact}" style="h3"></label>
+                                </fail-widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+</screens>

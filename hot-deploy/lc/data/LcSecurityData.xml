@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Lc Component." permissionId="LC_VIEW"/>
+    <SecurityPermission description="Create operations in the Lc Component." permissionId="LC_CREATE"/>
+    <SecurityPermission description="Update operations in the Lc Component." permissionId="LC_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Lc Component." permissionId="LC_DELETE"/>
+    <SecurityPermission description="ALL operations in the Lc Component." permissionId="LC_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="LC_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="LC_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="LC_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="LC_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="LC_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="LC_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="LC_ADMIN"/>
+    
+    <SecurityGroup groupId="LC" description="LC admin" />
+    <SecurityGroupPermission groupId="LC" permissionId="OFBTOOLS_VIEW"/>
+    <SecurityGroupPermission groupId="LC" permissionId="LC_ADMIN"/>
+    <SecurityGroupPermission groupId="LC" permissionId="LC_CREATE"/>
+    <SecurityGroupPermission groupId="LC" permissionId="LC_DELETE"/>
+    <SecurityGroupPermission groupId="LC" permissionId="LC_UPDATE"/>
+    <SecurityGroupPermission groupId="LC" permissionId="LC_VIEW"/>
+</entity-engine-xml>

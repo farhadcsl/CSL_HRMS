@@ -1,0 +1,47 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+   <screen name="EmployeeReport">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Employee Information Report"/>
+                <set field="headerItem" value="Report"/>
+                <set field="userLoginId" from-field="parameters.userLoginId"/>
+                
+                <set field="tabButtonItem2" value="EmployeeListReport"/>
+                <entity-one entity-name="PartyAndUserLoginAndPerson" value-field="partyAndUserLoginAndPerson"/>
+                <set field="partyAndUserLoginAndPersonctx" from-field="parameters"/>
+            </actions>
+             <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                     <decorator-section name="pre-body">
+                       <include-menu location="component://humanres/widget/HumanresMenus.xml" name="EmplReportTypeTabBar"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <include-form name="ListEmployeeReport" location="component://humanres/widget/report/profile/EmployeeReportForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+     <screen name="EmployeeReportByParves">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Employee Information Report"/>
+                <set field="headerItem" value="Report"/>
+                <set field="userLoginId" from-field="parameters.userLoginId"/>
+                
+                <set field="tabButtonItem2" value="EmployeeListReport"/>
+                <entity-one entity-name="PartyAndUserLoginAndPerson" value-field="partyAndUserLoginAndPerson"/>
+                <set field="partyAndUserLoginAndPersonctx" from-field="parameters"/>
+            </actions>
+             <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-form name="EmployeeReportByParves" location="component://humanres/widget/report/profile/EmployeeReportForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+     
+  </screens>

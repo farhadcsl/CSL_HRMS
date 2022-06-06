@@ -1,0 +1,27 @@
+#basicdiagram{	
+	width: 100%; height: 850px; border-style: dotted; border-width: 1px;float:left;
+}
+.orgdiagram{
+	float:left !important;
+}
+.orgdiagram{
+	float:left !important;
+}
+#basicdiagramCover{
+	width:100%;
+	height:400px;
+    overflow: scroll;
+}
+.bp-selectioncheckbox-frame{
+	display:none;
+	}
+	.bp-photo-frame{
+	display:none;
+	}
+	.bp-description{
+	top: 24px; 
+	left: 5px !important; 
+	width: 100% !important; 
+	height: 60% !important;
+	text-align:center;
+	}

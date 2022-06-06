@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="NewSalaryAdjustment" target="CreateSalaryAdjustment" type="single" odd-row-style="header-row"
+          default-table-style="basic-table">
+         <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="employeeId" title="Employee Id"  required-field="true" ><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+       
+        <field name="payrollItemTypeId">
+            <drop-down allow-empty="false">
+                <entity-options description="${payrollItemName}" key-field-name="payrollItemTypeId" entity-name="PayrollItem">
+                    <entity-constraint name="payrollType" value="V"/>
+                    <entity-order-by field-name="payrollItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="calculationType">
+            <drop-down allow-empty="false">
+                <option key="B" description="Benifit"/>
+                <option key="D" description="Deduction"/>
+            </drop-down>
+        </field>
+        <field name="calculationMode">
+            <drop-down allow-empty="false">
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field>
+        <field name="optValue" title="Value" required-field="true"  widget-style="number"><text/></field>
+        <field name="comments" title="Comments" required-field="true" ><textarea/></field>
+        <field name="isActive" title="Value"><hidden/></field>
+        <field name="amount" title="Value"><hidden/></field>
+     	<field name="submitButton" title="Create" widget-style="smallSubmit">
+     		<submit/>
+     	</field>
+       
+    </form>
+ 
+</forms>

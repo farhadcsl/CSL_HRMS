@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+     
+
+    <simple-method method-name="updateTrExpType" short-description="Update Training Expense Type">
+        <entity-one entity-name="TrainingExpenseType" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+
+    <simple-method method-name="deleteTrExpType" short-description="Delete Training Expense Type">
+        <entity-one entity-name="TrainingExpenseType" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <!-- Training Offer -->
+  <simple-method method-name="updateTrainingOffer" short-description="Update Training Offer">
+        <entity-one entity-name="TrainingOffer" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+
+    <simple-method method-name="deleteTrainingOffer" short-description="Delete Training Offer">
+        <entity-one entity-name="TrainingOffer" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deletePartyTrainingRequest" short-description="Delete PartyTrainingRequest">
+        <entity-one entity-name="PartyTrainingRequest" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deletePartyTrainingRequestDetails" short-description="Delete PartyTrainingRequestDetails">
+        <entity-one entity-name="PartyTrainingRequestDetails" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+</simple-methods>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    
+    <menu name="logistics"  default-menu-item-name="logisticsRequisition" default-selected-style="selected"
+        type="simple" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="logisticsRequisition" title="Requisition">
+            <link target="logisticsRequisition">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="logisticsApprove" title="Approve">
+            <link target="logisticsApprove">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu> 
+
+</menus>
+    

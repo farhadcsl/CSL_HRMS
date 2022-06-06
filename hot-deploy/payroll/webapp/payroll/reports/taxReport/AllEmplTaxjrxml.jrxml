@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2015-11-28T12:07:21 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AllEmplTaxjrxml" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82227b5a-56c4-41fe-a60a-a80209f98eda">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Contessa_DATAADAPTER.xml"/>
+	<subDataset name="EmplTaxDataset" uuid="35535407-9a5b-4d59-bcb7-3003cfd3387f">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Contessa_DATAADAPTER.xml"/>
+		<queryString>
+			<![CDATA[SELECT `EMPL_FINAL_SALARY_OPT`.`AMOUNT`,
+	`EMPL_FINAL_SALARY_OPT`.`MONTH_NUMBER`,
+	`PERSON`.`FIRST_NAME`
+FROM `EMPL_FINAL_SALARY_OPT`,
+	`PERSON`
+WHERE 
+	 `EMPL_FINAL_SALARY_OPT`.`PAYROLL_ITEM_TYPE_ID` = 'TAX' 
+	 AND `PERSON`.`PARTY_ID` = `EMPL_FINAL_SALARY_OPT`.`PARTY_ID`]]>
+		</queryString>
+		<field name="FIRST_NAME" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="AMOUNT" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="MONTH_NUMBER" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<group name="MONTH_NUMBER">
+			<groupExpression><![CDATA[$F{MONTH_NUMBER}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT `EMPL_FINAL_SALARY_OPT`.`AMOUNT`,
+	`EMPL_FINAL_SALARY_OPT`.`MONTH_NUMBER`,
+	`PERSON`.`FIRST_NAME`
+FROM `EMPL_FINAL_SALARY_OPT`,
+	`PERSON`
+WHERE 
+	 `EMPL_FINAL_SALARY_OPT`.`PAYROLL_ITEM_TYPE_ID` = 'TAX' 
+	 AND `PERSON`.`PARTY_ID` = `EMPL_FINAL_SALARY_OPT`.`PARTY_ID`]]>
+	</queryString>
+	<field name="AMOUNT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MONTH_NUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FIRST_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="MONTH_NUMBER">
+		<groupExpression><![CDATA[$F{MONTH_NUMBER}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="37" width="571" height="1" uuid="f6e5eb94-b78b-44ba-88a2-2b8292d97fc8"/>
+			</line>
+			<staticText>
+				<reportElement x="44" y="17" width="480" height="20" uuid="80641411-052c-40d8-9046-c42dc17b80af"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="-7" width="401" height="21" uuid="69d3bfc5-bc8b-42ef-b2a7-36d5f5a8ef7c"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contessa Solutions and Consultants Ltd]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="93" y="2" width="344" height="22" uuid="3ce12a6b-ab7c-489b-8d67-9d5e748fc69f"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tax Report]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="410" y="27" width="150" height="20" uuid="f951c07e-2294-4893-a0be-6325eb408221"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="-1" width="100" height="21" uuid="a7fa4b6a-e039-4af8-8633-6d19b87f1c24"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="0" width="150" height="20" uuid="a5d7a3f7-aa74-4d07-a6b0-384f10196a94"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monthly Tax Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="1" width="100" height="19" uuid="b9d752a8-9719-4c68-9487-31989200b992"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Month Number]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="260" splitType="Stretch">
+			<componentElement>
+				<reportElement x="10" y="0" width="410" height="260" uuid="66a5ff2d-3f94-4ed8-b79d-87ae8b009464"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="EmplTaxDataset" uuid="03508c58-3e0b-41b3-b02c-4a52a5544fdc">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="260" width="410">
+						<textField>
+							<reportElement x="0" y="0" width="160" height="20" uuid="f5f81fbf-c4f7-4344-b13e-02287c8f3b91"/>
+							<textFieldExpression><![CDATA[$F{FIRST_NAME}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="131" y="0" width="104" height="20" uuid="5085c94b-1352-4bdc-9e61-0d32596044ef"/>
+							<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="270" y="0" width="130" height="20" uuid="66be4721-9082-4e61-8024-4c6582262e91"/>
+							<textFieldExpression><![CDATA[$F{MONTH_NUMBER}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,1 @@
+ session.setAttribute("threedaysReportList", threedaysReportList);

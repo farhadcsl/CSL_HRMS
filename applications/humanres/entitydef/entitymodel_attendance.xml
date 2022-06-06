@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>Attendance Preference and Report Related Entity</description>
+    <version>1.0</version>
+    
+    
+    <entity entity-name="Location"
+            package-name="org.ofbiz.humanres.ability"
+            title="Location Entity">
+        <field name="partyId" type="id-ne"></field>
+        <field name="locationId" type="id-ne"></field>
+        <field name="currentInOutStatus" type="id-ne"></field>
+        <field name="locationName" type="id-long"></field>
+        <field name="statusId" type="id"></field>
+        <field name="parentLocationId" type="id-ne"></field>
+        <field name="locationTypeId" type="id-ne"></field>
+        <field name="parentLocationTypeId" type="id-ne"></field>
+		<field name="description" type="description"></field>
+        <prim-key field="locationId"/>
+      
+        <relation type="one" fk-name="LOCATION_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="LOCATION_LTYP" rel-entity-name="LocationType">
+            <key-map field-name="locationTypeId"/>
+        </relation>
+        <relation type="one" fk-name="LOCATION_STATUS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="one" fk-name="LOCATION_LPAR" title="Parent" rel-entity-name="Location">
+        <key-map field-name="parentLocationId" rel-field-name="locationId"/>
+      </relation>
+    </entity>
+
+	<entity entity-name="LocationType"
+            package-name="org.ofbiz.humanres.ability"
+            title="Location Type Entity">
+      <field name="locationTypeId" type="id-ne"></field>
+      <field name="parentLocationTypeId" type="id-ne"></field>
+      <field name="description" type="description"></field>
+      <prim-key field="locationTypeId"/>
+      <relation type="one" fk-name="LOCATION_LPARTYP" title="Parent" rel-entity-name="LocationType">
+        <key-map field-name="parentLocationTypeId" rel-field-name="locationTypeId"/>
+      </relation>
+    </entity>
+    
+    <entity entity-name="EmployeeRegistration"
+            package-name="org.ofbiz.humanres.ability"
+            title="Lacation Table for EmployeeRegistration">
+      <field name="userLoginId" type="id-ne"></field>
+      <field name="partyId" type="id-ne"></field><!-- New Addition -->
+      <field name="deivceId" type="id-ne"></field>
+      <field name="locationId" type="id-ne"></field>
+      <field name="employeeName" type="id-ne"></field>
+      <field name="description" type="description"></field>
+      
+      <prim-key field="partyId"/>
+      <prim-key field="deivceId"/>
+      <prim-key field="locationId"/>
+   
+      <relation type="one" fk-name="EMPL_DEVID" rel-entity-name="Location">
+            <key-map field-name="locationId" rel-field-name="locationId"/>
+      </relation>
+    </entity>
+    
+    <entity entity-name="DeviceRegistration"
+            package-name="org.ofbiz.humanres.ability"
+            title="Lacation Table for Device">
+      <field name="partyId" type="id-ne"></field>      
+      <field name="deviceType" type="id-long"></field>       
+      <field name="terminalId" type="id-long"></field>
+      <field name="locationId" type="id-long"></field>
+      <field name="terminalType" type="id-long"></field>
+      <field name="type" type="id-long"></field>
+      <field name="firsTimeRegister" type="id-long"></field>
+      <field name="terminalName" type="id-long"></field>
+      <field name="terminalSN" type="id-long"></field>
+      <field name="terminalIP" type="id-long"></field>
+      <field name="pegasusAddress" type="id-long"></field>	
+      <field name="description" type="description"></field>
+   
+      <field name="firmewareVersion" type="id-vlong"></field>
+      <field name="fliVersion" type="id-long"></field>
+      <field name="userName" type="id-vlong"></field>
+      <field name="userPass" type="id-vlong"></field>
+      <field name="endPointIP" type="id-vlong"></field>
+      <field name="agentVersion" type="id-vlong"></field>
+      <field name="lastUpdateRow" type="id-long"></field>
+ 
+      <prim-key field="terminalSN"/>
+      <prim-key field="locationId"/>
+      <prim-key field="terminalIP"/>
+
+    </entity>
+    
+  <entity entity-name="EmployeeLog"
+            package-name="org.ofbiz.humanres.ability"
+            title="Lacation Table for EmployeeLog">
+            
+      <field name="logId" type="id-ne"></field>
+      <field name="userLoginId" type="id-ne"></field>
+      <field name="partyId" type="id-ne"></field><!--New Addition  -->
+  	  <field name="logtimeStamp" type="date-time"></field>
+      <field name="eventType" type="id-ne"></field>
+      <field name="terminalSN" type="id-ne"></field>
+      <field name="senderTerminal" type="id-ne"></field>
+      <field name="photoPart" type="id-ne"></field>
+    
+      <prim-key field="logtimeStamp"/>
+      <prim-key field="partyId"/>
+      
+
+    </entity>
+    
+    
+  <entity entity-name="EmployeeAttendancePreference"
+            package-name="org.ofbiz.humanres.attendance"
+            title="Employee Attendance Preference Entity">
+            
+        <field name="employeePreferenceId" type="id-ne"></field>  
+        <field name="empPrefRevision" type="id-ne"></field>  
+        <field name="employeeId" type="id-ne"></field>
+        <field name="partyId" type="id-ne"></field><!--New Addition  -->
+        <field name="orgPartyId" type="id-ne"></field>
+        <field name="oTallowances" type="id-ne"></field>
+        <field name="attendanceBonusAllowances" type="id-ne"></field>
+        <field name="extraOTallowances" type="id-ne"></field>
+        <field name="entryTime" type="id-ne"></field>
+        <field name="exitTime" type="id-ne"></field>
+        <field name="lunchDuration" type="id-ne"></field>
+        <field name="lunchTime" type="id-ne"></field>
+        <field name="maximumStayTime" type="id-ne"></field>
+        <field name="lateEntryTime" type="id-ne"></field>
+        <field name="oTStartTime" type="id-ne"></field>
+        <field name="oTEndTime" type="id-ne"></field>
+        <field name="extraOTStartTime" type="id-ne"></field>
+        <field name="extraOTEndTime" type="id-ne"></field>
+        
+        <field name="firstTiffinStartTime" type="id-ne"></field>	
+		<field name="firstTiffinEndTime" type="id-ne"></field>	
+		<field name="secondTiffinStartTime" type="id-ne"></field>
+		<field name="secondTiffinEndTime" type="id-ne"></field>
+		<field name="nightStartTime" type="id-ne"></field>
+	 	<field name="nightEndTime" type="id-ne"></field>	
+	 	
+	 	<field name="leOrAbsForattbnDis" type="id-ne"></field>	
+	 	<field name="halfLesForattbnDed" type="id-ne"></field>	
+	 	
+	 	<field name="lunchStartTime" type="id-ne"></field>	
+	 	<field name="lunchEndTime" type="id-ne"></field>	
+        
+        <field name="lateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+        <field name="lateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+        <field name="yearlyLateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+        <field name="yearlylateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+        
+        <field name="firstHalfHolidayRate" type="id-ne"></field>
+		<field name="secondHalfHolidayRate" type="id-ne"></field>
+        
+        <field name="montlyBonusAmount" type="id-ne"></field>
+        <field name="yearlyBonusAmount" type="id-ne"></field>
+        <field name="bonusDeductionAmount" type="id-ne"></field>
+        <field name="oTCalculationOperand" type="id-ne"></field>
+        
+        <field name="firstTiffinRate" type="id-ne"></field>
+        <field name="secondTiffinRate" type="id-ne"></field>
+        <field name="nightRate" type="id-ne"></field>
+        
+        <field name="fromDate" type="date"></field>
+      	<field name="thruDate" type="date"></field>
+     
+        <prim-key field="employeePreferenceId"/>
+        <prim-key field="empPrefRevision"/>
+        <prim-key field="partyId"/>
+  
+    </entity>
+    
+    <view-entity entity-name="EmpPrefMin" package-name="org.ofbiz.humanres.attendance">
+    	<member-entity entity-alias="EAPMin" entity-name="EmployeeAttendancePreference"/>
+    	<alias-all entity-alias="EAPMin" function="min"/>
+    </view-entity>
+    
+    <view-entity entity-name="EmpPrefMax" package-name="org.ofbiz.humanres.attendance">
+    	<member-entity entity-alias="EAPMax" entity-name="EmployeeAttendancePreference"/>
+    	<alias-all entity-alias="EAPMax" function="max"/>
+    </view-entity>
+
+    <entity entity-name="DayAttendancePreference"
+            package-name="org.ofbiz.humanres.attendance"
+            title="Employee Attendance Preference Entity">
+            
+        <field name="dayPreferenceId" type="id-ne"></field>    
+        <field name="dateId" type="date"></field>
+        <field name="orgPartyId" type="id-ne"></field>
+        <field name="entryTime" type="id-ne"></field>
+        <field name="exitTime" type="id-ne"></field>
+        <field name="lunchDuration" type="id-ne"></field>
+        <field name="lunchTime" type="id-ne"></field>
+        <field name="maximumStayTime" type="id-ne"></field>
+        <field name="lateEntryTime" type="id-ne"></field>
+        <field name="oTStartTime" type="id-ne"></field>
+        <field name="oTEndTime" type="id-ne"></field>
+        <field name="extraOTStartTime" type="id-ne"></field>
+        <field name="extraOTEndTime" type="id-ne"></field>
+        
+        <field name="firstTiffinStartTime" type="id-ne"></field>	
+		<field name="firstTiffinEndTime" type="id-ne"></field>	
+		<field name="secondTiffinStartTime" type="id-ne"></field>
+		<field name="secondTiffinEndTime" type="id-ne"></field>
+		<field name="nightStartTime" type="id-ne"></field>
+	 	<field name="nightEndTime" type="id-ne"></field>
+	 	
+	 	<field name="leOrAbsForattbnDis" type="id-ne"></field>	
+	 	<field name="halfLesForattbnDed" type="id-ne"></field>	
+       
+       	<field name="lunchStartTime" type="id-ne"></field>	
+	 	<field name="lunchEndTime" type="id-ne"></field>	
+        
+        <prim-key field="dayPreferenceId"/>
+    
+  
+    </entity>
+    
+     <entity entity-name="OrgAttendancePreference"
+            package-name="org.ofbiz.humanres.attendance"
+            title="Organization Attendance Preference Entity">
+         
+        <field name="organizationPreferencdId" type="id-ne"></field> 
+        <field name="orgPrefRevision" type="id-ne"></field>    
+        <field name="orgPartyId" type="id-ne"></field>
+        <field name="oTallowances" type="id-ne"></field>
+        <field name="attendanceBonusAllowances" type="id-ne"></field>
+        <field name="extraOTallowances" type="id-ne"></field>
+        <field name="entryTime" type="id-ne"></field>
+        <field name="exitTime" type="id-ne"></field>
+        <field name="lunchDuration" type="id-ne"></field>
+        <field name="lunchTime" type="id-ne"></field>
+        <field name="maximumStayTime" type="id-ne"></field>
+        <field name="lateEntryTime" type="id-ne"></field>
+        <field name="oTStartTime" type="id-ne"></field>
+        <field name="oTEndTime" type="id-ne"></field>
+        <field name="extraOTStartTime" type="id-ne"></field>
+        <field name="extraOTEndTime" type="id-ne"></field>
+        
+        <field name="firstTiffinStartTime" type="id-ne"></field>	
+		<field name="firstTiffinEndTime" type="id-ne"></field>	
+		<field name="secondTiffinStartTime" type="id-ne"></field>
+		<field name="secondTiffinEndTime" type="id-ne"></field>
+		<field name="nightStartTime" type="id-ne"></field>
+	 	<field name="nightEndTime" type="id-ne"></field>
+	 	
+	 	<field name="leOrAbsForattbnDis" type="id-ne"></field>	
+	 	<field name="halfLesForattbnDed" type="id-ne"></field>	
+	 	
+	 	<field name="lunchStartTime" type="id-ne"></field>	
+	 	<field name="lunchEndTime" type="id-ne"></field>	
+        
+        <field name="lateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+        <field name="lateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+        <field name="yearlyLateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+        <field name="yearlylateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+        <field name="montlyBonusAmount" type="id-ne"></field>
+        <field name="yearlyBonusAmount" type="id-ne"></field>
+        <field name="bonusDeductionAmount" type="id-ne"></field>
+        <field name="oTCalculationOperand" type="id-ne"></field>
+        <field name="confirmationAfter" type="name"></field>
+        
+       <field name="halfDayMorningStart" type="id-ne"></field>
+       <field name="halfDayMorningEnd" type="id-ne"></field>
+       <field name="halfDayEveningStart" type="id-ne"></field>
+       <field name="halfDayEveningEnd" type="id-ne"></field>
+       
+       <field name="fromDate" type="date"></field>
+       <field name="thruDate" type="date"></field>
+        
+       
+    	<prim-key field="organizationPreferencdId"/>
+    	<prim-key field="orgPrefRevision"/>
+    	<prim-key field="orgPartyId"/>
+
+ 
+    </entity>
+    
+    <entity entity-name="DesignationPreference"
+            package-name="org.ofbiz.humanres.attendance"
+            title="DesignationPreference Preference Entity">
+         
+        <field name="designationPreferenceId" type="id-ne"></field>   
+        <field name="orgPartyId" type="id-ne"></field>
+        <field name="firstTiffinRate" type="id-ne"></field>
+        <field name="secondTiffinRate" type="id-ne"></field>
+        <field name="nightRate" type="id-ne"></field>
+        <field name="confirmationAfter" type="name"></field>
+        
+        <field name="entryTime" type="id-ne"></field>
+        <field name="exitTime" type="id-ne"></field>
+        <field name="lunchDuration" type="id-ne"></field>
+        <field name="lunchTime" type="id-ne"></field>
+        <field name="maximumStayTime" type="id-ne"></field>
+		<field name="lateEntryTime" type="id-ne"></field>
+		<field name="oTStartTime" type="id-ne"></field>
+		<field name="oTEndTime" type="id-ne"></field>
+		<field name="extraOTStartTime" type="id-ne"></field>
+		<field name="extraOTEndTime" type="id-ne"></field>
+		<field name="firstTiffinStartTime" type="id-ne"></field>
+		<field name="firstTiffinEndTime" type="id-ne"></field>
+		<field name="secondTiffinStartTime" type="id-ne"></field>
+		<field name="secondTiffinEndTime" type="id-ne"></field>
+		<field name="nightStartTime" type="id-ne"></field>
+		<field name="nightEndTime" type="id-ne"></field>
+		<field name="oTallowances" type="id-ne"></field>
+		<field name="attendanceBonusAllowances" type="id-ne"></field>
+		<field name="extraOTallowances" type="id-ne"></field>
+		<field name="lateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+		<field name="lateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+		<field name="yearlyLateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+		<field name="yearlylateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+		<field name="montlyBonusAmount" type="id-ne"></field>
+		<field name="yearlyBonusAmount" type="id-ne"></field>
+		<field name="bonusDeductionAmount" type="id-ne"></field>
+		
+		<field name="firstHalfHolidayRate" type="id-ne"></field>
+		<field name="secondHalfHolidayRate" type="id-ne"></field>
+		
+		<field name="oTCalculationOperand" type="id-ne"></field>
+        
+        <field name="leOrAbsForattbnDis" type="id-ne"></field>	
+	 	<field name="halfLesForattbnDed" type="id-ne"></field>	
+	 	
+	 	<field name="lunchStartTime" type="id-ne"></field>	
+	 	<field name="lunchEndTime" type="id-ne"></field>	
+	 	
+	 	<field name="fromDate" type="date"></field>
+      	<field name="thruDate" type="date"></field>
+       
+    	<prim-key field="designationPreferenceId"/>
+
+ 
+    </entity>
+    
+    
+    <entity entity-name="DesignPrefEmplposition"
+            package-name="org.ofbiz.humanres.attendance"
+            title="DesignPref Emplposition">
+            
+        <field name="designationPreferenceId" type="id-ne"></field>
+        <field name="designEmplposRevesion" type="id-ne"></field>
+        <field name="emplPositionId" type="id-ne"></field><!--New Addition  -->
+        
+        <field name="fromDate" type="date"></field>
+      	<field name="thruDate" type="date"></field>
+        
+        <prim-key field="designationPreferenceId"/>
+        <prim-key field="emplPositionId"/>
+        <prim-key field="designEmplposRevesion"/>
+        
+        <relation type="one" fk-name="DESIGN_EMPLPOS" rel-entity-name="DesignationPreference">
+            <key-map field-name="designationPreferenceId"/>
+        </relation>
+
+    </entity>
+ 
+      <entity entity-name="AttendanceRosterPreference"
+            package-name="org.ofbiz.humanres.attendance"
+            title="Roster Attendance Preference Entity">
+            
+        <field name="rosterPreferenceId" type="id-ne"></field>
+        <field name="rosterPrefRevision" type="id-ne"></field>  
+        <field name="orgPartyId" type="id-ne"></field>
+        <field name="rosterName" type="id-ne"></field>
+        <field name="rosterStartTime" type="id-ne"></field>
+        <field name="rosterEndTime" type="id-ne"></field>
+        <field name="oTallowances" type="id-ne"></field>
+        <field name="attendanceBonusAllowances" type="id-ne"></field>
+        <field name="extraOTallowances" type="id-ne"></field>
+        <field name="entryTime" type="id-ne"></field>
+        <field name="exitTime" type="id-ne"></field>
+        <field name="lunchDuration" type="id-ne"></field>
+        <field name="lunchTime" type="id-ne"></field>
+        <field name="maximumStayTime" type="id-ne"></field>
+        <field name="lateEntryTime" type="id-ne"></field>
+        <field name="oTStartTime" type="id-ne"></field>
+        <field name="oTEndTime" type="id-ne"></field>
+        <field name="extraOTStartTime" type="id-ne"></field>
+        <field name="extraOTEndTime" type="id-ne"></field>
+        
+        <field name="firstTiffinStartTime" type="id-ne"></field>	
+		<field name="firstTiffinEndTime" type="id-ne"></field>	
+		<field name="secondTiffinStartTime" type="id-ne"></field>
+		<field name="secondTiffinEndTime" type="id-ne"></field>
+		<field name="nightStartTime" type="id-ne"></field>
+	 	<field name="nightEndTime" type="id-ne"></field>
+	 	
+	 	<field name="leOrAbsForattbnDis" type="id-ne"></field>	
+	 	<field name="halfLesForattbnDed" type="id-ne"></field>	
+	 	
+	 	<field name="lunchStartTime" type="id-ne"></field>	
+	 	<field name="lunchEndTime" type="id-ne"></field>	
+        
+        <field name="lateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+        <field name="lateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+        <field name="yearlyLateEntryDaysForAttenBonusDisable" type="id-ne"></field>
+        <field name="yearlylateEntryDaysForAttenBonusDeduction" type="id-ne"></field>
+        <field name="montlyBonusAmount" type="id-ne"></field>
+        <field name="yearlyBonusAmount" type="id-ne"></field>
+        <field name="bonusDeductionAmount" type="id-ne"></field>
+        <field name="oTCalculationOperand" type="id-ne"></field>
+        
+        <prim-key field="rosterPreferenceId"/>
+        <prim-key field="rosterPrefRevision"/>
+        
+
+    </entity>
+    
+    <entity entity-name="RosterEmployee"
+            package-name="org.ofbiz.humanres.attendance"
+            title="Roster Entity">
+            
+        <field name="rosterPreferenceId" type="id-ne"></field>
+        <field name="rosterPrefRevision" type="id-ne"></field>  
+        <field name="orgPartyId" type="id-ne"></field>
+        <field name="rosterEmpRevesion" type="id-ne"></field>
+        <field name="employeeId" type="id-ne"></field>
+        <field name="partyId" type="id-ne"></field><!--New Addition  -->
+        <field name="employeeFullName" type="id-long"></field>
+        
+        <field name="fromDate" type="date"></field>
+      	<field name="thruDate" type="date"></field>
+        
+        <prim-key field="rosterPreferenceId"/>
+        <prim-key field="partyId"/>
+        <prim-key field="rosterEmpRevesion"/>
+        
+        <relation type="one" fk-name="ROSTER_EMP" rel-entity-name="AttendanceRosterPreference">
+            <key-map field-name="rosterPreferenceId"/>
+        </relation>
+
+    </entity>
+    
+     <entity entity-name="DailyAttendance"
+            package-name="org.ofbiz.humanres.attendance"
+            title="Daily Attendance Entity">
+            
+        <field name="partyId" type="id-ne"></field>
+        <field name="dateOfAttendance" type="date-time"></field>
+        <field name="employeeId" type="id-ne"></field>  
+        <field name="firstInTime" type="id-ne"></field>
+        <field name="lastOutTime" type="id-ne"></field>
+		<field name="employeeComments" type="long-varchar"/>
+		<field name="supervisorComments" type="long-varchar"/>
+        <field name="attendanceStatus" type="id-ne"></field>
+        <field name="attendanceResult" type="id-ne"></field>
+        <field name="processStatus" type="short-varchar"></field>        
+        <field name="dateAdded" type="date-time"></field>     
+        <field name="supervisorPartyId" type="id-ne"></field>
+        
+        <prim-key field="partyId"/>
+        <prim-key field="dateOfAttendance"/>
+        
+	      <relation type="one" fk-name="Daily_Att_Party" rel-entity-name="Party">
+	        <key-map field-name="partyId"/>       
+	      </relation>
+
+    </entity>
+
+</entitymodel>
+

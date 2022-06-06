@@ -1,0 +1,1029 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="FindJobRequisitions" type="single" target="ContessaFindJobRequisitions">
+        <actions>
+            <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+        </actions>
+       <!--  <auto-fields-entity entity-name="ContessaJobRequisition" default-field-type="find"/> -->
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="jobRequisitionId"><lookup target-form-name="LookupJobRequisition"/></field>
+        <field name="skillTypeId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="SkillType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+       <!--  <field name="jobPostingTypeEnumId">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" operator="equals" value="JOB_POSTING"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field> -->
+        <field name="jobLocation"><text-find ignore-case="true"/></field>
+        <!-- <field name="examTypeEnumId">
+             <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" operator="equals" value="EXAM_TYPE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field> -->
+        <field name="gender"><hidden/></field>
+        <field name="age"><hidden/></field>
+        <field name="durationMonths"><hidden/></field>
+        <field name="noOfResources"><hidden/></field>
+        <field name="jobRequisitionDate"><hidden/></field>
+        <field name="requiredOnDate"><hidden/></field>
+        <field name="qualification"><hidden/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListJobRequisitions" list-name="listIt" type="list" odd-row-style="alternate-row" header-row-style="header-row-2" target="approveRequisition"
+        paginate-target="ContessaFindJobRequisitions" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="entityName" value="ContessaJobRequisition"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="requestParameters"/>
+                <field-map field-name="entityName" from-field="entityName"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+	        <entity-and entity-name="EmplPositionAndEmplPositionType" list="emplPositionName">
+	        	<field-map field-name="emplPositionId" from-field="emplPositionId"/>
+	        </entity-and>	        
+	        <entity-condition entity-name="StatusItem" list="statusItems">
+ 				<condition-list>
+ 					<condition-expr field-name="statusTypeId" operator="equals" value="JOB_REQ_STATUS"/>
+ 					<condition-expr field-name="statusId" operator="not-equals" value="JOB_REQ_CREATED"/>
+ 				</condition-list>
+ 			</entity-condition>
+        </row-actions>
+        <field name="jobRequisitionId" widget-style="buttontext" use-when="hasAdminPermission">
+            <hyperlink target="EditContessaJobRequisition" description="${jobRequisitionId}">
+                <parameter param-name="jobRequisitionId"/>
+            </hyperlink>
+        </field>
+        <field name="jobRequisitionId" use-when="!hasAdminPermission"><display/></field>
+       <!--  <field name="skillTypeId">
+            <display-entity entity-name="SkillType" description="${description}"/>
+        </field> -->
+     
+        <!-- <field name="examTypeEnumId"><display/></field> -->
+        <field name="qualification"><display/></field>
+       
+        <field name="noOfResources"><display/></field>
+        
+       <field name="emplPositionId" title="Position Name"><display description="${emplPositionName[0].description}"/></field>
+       <field name="division"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="department"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="section"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="unit"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="requiredOnDate"><display /></field>
+      	<field name="reasonForRequisition"><display/></field>
+      	<field name="approverPartyId" ><display/></field>
+      	<field name="requisitionStatus"><display-entity entity-name="StatusItem" key-field-name="statusId" description="${description}"/></field>
+       <field name="approvalDate" use-when="&quot;JOB_REQ_APPROVED&quot;.equals(&quot;${requisitionStatus}&quot;)" title="Approve Date"><display/></field>
+       <field name="requisitionAction" id-name="requisitionAction" event="onchange" action="javascript:approveRequisitionForm(this.form, this.value);" title="Action" use-when="!&quot;JOB_REQ_APPROVED&quot;.equals(&quot;${requisitionStatus}&quot;) &amp;&amp;&quot;${userLogin.partyId}&quot;.equals(&quot;${approverPartyId}&quot;)" >
+			<drop-down allow-empty="false">
+				<option key="" description="Select Action"/>
+				<list-options key-name="statusId" list-name="statusItems" description="${description}"/>
+			</drop-down>
+		</field>
+		<field name="detail" title="Detail" widget-style="buttontext">
+			<hyperlink also-hidden="false" description="Detail" target="detailofRequisition"> 
+                <parameter param-name="jobRequisitionId"/> 
+            </hyperlink>
+		</field>
+       <!--  <field name="applyLink" title="${uiLabelMap.CommonApply}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonApply}" target="EditInternalJobPosting"> 
+                <parameter param-name="jobRequisitionId"/> 
+            </hyperlink>
+        </field> -->
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext" use-when="hasAdminPermission">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteContessaJobRequisition"> 
+                <parameter param-name="jobRequisitionId"/> 
+            </hyperlink>
+        </field>
+    </form>
+    <form name="detailofRequisition" default-map-name="contessaJobRequisition" type="single">
+    <actions>
+    <set field="emplPnId" from-field="contessaJobRequisition.emplPositionId"/>
+    <entity-and entity-name="EmplPositionAndEmplPositionType" list="emplPositionName">
+        <field-map field-name="emplPositionId"  value="${emplPnId}"/>
+        </entity-and>
+    </actions>
+    <auto-fields-entity entity-name="ContessaJobRequisition" default-field-type="display"/>
+     <field name="division"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+    <field name="department"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="section"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="unit"><display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/></field>
+      	<field name="jobRequisitionDate"><display type="date"/></field>
+      	<field name="skillTypeId">
+            <display-entity entity-name="SkillType" description="${description}"/>
+        </field>
+         <field name="emplPositionId" title="Position Name"><display description="${emplPositionName[0].description}" /></field>
+        <field name="requisitionStatus"><display-entity entity-name="StatusItem" key-field-name="statusId" description="${description}"/></field>
+        <field name="jobPostingTypeEnumId"><hidden/></field>
+      	<field name="examTypeEnumId" title="Exam Type"><display-entity entity-name="Enumeration" key-field-name="enumId" description="${description}"/></field>
+    </form>
+     <form name="EditContessaJobRequisition" type="single" target="updateContessaJobRequisition" default-map-name="contessaJobRequisition">
+        <alt-target use-when="contessaJobRequisition==null" target="createContessaJobRequisition"/>
+        <field name="jobRequisitionId" use-when="contessaJobRequisition==null"><ignored/></field>
+        <field use-when="contessaJobRequisition!=null" name="jobRequisitionId" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display/></field>
+     
+        <field name="jobDescriptions" title="${uiLabelMap.CommonDescription}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="jobTitle"><textarea cols="60" rows="1"/></field>
+        <field name="jobDescription"><textarea cols="60" rows="3"/></field>
+        <field name="jobRequisitionDate"><hidden/></field>
+        <field name="jobLocation" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="reasonForRequisition"><textarea/></field>
+        <field name="justification"><text/></field>
+        <field name="age"><text/></field>
+        <field name="noOfResources" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="gender">
+            <drop-down allow-empty="true">
+                <option key="M" description="${uiLabelMap.CommonMale}"/>
+                <option key="F" description="${uiLabelMap.CommonFemale}"/>
+            </drop-down>
+        </field>
+        <field name="durationMonths"><text/></field>
+        <field name="requiredOnDate"><date-time type="date" /></field>
+        <field name="qualification" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PartyQualType" key-field-name="partyQualTypeId" description="${description}">
+                    <entity-constraint name="parentTypeId" operator="equals" value="DEGREE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="examTypeEnumId">
+             <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" operator="equals" value="EXAM_TYPE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="note"><text/></field>
+        
+        <field name="positionCriteria" title="Position Information" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section" title="Section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="unit"  id-name="unit"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	<field name="emplPositionId" title="Position"><lookup target-form-name="LookupForEmplPositionWithOrgFilter"/></field>
+        
+        
+        
+        
+        <field name="skillCriteria" title="${uiLabelMap.HumanResSkills} ${uiLabelMap.CommonRequired}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="skillTypeId" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="SkillType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="experienceMonths" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><text/></field>
+        <field name="experienceYears" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><text/></field>
+        <field name="jobPostingTypeEnumId"><hidden value="JOB_POSTING_INTR"/></field>
+        <field name="approverPartyId" tooltip="${uiLabelMap.CommonRequired}"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="submitButton" use-when="contessaJobRequisition==null" title="Create" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="contessaJobRequisition!=null" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="RequisitionDocumentList" type="list" list-name="requisitionDocuments" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="RequisitionAndContent" value-field="document">
+			</entity-one>
+			<property-to-field resource="mimetype" property="${document.mimeTypeId}" field="imageType" />
+		</row-actions>
+		<field name="image" title=" ">
+			<image value="${imageType}" />
+		</field>
+		<field name="contentName" title="Title" widget-style="documentTitleEditor">
+			<display>
+				<in-place-editor url="renameImage" ok-text="..." cancel-text="X" saving-text="Updating..." text-between-controls=" " form-class-name="inplaceeditor">
+					<simple-editor />
+					<field-map field-name="contentId" from-field="contentId" />
+				</in-place-editor>
+			</display>
+		</field>
+		<field name="jobRequisitionId"><hidden/></field>
+		
+		<field name="contentId"><hidden/></field>
+		<field name="partyContentTypeId"><hidden/></field>
+		<field name="fromDate"><hidden/></field>
+		
+		<field name="delete" title=" " widget-style="buttontext">
+			<hyperlink target="removeRequisitionDocuments" description="delete">
+				
+				<parameter param-name="jobRequisitionId"/>
+				
+		        <parameter param-name="contentId"/>
+		        <parameter param-name="fromDate"/>
+			</hyperlink>
+		</field>
+		<field name="show" title=" " widget-style="buttontext">
+			<hyperlink target-window="_blank" target-type="content" target="img/${contentName}?imgId=${dataResourceId}" description="download"></hyperlink>
+		</field>
+	</form>
+	
+	<form name="FindApplicantApps" type="single" target="FindApplicantApps" header-row-style="header-row" default-table-style="basic-table"> <!--  -->
+
+	       <field name="applicationId"><text/></field>
+	      <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+	      
+	     <field name="jobRequisitionId" title="Job Title" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+           <drop-down no-current-selected-key="${jobRequisitionId}" allow-empty="true">
+			<auto-complete/>
+                <entity-options entity-name="ContessaJobRequisition" key-field-name="jobRequisitionId" description="${jobRequisitionId}: ${jobTitle}">
+                   
+                    <entity-order-by field-name="jobRequisitionId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+	       <!-- <field name="jobPostingId" title="Job Title">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="JobPosting"  description="${jobTitle} (Expired Date:${bsh:org.ofbiz.humanres.ProfileWorker.FormatDate(expiredDate)})">
+                    <entity-constraint name="expiredDate" operator="greater-equals" value="${groovy: org.ofbiz.base.util.UtilDateTime.nowTimestamp()}"/>
+                    <entity-order-by field-name="jobTitle"/>
+                </entity-options>
+            </drop-down>
+           </field>  -->
+           
+           <!-- <field name="statusId" title="Applicant Status">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem"  description="${description}">
+                    <entity-constraint name="statusTypeId" operator="equals" value="EMPL_JOB_APP_STATUS"/>
+                    <entity-constraint name="statusId" operator="not-equals" value="CONFIRMATION"/>
+                    
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+           </field> -->       
+       		
+      	   
+           <field name="fromDate" title="From Date"><date-time type="date"/></field>
+     	   <field name="toDate" title="To Date"><date-time type="date"/></field>
+           <field name="orgPartyId"><hidden value="${orgPartyId}"/></field>
+           <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+      
+      </form>
+      
+      <form name="ListEmploymentApplications" type="multi" list-name="applicantList" use-row-submit="true" separate-columns="true" paginate-target="FindApplicantApps"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" >
+        <actions>
+        <set field="entityName" value="EmploymentApp"/>
+            <service service-name="performFind" result-map="result" result-map-list="applicantList">
+                <field-map field-name="inputFields" from-field="employmentAppCtx"/>
+                <field-map field-name="entityName" from-field="entityName"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>            
+        </actions>
+        <row-actions>        
+	        <entity-and entity-name="Person" list="personalInfo">
+	            <field-map field-name="partyId" from-field="applyingPartyId"/>
+	        </entity-and>
+	        <entity-and entity-name="EmplPositionAndEmplPositionType" list="emplPositionName">
+	        	<field-map field-name="emplPositionId" from-field="emplPositionId"/>
+	        </entity-and>
+        </row-actions>
+        <field name="applyingPartyId"><hidden/></field>
+        <field name="applicationId" widget-style="buttontext">        
+	        <hyperlink also-hidden="false" target-type="plain" target="ApplicantProfile" description="${applicationId}">
+	        	<parameter param-name="partyId" from-field="applyingPartyId"/>
+	        </hyperlink>        
+        </field>
+        <field name="statusId"><display-entity entity-name="StatusItem" key-field-name="statusId" description="${description}"  /></field>
+        <field name="Full Name"><display description="${personalInfo[0].firstName } ${personalInfo[0].middleName } ${personalInfo[0].lastName}"/></field>
+        <field name="fatherName" title="Father Name"><display description="${personalInfo[0].fatherName}"/></field>
+        <field name="designation" title="Position"><display description="${emplPositionName[0].description}"/></field>
+        
+    </form>
+    
+    
+    <form name="FindApplicantApproval" type="single" target="FindApplicantApproval" header-row-style="header-row" default-table-style="basic-table"> <!--  -->
+
+	       <field name="applicationId"><text/></field>
+	      
+	     <field name="jobRequisitionId" title="Job Title" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+           <drop-down no-current-selected-key="${jobRequisitionId}" allow-empty="true">
+			<auto-complete/>
+                <entity-options entity-name="ContessaJobRequisition" key-field-name="jobRequisitionId" description="${jobRequisitionId}: ${jobTitle}">
+                   
+                    <entity-order-by field-name="jobRequisitionId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+	      
+      	   <field name="statusId"><hidden value="WAIT_APPROVAL"/></field>
+           <field name="fromDate" title="From Date"><date-time type="date"/></field>
+     	   <field name="toDate" title="To Date"><date-time type="date"/></field>
+           <field name="orgPartyId"><hidden value="${orgPartyId}"/></field>
+           <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+      
+      </form>
+      
+      <form name="ListApplicantApproval" type="list" list-name="listIt" target="updateStatus" use-row-submit="true" separate-columns="true" paginate-target="FindApplicantApproval"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" >
+        <actions>        
+        <set field="entityName" value="EmploymentApp"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="employmentAppsCtx"/>
+                <field-map field-name="entityName" from-field="entityName"/>               
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>            
+        </actions>
+        <row-actions>        
+	        <entity-and entity-name="Person" list="personalInfo">
+	            <field-map field-name="partyId" from-field="applyingPartyId"/>
+	        </entity-and>
+	        <entity-and entity-name="EmplPositionAndEmplPositionType" list="emplPositionName">
+	        	<field-map field-name="emplPositionId" from-field="emplPositionId"/>
+	        </entity-and>	        
+	        <entity-and list="applications" entity-name="PartyAndPersonAndEmploymentApp">
+             	<field-map field-name="applyingPartyId" value="${parameters.partyId}"/>
+            </entity-and>
+            <set field="applicationStatus" value="${applications[0].statusId}"/>
+          	<entity-condition entity-name="StatusItem" list="statusItems">
+ 				<condition-list>
+ 					<condition-expr field-name="statusTypeId" operator="equals" value="EMPL_JOB_APP_STATUS"/>
+ 					<condition-expr field-name="statusId" operator="not-equals" value="APPLICANT_CREATED"/>
+ 					<condition-expr field-name="statusId" operator="not-equals" value="WAIT_APPROVAL"/>
+ 					<condition-expr field-name="statusId" operator="not-equals" value="CONFIRMATION"/>
+ 				</condition-list>
+ 			</entity-condition>
+        </row-actions>
+        <field name="jobRequisitionId"><hidden/></field>
+        <field name="applyingPartyId"><hidden/></field>
+        <field name="applicationId" widget-style="buttontext">        
+	        <hyperlink also-hidden="false" target-type="plain" target="ApplicantProfile" description="${applicationId}">
+	        	<parameter param-name="partyId" from-field="applyingPartyId"/>
+	        </hyperlink>        
+        </field>
+     <field name="statusId"><display-entity entity-name="StatusItem" key-field-name="statusId" description="${description}"  /></field>
+        <field name="Full Name"><display description="${personalInfo[0].firstName } ${personalInfo[0].lastName}"/></field>
+        <field name="fatherName" title="Father Name"><display description="${personalInfo[0].fatherName}"/></field>
+      
+        <field name="designation" title="Position"><display description="${emplPositionName[0].description}"/></field>
+        <!-- <field name="approval" use-when="${statusId == 'WAIT_APPROVAL'}" parameter-name="approvalAction" >
+				<drop-down allow-empty="false">
+					<option key="WAIT_CONFIRMATION" description="Approved"/>
+					<option key="APPLICANT_REJECT" description="Reject"/>
+					
+				</drop-down>
+			</field>
+			<field name="requisitionAction" id-name="requisitionAction" event="onchange" action="javascript:approveRequisitionForm(this.form, this.value);" title="Action" use-when="${statusId == 'WAIT_APPROVAL'}" >
+				<drop-down allow-empty="false">
+					<option key="" description="Select Action"/>
+					<list-options key-name="statusId" list-name="statusItems" description="${description}"/>
+				</drop-down>
+			</field>
+			<field name="editLink" title="Submit" widget-style="buttontext" use-when="${statusId == 'WAIT_APPROVAL'}">
+             <hyperlink target="updateStatus" also-hidden="false" description="Submit">
+                <parameter param-name="requisitionAction" from-field="requisitionAction"/>
+                <parameter param-name="jobRequisitionId"/>
+                <parameter param-name="applyingPartyId"/>
+                
+            </hyperlink>   
+        </field> -->
+      <field name="cancelation" title="Approve" widget-style="buttontext" use-when="${statusId == 'WAIT_APPROVAL'}">
+            <hyperlink target="updateStatusApproved" also-hidden="false" description="Approved">
+                <parameter param-name="applyingPartyId"/>
+                <parameter param-name="jobRequisitionId"/>
+                <parameter param-name="requisitionAction" value="WAIT_CONFIRMATION"/>
+            </hyperlink>
+        </field>
+        <field name="actionLink" title="Cancel" widget-style="buttontext" use-when="${statusId == 'WAIT_APPROVAL'}">
+            <hyperlink target="updateStatusReject" also-hidden="false" description="Reject">
+               <parameter param-name="applyingPartyId"/>
+                <parameter param-name="jobRequisitionId"/>
+                <parameter param-name="requisitionAction" value="APPLICANT_REJECT"/>
+            </hyperlink>
+        </field>        
+    </form>
+    
+    
+     <form name="EditContessaApplicant" type="single" target="updateApplicant" default-map-name="personInfo"
+        focus-field-name="salutation" header-row-style="header-row" default-table-style="basic-table">
+        <actions>    
+         	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" /> 
+       	</actions>        
+        <alt-target use-when="personInfo==null" target="createApplicant"/>
+        
+        <field use-when="personInfo!=null" name="partyId" title="${uiLabelMap.EmplEmplId}" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display description="${emplId}"/></field>
+        <field use-when="personInfo==null&amp;&amp;partyId==null" name="partyId" title="${uiLabelMap.PartyPartyId}"><ignored/></field>
+        <field use-when="personInfo==null&amp;&amp;partyId!=null" name="partyId" title="${uiLabelMap.PartyPartyId}" tooltip="${uiLabelMap.CommonCannotBeFound}: [${partyId}]"><display also-hidden="false"/></field>
+		
+		<field name="partyId"><hidden/></field>
+		<field name="externalId"><hidden/></field>
+        <field name="salutation"><hidden/></field>
+       	<field name="personalTitle"><hidden/></field>
+        <field name="suffix"><hidden/></field>
+        <field name="nickname"><hidden/></field>
+       
+        <field name="memberId"><hidden/></field>
+        <field name="deceasedDate"><hidden/></field>       
+        <field name="weight"><hidden/></field>
+        <field name="socialSecurityNumber"><hidden/></field>
+        <field name="residenceStatusEnumId"><hidden/></field>
+        <field name="occupation"><hidden/></field>
+        <field name="yearsWithEmployer"><hidden/></field>
+        <field name="monthsWithEmployer"><hidden/></field>
+        <field name="existingCustomer"><hidden/></field>
+        <field name="lastNameLocal"><hidden/></field>
+        <field name="jobRequisitionId" title="Job Title" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+           <drop-down no-current-selected-key="${jobRequisitionId}" allow-empty="true">
+			<auto-complete/>
+                <entity-options entity-name="ContessaJobRequisition" key-field-name="jobRequisitionId" description="${jobRequisitionId}: ${jobTitle}">
+                   
+                    <entity-order-by field-name="jobRequisitionId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+      
+	<field name="firstName" title="${uiLabelMap.PartyFirstName}" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+	 <field name="middleName" title="Middle Name"><text size="40" maxlength="60"/></field>
+    <field name="lastName" title="${uiLabelMap.PartyLastName}"><text size="40" maxlength="60"/></field>
+    <field name="fatherName" title="Father's name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="50"/></field>
+	<field name="spouseName" title="Spouse's name"><text size="40" maxlength="30"/></field> 
+    <field name="mothersMaidenName" title="Mother's Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="50"/></field>
+   <field name="religion" title="Religion">
+        	<drop-down allow-empty="false" no-current-selected-key="Islam">
+        		<option key="Christianity" description="Christianity"/>
+        		<option key="Islam" description="Islam"/>
+        		<option key="Hinduism" description="Hinduism"/>
+        		<option key="Buddhism" description="Buddhism"/>
+        		<option key="Others" description="Others"/>
+        	</drop-down>
+        </field> 
+        <field name="gender" required-field="true"  tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down allow-empty="false">
+                <option key="F" description="${uiLabelMap.CommonFemale}"/>
+                <option key="M" description="${uiLabelMap.CommonMale}"/>
+                <option key="O" description="${uiLabelMap.CommonOther}"/> 
+            </drop-down>
+        </field>
+        <field name="bloodgroup" title="Blood Group" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="address" > <hidden/></field>       
+        <field name="mobileno"> <hidden/></field>
+        <field name="cardId" title="RFID No"><hidden/></field>
+       <field name="birthDate" title="Birth Date"  tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><date-time type="date"/></field>
+        
+       	 
+        <field name="maritalStatus" required-field="true"  tooltip="${uiLabelMap.CommonRequired}">
+             <drop-down allow-empty="false">
+                <option key="S" description="${uiLabelMap.PartyMaritalStatusSingle}"/>
+                <option key="M" description="${uiLabelMap.PartyMaritalStatusMarried}"/>
+                <option key="P" description="${uiLabelMap.PartyMaritalStatusSeparated}"/>
+                <option key="D" description="${uiLabelMap.PartyMaritalStatusDivorced}"/>
+                <option key="W" description="${uiLabelMap.PartyMaritalStatusWidowed}"/>
+            </drop-down>
+        </field>
+      
+        <field name="preferredCurrencyUomId"><hidden/></field>
+        <field name="statusId" ><hidden value="PARTY_ENABLED"/></field>
+        <field name="partyTypeId" ><hidden value="PERSON"/></field>
+        <field name="address1" title="Correspondence Address" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><textarea></textarea></field>
+        <field name="infoString" title="${uiLabelMap.Email}"><text size="40" maxlength="60" default-value="${emaillist[0].infoString}"/></field>
+   		<field name="contactNumber" title="Mobile No" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="mailingAddresss" title="Mailing Address" title-area-style="group-label"><display/></field>
+   		<field name="address2" title="Address" ><textarea/></field>
+   		<field name="city1" title="City"><text/></field>
+   		<field name="country1" title="Country">
+   		<drop-down no-current-selected-key="${defaultCountryGeoId}" allow-empty="true">
+			<auto-complete/>
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="COUNTRY"/>
+                    <entity-order-by field-name="geoId"/>
+                </entity-options>
+            </drop-down>
+            </field>
+   		<field name="permanentAddresss" title="Parmanent Address" title-area-style="group-label"><display/></field>
+   		<field name="address3" title="Address" ><textarea cols="60" rows="3"/></field>
+   		<field name="city2" title="City"><text/></field>
+   		<field name="country2" title="Country">
+   		<drop-down no-current-selected-key="${defaultCountryGeoId}" allow-empty="true">
+			<auto-complete/>
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="COUNTRY"/>
+                    <entity-order-by field-name="geoId"/>
+                </entity-options>
+            </drop-down>
+            </field>
+   		<field name="otherInfo" title="Other Referential Information" title-area-style="group-label"><display/></field>
+   		<field name="nationalid" title="National ID"><text/></field>
+   		<field name="birthCertificateNo" title="Birth Certificate No"><text/></field>
+   		<field name="passportNumber" title="Passport No"><text/></field>
+   		<field name="drivingLicenseNo" title="Driving License No"><text/></field>
+    
+   		
+        
+       <field name="referenceEmployeeId" title="Reference Employee ID"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+       <field name="referenceDetails" title="Reference Details(External Referee)"><textarea/></field>
+        <field name="submitButton" use-when="personInfo==null" title="Create" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="personInfo!=null" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        
+        <field name="cancelLink" title=" " use-when="personInfo!=null" widget-style="smallSubmit">
+            <hyperlink target="ApplicantProfile" also-hidden="false" description="${uiLabelMap.CommonCancelDone}">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+        
+    </form>
+    
+    
+     <form name="ApplicantPersonalInformation" type="single">
+		<actions>
+		 <set field="maritalStatus" value="${lookupPerson.maritalStatus}"/>
+		 <set field="gender" value="${lookupPerson.gender}"/>
+		 <set field="birthDate" value="${lookupPerson.birthDate}" type="Timestamp"/>
+		 <entity-and list="permanentAddressnew" entity-name="PartyAndPostalAddress">
+					<field-map field-name="partyId" value="${parameters.partyId}"/>
+					<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>
+					</entity-and>
+					
+		
+		<set field="height1" from-field="lookupPerson[0].height"/>
+    
+		</actions>
+		
+   		<field name="name" title="Full Name"><display description="${lookupPerson.personalTitle} ${lookupPerson.firstName} ${lookupPerson.middleName} ${lookupPerson.lastName}"/></field>
+   		<field name="fatherName" title="Father's name"><display description="${lookupPerson.fatherName}"/></field>
+		<field name="spouseName" title="Spouse's name"><display description="${lookupPerson.spouseName}"/></field>
+   		<field name="mothersMaidenName" title="Mother's Name"><display description="${lookupPerson.mothersMaidenName}"/></field>
+   		<!-- <field name="birthDate" title="Birth Date">
+   			<display description="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(birthDate)}"></display>
+   		</field> -->
+   		<field name="age" title="Age">
+   			<display description="${bsh:org.ofbiz.humanres.ProfileWorker.getAgeFromTheBirthDate(birthDate)}"></display>
+   		</field>
+   		<field name="religion" title="Religion"><display description="${lookupPerson.religion}"/></field>
+   		<field name="maritalStatus" parameter-name="maritalStatus" title="Marital status">
+   			<display description="${groovy: 
+   			if(maritalStatus=='S') 
+   				return 'Single'; 
+   			else if(maritalStatus=='M') 
+   				return 'Married'; 
+   			else if(maritalStatus=='P') 
+   				return 'Separated'; 
+			else if(maritalStatus=='D') 
+   				return 'Divorced'; 
+  			else if(maritalStatus=='W') 
+  				return 'Widowed';
+   			else return 'Single';}"/>
+   		</field>
+   		<field name="gender" parameter-name="gender" title="Gender"><display description="${groovy: if(gender=='M') return 'Male';else if(gender=='F') return 'Female'; else return 'Other';}"/></field>
+   		<field name="bloodgroup" title="Blood Group"><display description="${lookupPerson.bloodgroup}"/></field>
+   		
+   		<field name="address1" title="Correspondence Address" ><display description="${presentAddressnew[0].address1}"/></field>
+   		<field name="alternateemail" title="${uiLabelMap.Email}"><display description="${emaillist[0].infoString}"/></field>
+   		<field name="contactNumber" title="Mobile Number"><display description="${telecomnumberlist[0].contactNumber}"/></field>
+   		<field name="mailingAddresss" title="Mailing Address" title-area-style="group-label"><display/></field>
+   		<field name="address2" title="Address" ><display description="${mailingAddress[0].address1}"/></field>
+   		<field name="city1" title="City"><display description="${mailingAddress[0].city}"/></field>
+   		<field name="country1" title="Country"><display description="${mailingAddress[0].countryGeoId}"/></field>
+   		<field name="permanentAddresss" title="Parmanent Address" title-area-style="group-label"><display/></field>
+   		<field name="address3" title="Address" ><display description="${permanentAddressnew[0].address1}"/></field>
+   		<field name="city2" title="City"><display description="${permanentAddressnew[0].city}"/></field>
+   		<field name="country2" title="Country"><display description="${permanentAddressnew[0].countryGeoId}"/></field>
+   		<field name="otherInfo" title="Other Referential Information" title-area-style="group-label"><display/></field>
+   		<field name="nationalid" title="National ID"><display description="${lookupPerson.nationalid}"/></field>
+   		<field name="birthCertificateNo" title="Birth Certificate No"><display description="${lookupPerson.birthCertificateNo}"/></field>
+   		<field name="passportNumber" title="Passport No"><display description="${lookupPerson.passportNumber}"/></field>
+   		<field name="drivingLicenseNo" title="Driving License No"><display description="${lookupPerson.drivingLicenseNo}"/></field>
+   		<!-- <field name="height" title="Height"><display description="${lookupPerson.height}"></display></field>    --> 
+  	</form>
+  	
+  	
+  	<form name="UpdateApplicantInfo" type="single" target="updateApplicantInfo" default-map-name="personInfo"
+        focus-field-name="salutation" header-row-style="header-row" default-table-style="basic-table">
+        
+        <actions>
+			 <entity-and list="permanentAddressnew" entity-name="PartyAndPostalAddress">
+				<field-map field-name="partyId" value="${parameters.partyId}"/>
+				<field-map field-name="contactMechTypeId" value="PERMANENT_ADDRESS"/>
+			 </entity-and>
+			
+		</actions>
+		
+		<field name="partyId"><hidden value="${parameters.partyId}" /></field>
+ 		<field name="firstName" title="${uiLabelMap.PartyFirstName}" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+ 		<field name="middleName" title="Middle Name"><text></text></field>
+        <field name="lastName" title="${uiLabelMap.PartyLastName}" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="fatherName" title="Father's name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="spouseName" title="Spouse's name"><text size="40" maxlength="60"/></field>
+        <field name="mothersMaidenName" title="Mother's Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="religion" title="Religion" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="maritalStatus" required-field="true">
+             <drop-down allow-empty="true">
+                <option key="S" description="${uiLabelMap.PartyMaritalStatusSingle}"/>
+                <option key="M" description="${uiLabelMap.PartyMaritalStatusMarried}"/>
+                <option key="P" description="${uiLabelMap.PartyMaritalStatusSeparated}"/>
+                <option key="D" description="${uiLabelMap.PartyMaritalStatusDivorced}"/>
+                <option key="W" description="${uiLabelMap.PartyMaritalStatusWidowed}"/>
+            </drop-down>
+        </field>
+        
+        <field name="gender" required-field="true">
+            <drop-down allow-empty="true">
+                <option key="M" description="${uiLabelMap.CommonMale}"/>
+                <option key="F" description="${uiLabelMap.CommonFemale}"/>
+                <option key="O" description="${uiLabelMap.CommonOther}"/> 
+            </drop-down>
+        </field>
+        <field name="birthDate" title="Date of Birth"><date-time type="date"/></field>
+       
+       
+   		
+     	
+     	
+        <field name="nationalid" title="National Id" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+       
+        
+        
+        <field name="bloodgroup" title="Blood Group" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60"/></field>
+        <field name="address1" title="Correspondence Address" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><textarea default-value="${presentAddress[0].address1}"/></field>
+       <field name="mailingAddresss" title="Mailing Address" title-area-style="group-label"><display/></field>
+       <field name="address2" title="Mailing Address" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><textarea default-value="${mailingAddress[0].address1}"/></field>
+       
+       <field name="city1" title="City" parameter-name="city" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60" default-value="${presentAddress[0].city}"/></field>
+   		<field name="country1" title="Country">
+		<drop-down allow-empty="true" current-description="${presentAddress[0].countryGeoId}">
+			<auto-complete/>
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="COUNTRY"/>
+                    <entity-order-by field-name="geoId"/>
+                </entity-options>
+            </drop-down>
+		</field>
+        <field name="contactNumber" title="Contact Number" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text size="40" maxlength="60" default-value="${telecomnumberlist[0].contactNumber}"/></field>
+        <field name="infoString" title="${uiLabelMap.Email}"><text size="40" maxlength="60" default-value="${emaillist[0].infoString}"/></field>       
+          
+        
+		
+        <field name="permanentAddresss" title="Parmanent Address" title-area-style="group-label"><display/></field>
+   		<field name="address3" title="Address" ><textarea default-value="${permanentAddress[0].address1}"/></field>
+   		<field name="city2" title="City"><text default-value="${permanentAddress[0].city}"/></field>
+   		<field name="country2" title="Country">
+			<drop-down allow-empty="true" current-description="${permanentAddress[0].countryGeoId}">
+			<auto-complete/>
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="COUNTRY"/>
+                    <entity-order-by field-name="geoId"/>
+                </entity-options>
+            </drop-down>
+
+		</field>
+   		<field name="otherInfo" title="Other Referential Information" title-area-style="group-label"><display/></field>
+   		<field name="nationalid" title="National ID"><text default-value="${personInfo.nationalid}"/></field>
+   		<field name="birthCertificateNo" title="Birth Certificate No"><text default-value="${personInfo.birthCertificateNo}"/></field>
+   		<field name="passportNumber" title="Passport No"><text default-value="${personInfo.passportNumber}"/></field>
+   		<field name="drivingLicenseNo" title="Driving License No"><text default-value="${personInfo.drivingLicenseNo}"/></field>
+        
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}"><submit button-type="button"/></field>
+         <field name="cancelLink" title=" "  widget-style="smallSubmit">
+            <hyperlink target="ApplicantProfile" also-hidden="false" description="${uiLabelMap.CommonCancelDone}">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="ApplicantSalaryNegotiation1" target="updateSalaryNegotiation" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			
+			<entity-and entity-name="JobInterview" list="jobInterview">
+				<field-map field-name="jobIntervieweePartyId" from-field="partyId" />
+				<field-map field-name="jobInterviewTypeId" value="1203"/>
+			</entity-and>
+		</actions>
+		
+		
+		<field name="partyId"><text></text></field>
+		<field name="jobInterviewTypeId"><hidden value="1203"/></field> <!-- This value is taken from JobInterviewType table -->
+		
+		<field name="applicantPayGrade" title="Pay Grade"><display description="${payGrades[0].payGradeName} (${incrementAmount} BDT)"/></field>
+		
+		<field name="applicantPayGradeId"><hidden value="${payGrades[0].payGradeId}"/></field>
+		
+		<field name="jobInterviewResult" title="Comment">
+			<display description="${jobInterview[0].jobInterviewResult}"  default-value="Click Here">
+			    <!-- Here updateSillTest method is used. If we need anthing else information to save then need to write new method -->
+				<in-place-editor url="updateSkillTest" cancel-control="button" saving-text="Updating..." submit-on-blur="true">
+					<simple-editor />
+					<field-map field-name="partyId" from-field="partyId"/>
+					<field-map field-name="jobInterviewResult" from-field="jobInterviewResult"/>
+					<field-map field-name="jobInterviewTypeId" value="1203"/>
+				</in-place-editor>
+			</display>
+		</field>
+		
+		<field name="Note"><display description="If you want to add any increment, then click on + sign above."/></field>
+		
+		<field name="space" title=" "><display description=""/></field>
+		
+	</form>
+	
+	<form name="ApplicantSalaryNegotiationModify" target="updateApplicantSalaryNegotiation" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		
+        <alt-target use-when="${actionType=='Add'}" target="createApplicantSalaryNegotiation"/>
+		<field name="partyId" use-when="${applicationStatus== 'APPLICANT_CREATED'}"><text/></field>
+		<field name="payGradeId" title="Employee pay Grade Name" required-field="true" tooltip="Required" use-when="${applicationStatus== 'APPLICANT_CREATED'}">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${payGradeName}" key-field-name="payGradeId" entity-name="PayGrade">
+                    <entity-order-by field-name="payGradeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+		<field name="salaryLevelId" title="Employee Salary level" required-field="true" tooltip="Required" use-when="${applicationStatus== 'APPLICANT_CREATED'}">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${levelName}" key-field-name="levelId" entity-name="PayrollLevel">
+                    <entity-order-by field-name="levelId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="salaryTemplateId" title="Employee salary Template" required-field="true" tooltip="Required" use-when="${applicationStatus== 'APPLICANT_CREATED'}">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${salaryTemplateName}" key-field-name="salaryTemplateId" entity-name="SalaryTemplate">
+                    <entity-order-by field-name="salaryTemplateId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+         <field name="basicSalaryStepId" title="Basic Salary Step" tooltip="Required" required-field="true" use-when="${applicationStatus== 'APPLICANT_CREATED'}">
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${basicSalaryStepName}" key-field-name="basicSalaryStepId" entity-name="BasicSalaryStep">
+                    <entity-order-by field-name="basicSalaryStepId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="dateAdded"> <display/></field>
+        <field name="comments" use-when="${applicationStatus== 'APPLICANT_CREATED'}"><textarea cols="28" rows="2"/></field>
+		<field name="submitButton" title="Confirm" widget-style="smallSubmit" use-when="${applicationStatus== 'APPLICANT_CREATED'}">
+		<submit button-type="button"/></field>
+	</form>
+	
+	<form name="ApplicantSalaryNegotiationView" target="updateApplicantSalaryNegotiation" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<entity-and entity-name="ApplicantSalarySetup" list="applicantSalarySetupInfo">
+				<field-map field-name="partyId" from-field="partyId" />
+			</entity-and>
+			<set field="payGradeId" from-field="${applicantSalarySetupInfo[0].payGradeId}" type="Integer" />
+			<set field="salaryLevelId" from-field="${applicantSalarySetupInfo[0].salaryLevelId" type="Integer" />
+			<set field="salaryTemplateId" from-field="${applicantSalarySetupInfo[0].salaryTemplateId}" type="Integer" />
+			<set field="basicSalaryStepId" from-field="${applicantSalarySetupInfo[0].basicSalaryStepId}" type="Integer" />
+			
+			<entity-one value-field="payGrade" entity-name="PayGrade">
+				<field-map field-name="payGradeId" value="${applicantSalarySetupInfo[0].payGradeId}"/>
+			</entity-one>
+			<entity-one value-field="payrollLevel" entity-name="PayrollLevel">
+				<field-map field-name="levelId" value="${applicantSalarySetupInfo[0].salaryLevelId}"/>
+			</entity-one>
+			<entity-one value-field="basicSalaryStep" entity-name="BasicSalaryStep">
+				<field-map field-name="basicSalaryStepId" value="${applicantSalarySetupInfo[0].basicSalaryStepId}"/>
+			</entity-one>
+			<entity-one value-field="salaryTemplate" entity-name="SalaryTemplate">
+				<field-map field-name="salaryTemplateId" value="${applicantSalarySetupInfo[0].salaryTemplateId}"/>
+			</entity-one>
+		</actions>
+		<field name="applicantId"><hidden/></field>
+		<field name="partyId" ><hidden/></field>
+		<field name="payGradeIdHide">
+            <hidden value="${payGrade.payGradeId}"/>     
+        </field>
+        <field name="levelIdHide">
+            <hidden value="${payrollLevel.levelId}"/>     
+        </field>
+        
+		<field name="payGradeId" title="Employee Pay Grade Name">
+            <display description="${payGrade.payGradeName}"></display>             
+        </field>        
+		<field name="levelId" title="Employee Salary Level">
+            <display description="${payrollLevel.levelName}"></display>             
+        </field>        
+        <field name="salaryTemplateId" title="Employee Salary Template" >
+            <display description="${salaryTemplate.salaryTemplateName}"></display> 
+        </field>
+         <field name="basicSalaryStepId" title="Basic Salary Step" >
+            <display description="${basicSalaryStep.basicSalaryStepName}"></display> 
+        </field>
+        <field name="dataAddedTime"><hidden value="${applicantSalarySetupInfo[0].dateAdded}"></hidden></field>
+        <field name="comments" use-when="${applicationStatus== 'APPLICANT_CREATED'}"> <display description="${applicantSalarySetupInfo[0].comments}"></display> </field>
+		
+	</form>
+	<form name="AddOrUpdateJoinDate" type="single" target="updateApplicantJoiningDate" list-name="partyJoiningDate" default-map-name="partyJoiningDate[0]"
+         header-row-style="header-row" default-table-style="basic-table">
+         <alt-target use-when="joiningDate==null" target="updateApplicantJoiningDate"/>
+        <field name="joiningDate" title="Joining Date" use-when="${applicationStatus== 'APPLICANT_CREATED'}"><date-time type="date"/></field>
+        <field name="applyingPartyId" parameter-name="partyId"><hidden/></field>
+        <field name="onProbation" title="Is probation ?" position="1" use-when="${applicationStatus== 'APPLICANT_CREATED'}">
+        <check />
+        </field>
+<!--         <field name="submitButton" use-when="joiningDate==null" title="Submit" widget-style="smallSubmit"><submit button-type="text-link"/></field>       
+ -->        <field name="submitButton" position="2" use-when="${applicationStatus== 'APPLICANT_CREATED'}" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="space" title=" " use-when="${applicationStatus== 'APPLICANT_CREATED'}" ><display description=""/></field>
+    </form>
+    
+     <form name="ForwardNextStage" type="single" target="updateApplicantStatus"
+         header-row-style="header-row" default-table-style="basic-table">
+         <!-- <actions>
+         <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+         </actions> -->
+		<field name="userLoginId" title="Employee Id"><text default-value="${userLogin[0].userLoginId}"/></field>
+		<field name="isIssuedAppointmentLetter"><hidden value="no"/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="orgPartyId"><hidden value="${userPreferences.ORGANIZATION_PARTY}"/></field>
+        <field name="statusId"><hidden value="CONFIRMATION"/></field>
+        <field name="cardId" title="ID NO"><text/></field>
+        <field name="issuedBy" ><hidden value="${userLogin.partyId}"/></field>
+      <field name="employmentType" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+		<drop-down allow-empty="false">
+		<option key="Permanent" description="Permanent" />
+		<option key="Temporary" description="Temporary" />
+		</drop-down>
+		</field>
+       <field name="submitButton" title="Confirm" widget-style="smallSubmit"><submit button-type="button"/></field> 
+       <field name="space" title=" "><display description=""/></field>
+    </form>
+    
+     <form name="FormForDiscardApplicant" target="processDiscardApplicant" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="partyId"><hidden value="${partyId}"/></field>      		
+		<field name="discardReason"><text/></field>
+		<field name="discardFlag"><hidden value="yes"/></field>
+	   <field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit  button-type="button"/></field>
+	   
+	</form>
+	<form name="addRecruitmentNote" type="single" target="createApplicantNote"
+        focus-field-name="noteId" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-service service-name="createPartyNote"/>
+        <field name="partyId"><hidden/></field>
+        <field name="noteId" tooltip="${uiLabelMap.PartyOptional}"><hidden/></field>
+        <field name="noteName" title="${uiLabelMap.FormFieldTitle_noteName}" tooltip="${uiLabelMap.CommonRequired}"> </field>
+        <field name="note"><textarea cols="70" rows="10"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonSave}" widget-style="smallSubmit"><submit button-type="text-link"/></field>
+        <field name="cancelLink" title="${uiLabelMap.CommonEmptyHeader}" widget-style="smallSubmit">
+            <hyperlink target="${donePage}" also-hidden="false" description="${uiLabelMap.CommonCancelDone}">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    
+     <form name="FormForRecruitmentList" target="approveRequisition" type="list" list-name="recruitmentList" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="" odd-row-style="alternate-row"  separate-columns="true">
+		<actions>
+		<entity-condition entity-name="ContessaJobRequisition"><condition-expr field-name="emplPositionId" operator="equals" value="${parameters.emplPositionId}"/></entity-condition>
+		</actions>
+			<row-actions>		
+	 			<entity-and entity-name="StatusItem" list="statusItem" use-cache="false">
+	 				<field-map field-name="statusId" value="${requisitionStatus}"/>
+	 			</entity-and>
+	 			<entity-condition entity-name="PersonPayrollInfo"><order-by field-name="partyId"/></entity-condition>
+	 			<entity-condition entity-name="StatusItem" list="statusItems">
+	 				<condition-list>
+	 					<condition-expr field-name="statusTypeId" operator="equals" value="JOB_REQ_STATUS"/>
+	 					<condition-expr field-name="statusId" operator="not-equals" value="JOB_REQ_CREATED"/>
+	 				</condition-list>
+	 			</entity-condition>
+	 		</row-actions>
+	 		
+            <field name="jobRequisitionId" title="Job Requisition Id" widget-style="buttontext">
+            	<hyperlink also-hidden="false" target-type="plain" description="${jobRequisitionId}" target="javascript:showRequisitionDetail(${jobRequisitionId})"/>
+        	</field>
+            
+            <field name="jobRequisitionId"><display/></field>
+            <field name="emplPositionId"><display/></field>
+            <field name="positionName"><hidden/></field>
+            
+			<field name="noOfResources" title="Resources"><display/></field>
+			<field name="status" title="Status">
+				<display description=" ${statusItem[0].description}"/>
+			</field>
+			
+			
+			<field use-when="!&quot;JOB_REQ_APPROVED&quot;.equals(&quot;${requisitionStatus}&quot;)" name="update" widget-style="buttontext" title="Update">
+            	<hyperlink also-hidden="false" target-type="plain" description="Update" 
+            		target="javascript:updateRequisition(${jobRequisitionId})"/>
+        	</field>
+        
+		<field name="detail" title="Details" widget-style="buttontext">
+			<hyperlink also-hidden="false" description="Details"
+				target="JobRequisitionDetails">
+				<parameter param-name="emplPositionId" />
+				<parameter param-name="jobRequisitionId" />
+			</hyperlink>
+		</field>
+		<!-- <field name="approve" title="Submit" widget-style="smallSubmit" use-when="!&quot;JOB_REQ_APPROVED&quot;.equals(&quot;${requisitionStatus}&quot;) &amp;&amp;&quot;${userLogin.partyId}&quot;.equals(&quot;${approverPartyId}&quot;)" ><submit button-type="button"/></field> -->
+			
+	</form>
+	
+	<form name="FormForAddRequisition" type="single" target="updatePositionWiseJobRequisition" default-map-name="contessaJobRequisition">
+       <alt-target use-when="contessaJobRequisition==null" target="createPositionWiseJobRequisition"/>
+        <field name="jobRequisitionId" use-when="contessaJobRequisition==null"><ignored/></field>
+        <field use-when="contessaJobRequisition!=null" name="jobRequisitionId" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display/></field>
+     
+     	<field name="emplPositionId" title="Job Position"><display></display>  </field>
+        <field name="jobDescriptions" title="${uiLabelMap.CommonDescription}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="jobTitle"><text/></field>
+        <field name="jobDescription"><textarea cols="60" rows="3"/></field>
+        <field name="jobRequisitionDate"><hidden/></field>
+        <field name="jobLocation" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="reasonForRequisition"><textarea/></field>
+        <field name="justification" ><text default-value="${contessaJobRequisition.age}" /></field>
+        <field name="age"><text/></field>
+        <field name="noOfResources" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="gender">
+            <drop-down allow-empty="true">
+                <option key="M" description="Male"/>
+                <option key="F" description="Female"/>
+            </drop-down>
+        </field>
+        <field name="durationMonths"><text/></field>
+        <field name="requiredOnDate"><date-time type="date" /></field>
+        <field name="qualification" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PartyQualType" key-field-name="partyQualTypeId" description="${description}">
+                    <entity-constraint name="parentTypeId" operator="equals" value="DEGREE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="examTypeEnumId">
+             <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" operator="equals" value="EXAM_TYPE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="note"><text/></field>
+        
+        
+        
+        <field name="skillCriteria" title="${uiLabelMap.HumanResSkills} ${uiLabelMap.CommonRequired}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="skillTypeId" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="SkillType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="experienceMonths" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><text/></field>
+        <field name="experienceYears" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><text/></field>
+        <field name="jobPostingTypeEnumId"><hidden value="JOB_POSTING_INTR"/></field>
+        <field name="approverPartyId" tooltip="${uiLabelMap.CommonRequired}"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="submitButton" use-when="contessaJobRequisition==null" title="Create" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="contessaJobRequisition!=null" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+        
+    </form>
+    
+    <form name="RequisitionDetail" type="single" default-map-name="jobRequisition">
+       
+        <field name="jobTitle"><display/></field>
+        <field name="jobLocation"><display/></field>
+        <field name="age"><display/></field>
+        <field name="noOfResources"><display/></field>
+        
+        <field name="gender" title="Gender"><display description="${groovy: 
+   			if(jobRequisition.gender=='M') 
+   				return 'Male'; 
+   			else if(jobRequisition.gender=='F') 
+   				return 'Female'; 
+   			else return 'Other';}"/>
+   		</field>
+     
+        <field name="durationMonths"><display/></field>
+       
+          <field name="qualification">
+            <display-entity entity-name="PartyQualType" key-field-name="partyQualTypeId" description="${description}"></display-entity>
+        </field>
+            
+            
+         <field name="skillTypeId" title="Skill Type">
+            <display-entity entity-name="SkillType" key-field-name="skillTypeId" description="${description}"></display-entity>
+        </field>
+        
+       
+        <field name="experienceMonths"><display/></field>
+        <field name="experienceYears"><display/></field>
+       	<!-- <field name="approverPartyId" title="Approver">
+	        <drop-down> 
+	           <list-options key-name="userLoginId" list-name="approvers" description="${userLoginId}"/> 
+	       </drop-down> 
+        </field> -->
+    
+    </form>
+   
+        
+    </forms>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of Payroll Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+
+    
+    
+    <entity entity-name="PartyProFundRules" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+	    <field name="companyProFundPercent" type="currency-amount"></field>
+	    <field name="selfProFundPercent" type="currency-amount"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+    	<prim-key field="partyId"/>
+    	<prim-key field="dateAdded"/>
+        <relation type="one" fk-name="PAR_PF_RULES_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+    </entity>
+    
+    <entity entity-name="PartyProFundRulesHis" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+	    <field name="companyProFundPercent" type="currency-amount"></field>
+	    <field name="selfProFundPercent" type="currency-amount"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+    	<prim-key field="partyId"/>
+    	<prim-key field="dateAdded"/>
+        <relation type="one" fk-name="PAR_RULES_HIS_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+    </entity>
+    
+    <entity entity-name="BonusType" package-name="org.ofbiz.humanres.payroll">
+    	<field name="bonusId" type="id-ne"></field>
+    	<field name="bonusName" type="id-ne"></field>
+	    <field name="payrollItemTypeId" type="id-ne"></field>
+	    <field name="calculationMode" type="id-ne"></field>
+	    <field name="bonusValue" type="currency-amount"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+    	<prim-key field="bonusId"/>
+        <relation type="one" fk-name="BON_TYP_ITE_PAYIT" rel-entity-name="PayrollItem">
+        <key-map field-name="payrollItemTypeId"/>
+        </relation>
+    </entity>
+    
+    <entity entity-name="PartyBonusStatus" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+	    <field name="bonusId" type="id-ne"></field>
+	    <field name="bonusMonth" type="id-ne"></field>
+	    <field name="bonusYear" type="id-ne"></field>
+	    <field name="amount" type="currency-amount"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="isProcess" type="indicator"></field>
+		<field name="isPayroll" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+    	<prim-key field="partyId"/>
+    	<prim-key field="bonusId"/>
+    	
+    	<prim-key field="dateAdded"/>
+    
+        <relation type="one" fk-name="PRTY_BON_STA_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="PAR_BON_BON_TYP" rel-entity-name="BonusType">
+            <key-map field-name="bonusId" rel-field-name="bonusId"/>
+        </relation>
+    </entity>
+    
+    <entity entity-name="PartyBonusStatusHis" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+	    <field name="bonusId" type="id-ne"></field>
+	    <field name="bonusMonth" type="id-ne"></field>
+	    <field name="bonusYear" type="id-ne"></field>
+	    <field name="amount" type="currency-amount"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+    	<prim-key field="partyId"/>
+    	<prim-key field="bonusId"/>
+    	<prim-key field="bonusMonth"/>
+    	<prim-key field="bonusYear"/>
+    	<prim-key field="dateAdded"/>
+    	
+        <relation type="one" fk-name="PAR_BON_HIS_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="BON_HIS_BON_TYP" rel-entity-name="BonusType">
+            <key-map field-name="bonusId" rel-field-name="bonusId"/>
+        </relation>
+    </entity>
+    <entity entity-name="PartyBonusPayInfo" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+	    <field name="bonusId" type="id-ne"></field>
+	    <field name="bonusMonth" type="id-ne"></field>
+	    <field name="bonusYear" type="id-ne"></field>
+	    <field name="amount" type="currency-amount"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+    	<prim-key field="partyId"/>
+    	<prim-key field="bonusMonth"/>
+    	<prim-key field="bonusYear"/>
+    	<prim-key field="dateAdded"/>
+    	
+        <relation type="one" fk-name="PAR_BON_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="PARTY_BON_INFO_TYP" rel-entity-name="BonusType">
+            <key-map field-name="bonusId" rel-field-name="bonusId"/>
+        </relation>
+    </entity>
+    
+    
+    <entity entity-name="TaxCalculationType" package-name="org.ofbiz.humanres.payroll">
+    	<field name="taxCalculationTypeId" type="id-ne"></field>
+	    <field name="taxCalculationTypeTitle" type="id-ne"></field>
+		<field name="comments" type="comment"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+    	<prim-key field="taxCalculationTypeId"/>
+    </entity>
+    
+    
+    <entity entity-name="TaxCondition" package-name="org.ofbiz.humanres.payroll">
+    	<field name="taxConditionId" type="id-ne"></field>
+    	<field name="taxCalculationTypeId" type="id-ne"></field>
+	    <field name="stepOrder" type="currency-amount"></field>
+	    <field name="fromAmount" type="currency-amount"></field>
+	    <field name="toAmount" type="currency-amount"></field>
+	    <field name="amount" type="currency-amount"></field>
+	    <field name="deductionPercentage" type="currency-amount"></field>
+		<field name="comments" type="comment"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+    	<prim-key field="taxConditionId"/>
+        <relation type="one" fk-name="TAX_CON_CON_TYP" rel-entity-name="TaxCalculationType">
+            <key-map field-name="taxCalculationTypeId"/>
+        </relation>
+    </entity>
+    
+    <entity entity-name="PersonPayrollInfo" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+    	<field name="payGradeId" type="id-ne"></field>
+	    <field name="salaryLevelId" type="id-ne"></field>
+    	<field name="salaryTemplateId" type="id-ne"></field>
+    	<field name="basicSalaryStepId" type="id-ne"></field>
+	    <field name="taxPayerTypeId" type="id-ne"></field>
+	    <field name="monthlyTaxAmount" type="currency-amount"></field>
+	    <field name="isTaxApply" type="indicator"></field>
+		<field name="comments" type="comment"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+		<field name="incrementFlag" type="indicator"></field>
+    	<prim-key field="partyId"/>
+    	
+        <relation type="one" fk-name="PER_PAYR_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <!-- <relation type="one" fk-name="Pers_Payroll_Pay_Grade" rel-entity-name="PayGrade">
+            <key-map field-name="payGradeId"/>
+        </relation>
+        <relation type="one" fk-name="Pers_Payroll_Sal_Level" rel-entity-name="PayrollLevel">
+            <key-map field-name="salaryLevelId"  rel-field-name="levelId" />
+        </relation> -->
+        <relation type="one" fk-name="PER_PAYR_BAS_SAL" rel-entity-name="BasicSalaryStep">
+            <key-map field-name="basicSalaryStepId"  rel-field-name="basicSalaryStepId" />
+        </relation>
+        <relation type="one" fk-name="PER_PAYR_SAL_TEM" rel-entity-name="SalaryTemplate">
+            <key-map field-name="salaryTemplateId"  rel-field-name="salaryTemplateId" />
+        </relation>
+        <!-- <relation type="one" fk-name="PER_PR_TAX_TYP" rel-entity-name="TaxCalculationType">
+        	<key-map field-name="taxPayerTypeId"  rel-field-name="taxCalculationTypeId" />
+        </relation> -->
+    </entity>
+    
+    <entity entity-name="PersonPayrollInfoHis" package-name="org.ofbiz.humanres.payroll">
+    	<field name="partyId" type="id-ne"></field>
+    	<field name="employeeId" type="id-ne"></field>
+    	<field name="payGradeId" type="id-ne"></field>
+	    <field name="salaryLevelId" type="id-ne"></field>
+    	<field name="salaryTemplateId" type="id-ne"></field>
+    	<field name="basicSalaryStepId" type="id-ne"></field>
+	    <field name="taxPayerTypeId" type="id-ne"></field>
+	    <field name="monthlyTaxAmount" type="currency-amount"></field>
+		<field name="comments" type="comment"></field>
+	    <field name="dateAdded" type="date-time"></field>
+		<field name="isActive" type="indicator"></field>
+    	<prim-key field="partyId"/>
+    	<prim-key field="dateAdded"/>
+    	
+        <relation type="one" fk-name="PER_PAYR_HIS_PRTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <!-- <relation type="one" fk-name="Pers_Payroll_Pay_Grade" rel-entity-name="PayGrade">
+            <key-map field-name="payGradeId"/>
+        </relation>
+        <relation type="one" fk-name="Pers_Payroll_Sal_Level" rel-entity-name="PayrollLevel">
+            <key-map field-name="salaryLevelId"  rel-field-name="levelId" />
+        </relation> -->
+        <relation type="one" fk-name="PER_PR_H_BAS_SAL" rel-entity-name="BasicSalaryStep">
+            <key-map field-name="basicSalaryStepId"  rel-field-name="basicSalaryStepId" />
+        </relation>
+        <relation type="one" fk-name="PER_PR_H_SAL_TEM" rel-entity-name="SalaryTemplate">
+            <key-map field-name="salaryTemplateId"  rel-field-name="salaryTemplateId" />
+        </relation>
+        <!-- <relation type="one" fk-name="PER_PR_H_TAX_C_TYP" rel-entity-name="TaxCalculationType">
+        	<key-map field-name="taxPayerTypeId"  rel-field-name="taxCalculationTypeId" />
+        </relation> -->
+    </entity>
+</entitymodel>

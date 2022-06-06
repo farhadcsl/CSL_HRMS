@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Sales Component." permissionId="SALES_VIEW"/>
+    <SecurityPermission description="Create operations in the Sales Component." permissionId="SALES_CREATE"/>
+    <SecurityPermission description="Update operations in the Sales Component." permissionId="SALES_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Sales Component." permissionId="SALES_DELETE"/>
+    <SecurityPermission description="ALL operations in the Sales Component." permissionId="SALES_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="SALES_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SALES_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SALES_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SALES_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SALES_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="SALES_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="SALES_ADMIN"/>
+</entity-engine-xml>

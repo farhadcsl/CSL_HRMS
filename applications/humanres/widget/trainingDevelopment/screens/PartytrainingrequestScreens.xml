@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+         
+	<screen name="FindPartyTrainingRequest">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Employee Training Request"/>
+                <set field="headerItem" value="Training"/>
+                <set field="tabButtonItem" value="PartyTrainingRequest"/>
+                <set field="PartyTrainingRequestCtx" from-field="parameters"/>                
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="TrainingTypeMenu" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                           <link target="NewPartyTrainingRequest" text="Request For A Training" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindPartyTrainingRequest" location="component://humanres/widget/trainingDevelopment/forms/PartyTrainingRequestForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListPartyTrainingRequest" location="component://humanres/widget/trainingDevelopment/forms/PartyTrainingRequestForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="NewPartyTrainingRequest">
+		<section>
+            <actions>
+                <set field="titleProperty" value="Employee Training Request Create"/>
+                <set field="headerItem" value="Training"/>
+                <set field="tabButtonItem" value="PartyTrainingRequest"/>
+                <set field="PartyTrainingRequestCtx" from-field="parameters"/>                
+            </actions>
+           <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<include-menu name="TrainingTypeMenu" location="component://humanres/widget/HumanresMenus.xml"/>
+		                <screenlet title="New Training Request" >
+		                   <section>
+		                       <widgets>
+		                          <include-form name="NewPartyTrainingRequest" location="component://humanres/widget/trainingDevelopment/forms/PartyTrainingRequestForms.xml"/> 
+		                       </widgets>
+		                   </section>
+		               </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+           </widgets>
+		</section>
+	</screen>
+	<screen name="detailsPartyTrainingRequest">
+        <section>
+            <actions>
+               <set field="titleProperty" value="Party Training Requisition"/>
+                <set field="headerItem" value="Training"/>
+                <set field="tabButtonItem" value="PartyTrainingRequest"/>
+                <set field="PartyTrainingRequestCtx" from-field="parameters"/>     
+               <set field="partyId" from-field="parameters.partyId"/>
+               <set field="requestId" from-field="parameters.requestId"/>
+               <set field="trainingOfferId" from-field="parameters.trainingOfferId"/>
+               <set field="description" from-field="parameters.description"/>
+               <entity-condition list="partyTrainingRequestDetailsList" entity-name="PartyTrainingRequestDetails">
+	               <condition-list combine="and">
+	               <condition-expr field-name="requestId" operator="equals" value="${requestId}"/>
+	               <condition-expr field-name="isActive" operator="equals" value="Y"/>
+	               </condition-list>
+               </entity-condition>
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId"  from-field="parameters.partyId"/>
+             	</entity-and> 
+                <entity-one entity-name="TrainingOffer" value-field="trainingOffer">
+                    <field-map field-name="trainingOfferId"  from-field="parameters.trainingOfferId"/>
+             	</entity-one> 
+                <entity-one entity-name="PartyTrainingRequest" value-field="partyTrainingRequest">
+                    <field-map field-name="requestId"  from-field="parameters.requestId"/>
+                    <field-map field-name="trainingOfferId"  from-field="parameters.trainingOfferId"/>
+                    <field-map field-name="partyId"  from-field="parameters.partyId"/>
+             	</entity-one> 
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+						<include-menu name="TrainingTypeMenu" location="component://humanres/widget/HumanresMenus.xml"/>
+		                <screenlet  title="Party Training Requisition [${requestId}]" navigation-menu-name="LinkForAddPartyTrainingRequestDetails">
+							<container id="addPartyTrainingRequestDetailsPopUp"></container>
+							<include-menu  name="LinkForAddPartyTrainingRequestDetails" location="component://humanres/widget/HumanresMenus.xml"/>
+							<section>
+                               <widgets>
+                                   <include-form name="ViewPartyTrainingRequest" location="component://humanres/widget/trainingDevelopment/forms/PartyTrainingRequestForms.xml"/>
+                                   <include-form name="ListPartyTrainingRequestDetails" location="component://humanres/widget/trainingDevelopment/forms/PartyTrainingRequestDetailsForms.xml"/>
+                               </widgets>                           
+	                        </section>             
+						</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+</screens>

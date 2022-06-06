@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    
+    <form name="PerfApprHead" type="single" default-map-name="perfApprProcess">
+   
+        <actions>
+        	<entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and>
+        </actions>
+        <field name="employeeId" title="Employee Id"><display description="${userLogin[0].userLoginId}"/></field>
+        <field name="partyId"><display></display></field>
+        <field name="processId" title="Process"><display></display></field>
+        <field name="perfApprTypeId" title="Performance Appraisal"><display></display></field>        
+        <field name="startDate"><display></display></field>
+        <field name="endDate"><display></display></field>
+        <field name="title"><display></display></field>
+        <field name="description"><display></display></field>
+    </form>
+    
+    <form name="PerfApprComments" type="single" default-map-name="perfApprProcess"
+    	target="ApprovedPerformanceApproval"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="processId" title="Process"><display></display></field>
+        <field name="firstApprovarComments" title="First Approvar Comments" use-when="firstApprovarComments!=null"><display></display></field>
+        <field name="partyComments" title="Self Comments"  use-when="partyComments!=null"><display></display></field>
+        <field name="secondApprovarComments" title="Second Approvar Comments" use-when="secondApprovarComments!=null"> <display ></display></field>
+        <field name="thirdApprovarComments" title="Third Approvar Comments" use-when="thirdApprovarComments!=null"><display></display></field>
+        <field name="appraisarComments" parameter-name="appraisarCommentsParm" ><textarea cols="40"/></field>        
+		 <field name="rejectedLink"  widget-style="buttontext" title=" " position="1">
+       
+            <hyperlink target="RejectPreformanceApproval" description="Rejected" also-hidden="false" target-type="plain">             	
+            	<parameter param-name="processId"/>
+            	<parameter param-name="appraisarCommentsParm" value="${appraisarComments}" />
+            </hyperlink> 
+        </field>
+		 <field name="submitButton" title="Approved" widget-style="buttontext" position="3"><submit button-type="text-link" /></field>
+		
+         
+    </form>
+    
+    <form name="ListPerfApprBusinessKPI" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprBusinessKpi" >
+            	<condition-expr field-name="processId" value="${parameters.processId}"/>
+            	<order-by field-name="processId"/>
+            </entity-condition>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="dataId"><display/></field>
+        <field name="objectiveTypeId"><display/></field>
+        <field name="objectiveDesc"><display/></field>
+        <field name="perfIndicator"><display/></field>
+        <field name="ratingId"><display/></field>
+        <field name="weight"><display/></field>
+        <field name="achivementPercentage"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editPerfApprBusinessKPI" description="Edit" also-hidden="false">
+             	<parameter param-name="processId"/>  
+                <parameter param-name="dataId"/>
+                <parameter param-name="objectiveTypeId"/> 
+                <parameter param-name="objectiveDesc"/> 
+                <parameter param-name="perfIndicator"/>
+                <parameter param-name="achivementPercentage"/>
+                <parameter param-name="ratingId"/>
+                <parameter param-name="comments"/>
+                <parameter param-name="weight"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="ListPerfApprBehaviourKpi" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprBehaviourKpi" >
+            	<condition-expr field-name="processId" value="${parameters.processId}"/>
+            	<order-by field-name="processId"/>
+            </entity-condition>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="dataId"><display/></field>
+        <field name="kpiItemId"><display/></field>
+        <field name="kpiItemDescription"><display/></field>
+        <field name="perfIndicator"><display/></field>
+        <field name="ratingId"><display/></field>
+        <field name="weight"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+       
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink  target="editPerfApprBehaviourKpi" description="Edit" also-hidden="false">
+             	<parameter param-name="processId"/>  
+                <parameter param-name="dataId"/>
+                <parameter param-name="kpiItemId"/> 
+                <parameter param-name="kpiItemDescription"/> 
+                <parameter param-name="perfIndicator"/>
+                <parameter param-name="ratingId"/>
+                <parameter param-name="weight"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="ListPerfApprDevelopmentPlan" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <!-- <entity-condition entity-name="PerfApprDevelopmentPlan"><order-by field-name="processId"/></entity-condition> -->
+            <entity-condition entity-name="PerfApprDevelopmentPlan" >
+            	<condition-expr field-name="processId" value="${parameters.processId}"/>
+            	<order-by field-name="processId"/>
+            </entity-condition>
+        </actions>
+        <field name="processId"><display/></field>
+        <field name="dataId"><display/></field>
+        <field name="developmentRequirementId"><display/></field>
+        <field name="objective"><display/></field>
+        <field name="byWhen"><display/></field>
+        <field name="ratingId"><display/></field>
+        <field name="statusId"><display/></field>
+        <field name="comments"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink  target="editPerfApprDevelopmentPlan" description="Edit" also-hidden="false">
+             	<parameter param-name="processId"/>  
+                <parameter param-name="dataId"/>
+                <parameter param-name="developmentRequirementId"/> 
+                <parameter param-name="objective"/> 
+                <parameter param-name="byWhen"/>
+                <parameter param-name="ratingId"/>
+                <parameter param-name="statusId"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="isActive"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="PerfApprWaitingListView" type="multi" list-name="listIt" use-row-submit="true" target="updatePerformanceAppraisal" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-and entity-name="PerfApprProcess">
+            	<field-map field-name="stepPartyId"  value="${parameters.partyId}"/>
+            	<field-map field-name="isActive"  value="Y"/>
+            </entity-and>
+        </actions>
+        
+        <row-actions>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and>
+        </row-actions>
+        <field name="processId"><display/></field>
+        <field name="employeeId" title="Employee Id"><display description="${userLogin[0].userLoginId}"/></field>
+        
+        <field name="perfApprTypeId" title="Appraisal Type">
+			<display-entity entity-name="PerfApprType" description="${perfApprTypeName}" key-field-name="perfApprTypeId"></display-entity>
+		</field>
+        <field name="startDate"><display/></field>
+        <field name="endDate"><display/></field>
+        <field name="title"><display/></field>
+        <field name="description"><display/></field>
+        <field name="statusId"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="isActive"><display/></field> 
+        <field name="EditLink" title="Detail View" widget-style="buttontext">
+            <hyperlink target="editPerformanceAppraisalWaiting" description="Detail" also-hidden="false">
+                <parameter param-name="processId"/>
+                <parameter param-name="perfApprTypeId"/>
+                <parameter param-name="partyId"/>
+                <parameter param-name="startDate"/>
+                <parameter param-name="endDate"/>
+                <parameter param-name="title"/>
+                <parameter param-name="description"/>
+                <parameter param-name="statusId"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+    </form>
+
+</forms> 

@@ -1,0 +1,20 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+   <screen name="FindEmployeeForLeaveHistory">
+      	<section>
+      		<actions>
+                <set field="headerItem" value="Report"/>
+           	</actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+             			<screenlet title="Find Employee For Leave History Report">
+                        	<include-form name="FindEmployeeForLeaveHistory" location="component://humanres/widget/report/leave/EmployeeLeaveReportForms.xml"/>
+                        </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+
+</screens>

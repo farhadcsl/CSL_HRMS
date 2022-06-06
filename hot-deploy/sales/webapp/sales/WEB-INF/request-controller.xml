@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+
+    <description>Sales Component Site Configuration File</description>
+
+    <!-- Request Mappings -->
+     <request-map uri="FindRequestSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="FindRequest"/>
+     </request-map>
+     <request-map uri="requestSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="EditRequest"/>
+     </request-map>
+     <request-map uri="ViewRequestSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="ViewRequest"/>
+     </request-map>
+      <request-map uri="updaterequestSales">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateCustRequest"/>
+        <response name="success" type="view" value="EditRequest"/>
+        <response name="error" type="view" value="EditRequest"/>
+    </request-map>
+     <request-map uri="createrequestSales">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createCustRequest"/>
+        <response name="success" type="view" value="EditRequest"/>
+        <response name="error" type="view" value="EditRequest"/>
+    </request-map>
+     <request-map uri="requestrolesSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="RequestRoles"/>
+     </request-map>
+     <request-map uri="createCustRequestParty">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createCustRequestParty"/>
+        <response name="success" type="view" value="RequestRoles"/>
+        <response name="error" type="view" value="RequestRoles"/>
+    </request-map>
+     <request-map uri="updateCustRequestPartySales">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateCustRequestParty"/>
+        <response name="success" type="view" value="RequestRoles"/>
+        <response name="error" type="view" value="RequestRoles"/>
+    </request-map>
+     <request-map uri="requestitemsSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="RequestItems"/>
+     </request-map>
+      <request-map uri="EditCustRequestContentSales">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditCustRequestContent"/>
+    </request-map>
+     <request-map uri="createCustRequestContentSales">
+        <security auth="true" https="true"/>
+        <event path="component://order/script/org/ofbiz/order/request/CustRequestEvents.xml" type="simple"  invoke="createCustRequestContent"/>
+        <response name="success" type="request-redirect" value="EditCustRequestContent"><redirect-parameter name="custRequestId"/></response>
+        <response name="error" type="view" value="EditCustRequestContent"/>
+    </request-map>
+     <request-map uri="EditRequestSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="EditRequest"/>
+     </request-map>
+     <request-map uri="requestitemSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="EditRequestItem"/>
+     </request-map>
+     <request-map uri="createrequestitemSales">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createCustRequestItem"/>
+        <response name="success" type="view" value="RequestItems"/>
+        <response name="error" type="view" value="RequestItems"/>
+    </request-map>
+     <request-map uri="requestitemnotesSales">
+     <security https="true" auth="true"/>
+     <response name="success" type="view" value="RequestItemNotes"/>
+     </request-map>
+    <request-map uri="createrequestitemnoteSales">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createCustRequestItemNote"/>
+        <response name="success" type="view" value="RequestItemNotes"/>
+        <response name="error" type="view" value="RequestItemNotes"/>
+    </request-map>
+    <request-map uri="setCustRequestStatusSales">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="setCustRequestStatus"/>
+        <response name="success" type="view" value="FindRequest"/>
+        <response name="error" type="view" value="EditRequest"/>
+    </request-map>
+    <!-- View Mappings -->
+    <view-map name="RequestItemNotes" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#RequestItemNotes"/>
+    <view-map name="EditRequestItem" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#EditRequestItem"/>
+    <view-map name="EditCustRequestContent" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#EditCustRequestContent"/>
+    <view-map name="RequestItems" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#RequestItems"/>
+    <view-map name="FindRequest" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#FindRequest"/>
+    <view-map name="EditRequest" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#EditRequest"/>
+    <view-map name="ViewRequest" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#ViewRequest"/>
+    <view-map name="RequestRoles" type="screen" page="component://sales/widget/request/screens/RequestScreens.xml#RequestRoles"/>
+</site-conf>

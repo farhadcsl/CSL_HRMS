@@ -1,0 +1,487 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+<handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler"/>
+    <handler name="bsf" type="request" class="org.ofbiz.webapp.event.BsfEventHandler"/>
+    <!-- Data Import Request Requests -->
+    
+    <request-map uri="EmployeeDataImport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EmployeeDataImport" />
+	</request-map>
+
+	<!-- <request-map uri="impEmployeeDataFromExcel"> <security https="true" 
+		auth="true"/> <event type="java" path="org.ofbiz.humanres.dataimport.DataImportEvent" 
+		invoke="impEmployeeDataFromExcel"/> <response name="success" type="request-redirect" 
+		value="EmployeeDataImport"/> <response name="error" type="request-redirect" 
+		value="EmployeeDataImport"/> </request-map> -->
+
+	<request-map uri="impEmployeeDataFromExcel">
+		<security https="true" auth="true" />
+		<event type="java"
+			path="org.ofbiz.humanres.dataimport.HrDataImportEvent" invoke="impEmployeeDataFromExcel" />
+		<response name="success" type="request-redirect" value="EmployeeDataImport" />
+		<response name="error" type="request-redirect" value="EmployeeDataImport" />
+	</request-map>
+
+	<request-map uri="AttendaceInput">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AttendaceInput" />
+	</request-map>
+	
+	<request-map uri="saveAttendaceInput">
+		<security https="true" auth="true" />
+		<event type="service" invoke="saveAttendaceInput" />
+		<response name="success" type="request-redirect" value="AttendaceInput">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+	
+	<request-map uri="AttendanceDataImport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="AttendanceDataImport" />
+	</request-map>
+	<!-- GoalsAndKpiDataImport included by Farhad -->
+	<request-map uri="GoalsAndKpiDataImport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="GoalsAndKpiDataImport" />
+	</request-map>
+	<!-- GoalsAndKpiDataImport included by Farhad -->
+
+	<request-map uri="ImportAttendanceDataFromExcel">
+		<security https="true" auth="true" />
+		<event type="java"
+			path="org.ofbiz.humanres.dataimport.HrDataImportEvent" invoke="ImportAttendanceDataFromExcel" />
+		<response name="success" type="request-redirect" value="AttendanceDataImport" />
+		<response name="error" type="request-redirect" value="AttendanceDataImport" />
+	</request-map>
+
+	<!-- ImportGoalsAndKpiDataFromExcel included by Farhad -->
+	<request-map uri="ImportGoalsAndKpiDataFromExcel">
+		<security https="true" auth="true" />
+		<event type="java"
+			path="org.ofbiz.humanres.dataimport.HrDataImportEvent" invoke="ImportGoalsAndKpiDataFromExcel" />
+		<response name="success" type="request-redirect" value="GoalsAndKpiDataImport" />
+		<response name="error" type="request-redirect" value="GoalsAndKpiDataImport" />
+	</request-map>
+	<!-- ImportGoalsAndKpiDataFromExcel included by Farhad -->
+
+	<!-- For goals and kpi module (farhad hossain) -->
+<!-- 	 this controller is for Yearly Achievement -->
+	<request-map uri="GoalsAndKpi"> 
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ShowGoalsAndKpi" />
+	</request-map>
+	
+	<request-map uri="DetailsofKPI">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ShowDetailsofKPI" >
+		<redirect-parameter name="year" /> </response>
+	</request-map>
+	
+	<request-map uri="IndividualMonthlyDetails">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="IndividualMonthlyDetails" >
+		<redirect-parameter name="year" /> </response>
+	</request-map>
+	
+	<request-map uri="EmployeeGoalsAndKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ShowEmployeeGoalsAndKpi" />
+	</request-map>
+	
+	<request-map uri="ManagerKpiView">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ShowManagerKpiView" />
+	</request-map>
+	
+	<request-map uri="ManagerMonthlyKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ManagerMonthlyKpi" />
+	</request-map>
+	
+	<!-- 	Modified by Parves -->
+	<request-map uri="monthlyGoalsAndKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ShowMonthlyGoalsAndKpi" />
+	</request-map>
+
+
+    <request-map uri="monthlyGenerateKPI">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="monthlyGenerateKPI" />
+	</request-map>
+    
+	<request-map uri="monthlyKPI">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="monthlyKPI" />
+	</request-map>
+	
+	<request-map uri="yearlyKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="yearlyKpi" />
+	</request-map>
+	
+	
+		<request-map uri="generateMonthlyGoalsAndKpi">
+		<security https="true" auth="true" />
+		<event type="service" invoke="generateMonthlyGoalsAndKpi" />
+		<response name="success" type="request" value="monthlyGenerateKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyGenerateKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+<!-- 	Modified by Parves -->
+	
+	
+	<!-- For goals and kpi modul (farhad hossain -->
+
+	<!-- Update Individual Goals and KPI-> Farhad -->
+	<!-- <request-map uri="updateGoalsAndKpi"> <security https="true" auth="true"/> 
+		<event type="service-multi" invoke="updateGoalsAndKpi"/> <response name="success" 
+		type="view" value="ShowGoalsAndKpi"/> </request-map> -->
+
+	<!-- <request-map uri="updateEmp_GoalsAndKpi"> <security https="true" auth="true"/> 
+		<event type="java" path="org.ofbiz.humanres.dataimport.HrDataImportEvent" 
+		invoke="updateGoalsAndKpi"/> <response name="success" type="request-redirect" 
+		value="farhadGoalsAndKpisuccess"/> <response name="error" type="request-redirect" 
+		value="farhadGoalsAndKpiError"/> </request-map> <request-map uri="updateEmpGoalsAndKpi"> 
+		<security https="true" auth="true"/> <event type="java" path="org.ofbiz.humanres.SecurityAccessDataAdded" 
+		invoke="updateEmpGoalsAndKpi"/> <response name="success" type="request-redirect" 
+		value="ShowGoalsAndKpi"/> <response name="error" type="request-redirect" 
+		value="GoalsAndKpi"/> </request-map> -->
+
+	<request-map uri="saveAllAchievements">
+		<security https="true" auth="true" />
+		<event type="service-multi" invoke="saveAllAchievements" />
+		<response name="success" type="request" value="updateKpi">
+			<redirect-parameter name="partyId" />
+		</response>
+		<response name="error" type="request-redirect" value="GoalsAndKpi">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+	
+	
+	
+	<request-map uri="saveTargets">
+		<security https="true" auth="true" />
+		<event type="service-multi" invoke="targetSaveAll" />
+		<response name="success" type="request" value="monthlyGenerateKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyGenerateKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+	
+<!-- 	 this portion is created to goals and Kpi search with java service Farhad -->
+	<request-map uri="monthlyKpiSearch">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.PayslipEvents" invoke="KpiSearchJava"></event>
+        <response name="success" type="view" value="viewMonthlyKPI"/>
+        <response name="error" type="view" value="viewMonthlyKPI"/>
+    </request-map>
+
+     <!-- this portion is used to save Monthly KPI achievement Farhad -->
+     
+     
+     <!-- 	 this portion is created to yearly Kpi Search   with java service Farhad -->
+	<request-map uri="yearlyKpiSearch">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.PayslipEvents" invoke="yearlyKpiSearch"></event>
+        <response name="success" type="view" value="ShowGoalsAndKpi"/>
+        <response name="error" type="view" value="ShowGoalsAndKpi"/>
+    </request-map>
+
+     <!-- this portion is used to save Monthly KPI achievement Farhad -->
+     
+	
+	<request-map uri="saveMonthlyAchievements">
+		<security https="true" auth="true" />
+		<event type="service-multi" invoke="saveMonthlyAchievements" />
+		<response name="success" type="request" value="montlyKpiStatus">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+	</request-map>
+	
+	
+	<request-map uri="saveManagerMlyAchts">
+		<security https="true" auth="true" />
+		<event type="service-multi" invoke="saveMonthlyAchievements" />
+		<response name="success" type="request" value="montlyManagerKpiStatus">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+	</request-map>
+	
+	<request-map uri="montlyKpiStatus">
+		<security https="true" auth="true" />
+		<event type="service" invoke="montlyKpiStatus" />
+		<response name="success" type="request-redirect" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+	</request-map>
+	
+	<request-map uri="montlyManagerKpiStatus">
+		<security https="true" auth="true" />
+		<event type="service" invoke="montlyKpiStatusByManager" />
+		<response name="success" type="request-redirect" value="monthlyKpiSearchFromManager">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyKpiSearchFromManager">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+	</request-map>
+     
+
+	<request-map uri="saveMonthlyAcievement">
+		<security https="true" auth="true" />
+		<event type="service" invoke="saveMonthlyAcievement" />
+		<response name="success" type="request-redirect" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+			
+		<response name="error" type="request-redirect" value="monthlyGoalsAndKpi">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+	</request-map>
+	
+	<request-map uri="inputMonthlyAcievement">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="editAchievement" />
+	</request-map>
+	
+
+	<request-map uri="updateKpi">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateKpiService" />
+		<response name="success" type="request-redirect" value="GoalsAndKpi">
+			<redirect-parameter name="partyId" />
+		</response>
+		<response name="error" type="request-redirect" value="GoalsAndKpi">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+	
+	<request-map uri="reviewKPIbyManager">
+		<security https="true" auth="true" />
+		<event type="service-multi" invoke="saveAllAchievements" />
+		<response name="success" type="request" value="updateKPIByManager">
+			<redirect-parameter name="partyId" />
+		</response>
+		<response name="error" type="request-redirect" value="DetailsofKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+	
+	<request-map uri="updateKPIByManager">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateKPIByManagerService" />
+		<response name="success" type="request-redirect" value="DetailsofKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+		<response name="error" type="request-redirect" value="DetailsofKPI">
+			<redirect-parameter name="partyId" />
+		</response>
+	</request-map>
+
+	<!-- <request-map uri="updateKpi"> -->
+	<!-- <security https="true" auth="true"/> -->
+	<!-- <event type="java" path="org.ofbiz.humanres.KpiEvents" invoke="updateKpi"/> -->
+	<!-- <response name="success" type="view" value="ShowGoalsAndKpi"/> -->
+	<!-- <response name="success" type="view" value="ShowGoalsAndKpi"/> -->
+	<!-- </request-map> -->
+
+	<request-map uri="setGroupPermission">
+		<security https="true" auth="true" />
+		<event type="java" path="org.ofbiz.humanres.SecurityAccessDataAdded"
+			invoke="setGroupPermission" />
+		<response name="success" type="request-redirect" value="main1" />
+		<response name="error" type="request-redirect" value="main1" />
+	</request-map>
+	
+	<request-map uri="individualKpiReport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="individualKpiReport"/>
+    </request-map>
+    
+    <request-map uri="individualKpiReport.pdf">
+         <security https="true" auth="true"/>
+<!--          <event type="java" path="org.ofbiz.humanres.ReportsUtil" invoke="generateReport"/> -->
+         <response name="success" type="view" value="EmployeeLeaveHistory.pdf"/>
+         <response name="error" type="view" value="individualKpiReport"/>
+ </request-map>
+ 
+ 	<request-map uri="FindIndividualKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindIndividualKpi" />
+	</request-map>
+	
+	<request-map uri="FindDeptWiseKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindDeptWiseKpi" />
+	</request-map>
+	
+	<request-map uri="FindCompanyWiseKpi">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCompanyWiseKpi" />
+	</request-map>
+	
+	<request-map uri="DeptWiseKpiform">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="DeptWiseKpiform" />
+	</request-map>
+	
+	
+	
+	<!-- <request-map uri="generateDeptWiseKpi">
+		<security https="true" auth="true" />
+		<event type="java"
+			path="org.ofbiz.humanres.KpiEvents" invoke="deptWisekpI" />
+		<response name="success" type="request-redirect" value="FindDeptWiseKpi" />
+		<response name="error" type="request-redirect" value="FindDeptWiseKpi" />
+	</request-map> -->
+	
+	<request-map uri="generateDeptWiseKpi">
+		<security https="true" auth="true" />
+		<event type="service" invoke="ceateDeptWiseKpi" />
+		<response name="success" type="request-redirect" value="EmployeeGoalsAndKpi"></response>
+		<response name="error" type="request-redirect" value="EmployeeGoalsAndKpi"></response>
+	</request-map>
+	
+	<request-map uri="monthlyKpiSearchFromManager">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.PayslipEvents" invoke="KpiSearchJava"></event>
+        <response name="success" type="view" value="viewMonthlyKPIForManager"/>
+        <response name="error" type="view" value="viewMonthlyKPIForManager"/>
+    </request-map>
+    
+    <request-map uri="PersonList">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="PersonList" />
+	</request-map>
+    
+    
+<!--     <request-map uri="sendToManagerMail"> -->
+<!--         <security https="true" auth="true"/> -->
+<!--         <event type="java" path="org.ofbiz.humanres.KpiEvents" invoke="sendEmailNotification"></event> -->
+<!--         <response name="success" type="view" value="viewMonthlyKPIForManager"/> -->
+<!--         <response name="error" type="view" value="viewMonthlyKPIForManager"/> -->
+<!--     </request-map> -->
+    
+    
+    <request-map uri="sendToManagerMail">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="sendToManagerMail" />
+        <response name="success" type="request" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>
+		<response name="error" type="request-redirect" value="monthlyKpiSearch">
+			<redirect-parameter name="partyId" />
+			<redirect-parameter name="mMonth" />
+			<redirect-parameter name="mYear" />
+		</response>	
+    </request-map>
+
+
+	<view-map name="PersonList" type="screen"
+		page="component://humanres/widget/dataimport/DataImportScreens.xml#ListProfile" />
+	<view-map name="EmployeeDataImport" type="screen"
+		page="component://humanres/widget/dataimport/DataImportScreens.xml#EmployeeDataImport" />
+	<view-map name="AttendaceInput" type="screen"
+		page="component://humanres/widget/dataimport/DataImportScreens.xml#AttendaceInput" />	
+	<view-map name="AttendanceDataImport" type="screen"
+		page="component://humanres/widget/dataimport/DataImportScreens.xml#AttendanceDataImport" />
+	<view-map name="GoalsAndKpiDataImport" type="screen"
+		page="component://humanres/widget/dataimport/DataImportScreens.xml#GoalsAndKpiDataImport" />
+	<view-map name="ShowGoalsAndKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ShowGoalsAndKpi" />
+	<view-map name="farhadGoalsAndKpiError" type="screen"
+		page="component://humanres/widget/JobReqCompSettingscreens.xml#ShowGoalsAndKpi" />
+
+   <view-map name="ShowEmployeeGoalsAndKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ShowEmployeeGoalsAndKpi" />
+		
+ 	<view-map name="individualKpiReport" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#individualKpiReport" />
+	
+	<view-map name="FindIndividualKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#FindIndividualKpi" />
+		
+	<view-map name="FindDeptWiseKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#FindDeptWiseKpi" />
+	
+	<view-map name="DeptWiseKpiform" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#DeptWiseKpiform" />
+			
+	<view-map name="FindCompanyWiseKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#FindCompanyWiseKpi" />
+				
+	<view-map name="ShowManagerKpiView" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ShowManagerKpiView" />	
+			
+	<view-map name="ManagerMonthlyKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ManagerMonthlyKpi" />
+		
+	<view-map name="ShowDetailsofKPI" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ShowDetailsofKPI" />	
+		
+	<view-map name="IndividualMonthlyDetails" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#IndividualMonthlyDetails" />		
+    <!-- 		Modified by Parves -->
+	<view-map name="FindMonthlyKPI" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#FindIndividualKpi" />
+	
+	<view-map name="ShowMonthlyGoalsAndKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#ShowMonthlyGoalsAndKpi" />
+	
+	<view-map name="monthlyGenerateKPI" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#monthlyGenerateKPI" />
+   	
+   	
+   <view-map name="monthlyKPI" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#monthlyKPI" />	
+		
+	<view-map name="yearlyKpi" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#yearlyKpi" />
+	
+   <view-map name="viewMonthlyKPI" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#viewMonthlyKPI" />	
+		
+  <view-map name="editAchievement" type="screen"
+		page="component://humanres/widget/goalsandkpi/JobReqCompSettingscreens.xml#editAchievement" />	
+		
+  <view-map name="viewMonthlyKPIForManager" type="screen"
+		page="component://humanres/widget/goalsandkpi/managerkpiview/GoalsAndKpiScreens.xml#viewMonthlyKPIForManager" />					
+</site-conf>

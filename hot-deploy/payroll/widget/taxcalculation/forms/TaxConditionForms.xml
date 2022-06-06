@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+
+
+     <form name="FindTaxCondition" type="single" target="FindTaxCondition" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="taxCalculationTypeId" title="Tax Payer Group">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${taxCalculationTypeTitle}" key-field-name="taxCalculationTypeId" entity-name="TaxCalculationType">
+                    <entity-order-by field-name="taxCalculationTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+ 
+
+
+    <form name="AddTaxCondition" type="single" target="createTaxCondition" header-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="taxCalculationTypeId" title="Tax Payer Group">        
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${taxCalculationTypeTitle}" key-field-name="taxCalculationTypeId" entity-name="TaxCalculationType">
+                    <entity-order-by field-name="taxCalculationTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+	   	<field name="stepOrder" title="Step Order" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+	   	<field name="fromAmount" title="From Amount" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+	   	<field name="toAmount" title="To Amount" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+	   	<field name="deductionPercentage" title="Precentage (%)" required-field="true" tooltip="Enter value between 0 to 100" widget-style="number"><text/></field>
+	   	<field name="comments" title="Comments"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+
+
+    <form name="EditTaxCondition" type="single" target="updateTaxCondition" header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxConditionId" title="Condition Id"><display/></field>
+        <field name="taxCalculationTypeId" title="Tax Payer Group">        
+            <drop-down allow-empty="false">
+            <auto-complete/>
+                <entity-options description="${taxCalculationTypeTitle}" key-field-name="taxCalculationTypeId" entity-name="TaxCalculationType">
+                    <entity-order-by field-name="taxCalculationTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+	   	<field name="stepOrder" title="Step Order" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+	   	<field name="fromAmount" title="From Amount" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+	   	<field name="toAmount" title="To Amount" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+	   	<field name="deductionPercentage" title="Precentage (%)" required-field="true" tooltip="Enter value between 0 to 100" widget-style="number"><text/></field>
+	   	<field name="comments" title="Comments"><textarea/></field>
+	   	<field name="isActive" title="Is Active"><hidden/></field>
+	   	<field name="dateAdded" title="Date Added"><hidden/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+    
+    
+    
+   <form name="ListTaxCondition" type="multi" target="updatePayrollItemType" list-name="listIt" 
+   		odd-row-style="alternate-row" header-row-style="header-row-2" 
+        paginate-target="TaxConditionSetup" default-table-style="basic-table hover-bar">
+        <actions>
+        
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="taxConditionCtx"/>
+                <field-map field-name="entityName" value="TaxCondition"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            <!-- <entity-condition entity-name="TaxCondition">
+            	<order-by field-name="taxCalculationTypeId"/>
+            	<order-by field-name="stepOrder"/>
+            </entity-condition> -->
+        </actions>
+        <row-actions>
+	        <entity-and entity-name="TaxCalculationType" list="taxCalculationType">
+	        	<field-map field-name="taxCalculationTypeId" from-field="taxCalculationTypeId"/>
+	        </entity-and>
+        </row-actions>
+        <field name="taxConditionId" title="Tax Slab Id"><display/></field>
+        <field name="taxCalculationTypeId" title="Tax Payer Group"><hidden/></field>
+        <field name="taxCalculationTypeTitle" title="Tax Payer Group">
+        	<display description="${taxCalculationType[0].taxCalculationTypeTitle}"/></field>
+        <field name="stepOrder" title="Step order"><display/></field>
+        <field name="fromAmount" ><display/></field>
+        <field name="toAmount" ><display/></field>
+        <field name="amount" ><display/></field>
+        <field name="deductionPercentage" title="Percentage"><display/></field>
+        <field name="editLink" title="Edit" widget-style="buttontext" >
+            <hyperlink target="EditTaxCondition" description="Edit" also-hidden="false">
+                <parameter param-name="taxConditionId"/>
+                <parameter param-name="taxCalculationTypeId"/>
+                <parameter param-name="stepOrder"/>
+                <parameter param-name="fromAmount"/>
+                <parameter param-name="toAmount"/>
+                <parameter param-name="amount"/>
+                <parameter param-name="deductionPercentage"/>
+                <parameter param-name="comments"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext" >
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteTaxCondition" 
+            	request-confirmation="true" confirmation-message="Do you want to delete govt. tax slap ${taxConditionId"> 
+                <parameter param-name="taxConditionId"/> 
+            </hyperlink>
+        </field>
+    </form>
+    
+ 
+    
+ </forms>

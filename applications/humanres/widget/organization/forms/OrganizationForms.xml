@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+	<!-- Group List for Company(Mother Group of Company) -->
+	<form name="GroupList" type="list" list-name="companies" paginate="false" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="PartyGroup" value-field="companies">
+				<field-map field-name="partyId" from-field="partyIdTo" />
+			</entity-one>
+			<!-- <set field="organizationTitles" from-field="organizationTitle" default-value="${uiLabelMap.CompaniesList}" type="String"/> -->
+			
+		</row-actions>
+	 	<field name="partyIdTo"  title="${organizationChildListTitle}" widget-style="button-col" parameter-name="userPrefValue">
+			<hyperlink target="setUserPreference" description="${companies.groupName}">
+				<parameter param-name="userPrefTypeId" value="ORGANIZATION_PARTY" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${companies.partyId}" />
+			</hyperlink>
+		</field>
+	
+		<field name="numEmployeesParameter" title="${uiLabelMap.numOfEmployees}">
+			<display description="${companies.numEmployees}"></display>
+		</field>
+		<!-- <field name="detail" title="Detail" widget-style="button-col">
+				<hyperlink target="/partymgr/control/viewprofile?partyId" description="Detail" target-type="plain">
+				<parameter param-name="partyId" from-field="partyIdTo"/>
+				</hyperlink>
+		</field> -->
+	</form>
+
+
+
+	<form name="UnitList" type="list" list-name="companies" paginate="false" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="PartyGroup" value-field="companies">
+				<field-map field-name="partyId" from-field="partyIdTo" />
+			</entity-one>
+			<!-- <set field="organizationTitles" from-field="organizationTitle" default-value="${uiLabelMap.CompaniesList}" type="String"/> -->
+			
+		</row-actions>
+		<field name="partyIdTo"  title="${organizationChildListTitle}" widget-style="button-col" parameter-name="userPrefValue">
+			<hyperlink target="setUserPreference" description="${companies.groupName}">
+				<parameter param-name="userPrefTypeId" value="ORGANIZATION_UNIT" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${companies.partyId}" />
+			</hyperlink>
+		</field>
+	
+		<field name="numEmployeesParameter" title="${uiLabelMap.numOfEmployees}">
+			<display description="${companies.numEmployees}"></display>
+		</field>
+	</form>
+
+
+
+
+	<form name="EmployeesPerPosition" type="list" list-name="emplPositionFulfillments" list-entry-name="entry" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-and entity-name="UserLoginAndPartyDetails" list="employee">
+				<field-map field-name="partyId" from-field="entry.partyId" />
+			</entity-and>
+			<set field="emplId" from-field="employee[0].userLoginId"/>
+		</row-actions>
+		
+		<field name="partyId" title="Person Name">
+			<hyperlink target="EmployeeProfile" description="${groovy:employee[0].firstName+' '+(employee[0].middleName==null?' ':employee[0].middleName)+' '+(employee[0].lastName==null?' ':employee[0].lastName)}">
+				<parameter param-name="partyId" value="${entry.partyId}" />
+			</hyperlink>
+		</field>
+		<field name="emplId" title="Employee Id"><display description="${emplId}"/></field>
+		<field name="emplPositionId" title="Position Id"><display/></field>
+		<field name="status"><display description="${groovy: if(employee[0].enabled=='N') return 'Employee Separated'; else return 'Active';}"/></field>
+	</form>
+	<form name="FindDocument" target="findContent" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="contentName" title=" ">
+			<lookup target-form-name="LookupContent" />
+		</field>
+	</form>
+	<form name="PositionInfo" type="single" default-map-name="emplPosition" paginate-target="FindEmplPositions" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+		
+			<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+			<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+			<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			<entity-one entity-name="PartyGroup">
+				<!-- <field-map field-name="partyId" value="userPreferences.ORGANIZATION_PARTY" /> -->
+				<field-map field-name="partyId" value="${partyId}" />
+			</entity-one>
+			
+	 	  <set field="totalEmployeeByPosition" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.countTotalEmployeeByPositionId(delegator,emplPositionId)}" type="Long"/>
+		
+			
+		</actions>
+		<row-actions>
+		<!--   <entity-one entity-name="EmplPosition" value-field="ePosition"> 
+              <field-map field-name="emplPositionId" from-field="emplPositionId"/>
+           </entity-one>		
+		 <entity-and entity-name="BudgetItem" list="budgetItemList" use-cache="false">
+	 		<field-map field-name="budgetId" from-field="emplPosition.budgetId"/>
+	 		<field-map field-name="budgetItemSeqId" from-field="emplPosition.budgetItemSeqId"/>
+	 	 </entity-and> -->
+	 	</row-actions>
+		<field name="emplPositionId"><hidden/></field>
+		<field name="emplPositionTypeId" title="Position Name">
+			<display-entity entity-name="EmplPositionType" description="${description} of ${groupName}">
+			</display-entity>
+		</field>
+		<field name="statusId" title="Status">
+			<display description="${groovy:(emplPosition.statusId=='EMPL_POS_ACTIVE'?'Active':'Inactive')+' '+(emplPosition.fulltimeFlag=='Y'?'[Fulltime]':'[Temporary]')}" />
+		</field>
+		<field name="currentEmployee"><display description="${totalEmployeeByPosition}"></display></field>
+		<!-- <field name="budgetId" title="Budget">
+			<display description="${groovy:emplPosition.budgetId!=null?'Allocated':'Not Analyzed Yet'}" />
+		</field> -->
+		<field name="budgetId" title="Budget">		
+<!-- 			<display description="${groovy:emplPosition.budgetId!=null?'Allocated':'Not Analyzed Yet'}" />
+ -->	
+		 <display description=" ${budgetItem[0].amount}" default-value="Add Budget">	
+		<!-- <display description="${groovy:emplPosition.budgetId!=null?'Allocated':'Add Budget'}"  default-value="Add Budget"> -->
+			 <!-- Here updateSillTest method is used. If we need anthing else information to save then need to write new method -->
+				<in-place-editor url="updatePositionBudget" cancel-control="button" saving-text="Updating..." submit-on-blur="true">
+					<simple-editor />
+					<field-map field-name="partyId" from-field="partyId"/>
+					<field-map field-name="emplPositionId" from-field="emplPositionId"/>
+					<field-map field-name="budgetId" from-field="budgetId"/>
+				</in-place-editor>
+			</display>
+		</field>
+		
+	</form>
+	<form name="Positions" type="list" list-name="positions" paginate-target="OrganizationMain" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<!-- create a view for get total per position type -->
+			<entity-condition list="totalEmployees" entity-name="EmplPositionFulfillmentPerUnit">
+				<condition-list>
+					<condition-expr field-name="positionId" from-field="emplPositionId" />
+				</condition-list>
+			</entity-condition>
+			<entity-one entity-name="EmplPositionType" value-field="type" />
+		</row-actions>
+		<field name="emplPositionTypeId" title="Position Name">
+			<hyperlink target="ContessaPositionView" description="${type.description}">
+				<parameter param-name="emplPositionId" value="${emplPositionId}" />
+			</hyperlink>
+		</field>
+		
+		<field name="totalEmployee" title="Total Employees">
+			<display description="${totalEmployees[0].totalEmployee}" />
+		</field>
+	</form>
+	
+	
+	<form name="OrganizationHeadAssign" type="list" list-name="emplTop" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+        
+        <set field="partyId" value="${userPreferences.ORGANIZATION_UNIT}"/>
+           <entity-and entity-name="BusinessUnitTopAssign" list="emplTop">
+           <field-map field-name="partyId" from-field="partyId"/>
+           </entity-and>
+        </actions>
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="userLogin">
+        <field-map field-name="partyId" value="${emplTop[0].employeePartyId}"/>
+        </entity-and>
+       <entity-and entity-name="PartyAndPerson" list="partyAndPerson">
+        <field-map field-name="partyId" value="${emplTop[0].employeePartyId}"/>
+        </entity-and>
+        </row-actions>
+        <field name="employeePartyId" title="Employee Id"><display description="${userLogin[0].userLoginId}"/></field>
+        <field name="partyId" ><hidden/></field>
+        <field name="employeeName"><display description="${partyAndPerson[0].firstName} ${partyAndPerson[0].lastName}"/></field>
+        <field name="fromDate" title="Date"><hidden/></field>
+        
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteOrganizationHead"> 
+                <parameter param-name="partyId"/> 
+                <parameter param-name="employeePartyId"/> 
+                <parameter param-name="fromDate"/> 
+            </hyperlink>
+        </field>
+    </form>
+
+	<form name="GroupInformation" target="updateParty" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<entity-one entity-name="PartyGroup">
+				<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" />
+			</entity-one>
+			
+			<set field="getTotalEmployeeByOrg" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils. getTotalEmployeeByOrg(delegator,orgPartyId)}" type="Long"/> 
+		<set field="getTotalBudgetByOrg" value="${bsh:org.ofbiz.humanres.organization.OrgChart. getTotalBudgetByOrganizationLevel(delegator,orgPartyId,totalBudget)}" type="Long"/>
+		 
+		
+		</actions>
+		<field name="partyId" title="${organizationTitle} Name">
+			<display description="${groupName}"></display>
+		</field>
+		<field name="groupName">
+			<display>
+				<in-place-editor url="/humanres/control/updatePartyGroup" cancel-control="button" saving-text="Updating...">
+					<simple-editor />
+					<field-map field-name="partyId" from-field="partyId"/>
+					<field-map field-name="groupName" from-field="company.groupName" />
+				</in-place-editor>
+			</display>
+		</field>
+		
+		<field name="CurrentEmployee"> <display description="${getTotalEmployeeByOrg}"/> </field>
+		<field name="Budget"> <display description="${getTotalBudgetByOrg}"/> </field>
+	</form>
+	
+	
+	<form name="UnitInformation" target="updateParty" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<entity-one entity-name="PartyGroup">
+				<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_UNIT" />
+			</entity-one>
+			
+	<set field="getTotalEmployeeByOrg" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils. getTotalEmployeeByOrg(delegator,orgPartyId)}" type="Long"/> 
+		<set field="getTotalBudgetByOrg" value="${bsh:org.ofbiz.humanres.organization.OrgChart.getTotalBudgetByOrganizationLevel(delegator,orgPartyId,totalBudget)}" type="Long"/> 
+		
+		</actions>
+		<field name="partyId" title="${organizationTitle} Name">
+			<display description="${groupName}"></display>
+		</field>
+		<field name="groupName">
+			<display>
+				<in-place-editor url="/humanres/control/updatePartyGroup" cancel-control="button" saving-text="Updating...">
+					<simple-editor />
+					<field-map field-name="partyId" from-field="partyId"/>
+					<field-map field-name="groupName" from-field="company.groupName" />
+				</in-place-editor>
+			</display>
+		</field>
+		
+		<field name="CurrentEmployee"> <display description="${getTotalEmployeeByOrg}"/> </field>
+		<field name="Budget"> <display description="${getTotalBudgetByOrg}"/> </field>
+	</form>
+
+	<form name="Documents" type="list" list-name="documents" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="PartyContentDetail" value-field="document">
+			</entity-one>
+			<property-to-field resource="mimetype" property="${document.mimeTypeId}" field="imageType" />
+		</row-actions>
+		<field name="image" title=" ">
+			<image value="${imageType}" />
+		</field>
+		<field name="contentName" title="Title" widget-style="documentTitleEditor">
+			<display>
+				<in-place-editor url="renameImage" ok-text="..." cancel-text="X" saving-text="Updating..." text-between-controls=" " form-class-name="inplaceeditor">
+					<simple-editor />
+					<field-map field-name="contentId" from-field="contentId" />
+				</in-place-editor>
+			</display>
+		</field>
+		
+		<field name="partyId"><hidden/></field>
+		<field name="contentId"><hidden/></field>
+		<field name="partyContentTypeId"><hidden/></field>
+		<field name="fromDate"><hidden/></field>
+		<field name="dataResourceId"><hidden/></field>
+		
+		<field name="permission" title=" " widget-style="buttontext">
+			<hyperlink target="DocumentPermission" description="Permission Set">
+				<parameter param-name="partyId"/>
+		        <parameter param-name="contentId"/>
+		        <parameter param-name="partyContentTypeId"/>
+		        <parameter param-name="contentName"/>
+		        <parameter param-name="dataResourceId"/>
+		        <parameter param-name="mimeTypeId"/>
+			</hyperlink>
+		</field>
+		<field name="delete" title=" " widget-style="buttontext">
+			<hyperlink target="removeDocuments" description="Delete" confirmation-message="Do you want to remove this document">
+				<parameter param-name="partyId"/>
+		        <parameter param-name="contentId"/>
+		        <parameter param-name="partyContentTypeId"/>
+		        <parameter param-name="fromDate"/>
+			</hyperlink>
+		</field>
+		<field name="show" title=" " widget-style="buttontext">
+			<hyperlink target-window="_blank" target-type="content" target="img/${contentName}?imgId=${dataResourceId}" description="Download"></hyperlink>
+		</field>
+	</form>
+	<form name="BusinessDocumentList" type="multi" list-name="documentList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>			
+            <service service-name="performFind" result-map="result" result-map-list="documentList">
+                <field-map field-name="inputFields" from-field="documentPermissionCtx"/>
+                <field-map field-name="entityName" value="DocumentPermission"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+		</actions>
+		<row-actions>
+			<property-to-field resource="mimetype" property="${mimeTypeId}" field="imageType" />
+		</row-actions>
+		<field name="image" title=" ">
+			<image value="${imageType}" />
+		</field>
+		<field name="contentName" title="File name" >
+			<display>
+				
+			</display>
+		</field>
+		
+		<field name="partyId"><hidden/></field>
+		<field name="contentId"><hidden/></field>
+		<field name="partyContentTypeId"><hidden/></field>
+		<field name="fromDate"><hidden/></field>
+		<field name="dataResourceId"><hidden/></field>
+		
+		<field name="show" title=" " widget-style="buttontext">
+			<hyperlink target-window="_blank" target-type="content" target="img/${contentName}?imgId=${dataResourceId}" description="Download"></hyperlink>
+		</field> 
+	</form>
+	
+	<!-- Document Permission Set -->
+	<form name="DocumentPermission" target="SetDocumentPermission" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<entity-one value-field="documentPermission" entity-name="DocumentPermission">
+				<field-map field-name="contentId" value="${parameters.contentId}"/>
+			</entity-one>
+			<set field="permissionType" value="${documentPermission.permissionType}"/>
+		</actions>
+		<field name="partyId"> <hidden /> </field>
+		<field name="contentId"> <hidden /> </field>
+		<field name="partyContentTypeId"> <hidden /> </field>
+		<field name="contentName"> <display /> </field>
+		<field name="dataResourceId"> <hidden /> </field>
+		<field name="mimeTypeId"> <hidden /> </field>
+		<field name="permissionType"> 
+			<drop-down  allow-empty="true">
+				<option key="Not allow"/>
+				<option key="Publish for all"/>
+				<option key="Publish for unit"/>
+			</drop-down>
+		 </field>
+		 <field name="submitButton" title="Set permission" widget-style="smallSubmit"><submit/></field>
+	</form>
+	
+	<!--  Position Budget Document List-->
+	
+	<form name="BudgetDocumentList" type="list" list-name="budgetdocuments" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="BudgetAndContent" value-field="document">
+			</entity-one>
+			<property-to-field resource="mimetype" property="${document.mimeTypeId}" field="imageType" />
+		</row-actions>
+		<field name="image" title=" ">
+			<image value="${imageType}" />
+		</field>
+		<field name="contentName" title="Title" widget-style="documentTitleEditor">
+			<display>
+				<in-place-editor url="renameImage" ok-text="..." cancel-text="X" saving-text="Updating..." text-between-controls=" " form-class-name="inplaceeditor">
+					<simple-editor />
+					<field-map field-name="contentId" from-field="contentId" />
+				</in-place-editor>
+			</display>
+		</field>
+		<field name="emplPositionId"><hidden/></field>
+		<field name="budgetId"><hidden/></field>
+		<field name="budgetItemSeqId"><hidden/></field>
+		<field name="contentId"><hidden/></field>
+		<field name="partyContentTypeId"><hidden/></field>
+		<field name="fromDate"><hidden/></field>
+		
+		<field name="delete" title=" " widget-style="buttontext">
+			<hyperlink target="removeBudgetDocuments" description="delete">
+				<parameter param-name="emplPositionId"/>
+				<parameter param-name="budgetId"/>
+				<parameter param-name="budgetItemSeqId"/>
+		        <parameter param-name="contentId"/>
+		        <parameter param-name="fromDate"/>
+			</hyperlink>
+		</field>
+		<field name="show" title=" " widget-style="buttontext">
+			<hyperlink target-window="_blank" target-type="content" target="img/${contentName}?imgId=${dataResourceId}" description="download"></hyperlink>
+		</field>
+	</form>
+	
+	<!-- Divisions Add Form -->
+	<form name="FormForAddCompany" target="createContessaCompany" type="single" header-row-style="header-row" default-table-style="basic-table">
+		
+		<field name="partyId" title="Company ID"><text size="25"/></field>
+		<field name="groupName" title="Company Name"><text size="25"/></field>
+		<field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field> 
+	</form>
+	<!-- Divisions Add Form -->
+	<form name="FormForAddDivisions" target="createDivisions" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<!-- Find the Company parents -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+				<!-- set the value null for the form -->
+				
+		</actions>
+		<field name="partyId" title="Division ID"><hidden/></field>
+		<field name="groupName" title="Division Name"><text size="25"/></field>
+		<!-- <field name="groupNameLocal" title="ডিভিসানের নাম"><text size="25"/></field> -->
+		<field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		<field name="companyId"><hidden/></field>
+		<!-- <field name="groupName2"><display description="${groupName}"/></field> -->
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<!-- Departments Add Form -->
+	<form name="FormForAddDepartments" target="createDepartments" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<set field="partyId" value="${userPreferences.ORGANIZATION_UNIT}"/>
+				<!-- Find the Company parents -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+				<!-- set the value null for the form -->
+				<set field="orgPartyId" from-field="partyId"/>
+		</actions>
+		<field name="partyId" title="Department ID"><hidden/></field>
+		<field name="groupName" title="Department Name"><text size="25"/></field>
+		
+		<field name="orgPartyId"><hidden/></field>
+		<field name="companyId"><hidden/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<!-- Section Add Form -->
+	<form name="FormForAddSection" target="createSection" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<set field="partyId" value="${userPreferences.ORGANIZATION_UNIT}" />
+				<!-- Find the Company parents -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+				<set field="orgPartyId" from-field="partyId"/>
+				<!-- set the value null for the form -->
+				
+		</actions>
+		<field name="partyId" title="Section ID"><hidden/></field>
+		<field name="groupName" title="Section Name"><text size="25"/></field>
+		
+		<field name="orgPartyId"><hidden/></field>
+		<field name="companyId"><hidden/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<!-- Line Add Form -->
+	<form name="FormForAddLine" target="createLine" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+				<set field="partyId" value="${userPreferences.ORGANIZATION_UNIT}"/>
+				<!-- Find the Company parents -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+				<set field="orgPartyId" from-field="partyId"/>
+				<!-- set the value null for the form -->
+				
+		</actions>
+		<field name="partyId" title="Unit ID"><hidden/></field>
+		<field name="groupName" title="Unit Name"><text size="25"/></field>
+		
+		<field name="orgPartyId"><hidden/></field>
+		<field name="companyId"><hidden/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<!-- Paygrade Form List -->
+	<form name="FormForPaygradeList" type="list" list-name="payGradeList" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrgPaygradeView" odd-row-style="alternate-row">
+		<field name="payGradeId" title="Pay Grade" >
+            <hyperlink target="OrgPaygradeView"  description="${payGradeId}">
+                
+                 <parameter param-name="emplPositionId"/>
+                 <parameter param-name="payGradeId"/>
+            </hyperlink>
+        </field>
+		<field name="payGradeName"><display/></field>
+		<!-- <field name="emplPositionId"><display/></field> -->
+		<field name="comments"><hidden/></field>
+	</form>
+	<!-- Paygrade Add Form -->
+	<form name="FormForAddPaygrade" target="createPayGradeAndUpdateEmplPosition" type="single" header-row-style="header-row" default-table-style="basic-table">
+	
+		<field name="payGradeId" title="Paygrade ID"><text size="25"/></field>
+		<field name="payGradeName" title="Paygrade Name"><text size="25"/></field>
+		<field name="payGradeNameInBangla" title="পে গ্রেড(বাংলা)"><text size="25"/></field>
+		<field name="emplPositionId" ><hidden/></field>
+		<field name="orgPartyId"><hidden/></field>
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<!-- paygrade INfo -->
+	<form name="PaygradeInfo" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+		
+			<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+			<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+			<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+		
+			<entity-one entity-name="PartyGroup">
+				<!-- <field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+				<field-map field-name="partyId"  value="${partyId}" />
+			</entity-one>
+			<entity-and entity-name="PayGrade" list="payGrades">
+			   <field-map field-name="payGradeId" from-field="payGradeId"/>
+			</entity-and>
+			<set field="payGradeName" from-field="payGrades[0].payGradeName"/>
+			
+		</actions>
+		<field name="emplPositionId"><hidden/></field>
+		<field name="payGradeId" title="Pay Grade Name">
+			<display-entity entity-name="PayGrade" description="${payGradeName}">
+			</display-entity>
+		</field>
+		<field name="groupName" title="Group Name">
+			<display></display>
+		</field>
+		<field name="emplPosTypeDes" title="Position Name">
+			<hyperlink target="ContessaPositionView" description="${emplPosTypeDes}">
+				<parameter param-name="emplPositionId" value="${emplPositionId}" />
+			</hyperlink>
+		</field>
+		
+	</form>
+	<!-- salary step INfo -->
+	<form name="SalaryStepInfo" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+		
+			<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+			<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+			<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			<entity-one entity-name="PartyGroup">
+				<!-- <field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+				<field-map field-name="partyId"  value="${partyId}" />
+			</entity-one>
+			<entity-and entity-name="PayGrade" list="payGrades">
+			   <field-map field-name="payGradeId" from-field="payGradeId"/>
+			</entity-and>
+			<set field="payGradeName" from-field="payGrades[0].payGradeName"/>
+			
+		</actions>
+		
+		<field name="salaryStepSeqId" title="Increment Id"><display/></field>
+		<field name="payGradeId" title="Pay Grade Name">
+			<display-entity entity-name="PayGrade" description="${payGradeName}">
+			</display-entity>
+		</field>
+		<field name="groupName" title="Group Name">
+			<display/>
+		</field>
+		<field name="emplPosTypeDes" title="Position Name">
+			<hyperlink target="ContessaPositionView" description="${emplPosTypeDes}">
+				<parameter param-name="emplPositionId" value="${emplPositionId}" />
+			</hyperlink>
+		</field>
+		<field name="emplPositionId"><hidden/></field>
+		
+	</form>
+	<form name="ListSalaryBenefits" type="list" list-name="payGradeBenefits" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrganizationMain" odd-row-style="alternate-row">
+        <actions>
+        	<entity-and list="payGradeLists" entity-name="PayGrade">
+					<field-map field-name="payGradeId" from-field="payGradeId"/>
+				</entity-and>
+				<entity-and entity-name="PayGradeBenefit" list="payGradeBenefits">
+					<field-map field-name="payGradeId" from-field="payGradeId"/>
+				</entity-and>
+			
+        </actions>
+       
+        <field name="payGradeId" title="Pay Grade"><display also-hidden="true"/></field> 
+        <field name="benefitTypeId" title="Benefit Type"><display/></field>
+        <field name="ruleId" title="Assign Rule"><display/></field>
+        <field name="cost" title="Amount"><display/></field>
+        
+        
+    </form>
+    <form name="ListSalaryDeduction" type="list" list-name="payGradeDeductions" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrganizationMain" odd-row-style="alternate-row">
+        <actions>
+        	<entity-and list="payGradeLists" entity-name="PayGrade">
+					<field-map field-name="payGradeId" from-field="payGradeId"/>
+				</entity-and>
+				<entity-and entity-name="PayGradeDeduction" list="payGradeDeductions">
+					<field-map field-name="payGradeId" from-field="payGradeId"/>
+				</entity-and>
+			
+        </actions>
+       
+         <field name="payGradeId" title="Pay Grade"><display also-hidden="true"/></field> 
+        <field name="deductionTypeId" title="Deduction Type"><display/></field>
+        <field name="ruleId" title="Assign Rule"><display/></field>
+        <field name="cost" title="Amount"><display/></field>
+        
+    </form>
+     <form name="ListIncrementPerson" type="list" list-name="personIncrements" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrgSalaryStepView" odd-row-style="alternate-row">
+        <actions>
+        	
+				<entity-and entity-name="PersonIncrement" list="personIncrements">
+					<field-map field-name="salaryStepSeqId" from-field="salaryStepSeqId"/>
+				</entity-and>
+			
+        </actions>
+        <row-actions>
+        	<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+         	</entity-and>
+	 		 <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+	 		 
+        </row-actions>
+       
+         <field name="partyId" title="Person Name">
+         <display-entity description="${firstName} ${middleName} ${lastName} ${groupName}" entity-name="PartyNameView" key-field-name="partyId"/> 
+         </field> 
+        <field name="emplId" title="Employee Id"><display description="${emplId}"/></field>
+        <field name="salaryStepSeqId" title="Increment Id"><display/></field>
+       	<field name="isCurrentSalary" ><display/></field>
+        
+    </form>
+    <form name="ListSalaryIncrements" type="list" list-name="salarySteps" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrgPaygradeView" odd-row-style="alternate-row">
+        <actions>
+        	<entity-and list="payGradeLists" entity-name="PayGrade">
+					<field-map field-name="payGradeId" from-field="payGradeId"/>
+				</entity-and>
+				<entity-and entity-name="SalaryStep" list="salarySteps">
+					<field-map field-name="payGradeId" from-field="payGradeId"/>
+				</entity-and>
+        </actions>
+        <field name="salaryStepSeqId" title="Salary Step Id">
+        	<hyperlink target="OrgSalaryStepView"  description="${payGradeId}">
+               
+                 <parameter param-name="emplPositionId"/>
+                 <parameter param-name="payGradeId"/>
+                  <parameter param-name="salaryStepSeqId"/>
+            </hyperlink>
+		</field> 
+        <field name="payGradeId" title="Pay Grade"><display/></field>
+        <field name="amount"><display/></field>
+    </form>
+    <form name="PaygradePositions" type="list" list-name="positions" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<!-- create a view for get total per position type -->
+			<entity-condition list="totalEmployees" entity-name="EmplPositionFulfillmentPerUnit">
+				<condition-list>
+					<condition-expr field-name="positionId" from-field="emplPositionId" />
+				</condition-list>
+			</entity-condition>
+			<entity-one entity-name="EmplPositionType" value-field="type" />
+
+		</row-actions>
+		<field name="emplPositionTypeId" title="Position Name">
+			<hyperlink target="ContessaPositionView" description="${type.description}">
+				<parameter param-name="emplPositionId" value="${emplPositionId}" />
+			</hyperlink>
+		</field>
+		<field name="emplPositionId"><hidden/></field>
+		<field name="totalEmployee">
+			<display description="${totalEmployees[0].totalEmployee}" />
+		</field>
+	</form>
+	
+	<!-- Position Add Form -->
+	<!-- <form name="FormForAddPositions" target="createEmplForPosition" type="single" header-row-style="header-row" default-table-style="basic-table">
+		
+		<field name="emplPositionParent" title="Parent Position"><lookup target-form-name="LookupForEmplPosition" client-autocomplete-field="true" size="31"/></field>
+		<field name="emplPositionTypeId" title="Position Type">
+            <drop-down allow-empty="false">
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType"></entity-options>
+            </drop-down>
+        </field>
+        <field name="emplPositionId" title="Position"><text size="31"/></field>
+        
+        <field name="statusId" title="Position Status">
+            <drop-down allow-empty="false">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="EMPL_POSITION_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="partyId" title="Company"><display description="${orgPartyId}"/></field>
+        <field name="dummy" title=" "><display/></field>
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+		<field name="cancelBtn" title="Cancel" widget-style="smallSubmit" event="javascript:window.history.back();"><submit button-type="button"/></field>
+	</form>  -->
+	
+	 <form name="OrgAddSalaryStep" type="single" target="createContessaSalaryStep" header-row-style="header-row" default-table-style="basic-table">
+       
+        <auto-fields-service service-name="createSalaryStep"/>
+        <field name="salaryStepSeqId"><ignored/></field>
+        <field name="payGradeId" title="Pay Grade"><display/></field>
+        <field name="dateModified"><date-time type="date"/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="emplPositionId"><hidden/></field>
+        <field name="benefitType"><hidden/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListIncrementBenefits" type="list" list-name="incrementBenefits" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrganizationMain" odd-row-style="alternate-row">
+        <actions>
+        	
+				
+				<entity-and entity-name="IncrementBenefit" list="incrementBenefits">
+					<field-map field-name="salaryStepSeqId" from-field="salaryStepSeqId"/>
+				</entity-and>
+			
+        </actions>
+       
+        <field name="payGradeId" title="Pay Grade"><display also-hidden="true"/></field> 
+        <field name="benefitTypeId" title="BenefitT ype"><display/></field>
+        <field name="ruleId" title="Assign Rule"><display/></field>
+        <field name="cost" title="Amount"><display/></field>
+        
+    </form>
+    <form name="ListIncrementDeduction" type="list" list-name="incrementDeductions" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrganizationMain" odd-row-style="alternate-row">
+        <actions>
+        	<entity-and entity-name="IncrementDeduction" list="incrementDeductions">
+					<field-map field-name="salaryStepSeqId" from-field="salaryStepSeqId"/>
+				</entity-and>
+			
+        </actions>
+       
+         <field name="payGradeId" title="Pay Grade"><display also-hidden="true"/></field> 
+        <field name="deductionTypeId" title="Deduction Type"><display/></field>
+        <field name="ruleId" title="Assign Rule"><display/></field>
+        <field name="cost" title="Amount"><display/></field>
+        
+    </form>
+    <form name="AssignIncrementPerson" target="assingIncrementPerson" type="single" header-row-style="header-row" default-table-style="basic-table">
+    <actions>
+    	<set field="positionId" from-field="emplPositionId"/>
+    
+    </actions>
+		<field name="salaryStepSeqId" title="Increment"><hidden value="${salaryStepSeqId}"/></field>
+		<field name="emplId" parameter-name="emplId" title="${uiLabelMap.EmplEmplId}"  tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+			<lookup target-form-name="OrgLookupUserLoginAndPartyDetailsAndPosition" target-parameter="emplPositionId"/> 
+		
+		</field>
+		<field name="payGradeId" title="PayGrade"><hidden/></field>		
+		<field name="emplPositionId" title="emplPositionId"><hidden/></field>	
+		<field name="companyId">
+            <hidden value="${userPreferences.ORGANIZATION_PARTY}"/>
+        </field>
+		<field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+        <field name="effectiveDate"><date-time type="date"/></field>
+        <field name="doRealize" position="2">
+            <drop-down allow-empty="false">
+                <option key="N" description="N" />
+                <option key="Y" description="Y" />
+            </drop-down>
+        </field>
+        <field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<!-- Position Add Form -->
+	<form name="FormForAddPositions" target="createOrgEmplForPosition" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<row-actions>
+				<set field="childVaule" from-field="emplPositionTypeId"/>
+				<set field="orgPartyId" value="${orgPartyId}"/>
+		</row-actions>
+		<field name="emplPositionId" title="Parent Position"><lookup target-form-name="LookupForEmplPosition"/></field>
+
+		<field name="orgPartyId"><hidden/></field>
+		<field name="statusId"><hidden/></field>
+		<field name="partyId"><hidden/></field>
+		<field name="parentTypeId"><hidden/></field>
+		<field name="description"><hidden/></field>
+		<field name="emplType"><hidden/></field>
+		<field name="hasTable"><hidden/></field>
+		<!-- <field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit  button-type="button"/></field> -->
+		<!-- <field name="submit" title="Submit" widget-style="smallSubmit">
+            <hyperlink target="PositionAddPopUpChild" description="Submit" target-type="inter-app">
+                <parameter param-name="emplPositionTypeId" from-field="emplPositionTypeId"/>
+            </hyperlink>
+        </field> -->
+     <!--    
+		 <field name="submitBtn" title="Submit" widget-style="smallSubmit">
+			<submit background-submit-refresh-target="PositionAddPopUpChild" button-type="button"/>
+		</field>  -->
+	   <field name="emplPositionTypeId" title="New Position"><lookup target-form-name="LookupForEmplPositionType"/></field>
+	   <field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit  button-type="button"/></field>
+	</form>
+		<!-- OrganizationHeadAssign Add Form -->
+	<form name="FormForAddOrganizationHead" type="single" target="createOrganizationHead" header-row-style="header-row" default-table-style="basic-table">     
+      <actions>
+      <set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+		<set field="partyId" value="${userPreferences.ORGANIZATION_UNIT}"/>
+		<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+		<set field="orgPartyId" from-field="partyId"/>
+      </actions>
+      <field name="partyId"><hidden/></field>
+     <field name="employeePartyId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+     <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+        
+    </form>
+	
+	<!-- Position Add Form for child -->
+	<form name="FormForAddPositionsChild" target="createEmplForPosition" type="single" header-row-style="header-row" default-table-style="basic-table">
+		
+		<field name="emplPositionId" title="New Position"><lookup target-form-name="LookupForEmplPositionType"/></field>
+		
+		<field name="test"><display description="${orgPartyId}"/></field>
+		<field name="emplPositionTypeId"><display/></field>
+		
+		<field name="orgPartyId"><hidden value="${orgPartyId}"/></field>
+		<field name="statusId"><hidden/></field>
+		<field name="partyId"><hidden/></field>
+		<field name="parentTypeId"><hidden/></field>
+		<field name="description"><hidden/></field>
+		<field name="emplType"><hidden/></field>
+		<field name="hasTable"><hidden/></field>
+        
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	 <form name="AssignFullfilmentPerson" target="assingFulfillmentPerson" type="single" header-row-style="header-row" default-table-style="basic-table">
+	 
+		<field name="emplPositionId" title="Employee Position"><display description="${emplPositionId}"/></field>
+		<field name="partyId" title="Organization" ><hidden value="${partyId}"/></field>	
+		<field name="emplId" parameter-name="emplId" title="${uiLabelMap.EmplEmplId}"  tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><lookup target-form-name="OrgLookupUserLoginAndPartyDetails"/></field>
+			
+			
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<!-- added for position report to list -->
+     <form name="OrgListEmplPositionReportedToInfo" target="" type="list" list-name="emplPositionReportingStructs" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="" odd-row-style="alternate-row"  separate-columns="true">
+        <row-actions>
+        	<entity-and entity-name="EmplPosition" list="emplPositionS">
+        		<field-map field-name="emplPositionId" from-field="emplPositionIdManagedBy"/>
+        	</entity-and>
+        	<set field="emplPositionTypeId" from-field="emplPositionS[0].emplPositionTypeId"/>
+        </row-actions>
+        <field name="emplPositionIdManagedBy" title="Reporting By PositionId"><display/></field>
+       <field name="emplPositionTypeId" title="Position Name">
+			<display-entity entity-name="EmplPositionType" description="${description}">
+			</display-entity>
+		</field>
+        <field name="emplPositionIdReportingTo"><hidden/></field>
+        <field name="fromDate" title="From Date" >
+   			<display description="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(fromDate)}"></display>
+   		</field>
+    </form>
+   
+     <form name="OrgListEmplPositionReportsToInfo" target="" type="list" list-name="emplPositionReportingStructs" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="" odd-row-style="alternate-row"  separate-columns="true">
+        <row-actions>
+        	<entity-and entity-name="EmplPosition" list="emplPositionS">
+        		<field-map field-name="emplPositionId" from-field="emplPositionIdReportingTo"/>
+        	</entity-and>
+        	<set field="emplPositionTypeId" from-field="emplPositionS[0].emplPositionTypeId"/>
+        </row-actions>
+       <!--   <auto-fields-service service-name="updateEmplPositionReportingStruct" default-field-type="display"/> -->
+        <field name="emplPositionIdManagedBy"><hidden/></field>
+        <field name="emplPositionIdReportingTo" title="Reporting To PositionId"><display/></field> 
+        <field name="emplPositionTypeId" title="Position Name">
+			<display-entity entity-name="EmplPositionType" description="${description}">
+			</display-entity>
+		</field>
+        <field name="fromDate" title="From Date" >
+   			<display description="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(fromDate)}"></display>
+   		</field>
+    </form>
+    
+    <form name="OrgListEmplPositionResponsibilityInfo" target="" type="list" list-name="emplPositionResponsibilities" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="" odd-row-style="alternate-row"  separate-columns="true">
+        <row-actions>
+        	<entity-and entity-name="EmplPosition" list="emplPositionS">
+        		<field-map field-name="emplPositionId" from-field="emplPositionId"/>
+        	</entity-and>
+        	<set field="emplPositionTypeId" from-field="emplPositionS[0].emplPositionTypeId"/>
+        </row-actions>
+        <field name="responsibilityTypeId" title="Responsibility Type"><display-entity entity-name="ResponsibilityType" description="${description}"></display-entity>
+        </field>
+        <field name="emplPositionId"><hidden/></field>
+        <field name="emplPositionTypeId" title="Position Name">
+			<display-entity entity-name="EmplPositionType" description="${description}">
+			</display-entity>
+		</field>
+		<field name="fromDate" title="From Date" >
+   			<display description="${bsh:org.ofbiz.humanres.ProfileWorker.getFormatedDateFromDate(fromDate)}"></display>
+   		</field>
+    </form>
+</forms>

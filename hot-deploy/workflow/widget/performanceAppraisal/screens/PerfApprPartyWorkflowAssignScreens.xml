@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+<screen name="PerfApprPartyProcessAssign">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Performance Appraisal Employee Process Assign"/>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="PerfApprPartyProcessAssign"/>
+                <entity-one entity-name="ProcessParty" value-field="processParty"/>
+                <set field="ProcessPartyCtx" from-field="parameters"/>
+            </actions>
+            <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="NewPerfApprPartyProcessAssign" text="New Performance Appraisal Employee Process Assign" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindPerfApprPartyWorkflowAssign" location="component://workflow/widget/performanceAppraisal/forms/PerfApprPartyWorkflowAssignForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListPerfApprPartyWorkflowAssign" location="component://workflow/widget/performanceAppraisal/forms/PerfApprPartyWorkflowAssignForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>   
+    
+    <screen name="NewPerfApprPartyProcessAssign">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Performance Appraisal Employee Process Assign"/>
+                <set field="headerItem" value="PerformanceAppraisalConfig"/>
+            	<set field="tabButtonItem" value="PerfApprPartyProcessAssign"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="WorkflowCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	                    <include-menu location="component://workflow/widget/WorkflowMenus.xml" name="PerformanceAppraisalMenu"/>
+	                    <screenlet title="">
+	                    	<include-form  name="NewPerfApprPartyWorkflowAssign" location="component://workflow/widget/performanceAppraisal/forms/PerfApprPartyWorkflowAssignForms.xml"/>
+	                    </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    
+    <screen name="MonthlyTaxCalculation">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Tax Condition Create"/>
+                <set field="headerItem" value="TaxCalculation"/>
+                <set field="tabButtonItem" value="MonthlyTaxCalculate"/>
+                <entity-one entity-name="PersonPayrollInfo" value-field="personPayrollInfo"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu location="component://payroll/widget/PayrollMenus.xml" name="TaxCalculationMenus"/>
+                        <section>
+                    	 	<widgets>
+                                <container style="profile-left">
+                                        <include-form name="AllPersonTaxCalculation" location="component://payroll/widget/taxcalculation/forms/MonthlyTaxCalculationForms.xml"/>
+                                </container>
+                                <container style="profile-right">
+                                        <include-form name="AllEmployeeTaxPayrollIntregration" location="component://payroll/widget/taxcalculation/forms/MonthlyTaxCalculationForms.xml"/>
+                                </container>
+                                <screenlet title="Employee Monthly Tax Amount List">
+		                            <section>
+		                                <widgets>
+		                                    <include-form name="PartyTaxInfoList" location="component://payroll/widget/taxcalculation/forms/MonthlyTaxCalculationForms.xml"/>
+		                                </widgets>
+		                            </section>
+                        		</screenlet>
+                    		</widgets>
+                    	 </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

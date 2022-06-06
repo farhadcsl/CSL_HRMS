@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindLogisticRequisition">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="titleProperty" value="Logistic Information"/>
+                <entity-one entity-name="LogisticsItem" value-field="logisticsRequisition"/>
+                <set field="logisticsRequisitionCtx" from-field="parameters"/>
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="userLoginId"  from-field="parameters.employeeId" />
+             	</entity-and>
+				<set field="partyId" value="${userLoginList[0].partyId}"/>
+             	<!-- <entity-and entity-name="LogisticsItem" list="logisticsItemList"> 
+                    <field-map field-name="partyId"  from-field="partyId" />
+             	</entity-and>
+             	 -->
+             	 <entity-condition entity-name="LogisticsItem" list="logisticsItemList">
+             	 	<condition-list>
+	             	 	<condition-expr field-name="partyId" operator="equals" ignore-if-null="true" from-field="partyId"/>
+			            <condition-expr field-name="logisticsItemTypeId" operator="equals" ignore-if-null="true"  from-field="parameters.logisticsItemTypeId"/>
+			            <condition-expr field-name="statusId" operator="equals" from-field="parameters.statusId" ignore-if-empty="true"/>
+		            </condition-list>		            
+		        </entity-condition>
+            </actions>
+            <widgets>
+               <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    
+              		<include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                      <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml"> 
+                           <!--  <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="AddLogisticsRequisition" text="New logistics requisition" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section> -->
+                           <decorator-section name="search-options">
+                               <include-form name="FindLogisticsRequisition" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                           </decorator-section>
+                           <decorator-section name="search-results">
+                               <include-form name="ListLogisticsRequisition" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                           </decorator-section>
+                       </decorator-screen> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="AddLogisticsRequisition">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="requisitionId" from-field="parameters.requisitionId"/>
+                <entity-one entity-name="LogisticsItem" value-field="logisticsRequisition"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <screenlet title="New logistics requisition">
+                            <section>
+                                <widgets>
+                                    <include-form name="AddLogisticsRequisition" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="issueLogistics">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="issueId" from-field="parameters.issueId"/>
+                <entity-one entity-name="LogisticsItem" value-field="logisticsIssue">
+                <field-map field-name="issueId" from-field="issueId"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                       <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                      <screenlet title="New logistics requisition">
+                            <section>
+                                <widgets>
+                                    <include-form name="issueLogisticsRequisition" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditLogisticsRequisition">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="requisitionId" from-field="parameters.requisitionId"/>
+                <entity-one entity-name="LogisticsItem" value-field="logisticsRequisition"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <screenlet title="Logistics Requisition">
+                            <section>
+                                <widgets>
+                                    <include-form name="EditLogisticsRequisition" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    
+    <screen name="FindLogisticApproval">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="titleProperty" value="Logistic Requisition"/>
+                <entity-one entity-name="LogisticsRequisition" value-field="logisticsRequisition"/>
+                <set field="logisticsRequisitionCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+               <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                    <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml"> 
+                           <decorator-section name="search-options">
+                               <include-form name="FindLogisticsApproval" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                           </decorator-section>
+                           <decorator-section name="search-results">
+                               <include-form name="ListLogisticApproval" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                           </decorator-section>
+                       </decorator-screen> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="ListLogisticApproval">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="logisticsRequisitionCtx" from-field="parameters"/>
+                <entity-one entity-name="LogisticsRequisition" value-field="logisticsRequisition"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                    <screenlet title="New logistics requisition">
+                            <section>
+                                <widgets>
+                                    <include-form name="ListLogisticApproval" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="DetailLogistics">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="logistics"/>
+                <set field="issueId" from-field="parameters.issueId"/>
+                <entity-one entity-name="LogisticsItem" value-field="logisticsRequisition">
+                <field-map field-name="issueId" from-field="issueId"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                          <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                      <screenlet title="Logistics Requisition">
+                            <section>
+                                <widgets>
+                                    <include-form name="EditLogisticsRequisition" location="component://humanres/widget/Logistics/RequisitionForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </screens>

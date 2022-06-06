@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+     <request-map uri="incrementMng">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="incrementMng"/>
+        <response name="error" type="view" value="incrementMng"/>
+    </request-map>
+     <request-map uri="incrementMngAll">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="incrementMngAll"/>
+        <response name="error" type="view" value="incrementMngAll"/>
+    </request-map>
+     <request-map uri="updateSalaryIncforAll">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="updateSalaryIncforAll"/>
+        <response name="error" type="view" value="incrementMngAll"/>
+    </request-map>
+     <request-map uri="generalIncStepOne">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.incrementProcess.IncrementEvent" invoke="individualIncInitiate"/>
+        <response name="success" type="view" value="generalIncStepOne"/>
+        <response name="error" type="view" value="incrementMng"/>
+    </request-map>
+    <request-map uri="updateSalaryInc">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.incrementProcess.IncrementEvent" invoke="individualIncConfig"/>
+        <response name="success" type="view" value="generalIncStepOne"/>
+        <response name="error" type="view" value="incrementMng"/>
+    </request-map>
+    <request-map uri="updateIncforAll">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.incrementProcess.IncrementAllEvents" invoke="overallIncConfig"/>
+        <response name="success" type="view" value="incrementMngAll"/>
+        <response name="error" type="view" value="incrementMngAll"/>
+    </request-map>
+    <request-map uri="UpdateIncrementList">
+        <security https="true" auth="true"/>
+        <!-- <event type="java" path="org.ofbiz.salaryprocess.NewSalaryEvents" invoke="updateSalaryList"/> -->
+       <event type="service-multi" invoke="updateIncrementList"/>
+        <response name="success" type="view" value="updateSalaryIncforAll"/>
+        <response name="error" type="view" value="updateSalaryIncforAll"/>
+    </request-map>
+     <request-map uri="FindIncrementSalary">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.incrementProcess.IncrementAllEvents" invoke="findfromIncrementSalaryList"/>
+        <response name="success" type="view" value="FindIncrementSalary"/>
+      
+    </request-map>
+    
+    
+    <request-map uri="arrearProcess">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="arrearProcess"/>
+        <response name="error" type="view" value="arrearProcess"/>
+    </request-map>
+        <request-map uri="arrearProcessInitiate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="arrearProcessInitiate"/>
+        <response name="error" type="view" value="arrearProcessInitiate"/>
+    </request-map>
+    <request-map uri="FindArrearSalary">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.incrementProcess.ArrearEvents" invoke="findfromArrearSalaryList"/>
+        <response name="success" type="view" value="FindArrearSalary"/>
+    </request-map>
+    <request-map uri="updateCheckArrerList">
+        <security https="true" auth="true"/>
+       
+       <event type="service-multi" invoke="updateCheckArrerList"/>
+        <response name="success" type="view" value="arrearProcessInitiate"/>
+        <response name="error" type="view" value="arrearProcessInitiate"/>
+    </request-map>
+     <request-map uri="processArrear">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.incrementProcess.ArrearEvents" invoke="processArrear"/>
+        <response name="success" type="view" value="arrearProcess"/>
+    </request-map>
+    
+    <view-map name="arrearProcess" type="screen" page="component://payroll/widget/increment/screens/ArrearProcessingScreens.xml#arrearProcess"/> 
+ 	<view-map name="arrearProcessInitiate" type="screen" page="component://payroll/widget/increment/screens/ArrearProcessingScreens.xml#arrearProcessInitiate"/> 
+ 	<view-map name="FindArrearSalary" type="screen" page="component://payroll/widget/increment/screens/ArrearProcessingScreens.xml#FindArrearSalary"/> 
+ 	
+    <view-map name="updateSalaryIncforAll" type="screen" page="component://payroll/widget/increment/screens/GeneralIncrementScreens.xml#updateSalaryIncforAll"/> 
+ 	<view-map name="FindIncrementSalary" type="screen" page="component://payroll/widget/increment/screens/GeneralIncrementScreens.xml#FindIncrementSalary"/> 
+ 	<view-map name="incrementMngAll" type="screen" page="component://payroll/widget/increment/screens/GeneralIncrementScreens.xml#incrementMngAll"/> 
+ 	<view-map name="incrementMng" type="screen" page="component://payroll/widget/increment/screens/GeneralIncrementScreens.xml#SalaryIncrementProcess"/> 
+ 	<view-map name="generalIncStepOne" type="screen" page="component://payroll/widget/increment/screens/GeneralIncrementScreens.xml#generalIncStepOne"/> 
+ 	
+</site-conf>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+
+    <menu name="EmplProfileMenu" type="simple" default-menu-item-name="SkillType"
+        menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem" default-selected-style="selected">
+        <menu-item name="EmployeeProfile" title="${uiLabelMap.PartyProfile}">
+            <link target="loginEmployeesProfile">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="BasicInfo" title="Basic Info">
+            <link target="loginEmployeesbasicInfo">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="CurrectEmploymentStatus" title="Current Employment Status">
+            <link target="loginEmployeescurrectEmploymentStatus">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="CurrentJobDescription" title="Current Job Description">
+            <link target="loginEmployeescurrentJobDescription">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="EmploymentHistory" title="Employment History">
+            <link target="loginEmployeesemploymentHistory">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="EmergencyContactsAndNomaineeInformation" title="Emergency Contacts And Nomainee Information">
+            <link target="loginEmployeesemergencyContactsAndNomaineeInformation">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item> 
+        <menu-item name="TrainingInfo" title="Training Information">
+            <link target="loginEmployeestrainingInfo">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item> 
+        <menu-item name="content" title="Content">
+            <link target="loginEmployeescontentForProfile">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+       <menu-item name="EducationBackground" title="Education background">
+            <link target="loginEmployeeseducationBackground">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="ProfessionalCertificates" title="Professional certificates">
+            <link target="loginEmployeesprofessionalCertificates">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="LogisticSupport" title="Logistic Support">
+            <link target="loginEmployeeslogisticSupport">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+         <menu-item name="notes" title="Employee Notes">
+            <link target="loginEmployeesNotes">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <menu-item name="UpdateUserLoginPassword" title="Reset Password"  >
+			<link target="UpdateUserLoginPassword?partyId=${userLogin.partyId}" />
+		</menu-item>
+		<menu-item name="generatePdf" title="Generate PDF"  >
+			<link target="EmployeeReport.pdf?employeeId=${userLogin.userLoginId}" />
+		</menu-item>
+		<menu-item name="publicHoliday" title="Public Holiday"  >
+			<link target="publicHoliday">
+			<parameter param-name="partyId"/>
+			</link>
+		</menu-item>
+     </menu>
+     
+     
+     <menu name="logisticSupportAddForLoginEmpl">
+        <menu-item name="addNew" title="Add New">
+            <link target="editlogisticSupportForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="professionalCertificatesAddForLoginEmpl">
+        <menu-item name="AddNew" title="Add new">
+            <link target="editProfessionalCertificatesForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="educationBackgroundUpdateForLoginEmpl">
+    <menu-item name="addNew" title="Add New">
+            <link target="editEducationBackgroundForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="emergencyContactsAndNomaineeInformationUpdateForLoginEmpl">
+        <menu-item name="update" title="${uiLabelMap.CommonUpdate}">
+            <link target="editEmergencyContactsAndNomaineeInformationForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu> 
+    <menu name="previousEmploymentHistoryMenuForLoginEmpl">
+        <menu-item name="add" title="Add">
+            <link target="addPreviousEmploymentHistoryForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="currentJobDescriptionUpdateForLoginEmpl">
+        <menu-item name="update" title="${uiLabelMap.CommonUpdate}">
+            <link target="editCorrentJobDescriptionForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="personUpdateContessaForLoginEmpl">
+        <menu-item name="update" title="${uiLabelMap.CommonUpdate}">
+            <link target="editContessaPersonForLoginEmpl">
+                <parameter param-name="partyId" from-field="parameters.partyId"/>
+            </link>
+        </menu-item>
+    </menu>
+</menus>

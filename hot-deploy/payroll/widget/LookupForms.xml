@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="LookupFormInvoiceItemType" target="LookupInvoiceItemTypeParentType" title="" type="single"
+          header-row-style="header-row" default-table-style="basic-table">
+
+        <field name="invoiceItemTypeId" title="Invoice Item Type Type">
+            <text-find/>
+        </field>
+
+        <field name="noConditionFind">
+            <hidden value="Y"/>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}">
+            <submit button-type="button"/>
+        </field>
+    </form>
+
+    <form name="LookupListInvoiceItemType" list-name="listIt" type="list"
+          paginate-target="LookupInvoiceItemTypeParentType" view-size="10"
+          odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="invoiceItemTypeId"/>
+            <set field="entityName" value="InvoiceItemType"/>
+            <script location="component://payroll/webapp/payroll/WEB-INF/actions/configuration/FindLookUpParentTypeId.groovy"/>
+
+        </actions>
+
+        <field name="invoiceItemTypeId" title="Invoice Item Type" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${invoiceItemTypeId}"
+                       target="javascript:set_value('${invoiceItemTypeId}')"/>
+        </field>
+
+
+        <field name="parentTypeId" title="Parent Type">
+            <display/>
+        </field>
+        <field name="description" title="Description">
+            <display/>
+        </field>
+    </form>
+<form name="LookupGlAccountForm" target="LookupGlAccount" type="single"
+          header-row-style="header-row" default-table-style="basic-table">
+        <field name="glAccountId" title="Gl Account">
+            <text-find/>
+        </field>
+        <field name="noConditionFind">
+            <hidden value="Y"/>
+        </field>
+
+        <field name="submitButton" title="${uiLabelMap.CommonFind}">
+            <submit button-type="button"/>
+        </field>
+    </form>
+
+
+    <form name="LookupGlAccountList" list-name="listIt" type="list" paginate-target="LookupGlAccount"
+          odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="orderBy" value="glAccountId"/>
+                <field-map field-name="entityName" value="GlAccount"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+         
+
+        </actions>
+
+        <field name="glAccountId" title="Gl Account" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${glAccountId}"
+                       target="javascript:set_value('${glAccountId}')"/>
+        </field>
+
+
+        <field name="glAccountTypeId" title="Gl Account Type Id">
+            <display/>
+        </field>
+        <field name="accountName" title=" Account Name">
+            <display/>
+        </field>
+    </form>
+    <form name="LookupCreditGlAccountForm" target="LookupCreditGlAccount" type="single"
+          header-row-style="header-row" default-table-style="basic-table">
+        <field name="glAccountId" title="Credit Gl Account">
+            <text-find/>
+        </field>
+		<field name="accountName" title="Name of Gl Account">
+            <text-find/>
+        </field>
+        <field name="noConditionFind">
+            <hidden value="Y"/>
+        </field>
+
+        <field name="submitButton" title="${uiLabelMap.CommonFind}">
+            <submit button-type="button"/>
+        </field>
+    </form>
+
+
+    <form name="LookupCreditGlAccountList" list-name="listIt" type="list" paginate-target="LookupCreditGlAccount"
+          odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+             <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="orderBy" value="glAccountId"/>
+                <field-map field-name="entityName" value="GlAccount"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+
+        <field name="glAccountId" title="Gl Account" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${glAccountId}"
+                       target="javascript:set_value('${glAccountId}')"/>
+        </field>
+
+
+        <field name="glAccountTypeId" title="Gl Account Type Id">
+            <display/>
+        </field>
+        <field name="accountName" title=" Account Name">
+            <display/>
+        </field>
+    </form>
+</forms>

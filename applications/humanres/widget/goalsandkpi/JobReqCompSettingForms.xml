@@ -1,0 +1,1342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+
+<!-- This below (ListEmployeeGoalsAndKpi) form is used for Individual user level Yearly KPI  
+ It is under Yearly Achievement Tab under Goals and KPI Menu -->
+	    
+	    
+	<form name="ListEmployeeGoalsAndKpiYearly" type="multi" list-name="listKpiYearly" target="saveMonthlyAchievements" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+	    <field name="goalsKpiId">
+			<hidden />
+		</field>
+		<field name="partyId" title="partyId">
+			<hidden />
+		</field>
+		<field name="employeeId" title="Employee Id">
+			<hidden />
+		</field>
+		<field name="goal" title="Goals">
+			<display />
+		</field>
+		<field name="kpi" title="Kpi">
+			<display />
+		</field>
+		<field name="unit" title="Unit">
+			<display />
+		</field>
+		<field name="unitRemarks" title="Unit Remarks">
+			<display />
+		</field>
+		<field name="target" title="Target" >
+			<display />
+		</field>
+<!-- 		<field name="achievement" title="Achievemnt"><text size="10" maxlength="10" /></field> -->
+ 		<field name="achievement" title="Achievemnt"><display /></field>
+		
+		<field name="achievementStatus" title="Achievement Status">
+			<display />
+		</field>
+		<field name="mgrApprStatus" title="Status"><hidden/></field>
+		<field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+		<field name="year" title="Year" >
+			<display />
+		</field>
+		
+<!-- 		<field name="submitButton" title="Save All Achievements" -->
+<!-- 			widget-style="smallSubmit"> -->
+<!-- 			<submit /> -->
+<!-- 		</field> -->
+<!-- 		<field name="submitButton" title="Send to Review"> -->
+<!-- 			<submit button-type="button" /> -->
+<!-- 		</field>  -->
+	</form>
+	<form name="ListEmployeeGoalsAndKpi" type="multi" 
+		target="saveAllAchievements" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			<entity-condition entity-name="EmployeeGoalsAndKpi">
+ 				<condition-expr field-name="partyId" from-field="partyId"/>
+ 				<condition-expr field-name="year" from-field="year"/>
+					<order-by field-name="goalsKpiId" />
+			</entity-condition>
+		</actions>
+		<!-- <auto-fields-service service-name="updateKpi" default-field-type="hidden"/> -->
+		<field name="goalsKpiId">
+			<hidden />
+		</field>
+		<field name="partyId" title="partyId">
+			<hidden />
+		</field>
+		<field name="employeeId" title="Employee Id">
+			<hidden />
+		</field>
+		<field name="goal" title="Goals">
+			<display />
+		</field>
+		<field name="kpi" title="Kpi">
+			<display />
+		</field>
+		<field name="unit" title="Unit">
+			<display />
+		</field>
+		<field name="unitRemarks" title="Unit Remarks">
+			<display />
+		</field>
+		<field name="target" title="Target" >
+			<display />
+		</field>
+<!-- 		<field name="achievement" title="Achievemnt"><text size="10" maxlength="10" /></field> -->
+ 		<field name="achievement" title="Achievemnt"><display /></field>
+		
+		<field name="achievementStatus" title="Achievement Status">
+			<display />
+		</field>
+		<field name="mgrApprStatus" title="Status"><display/></field>
+		<field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+		<field name="year" title="Year" >
+			<display />
+		</field>
+		
+<!-- 		<field name="submitButton" title="Save All Achievements" -->
+<!-- 			widget-style="smallSubmit"> -->
+<!-- 			<submit /> -->
+<!-- 		</field> -->
+<!-- 		<field name="submitButton" title="Send to Review"> -->
+<!-- 			<submit button-type="button" /> -->
+<!-- 		</field>  -->
+	</form>
+	
+	
+<!-- 	This below (ListManagerKPIView) form is Manager Level Yearly KPI  
+ 		This form is under Yearly Tab Under Manager KPI Menu -->
+
+	<form name="ListManagerKPIView" type="multi" 
+		target="reviewKPIbyManager" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			
+			<entity-and entity-name="EmployeeGoalsAndKpi">
+            	<field-map field-name="partyId"  value="${parameters.partyId}"/>
+            	<field-map field-name="year"  value="${parameters.year}"/>
+            	<order-by field-name="goalsKpiId" />
+            </entity-and>
+		</actions>
+		<field name="goalsKpiId">
+			<hidden />
+		</field>
+		<field name="partyId" title="partyId">
+			<hidden />
+		</field>
+		<field name="employeeId" title="Employee Id">
+			<hidden />
+		</field>
+		<field name="goal" title="Goals">
+			<display />
+		</field>
+		<field name="kpi" title="Kpi">
+			<display />
+		</field>
+		<field name="unit" title="Unit">
+			<display />
+		</field>
+		<field name="unitRemarks" title="Unit Remarks">
+			<display />
+		</field>
+		<field name="target" title="Target" >
+			<display />
+		</field>
+		<field name="achievement" title="Achievemnt">
+			<display />
+		</field>
+<!-- 		<field name="achievementStatus" title="Achievement Status"> -->
+<!-- 			<display /> -->
+<!-- 		</field> -->
+<!-- 		<field name="mgrRemarks" title="Remarks"> -->
+<!-- 			<text size="10" maxlength="20"/> -->
+<!-- 		</field> -->
+<!-- 		<field name="mgrApprStatus" title="Status"> -->
+<!-- 			<drop-down allow-empty="false"> -->
+<!--                 <option key="Accepted" description="Accepted"/> -->
+<!--                 <option key="Rejected" description="Rejected"/>                -->
+<!--             </drop-down> -->
+<!-- 		</field> -->
+		<field name="achievementStatus" title="Achievement Status">
+			<display />
+		</field>
+		<field name="year" title="Year">
+			<display />
+		</field>
+		
+		<field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+		
+<!-- 		<field name="submitButton" title="Save All Achievements" -->
+<!-- 			widget-style="smallSubmit"> -->
+<!-- 			<submit /> -->
+<!-- 		</field> -->
+	</form>
+	
+	
+	
+	
+	
+	
+	<form name="OverallAchvStatus" type="multi" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+		<!--	<entity-condition entity-name="EmployeeGoalsAndKpiOverallStatus"> -->
+		<!--		<condition-expr field-name="partyId" from-field="partyId" /> -->
+		<!--		<order-by field-name="partyId" /> -->
+		<!--	</entity-condition> -->
+			<entity-and entity-name="EmployeeGoalsAndKpiOverallStatus">
+            	<field-map field-name="partyId"  value="${parameters.partyId}"/>
+            	<field-map field-name="year"  value="${parameters.year}"/>
+            	<order-by field-name="partyId" />
+            </entity-and>
+		</actions>
+		
+		<field name="partyId"><hidden/></field>
+		<field name="overallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="overallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="year" title="Year"><display /></field>
+	</form>
+	
+	
+	
+	
+	
+	<form name="GoalsAndKpi" type="multi" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			<entity-condition entity-name="EmployeeGoalsAndKpi">
+				<order-by field-name="goalsKpiId" />
+			</entity-condition>
+		</actions>
+		<field name="goalsKpiId">
+			<hidden />
+		</field>
+		<field name="partyId" title="partyId">
+			<hidden />
+		</field>
+		<field name="employeeId" title="Employee Id">
+			<display />
+		</field>
+		<field name="goal" title="Goals">
+			<display />
+		</field>
+		<field name="kpi" title="Kpi">
+			<display />
+		</field>
+		<field name="unit" title="Unit">
+			<display />
+		</field>
+		<field name="unitRemarks" title="Unit Remarks">
+			<display />
+		</field>
+		<field name="target" title="Target" >
+			<display />
+		</field>
+		<field name="achievement" title="Achievemnt">
+			<display />
+		</field>
+		<field name="achievementStatus" title="Achievement Status">
+			<display />
+		</field>
+		
+	</form>
+	
+	
+	<form name="individualKpiReport" type="single" target="" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+      <field name="employeeId" title="Employee Id" position="1" >
+       <lookup target-form-name="LookupPartyAndUserLoginAndPerson"/>
+      </field>
+        
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+	
+	<form name="Reports" type="single" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		
+		<field name="year" title="Year"><text />
+<!--      		<drop-down allow-empty="true"> -->
+<!--                <list-option>2001</list-option>  -->
+<!--             </drop-down> -->
+        </field>
+		<field name="month" title="Month"><text /></field>
+		<field name="department" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options key-field-name="department" description="${department}" entity-name="EmployeeGoalsAndKpiOverallStatus"/>
+            </drop-down>
+        </field>
+		<field name="employeeId" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options key-field-name="employeeId" description="${employeeId}" entity-name="EmployeeGoalsAndKpiOverallStatus"/>
+            </drop-down>
+        </field>
+	</form>
+	
+	
+	<form name="FindIndividualKpi" type="single" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="EmployeeGoalsAndKpi" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="goalsKpiId" ><hidden/></field>
+        <field name="partyId" ><hidden/></field>
+        <field name="managerId" ><hidden/></field>
+        <field name="department" ><hidden/></field>
+        <field name="goal" ><hidden/></field>
+        <field name="employeeId" title="Employee Id" position="1"  required-field="true">
+      		<lookup target-form-name="LookupPartyAndUserLoginAndPerson"/>
+        </field>
+        <field name="kpi" ><hidden/></field>
+        <field name="year" title="Year" position="1" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018" required-field="true"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+        <field name="kpiStatus" ><hidden/></field>
+        <field name="unit" ><hidden/></field>
+        <field name="unitRemarks" ><hidden/></field>
+        <field name="target" ><hidden/></field>
+        <field name="achievement" ><hidden/></field>
+        <field name="achievementResult" ><hidden/></field>
+        <field name="overallResult" ><hidden/></field>
+        <field name="achievementStatus" ><hidden/></field>
+        <field name="emploeyeRemarks" ><hidden/></field>
+        <field name="mgrApprStatus" ><hidden/></field>
+        <field name="mgrRemarks" ><hidden/></field>
+		<field name="kpiDate" ><hidden/></field>
+		<field name="divisionOfKpi" ><hidden/></field>
+		<field name="mgrApprStatus" ><hidden/></field>
+		<field name="param" ><hidden/></field>
+        <field name="searchButton" title="Show Report" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    
+        
+    <form name="ListIndividualKpi" type="list" list-name="listIt" paginate-target="FindIndividualKpi"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">    
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="EmployeeGoalsAndKpiCtx"/>
+                <field-map field-name="entityName" value="EmployeeGoalsAndKpi"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="employeeId" title="employeeId"><display/></field>
+        <field name="goal" title="Goal"><display/></field>
+        <field name="kpi" title="KPI"><display/></field>
+        <field name="target" title="Target"><display/></field>
+        <field name="achievement" title="Achievement"><display/></field>
+        <field name="achievementStatus" title="Achievement Status"><display/></field>
+<!--         <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field> -->
+<!--         <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field> -->
+    </form>
+    
+    <form name="ListOverallKpi" type="list" list-name="listIt" paginate-target="FindIndividualKpi"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">    
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="EmployeeGoalsAndKpiCtx"/>
+                <field-map field-name="entityName" value="EmployeeGoalsAndKpiOverallStatus"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="employeeId" title="employeeId"><display/></field>
+        <field name="overallAchvResult" title="Overall Achievement Result"><display/></field>
+        <field name="overallAchvStatus" title="Overall Achievement Status"><display/></field>
+<!--         <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field> -->
+<!--         <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field> -->
+    </form>
+    
+    <form name="FindDeptWiseKpi" type="single" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="EmployeeGoalsAndKpiOverallStatus" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="partyYear" ><hidden/></field>
+        <field name="partyId" ><hidden/></field>
+        <field name="managerId" ><hidden/></field>
+        <field name="department" title="Department" position="1">
+          <drop-down allow-empty="false">
+                <option key="Accounts and Finance" description="Accounts and Finance"/>
+                <option key="AMC + Image" description="AMC + Image "/>
+                <option key="DELL EMC" description="DELL EMC"/>
+                <option key="DELL EMC -Server" description="DELL EMC -Server"/>
+                <option key="Human Resource" description="Human Resource"/>
+                <option key="ITES" description="ITES"/>
+                <option key="Sales" description="Sales"/>
+                <option key="Strategy, HR, Admin, PMO" description="Strategy, HR, Admin, PMO"/>
+                <option key="Technical" description="Technical"/>
+                <option key="Tender" description="Tender"/>
+          </drop-down>
+        
+         </field>
+        <field name="employeeId" ><hidden/></field>
+        <field name="overallAchvResult" ><hidden/></field>
+        <field name="overallAchvStatus" ><hidden/></field>
+        <field name="mgrApprStatus" ><hidden/></field>
+        <field name="mgrRemarks" ><hidden/></field>
+        <field name="kpiType" ><hidden/></field>
+	<field name="year" ><hidden/></field>
+<!--         <field name="genetateReport" widget-style="buttontext">  -->
+<!--         	<hyperlink target="generateDeptWiseKpi"  description="Generate" also-hidden="false"> -->
+<!-- 				<parameter param-name="department"/>  -->
+<!-- 			</hyperlink> </field> -->
+        <field name="searchButton" title="Show Report" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListDeptWiseKpi" type="list" list-name="listIt" paginate-target="FindDeptWiseKpi"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">    
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="DeptWiseKpiCtx"/>
+                <field-map field-name="entityName" value="EmployeeGoalsAndKpiOverallStatus"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="department" title="Department"><display/></field>
+        <field name="employeeId" title="Employee Id"><display/></field>
+        <field name="overallAchvResult" title="Overall Achievement Result"><display/></field>
+        <field name="overallAchvStatus" title="Overall Achievement Status"><display/></field>
+<!--         <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field> -->
+<!--         <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field> -->
+    </form>
+    
+    <form name="ListOverallDeptWiseKpi" type="list" list-name="listIt" paginate-target="FindDeptWiseKpi"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">    
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="DeptWiseKpiCtx"/>
+                <field-map field-name="entityName" value="DepartmentWiseKpiStatus"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="department" title="department"><display/></field>
+        <field name="overallDeptResult" title="Overall Department Result"><display/></field>
+        <field name="overallDeptStatus" title="Overall Department Status"><display/></field>
+<!--         <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field> -->
+<!--         <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field> -->
+    </form>
+    
+    <form name="DeptWiseKpiform" type="single" target="generateDeptWiseKpi"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="department"><text/>
+        	<drop-down allow-empty="false">
+                <option key="Accounts and Finance" description="Accounts and Finance"/>
+                <option key="AMC + Image" description="AMC + Image "/>
+                <option key="DELL EMC" description="DELL EMC"/>
+                <option key="DELL EMC -Server" description="DELL EMC -Server"/>
+                <option key="Human Resource" description="Human Resource"/>
+                <option key="ITES" description="ITES"/>
+                <option key="Sales" description="Sales"/>
+                <option key="Strategy, HR, Admin, PMO" description="Strategy, HR, Admin, PMO"/>
+                <option key="Technical" description="Technical"/>
+                <option key="Tender" description="Tender"/>
+          </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit/></field>
+    </form>
+    
+    <form name="ShowManagerKpiView" type="list" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		
+		<actions>		
+			<entity-condition entity-name="EmployeeGoalsAndKpiOverallStatus">
+			<condition-expr field-name="managerId" value="${userLogin.userLoginId}"/>
+			</entity-condition>
+		</actions>
+		
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${middleName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+		
+<!-- 		<field name="partyId"><display/></field> -->
+		<field name="managerId"><hidden/></field>
+		<field name="employeeId" title="Employee ID"><display /></field>
+		<field name="overallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="overallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="year" title="Year"><display /></field>
+		<field name="Details" title="Details" widget-style="buttontext">
+            <hyperlink target="DetailsofKPI" description="Details" also-hidden="false" request-confirmation="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="managerId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="overallAchvResult"/>
+                <parameter param-name="overallAchvStatus"/>
+                <parameter param-name="year"/>
+            </hyperlink>
+        </field>
+	</form>
+	
+	
+	
+	<form name="ManagerMonthlyKpi" type="list" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>		
+			<entity-and entity-name="EmployeeGAKOvrlStatMonthly">
+            	<field-map field-name="partyId"  value="${parameters.partyId}"/>
+            	<field-map field-name="mYear"  value="${parameters.year}"/>
+            </entity-and>
+		</actions>
+		
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${middleName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+		
+<!-- 		<field name="partyId"><display/></field> -->
+		<field name="managerId"><hidden/></field>
+		<field name="employeeId" title="Employee ID"><display /></field>
+		<field name="mOverallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="mOverallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="mMonth" title="Month"><display /></field>
+		<field name="mYear" title="Year"><display /></field>
+		<field name="Details" title="Details" widget-style="buttontext">
+            <hyperlink target="monthlyKpiSearchFromManager" description="Details" also-hidden="false" request-confirmation="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="managerId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="overallAchvResult"/>
+                <parameter param-name="overallAchvStatus"/>
+                <parameter param-name="mMonth"/>
+                <parameter param-name="mYear"/>
+            </hyperlink>
+        </field>
+	</form>
+	
+	
+	<form name="ManagerMonthlyKpi1" type="list" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		
+		<actions>		
+			<entity-condition entity-name="EmployeeGoalsAndKpiOverallStatus">
+			<condition-expr field-name="managerId" value="${userLogin.userLoginId}"/>
+			</entity-condition>
+		</actions>
+		
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${middleName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+		
+<!-- 		<field name="partyId"><display/></field> -->
+		<field name="managerId"><hidden/></field>
+		<field name="employeeId" title="Employee ID"><display /></field>
+		<field name="year" title="Year"><display /></field>
+		<field name="Details" title="Details" widget-style="buttontext">
+            <hyperlink target="IndividualMonthlyDetails" description="Details" also-hidden="false" request-confirmation="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="managerId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="year"/>
+            </hyperlink>
+        </field>
+	</form>
+	
+	<!-- 	Modified by Parves -->
+
+<form name="FindIndividualKpi1" type="single" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="EmployeeGoalsAndKpi" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="goalsKpiId" ><hidden/></field>
+        <field name="partyId" ><hidden/></field>
+        <field name="managerId" ><hidden/></field>
+        <field name="department" ><hidden/></field>
+        <field name="goal" ><hidden/></field>
+        <field name="kpi" ><hidden/></field>
+        <field name="kpiStatus" ><hidden/></field>
+        <field name="unit" ><hidden/></field>
+        <field name="unitRemarks" ><hidden/></field>
+        <field name="target" ><hidden/></field>
+        <field name="achievement" ><hidden/></field>
+        <field name="achievementResult" ><hidden/></field>
+        <field name="overallResult" ><hidden/></field>
+        <field name="achievementStatus" ><hidden/></field>
+        <field name="mgrApprStatus" ><hidden/></field>
+        <field name="searchButton" title="Show Report" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="GenerateMonthlyGoalsAndKpi" type="single" 
+		target="generateMonthlyGoalsAndKpi" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			<entity-condition entity-name="EmployeeGoalsAndKpi">
+				<condition-expr field-name="partyId" from-field="partyId" />
+				<order-by field-name="goalsKpiId" />
+			</entity-condition>
+		</actions>
+		<field name="partyId" ><hidden/></field>
+		<field name="year" title="Year" parameter-name="year" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+		
+		<field name="submitButton" title="Generate Monthly Kpi"
+			widget-style="smallSubmit">
+			<submit />
+		</field>
+		
+	</form>
+	
+<!-- 	<form name="viewKpiMonthly" type="single" target="viewKpiMonthly" odd-row-style="header-row" default-table-style="basic-table"> -->
+<!--        <actions> -->
+<!--        <set field="partyId" from-field="parameters.partyId"/> -->
+<!--        </actions> -->
+       
+<!--         <field name="mMonth" tooltip="${uiLabelMap.CommonRequired}" title="Month" parameter-name="mMonth" required-field="true"> -->
+<!--             <drop-down allow-empty="true"> -->
+<!--                 <option key="January" description="January"/> -->
+<!--                 <option key="February" description="February"/> -->
+<!--                 <option key="March" description="March"/> -->
+<!--                 <option key="April" description="April"/> -->
+<!--                 <option key="May" description="May"/> -->
+<!--                 <option key="June" description="June"/> -->
+<!--                 <option key="July" description="July"/> -->
+<!--                 <option key="August" description="August"/> -->
+<!--                 <option key="September" description="September"/> -->
+<!--                 <option key="October" description="October"/> -->
+<!--                 <option key="November" description="November"/> -->
+<!--                 <option key="December" description="December"/> -->
+<!--             </drop-down> -->
+<!--         </field> -->
+<!--          <field name="partyId" parameter-name="partyId"> -->
+<!--             <hidden/> -->
+<!--         </field> -->
+        
+<!--         <field name="fiscalYear" title="Year" tooltip="e.g.2008" parameter-name="fiscalYear" required-field="true"> -->
+<!--             <text/> -->
+<!--         </field> -->
+<!--         <field name="searchButton" title="Show Montly KPI" widget-style="smallSubmit"> -->
+<!--             <submit button-type="button"/> -->
+<!--         </field> -->
+<!--     </form> -->
+    
+     <form name="FindGoalsAndKpiMonthly" type="single" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="EmployeeGoalsAndKpiMonthly" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="mGoalsKpiId" ><hidden/></field>
+        <field name="goalsKpiId" ><hidden/></field>
+        <field name="partyId" ><hidden/></field>
+        <field name="goal" ><hidden/></field>
+        <field name="kpi" ><hidden/></field>
+        <field name="unit" ><hidden/></field>
+        <field name="unitRemarks" ><hidden/></field>
+        <field name="mTarget" ><hidden/></field>
+        <field name="mAchievement" ><hidden/></field>
+        <field name="mAchievementStatus" ><hidden/></field>
+        <field name="mKpiDate" ><hidden/></field>
+        <field name="mMgrRemarks" ><hidden/></field>
+        <field name="mMgrApprStatus" ><hidden/></field>
+        <field name="mMonth" title="Month" position="1" >
+      		<drop-down allow-empty="false">
+                <option key="January" description="January"/>
+                <option key="February" description="February"/>
+                <option key="March" description="March"/>
+                <option key="April" description="April"/>
+                <option key="May" description="May"/>
+                <option key="June" description="June"/>
+                <option key="July" description="July"/>
+                <option key="August" description="August"/>
+                <option key="September" description="September"/>
+                <option key="October" description="October"/>
+                <option key="November" description="November"/>
+                <option key="December" description="December"/>
+            </drop-down>
+        </field>
+         <field name="mYear" title="Year" position="2">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+        <field name="searchButton" title="Show Monthly KPI" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListGoalsAndKpiMonthly" type="list" list-name="listIt" paginate-target="FindGoalsAndKpiMonthly"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">    
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="EmpGoalsAndKpiMonthlyCtx"/>
+                <field-map field-name="entityName" value="EmployeeGoalsAndKpiMonthly"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        
+        
+        <field name="mGoalsKpiId"><hidden/></field>
+        <field name="goalsKpiId"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+		<field name="goal" title="Goal"><display/></field>
+		<field name="kpi" title="KPI"><display/></field>
+		<field name="unit" title="Unit"><display/></field>
+		<field name="unitRemarks" title="Unit Remarks"><display /></field>
+		<field name="mTarget" title="Target" ><display /></field>
+		<field name="mAchievement" title="Achievemnt">
+			<text size="10" maxlength="10" />
+		</field>
+        <field name="mAchievementStatus" title="Achievement Status"><display/></field>
+         <field name="mMgrRemarks" title="Manager Remarks"><display/></field>
+        <field name="mMgrApprStatus" title="Status"><display/></field>
+        <field name="mMonth" title="mMonth"><display/></field>
+        <field name="mYear" title="mYear"><display/></field>
+        <field name="input" title="Input" widget-style="buttontext">
+            <hyperlink target="inputMonthlyAcievement" description="input" also-hidden="false">
+                <parameter param-name="mGoalsKpiId"/>
+                <parameter param-name="goalsKpiId"/>
+                <parameter param-name="goal"/>
+                <parameter param-name="partyId"/>
+                <parameter param-name="kpi"/>
+                <parameter param-name="unit"/>
+                <parameter param-name="unitRemarks"/>
+                <parameter param-name="mTarget"/>
+                <parameter param-name="mAchievement"/>
+                <parameter param-name="mAchievementStatus"/>
+                <parameter param-name="mMgrRemarks"/>
+                <parameter param-name="mMgrApprStatus"/>
+                <parameter param-name="mMonth"/>
+                <parameter param-name="mYear"/>
+            </hyperlink>
+             </field>
+        <field name="save" title="save" widget-style="buttontext">
+            <hyperlink target="saveMonthlyAcievement" description="save" also-hidden="false">
+                <parameter param-name="mGoalsKpiId" from-field="mGoalsKpiId"/>
+                <parameter param-name="goalsKpiId"/>
+                <parameter param-name="goal"/>
+                <parameter param-name="partyId"/>
+                <parameter param-name="kpi"/>
+                <parameter param-name="unit"/>
+                <parameter param-name="unitRemarks"/>
+                <parameter param-name="mTarget"/>
+                <parameter param-name="mAchievement" from-field="mAchievement"/>
+                <parameter param-name="mAchievementStatus"/>
+                <parameter param-name="mMgrRemarks"/>
+                <parameter param-name="mMgrApprStatus"/>
+                <parameter param-name="mMonth"/>
+                <parameter param-name="mYear"/>
+            </hyperlink>
+        </field>
+    </form>
+
+
+<!-- <form name="ListGoalsAndKpiMonthly1" type="list" list-name="listIt" paginate-target="FindGoalsAndKpiMonthly" -->
+<!--         odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">     -->
+<!--         <actions> -->
+<!--             <service service-name="performFind" result-map="result" result-map-list="listIt"> -->
+<!--                 <field-map field-name="inputFields" from-field="EmpGoalsAndKpiMonthlyCtx"/> -->
+<!--                 <field-map field-name="entityName" value="GAKview"/> -->
+<!--                 <field-map field-name="viewIndex" from-field="viewIndex"/> -->
+<!--                 <field-map field-name="viewSize" from-field="viewSize"/> -->
+<!--             </service> -->
+<!--         </actions> -->
+        
+<!--          <field name="partyId" title="partyId"><display/></field> -->
+<!--         <field name="goalsKpiId" title="GoalsKpiId"><display/></field> -->
+<!--         <field name="goal" title="Goal"><display/></field> -->
+<!--         <field name="kpi" title="KPI"><display/></field> -->
+<!--         <field name="mTarget" title="Target"><display/></field> -->
+<!--         <field name="mAchievement" title="Achievement"><text size="10" maxlength="10" /></field> -->
+<!--         <field name="mMonth" title="mMonth"><display/></field> -->
+<!--         <field name="mYear" title="mYear"><display/></field>         -->
+<!--     </form> -->
+    
+    
+	
+	<form name="ListMonthlyGoalsAndKpi" type="multi" 
+		target="saveTargets" odd-row-style="alternate-row" list-name="ListMonthlyGoalsAndKpi"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+            <entity-and entity-name="EmployeeGoalsAndKpiMonthly">
+            	<field-map field-name="partyId"  value="${parameters.partyId}"/>
+            	<field-map field-name="mYear"  value="2019"/>
+            </entity-and>
+        </actions>
+		<field name="partyId"><hidden/></field>
+		<field name="mGoalsKpiId"><hidden/></field>
+		<field name="goalsKpiId" title="GoalsKpiId"><hidden/></field>
+        <field name="goal" title="Goal"><display/></field>
+        <field name="kpi" title="KPI"><display/></field>
+        <field name="mTarget" title="Target"><text size="10" maxlength="10" /></field>
+        <field name="mMonth" title="Month"><display/></field>
+        <field name="mYear" title="Year"><display/></field>
+		
+		<field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+		
+		<field name="submitButton" title="Save Targets"
+			widget-style="smallSubmit">
+			<submit />
+		</field>
+	</form>
+	
+	
+	
+	
+	
+	
+	
+	<form name="monthlyKPI" type="single" target="monthlyKpiSearch" odd-row-style="header-row" default-table-style="basic-table">
+       <actions>
+       <set field="partyId" from-field="parameters.partyId"/>
+       </actions>
+       
+        <field name="mMonth" tooltip="${uiLabelMap.CommonRequired}" title="Month" parameter-name="mMonth">
+            <drop-down allow-empty="false">
+                <option key="January" description="January"/>
+                <option key="February" description="February"/>
+                <option key="March" description="March"/>
+                <option key="April" description="April"/>
+                <option key="May" description="May"/>
+                <option key="June" description="June"/>
+                <option key="July" description="July"/>
+                <option key="August" description="August"/>
+                <option key="September" description="September"/>
+                <option key="October" descrviewKpiMonthlyiption="October"/>
+                <option key="November" description="November"/>
+                <option key="December" description="December"/>
+            </drop-down>
+        </field>
+         <field name="partyId" parameter-name="partyId">
+            <hidden/>
+        </field>
+        <field name="mYear" title="Year" parameter-name="mYear">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+        
+<!--         <field name="mYear" title="Year" tooltip="e.g.2008" parameter-name="mYear"> -->
+<!--             <text/> -->
+<!--         </field> -->
+
+        <field name="searchButton" title="Show" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="yearlyKpi" type="single" target="yearlyKpiSearch" odd-row-style="header-row" default-table-style="basic-table">
+       <actions>
+       <set field="partyId" from-field="parameters.partyId"/>
+       </actions>
+        <field name="partyId" parameter-name="partyId">
+            <hidden/>
+        </field>
+        <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+        
+<!--         <field name="mYear" title="Year" tooltip="e.g.2008" parameter-name="mYear"> -->
+<!--             <text/> -->
+<!--         </field> -->
+
+        <field name="searchButton" title="View Report" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="viewMonthlyKPIform" type="multi" list-name="listKpiMonthly" target="saveMonthlyAchievements" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  		<field name="mGoalsKpiId"><hidden/></field>
+        <field name="goalsKpiId"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+		<field name="goal" title="Goal"><display/></field>
+		<field name="kpi" title="KPI"><display/></field>
+		<field name="unit" title="Unit"><display/></field>
+		<field name="unitRemarks" title="Unit Remarks"><display /></field>
+		<field name="mTarget" title="Target" ><display/></field>
+		<field name="mAchievement" title="Achievemnt">
+			<text size="10" maxlength="10" />
+		</field>
+		<field name="mEmploeyeRemarks" title="Emploeye Remarks">
+			<text size="10" maxlength="20" />
+		</field>
+		<field name="mEmploeyeRemarks" title="Emploeye Remarks">
+			<textarea cols="20" rows="2"/>
+		</field>
+        <field name="mAchievementStatus" title="Achievement Status"><display/></field>
+        <field name="mMgrRemarks" title="Manager Remarks"><display/></field>
+        <field name="mMgrApprStatus" title="Status"><display/></field>
+        <field name="mMonth" title="Month"><display/></field>
+        <field name="mYear" title="Year"><display/></field>
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+		
+		<field name="submitButton" title="Save Monthly Achievements"
+			widget-style="smallSubmit">
+			<submit />
+		</field>
+<!-- 		<field name="submitButton" title="Send to Review"> -->
+<!-- 			<submit button-type="button" /> -->
+<!-- 		</field>  -->
+		
+    </form>
+    
+    <form name="monthlyOvrlAchvStatus" type="multi" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			<entity-condition entity-name="EmployeeGAKOvrlStatMonthly">
+				<condition-expr field-name="partyId" from-field="partyId" />
+				<condition-expr field-name="mMonth" from-field="mMonth"/>
+		        <condition-expr field-name="mYear" from-field="mYear"/>
+				<order-by field-name="mGoalsKpiId" />
+			</entity-condition>
+		</actions>
+		
+		<field name="partyId"><hidden/></field>
+		<field name="mOverallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="mOverallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="mMonth" title="Month"><display /></field>
+	</form>
+	
+	<form name="monthlyOvrlAchvStatus2" type="multi" list-name="listKpiOverallMonthly" target="" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  		<field name="partyId"><hidden/></field>
+		<field name="mOverallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="mOverallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="mMonth" title="Month"><display /></field>
+    </form>
+    
+    <form name="OverallAchvStatusYearly" type="multi" list-name="listKpiOverallYearly" target="" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  		<field name="partyId"><hidden/></field>
+		<field name="overallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="overallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="year" title="Year"><display /></field>
+    </form>
+	
+	<form name="editAchievement" type="single" target="saveMonthlyAcievement" odd-row-style="header-row" default-table-style="basic-table">
+         <field name="mGoalsKpiId"><hidden/></field>
+        <field name="goalsKpiId"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+		<field name="goal" title="Goal"><display/></field>
+		<field name="kpi" title="KPI"><display/></field>
+		<field name="unit" title="Unit"><display/></field>
+		<field name="unitRemarks" title="Unit Remarks"><display /></field>
+		<field name="mTarget" title="Target" ><display /></field>
+		<field name="mAchievement" title="Achievemnt">
+			<text size="10" maxlength="10" />
+		</field>
+        <field name="mAchievementStatus" title="Achievement Status"><display/></field>
+         <field name="mMgrRemarks" title="Manager Remarks"><display/></field>
+        <field name="mMgrApprStatus" title="Status"><display/></field>
+        <field name="mMonth" title="mMonth"><display/></field>
+        <field name="mYear" title="mYear"><display/></field>
+        <field name="save" title="Show" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    
+   <form name="sendToManagerMail" type="list" list-name="listKpiOverallMonthly" target="sendToManagerMail" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar sendCouter" use-row-submit="true" >
+        <actions>
+        <entity-and entity-name="Person" list="person">
+        <field-map field-name="partyId" value="${partyId}"/>
+        </entity-and>
+        	<entity-and entity-name="PartyAndPerson"  list="partyAndPerson">
+             	 <field-map field-name="partyId" value="${person[0].attendanceSuperiorId}"/>
+             </entity-and>
+        </actions>
+        <field name="partyId"><hidden/></field>
+		<field name="managerId" title="Manager ID"><display/></field>
+		<field name="manager" title="Manager Name"><display description="${partyAndPerson[0].firstName} ${partyAndPerson[0].middleName} ${partyAndPerson[0].lastName}"></display></field>
+        <field name="mMonth" title="Month"><hidden/></field>
+        <field name="mYear" title="Year"><hidden/></field>
+        <field name="mgrApprStatus" title="mgrApprStatus"><hidden/></field>
+        <field name="kpiCounter" title="Review Left"><display/></field>
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+        <field name="submitButton" title="Send to Manager"
+			widget-style="smallSubmit">
+			<submit />
+		</field>
+    </form>
+    
+<!--     This below form is for company KPI report -->
+    <form name="CompanyWiseKpiReport" type="list" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		
+		<actions>		
+			<entity-condition entity-name="DepartmentWiseKpiStatus">
+			</entity-condition>
+		</actions>
+		
+		 <field name="department" title="Department"><display/></field>
+        <field name="overallDeptResult" title="Overall Department Result"><display/></field>
+        <field name="overallDeptStatus" title="Overall Department Status"><display/></field>
+	</form>
+	
+	<form name="printIndividualReport" type="single" target="printMonthlyIndividualReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+      <field name="userLoginId" title="Employee Id" position="1" >
+       <lookup target-form-name="LookupPartyAndUserLoginAndPerson"/>
+      </field>
+      <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Month" parameter-name="month">
+            <drop-down allow-empty="false">
+                <option key="January" description="January"/>
+                <option key="February" description="February"/>
+                <option key="March" description="March"/>
+                <option key="April" description="April"/>
+                <option key="May" description="May"/>
+                <option key="June" description="June"/>
+                <option key="July" description="July"/>
+                <option key="August" description="August"/>
+                <option key="September" description="September"/>
+                <option key="October" descrviewKpiMonthlyiption="October"/>
+                <option key="November" description="November"/>
+                <option key="December" description="December"/>
+            </drop-down>
+        </field>
+         <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+      
+        
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Print Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="printIndividualReportYearly" type="single" target="printYearlyIndividualReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+      <field name="userLoginId" title="Employee Id" position="1" >
+       <lookup target-form-name="LookupPartyAndUserLoginAndPerson"/>
+      </field>
+         <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+      
+        
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="View Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="genDeptWiseReportForm" type="single" target="generateDeptWiseReport" title="" header-row-style="header-row" default-table-style="basic-table">
+
+        <field name="department" title="Department" position="1">
+          <drop-down allow-empty="false">
+                <option key="Accounts and Finance" description="Accounts and Finance"/>
+                <option key="AMC + Image" description="AMC + Image "/>
+                <option key="DELL EMC" description="DELL EMC"/>
+                <option key="DELL EMC -Server" description="DELL EMC -Server"/>
+                <option key="Human Resource" description="Human Resource"/>
+                <option key="ITES" description="ITES"/>
+                <option key="Sales" description="Sales"/>
+                <option key="Strategy, HR, Admin, PMO" description="Strategy, HR, Admin, PMO"/>
+                <option key="Technical" description="Technical"/>
+                <option key="Tender" description="Tender"/>
+          </drop-down>
+         </field>
+          <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="genDeptWiseMonthlyReport" type="single" target="generateDeptWiseMonthlyReport.pdf" title="" header-row-style="header-row" default-table-style="basic-table">
+
+        <field name="department" title="Department" position="1">
+          <drop-down allow-empty="false">
+                <option key="Accounts and Finance" description="Accounts and Finance"/>
+                <option key="AMC + Image" description="AMC + Image "/>
+                <option key="DELL EMC" description="DELL EMC"/>
+                <option key="DELL EMC -Server" description="DELL EMC -Server"/>
+                <option key="Human Resource" description="Human Resource"/>
+                <option key="ITES" description="ITES"/>
+                <option key="Sales" description="Sales"/>
+                <option key="Strategy, HR, Admin, PMO" description="Strategy, HR, Admin, PMO"/>
+                <option key="Technical" description="Technical"/>
+                <option key="Tender" description="Tender"/>
+          </drop-down>
+         </field>
+          <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+         <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Month" parameter-name="month">
+            <drop-down allow-empty="false">
+                <option key="January" description="January"/>
+                <option key="February" description="February"/>
+                <option key="March" description="March"/>
+                <option key="April" description="April"/>
+                <option key="May" description="May"/>
+                <option key="June" description="June"/>
+                <option key="July" description="July"/>
+                <option key="August" description="August"/>
+                <option key="September" description="September"/>
+                <option key="October" descrviewKpiMonthlyiption="October"/>
+                <option key="November" description="November"/>
+                <option key="December" description="December"/>
+            </drop-down>
+        </field>
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="DepartmentWiseAnnualReport" type="single" target="genDepartmentWiseAnnualReport.pdf" title="" header-row-style="header-row" default-table-style="basic-table">
+
+        <field name="department" title="Department" position="1">
+          <drop-down allow-empty="false">
+                <option key="Accounts and Finance" description="Accounts and Finance"/>
+                <option key="AMC + Image" description="AMC + Image "/>
+                <option key="DELL EMC" description="DELL EMC"/>
+                <option key="DELL EMC -Server" description="DELL EMC -Server"/>
+                <option key="Human Resource" description="Human Resource"/>
+                <option key="ITES" description="ITES"/>
+                <option key="Sales" description="Sales"/>
+                <option key="Strategy, HR, Admin, PMO" description="Strategy, HR, Admin, PMO"/>
+                <option key="Technical" description="Technical"/>
+                <option key="Tender" description="Tender"/>
+          </drop-down>
+         </field>
+          <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="FindCompWiseReportForm" type="single" target="genCompWiseReport" title="" header-row-style="header-row" default-table-style="basic-table">
+           <field name="company" title="Company" position="1">
+	          <drop-down allow-empty="false">
+	                <option key="Computer Services Ltd." description="Computer Services Ltd."/>
+	          </drop-down>
+         </field>
+          <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+         
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="CompanyWiseMonthlyReport" type="single" target="Company_Wise_KPI_Monthly_Report.pdf" title="" header-row-style="header-row" default-table-style="basic-table">
+          <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Month" parameter-name="month">
+            <drop-down allow-empty="false">
+                <option key="January" description="January"/>
+                <option key="February" description="February"/>
+                <option key="March" description="March"/>
+                <option key="April" description="April"/>
+                <option key="May" description="May"/>
+                <option key="June" description="June"/>
+                <option key="July" description="July"/>
+                <option key="August" description="August"/>
+                <option key="September" description="September"/>
+                <option key="October" descrviewKpiMonthlyiption="October"/>
+                <option key="November" description="November"/>
+                <option key="December" description="December"/>
+            </drop-down>
+        </field>
+          <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+     <form name="CompanyWiseAnnualReport" type="single" target="Company_Wise_KPI_Annual_Report.pdf" title="" header-row-style="header-row" default-table-style="basic-table">
+          <field name="year" title="Year" parameter-name="year">
+            <drop-down allow-empty="false">
+                <option key="2018" description="2018"/>
+                <option key="2019" description="2019"/>
+                <option key="2020" description="2020"/>
+                <option key="2021" description="2021"/>
+                <option key="2022" description="2022"/>
+                <option key="2023" description="2023"/>
+                <option key="2024" description="2024"/>
+                <option key="2025" description="2025"/>
+                <option key="2026" description="2026"/>
+                <option key="2027" description="2027"/>
+                <option key="2028" description="2028"/>
+                <option key="2029" description="2029"/>
+                <option key="2030" description="2030"/>
+            </drop-down>
+         </field>
+         
+      <field name="noConditionFind"><hidden value="Y"/></field>
+     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+</forms>

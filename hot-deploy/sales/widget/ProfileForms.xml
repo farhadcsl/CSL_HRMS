@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="ViewPartyGroup" type="single" default-map-name="lookupGroup">
+        <auto-fields-entity entity-name="PartyGroup" default-field-type="display"/>
+        <field name="logo" use-when="partyGroupLogoLinkUrl!=null" title="${uiLabelMap.CommonOrganizationLogo}"><image alternate="${uiLabelMap.CommonOrganizationLogo}" value="${partyGroupLogoLinkUrl}" style="cssImgStandard"/></field>
+        <field name="partyTypeId"><ignored/></field>
+        <field name="comments"><ignored/></field>
+        <field name="logoImageUrl"><ignored/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        <field name="preferredCurrencyUomId" title="${uiLabelMap.CommonCurrency}"><display-entity entity-name="Uom" key-field-name="uomId" description="${description}"/></field>
+        <field name="externalId"><display/></field>
+        <field name="statusId"><display-entity entity-name="StatusItem" key-field-name="statusId" description="${description}"/></field>
+        <sort-order>
+            <sort-field name="logo"/>
+            <sort-field name="partyId"/>
+            <sort-field name="groupName"/>
+            <sort-field name="groupNameLocal"/>
+            <sort-field name="officeSiteName"/>
+            <sort-field name="annualRevenue"/>
+            <sort-field name="numEmployees"/>
+            <sort-field name="tickerSymbol"/>
+            <sort-field name="description"/>
+            <sort-field name="preferredCurrencyUomId"/>
+            <sort-field name="externalId"/>
+            <sort-field name="statusId"/>
+        </sort-order>
+    </form>
+
+    <form name="ViewPartyPerson" type="single" default-map-name="lookupPerson">
+        <field name="personalImage" use-when="partyContentId!=null" title="${uiLabelMap.FormFieldTitle_personalImage}"><image value="${personalImage}" style="cssImgStandard"/></field>
+        <field name="partyId"><display/></field>
+        <field name="name" title="${uiLabelMap.PartyName}"><display description="${lookupPerson.personalTitle} ${lookupPerson.firstName} ${lookupPerson.middleName} ${lookupPerson.lastName}"/></field>
+        <field name="comments" title="${uiLabelMap.PartyComments}"><display/></field>
+        <field name="externalId"><display/></field>
+        <field name="statusId"><display-entity entity-name="StatusItem" key-field-name="statusId" description="${description}"/></field>
+    </form>
+
+    <form name="ViewPartyPersonHistory" type="list" list-name="partyNameHistoryList"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <field name="was" title="${uiLabelMap.PartyHistoryWas}"><display description="${personalTitle} ${firstName} ${middleName} ${lastName} ${suffix}"/></field>
+        <field name="changed" title="${uiLabelMap.PartyHistoryChanged}"><display description="${changeDate}"/></field>
+    </form>
+
+    <form name="ViewPartyGroupHistory" type="list" list-name="partyNameHistoryList"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <field name="was" title="${uiLabelMap.PartyHistoryWas}"><display description="${groupName}"/></field>
+        <field name="changed" title="${uiLabelMap.PartyHistoryChanged}"><display description="${changeDate}"/></field>
+    </form>
+
+   
+
+    <form name="ListCarrierAccounts" type="list" target="updatePartyCarrierAccount"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar"
+        paginate="true"  view-size="3" paginate-target="viewprofile" paginate-target-anchor="ListCarrierAccounts">
+        <actions>
+            <entity-condition entity-name="PartyCarrierAccount" list="carrierAccounts" filter-by-date="true">
+                <condition-expr field-name="partyId" from-field="parameters.partyId"></condition-expr>
+                <order-by field-name="fromDate"/>
+            </entity-condition>
+        </actions>
+        <auto-fields-service service-name="updatePartyCarrierAccount"/>
+        <field name="partyId"><display/></field>
+        <field name="carrierPartyId"><display/></field>
+        <field name="fromDate"><display/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}"><submit button-type="button"/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="smallSubmit">
+            <hyperlink target="updatePartyCarrierAccount" description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="carrierPartyId"/>
+                <parameter param-name="fromDate"/>
+                <parameter param-name="thruDate" from-field="context.thruDate"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="ListSubscriptions" type="list" list-name="subscriptionList" default-table-style="basic-table">
+        <field name="subscriptionId">
+            <display-entity entity-name="Subscription" description="${description}">
+                <sub-hyperlink description="[${subscriptionId}]" target="/catalog/control/EditSubscription" target-type="inter-app">
+                    <parameter param-name="subscriptionId"/>
+                </sub-hyperlink>
+            </display-entity>
+        </field>
+        <field name="subscriptionTypeId" title="${uiLabelMap.ProductSubscription} ${uiLabelMap.CommonType}">
+            <display-entity entity-name="SubscriptionType" description="${description}"/>
+        </field>
+        <field name="subscriptionResourceId">
+            <display-entity entity-name="SubscriptionResource" description="${description}"/>
+        </field>
+        <field name="description"><display/></field>
+        <field name="productId">
+            <display-entity entity-name="Product" description="${productName}">
+                <sub-hyperlink target="/catalog/control/EditProduct" target-type="inter-app" description="${productId}" link-style="buttontext">
+                    <parameter param-name="productId"/>
+                </sub-hyperlink>
+            </display-entity>
+        </field>
+        <field name="fromDate"><display/></field>
+        <field name="thruDate"><display/></field>
+    </form>
+
+    <form name="ListRelatedContacts" type="list" list-name="contacts" default-table-style="basic-table">
+        <field name="partyIdTo">
+            <display-entity entity-name="PartyNameView" description="${firstName} ${middleName} ${lastName} ${groupName}" key-field-name="partyId">
+                <sub-hyperlink description="[${partyIdTo}]" target="viewprofile">
+                <parameter param-name="partyId" from-field="partyIdTo"/>
+            </sub-hyperlink>
+            </display-entity>
+        </field>
+        <field name="partyRelationshipTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="PartyRelationshipType" description="${partyRelationshipName}"/></field>
+        <field name="comments"><display/></field>
+    </form>
+
+    <form name="ListRelatedAccounts" type="list" list-name="accounts" default-table-style="basic-table">
+        <field name="partyIdFrom">
+            <display-entity entity-name="PartyNameView" description="${firstName} ${middleName} ${lastName} ${groupName}" key-field-name="partyId">
+                <sub-hyperlink description="[${partyIdFrom}]" target="viewprofile">
+                <parameter param-name="partyId" from-field="partyIdFrom"/>
+            </sub-hyperlink>
+            </display-entity>
+        </field>
+        <field name="partyRelationshipTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="PartyRelationshipType" description="${partyRelationshipName}"/></field>
+        <field name="comments"><display/></field>
+    </form>
+
+    <form name="AddAccount" type="single" target="createPartyRelationshipContactAccount">
+        <field name="partyId"><hidden value="${parameters.partyId}"/></field>
+        <field name="accountPartyId"><lookup target-form-name="LookupAccount"/></field>
+        <field name="contactPartyId"><hidden value="${parameters.partyId}"/></field>
+        <field name="comments"><text/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="AddContact" type="single" target="createPartyRelationshipContactAccount">
+        <field name="partyId"><hidden value="${parameters.partyId}"/></field>
+        <field name="accountPartyId"><hidden value="${parameters.partyId}"/></field>
+        <field name="contactPartyId"><lookup target-form-name="LookupContact"/></field>
+        <field name="comments"><text/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}"><submit button-type="button"/></field>
+    </form>
+   
+    <form name="PartySalesOpportunities" type="list" list-name="salesOpportunities" default-table-style="basic-table hover-bar">
+        <field name="opportunityName" title="${uiLabelMap.SfaOpportunityName}">
+            <hyperlink target="ViewSalesOpportunity" description="${opportunityName} [${salesOpportunityId}]">
+                <parameter param-name="salesOpportunityId"/>
+            </hyperlink>
+        </field>
+        <field name="opportunityStageId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="SalesOpportunityStage" description="${description}"/></field>
+        <field name="estimatedAmount" title="${uiLabelMap.SfaEstimatedAmount}"><display/></field>
+        <field name="partyId"><display/></field>
+    </form>
+
+    <form name="listPartyIdentification" type="list" list-name="listIt"
+                 default-table-style="basic-table hover-bar" target="updatePartyIdentification">
+        <actions>
+            <entity-and entity-name="PartyIdentificationAndParty" >
+                <field-map field-name="partyId" from-field="partyId"/>
+            </entity-and>
+        </actions>
+        <field name="partyIdentificationTypeId"><hidden /></field>
+        <field name="partyId"><hidden /></field>
+        <field name="partyIdentTypeDesc"><display /></field>
+        <field name="idValue"><display /></field>
+        <field name="delete">
+             <hyperlink target="deletePartyIdentification" description="${uiLabelMap.CommonDelete}">
+                 <parameter param-name="partyId"/>
+                 <parameter param-name="partyIdentificationTypeId"/>
+             </hyperlink>
+        </field>
+        <field name="submit" title="${uiLabelMap.CommonUpdate}"><submit /></field>
+    </form>
+</forms>

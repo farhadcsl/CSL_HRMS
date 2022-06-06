@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IndividualAttendanceReport_List" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a2126489-ff0e-40fc-a272-069b0af72ffa">
+	<property name="ireport.zoom" value="1.4019755979255706"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="dateOfAttendance" class="java.lang.String"/>
+	<field name="employeeId" class="java.lang.String"/>
+	<field name="firstInTime" class="java.lang.String"/>
+	<field name="lastOutTime" class="java.lang.String"/>
+	<field name="attendanceStatus" class="java.lang.String"/>
+	<field name="employeeComments" class="java.lang.String"/>
+	<field name="supervisorComments" class="java.lang.String"/>
+	<field name="processStatus" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="1" width="50" height="20" uuid="d86e8bd0-24f8-4b6e-b6a8-1f4ff12bcc75"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<line>
+				<reportElement x="51" y="1" width="1" height="20" uuid="97c9098e-0f1c-419b-97c3-94a0ce22bde6"/>
+			</line>
+			<staticText>
+				<reportElement x="199" y="1" width="78" height="20" uuid="3aef1364-4481-4174-8472-25c02266facc"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Attendance Status]]></text>
+			</staticText>
+			<line>
+				<reportElement x="277" y="1" width="1" height="20" uuid="ec89f0c8-e683-495a-9d6a-9b505bf58414"/>
+			</line>
+			<staticText>
+				<reportElement x="278" y="1" width="109" height="20" uuid="55af2047-8c60-4463-8263-ff111da07baf"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Employee Comments]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="1" width="112" height="20" uuid="2ee64370-6192-46b8-8e55-2f3600248d0d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Supervisor Comments]]></text>
+			</staticText>
+			<line>
+				<reportElement x="387" y="1" width="1" height="20" uuid="27d4e5a5-3cea-4abf-9151-c7ecf35e0dea"/>
+			</line>
+			<line>
+				<reportElement x="500" y="1" width="1" height="20" uuid="6d128b0f-b378-4538-90e6-adb6bc77c568"/>
+			</line>
+			<staticText>
+				<reportElement x="501" y="1" width="67" height="20" uuid="8a47bb28-feb2-45c3-9fa3-0fd4d10f38c3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Process Status]]></text>
+			</staticText>
+			<line>
+				<reportElement x="568" y="1" width="1" height="20" uuid="facf6eb7-5b99-422b-9e67-6dbc2d1a38b0"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="20" uuid="aa3318dd-bfe7-484f-bba0-5c87ded6a343"/>
+			</line>
+			<line>
+				<reportElement x="1" y="21" width="568" height="1" uuid="beb56f49-3591-45b0-9933-a1a6d158474d"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="569" height="1" uuid="c36aa56c-79e5-4377-b408-62f6d8f57478"/>
+			</line>
+			<line>
+				<reportElement x="198" y="1" width="1" height="20" uuid="86abaa36-ddf6-47fe-97f9-b17bd84a8061"/>
+			</line>
+			<staticText>
+				<reportElement x="121" y="1" width="77" height="20" uuid="06d8b6e2-4350-4eff-b7f6-0b3d7261c7e5"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Last In Time]]></text>
+			</staticText>
+			<line>
+				<reportElement x="120" y="1" width="1" height="20" uuid="a17fe677-2002-4ca6-b681-4255a8caef4d"/>
+			</line>
+			<staticText>
+				<reportElement x="52" y="1" width="68" height="20" uuid="4df29a70-2c0d-4869-87c7-3dee24852e39"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[First In Time]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="387" y="0" width="1" height="20" uuid="2e73716e-f4c1-477e-ae8e-c66678cf0fdd"/>
+			</line>
+			<line>
+				<reportElement x="568" y="-1" width="1" height="21" uuid="bdc21ff3-274d-4870-ab3c-e495c6d65037"/>
+			</line>
+			<line>
+				<reportElement x="500" y="0" width="1" height="20" uuid="aa742e4e-a26d-45d5-8a33-fdfbbe2ca3a6"/>
+			</line>
+			<line>
+				<reportElement x="277" y="0" width="1" height="20" uuid="563404c1-20a3-4e3e-a141-c4b685921b4c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-1" width="1" height="21" uuid="7c520be9-36cc-42ee-a50c-66971474ae92"/>
+			</line>
+			<line>
+				<reportElement x="51" y="-1" width="1" height="20" uuid="b29bb498-00e9-4150-a442-790cc80f4d8a"/>
+			</line>
+			<textField>
+				<reportElement x="501" y="0" width="67" height="20" uuid="2a8a14c9-54d2-44c8-98c1-96df32d6a4a9"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{processStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="0" width="109" height="20" uuid="e20eb1e1-a619-4233-b487-525571ca8db0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{supervisorComments}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="1" width="105" height="19" uuid="d976238e-1075-4af0-8df1-b0ed13720001"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeComments}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="199" y="1" width="78" height="19" uuid="ce03de9c-6112-4943-b123-add2cf83722c"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{attendanceStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="0" width="48" height="20" uuid="9affb275-04fa-4979-8af8-2ec78699eed9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateOfAttendance}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="198" y="0" width="1" height="19" uuid="324c3559-35bf-4222-b100-afb9444bc814"/>
+			</line>
+			<line>
+				<reportElement x="120" y="0" width="1" height="20" uuid="cb67f43e-93cc-4af9-86f0-13edb6c18599"/>
+			</line>
+			<textField>
+				<reportElement x="121" y="1" width="77" height="19" uuid="667cb377-3346-49eb-913e-6e1c3e47c68e"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lastOutTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="0" width="68" height="20" uuid="ee16735b-b706-4986-85b6-0f0554929387"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstInTime}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="569" height="1" uuid="8a81c8b1-aa04-4345-94e3-017ce7ed029b"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

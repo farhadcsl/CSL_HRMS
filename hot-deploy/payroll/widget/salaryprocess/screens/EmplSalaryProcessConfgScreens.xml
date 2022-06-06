@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    
+    <screen name="ExtProcess">
+    <section>
+            <actions>
+               <set field="headerItem" value="SalaryProcess"/>
+               <set field="tabButtonItem" value="ExtProcess"/>
+            </actions>
+            <widgets>
+    		<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://payroll/widget/PayrollMenus.xml" name="salaryProcessGen"/>
+                        <screenlet id="ExistingSalaryProcess" title="Salary Process View" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="ExistingSalaryProcessMonthSelect" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+            </decorator-screen>
+            </widgets>
+  	</section>
+</screen>
+<screen name="empldetailSalaryProcessList">
+        <section>
+            <actions>
+                <set field="headerItem" value="SalaryProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+               <set field="processId" from-field="parameters.processId"/> 
+                <set field="monthNumber" from-field="parameters.monthNumber"/>
+	            <set field="fiscalYear" from-field="parameters.fiscalYear"/>	
+                 <set field="tabButtonItem" value="ExtProcess"/>
+              <entity-and list="eligibleEmployee" entity-name="EligibleEmployee">
+              <field-map field-name="processId" from-field="processId"/>
+               <field-map field-name="monthNumber" from-field="monthNumber"/>
+              <field-map field-name="isActive" value="N"/>
+              </entity-and>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://payroll/widget/PayrollMenus.xml" name="salaryProcessGen"/>
+                     <screenlet id="FindPayrollTypePanel2" title="Salary Process List" collapsible="true">
+                            <section>
+                                <widgets>
+                                        <include-form name="FindEmplSalaryDetailView" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                                        <include-form name="NewEmplSalaryDetailViewlist" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                                       
+                                </widgets>
+                            </section>
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdateSalaryOverallSalarySummary" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                      <!--   <screenlet id="CreatePayrollTypePanel" title="Overall Salary Summary" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="UpdateSalaryOverallSalarySummary" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                               </widgets>
+                            </section>
+                        </screenlet> -->
+                       
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindEmplNewSalary">
+        <section>
+             <actions>
+           	    <set field="headerItem" value="SalaryProcess"/>
+                <set field="tabButtonItem" value="ExtProcess"/>
+                <entity-and list="eligibleEmployee" entity-name="EligibleEmployee">
+                <field-map field-name="processId" from-field="processId"/>
+                <field-map field-name="isActive" value="N"/>
+              </entity-and>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                 
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/PayrollMenus.xml" name="salaryProcessGen"/>
+                       
+                        <screenlet id="CreatePayrollTypePanel2" title="Slary Process List" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="FindSalaryDetailView" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                                    <include-form name="ListFindNewSalary" location="component://payroll/widget/salaryprocess/forms/EmplSalaryProcessConfgForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>   
+    
+    
+    
+    
+    </screens>

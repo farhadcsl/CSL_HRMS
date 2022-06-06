@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+	<!-- Group List for Company(Mother Group of Company) -->
+	<form name="BuildingList" type="list" list-name="buildingList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="AttendanceMain">
+		
+		<row-actions>
+		<set field="partyId" value="${orgId.partyId}"/>
+		<set field="currentEmpStatus" value="${bsh: org.ofbiz.humanres.attendance.AttendanceEvents.getCurrentEmpStatus(delegator, locationId,partyId)}" type="List"/>
+        
+		</row-actions>
+		
+		<field name="locationId" parameter-name="userPrefValue"><hidden/></field>
+		<field name="partyId" ><hidden/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="locationName" title="Building Names" widget-style="button-col" >
+		<hyperlink target="setUserPreferenceForatten" description="${locationName}">
+				<parameter param-name="userPrefTypeId" value="ATTENDANCE_LOCATION" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${locationId}" />
+		</hyperlink>
+		</field>
+		
+		<field name="totalRegisteredEmployees" title="Registered Employees"><display description="${bsh:currentEmpStatus.get(0)}"></display></field>
+		<field name="totalInEmployees" title="In Employees"><display description="${bsh:currentEmpStatus.get(1)}"></display></field>
+		<field name="totalOutEmployees" title="Out Employees"><display description="${bsh:currentEmpStatus.get(2)}"></display></field>
+		<field name="atPresentEmployees" title="Present Employees"><display description="${bsh:currentEmpStatus.get(3)}"></display></field>
+			
+	</form>
+	
+	<form name="FloorList" type="list" list-name="floorList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="AttendanceMain">
+		
+		<row-actions>
+		<set field="partyId" value="${orgId.partyId}"/>
+		<set field="currentEmpStatus" value="${bsh: org.ofbiz.humanres.attendance.AttendanceEvents.getCurrentEmpStatus(delegator, locationId,partyId)}" type="List"/>
+        
+		</row-actions> 
+		
+		<field name="locationId" parameter-name="userPrefValue"><hidden/></field>
+		<field name="partyId" ><hidden/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="locationName" title="Floor Names" widget-style="button-col" >
+		<hyperlink target="setUserPreferenceForatten" description="${locationName}">
+				<parameter param-name="userPrefTypeId" value="ATTENDANCE_LOCATION" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${locationId}" />
+		</hyperlink>
+		</field>
+		
+		
+		<field name="totalRegisteredEmployees" title="Registered Employees"><display description="${bsh:currentEmpStatus.get(0)}"></display></field>
+		<field name="totalInEmployees" title="In Employees"><display description="${bsh:currentEmpStatus.get(1)}"></display></field>
+		<field name="totalOutEmployees" title="Out Employees"><display description="${bsh:currentEmpStatus.get(2)}"></display></field>
+		<field name="atPresentEmployees" title="Present Employees"><display description="${bsh:currentEmpStatus.get(3)}"></display></field>
+			
+	</form>
+	
+	<form name="GateList" type="list" list-name="gateList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="AttendanceMain">
+	
+		<row-actions>
+		<set field="partyId" value="${orgId.partyId}"/>
+		<set field="currentEmpStatus" value="${bsh: org.ofbiz.humanres.attendance.AttendanceEvents.getCurrentEmpStatus(delegator, locationId,partyId)}" type="List"/>
+        
+		</row-actions> 
+	
+		<field name="locationId" parameter-name="userPrefValue"><hidden/></field>
+		<field name="partyId" ><hidden/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="locationName" title="Gate Names" widget-style="button-col" >
+		<hyperlink target="setUserPreferenceForatten" description="${locationName}">
+				<parameter param-name="userPrefTypeId" value="ATTENDANCE_LOCATION" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${locationId}" />
+		</hyperlink>
+		</field>
+		<field name="statusId" title="Status" parameter-name="statusId"><display description="${groovy: 
+   			if(statusId=='GATE_ACTIVATED') 
+   				return 'Activated'; 
+   			else return 'Deactivated';}"/></field>
+   			
+   		<field name="totalRegisteredEmployees" title="Registered Employees"><display description="${bsh:currentEmpStatus.get(0)}"></display></field>
+		<field name="totalInEmployees" title="In Employees"><display description="${bsh:currentEmpStatus.get(1)}"></display></field>
+		<field name="totalOutEmployees" title="Out Employees"><display description="${bsh:currentEmpStatus.get(2)}"></display></field>
+		<field name="atPresentEmployees" title="Present Employees"><display description="${bsh:currentEmpStatus.get(3)}"></display></field>		
+		
+		<field name="numEmployeesParamet" title="Action">
+			<hyperlink target="unRegisterGate" description="${groovy: 
+   			if(statusId=='GATE_ACTIVATED') 
+   				return 'Deactive'; 
+   			else return 'Active';}">
+				<parameter param-name="userPrefValue" value="${locationId}" />
+				<parameter param-name="currentLocationId"/>
+				<parameter param-name="statusId" value="${statusId}"/>
+			</hyperlink>
+		</field>
+		
+	</form>
+	
+	<form name="DeviceList" type="list" target="updateDeviceStaus" list-name="deviceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="AttendanceMain">
+		
+	 	<row-actions>
+			<set field="partyId" value="${orgId.partyId}"/>
+			<set field="currentEmpStatus" value="${bsh: org.ofbiz.humanres.attendance.AttendanceEvents.getCurrentEmpStatus(delegator, locationId,partyId)}" type="List"/>
+	        <set field="firstTime" value="${bsh: org.ofbiz.humanres.attendance.AttendanceUtils.getDeviceFirstTimeStatus(delegator, locationId)}" type="String"/>
+	        <set field="deviceType" value="${bsh: org.ofbiz.humanres.attendance.AttendanceEvents.getDeviceType(delegator, locationId)}" type="String"/>
+		</row-actions> 
+		
+		<field name="locationId" parameter-name="userPrefValue"><hidden/></field>
+		<field name="partyId" ><hidden/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="deviceType" title="Device Type"><display description="${deviceType}"></display></field>
+		<field name="locationName" title="Device Names" widget-style="button-col" >
+		<hyperlink target="setUserPreferenceForatten" description="${locationName}">
+				<parameter param-name="userPrefTypeId" value="ATTENDANCE_LOCATION" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${locationId}" />
+		</hyperlink>
+		</field>
+		<field name="statusId" title="Status"><display description="${groovy: 
+   			if(statusId=='DEVICE_REGISTERED') 
+   				return 'Registered'; 
+   			else return 'Unregistered';}"/></field>
+   					
+		<field name="totalRegisteredEmployees" title="Registered Employees"><display description="${bsh:currentEmpStatus.get(0)}"></display></field>
+		<field name="firstTime" title="First Time" >
+			<hyperlink target="updateDeviceStaus" description="${groovy: 
+   			if(firstTime!='null') 
+   				return firstTime; 
+   			else return '';}">
+				<parameter param-name="userPrefValue" value="${locationId}" />
+				<parameter param-name="firsTimeRegister" value="${firstTime}"/>
+			</hyperlink>
+		</field>
+		<field name="totalInEmployees" title="In Employees"><display description="${bsh:currentEmpStatus.get(1)}"></display></field>
+		<field name="totalOutEmployees" title="Out Employees"><display description="${bsh:currentEmpStatus.get(2)}"></display></field>
+		<field name="atPresentEmployees" title="Present Employees"><display description="${bsh:currentEmpStatus.get(3)}"></display></field>
+		<field name="inAbsentEmployees" title="Absent Employees"><display description="${bsh:currentEmpStatus.get(4)}"></display></field>
+		<field name="numEmployeesParamet" title="Action">
+			<hyperlink target="unRegisterDevice" description="${groovy: 
+   			if(statusId=='DEVICE_REGISTERED') 
+   				return 'Unregister'; 
+   			else return 'Register';}">
+				<parameter param-name="userPrefValue" value="${locationId}" />
+				<parameter param-name="currentLocationId"/>
+				<parameter param-name="statusId"/>
+			</hyperlink>
+		</field>
+		<field name="lastUpdateRow" title="Sink Device">
+			<hyperlink target="sinkDevice" description="Sink">
+				<parameter param-name="userPrefValue" value="${locationId}" />
+				<parameter param-name="currentLocationId"/>
+			</hyperlink>
+		</field>
+		
+	</form>
+	<form name="EmployeeList" type="list" list-name="employeeList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="AttendanceMain">
+		
+		 <row-actions>
+			<set field="currentInOutStatus" value="${bsh: org.ofbiz.humanres.attendance.AttendanceEvents.getInOutStatus(delegator, locationId)}" type="String"/>
+		</row-actions> 
+		<field name="locationId" parameter-name="userPrefValue"><hidden/></field>
+		<field name="partyId" ><hidden/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="locationName" title="Employee Names" widget-style="button-col" >
+		<hyperlink target="setUserPreferenceForatten" description="${locationName}">
+				<parameter param-name="userPrefTypeId" value="ATTENDANCE_LOCATION" />
+				<parameter param-name="userPrefGroupTypeId" value="GLOBAL_PREFERENCES" />
+				<parameter param-name="userPrefValue" value="${locationId}" />
+		</hyperlink>
+		</field>
+		<field name="currentInOutStatus" ><display/></field>
+		
+		<field name="statusId" title="Status"><display description="${groovy: 
+   			if(statusId=='EMPL_REGISTERED') 
+   				return 'Registered'; 
+   			else return 'Unregistered';}"/></field>
+		<field name="numEmployeesParamet" title="Action">
+			<hyperlink target="unRegisterEmployee" description="${groovy: 
+   			if(statusId=='EMPL_REGISTERED') 
+   				return 'Unregister'; 
+   			else return 'Register';}">
+				<parameter param-name="userPrefValue" value="${locationId}" />
+				<parameter param-name="currentLocationId"/>
+				<parameter param-name="statusId"/>
+			</hyperlink>
+		</field>
+		
+	</form>
+	<form name="EmployeeAttendanceList" type="list" list-name="employeeattendanceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="AttendanceMain">
+  	 	<row-actions>
+  	 		<set field="time" value="${bsh: org.ofbiz.humanres.attendance.AttendanceUtils.getTimeFormate(logtimeStamp)}" type="String"/>
+  	 	</row-actions>
+  	 
+  		  <field name="logId" title="Log ID" ><display/></field>
+  		  <field name="logtimeStamp" title="Login Time"><display description="${time}"></display></field>
+   		  <field name="eventType" title="Event Type"><display/></field>
+   	  	  <field name="terminalSN" title="Terminal SN "><display/></field>
+   		<!--   <field name="senderTerminal" title="Sender Terminal"><display/></field> -->
+   
+	 
+		
+	</form>
+
+	<form name="CompanyInformation" target="updateParty" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<entity-one entity-name="PartyGroup">
+				<field-map field-name="partyId" value="${orgId.partyId}" />
+			</entity-one>
+		</actions>
+		<field name="partyId" title="${organizationTitle} Id">
+			<display description="${orgId.partyId}"></display>
+		</field>
+		<field name="groupName" title="${organizationTitle} Name">
+			<display>
+				<in-place-editor url="updatePartyGroup" saving-text="Updating...">
+					<simple-editor />
+					<field-map field-name="partyId" value="${partyId}" />
+					<field-map field-name="groupName" value="${company.groupName}" />
+				</in-place-editor>
+			</display>
+		</field>
+	</form>
+	
+	<form name="LocationInformation" target="" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+		
+		<field name="locationId" title="${organizationTitle} Id">
+			<display description="${currentLocationId}"></display>
+		</field>
+		<field name="groupName" title="${organizationTitle} Name">
+			<display description="${locationName}">
+			<in-place-editor url="updateLocationInfo" cancel-control="button" saving-text="Updating..." submit-on-blur="true" >
+					<simple-editor />
+					<field-map field-name="partyId" from-field="orgPartyId"/>
+					<field-map field-name="locationId" from-field="currentLocationId"/>
+			</in-place-editor>
+			</display>
+		</field>
+	</form>
+	
+	<form name="EmployeeInformation" target="" title="" type="single"  header-row-style="header-row" default-table-style="basic-table">
+	
+		<field name="userLoginId" title="Employee Id">
+			<display description="${userId}"></display>
+		</field>
+		<field name="employeeName" title="Employee Name">
+			<display description="${locationName}"></display>
+		</field>
+	</form>
+	
+	
+	
+	<form name="EmployeeCurrentStatus" target="" title="" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		
+		 <field name="employeeInOutStatus" title="Current Status" >
+		 	<display description="${currentEmployeeStatus}"></display>
+		 </field>
+
+	</form>
+	
+	<form name="DeviceCurrentEmpStatus" id="deviceCurrentEmpStatus" target="" title="" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		 <field name="employeeid" title="Employee ID:" >
+		 	<display description="${currentDeviceEmpId}"/>
+		 </field>
+		 <field name="employeeName" title="Employee Name:" >
+		 	<display description="${currentDeviceEmpName}"/>
+		 </field>
+		 <field name="employeeInOutStatus" title="Current Status:" >
+		 	<display description="${currentDeviceEmpStatus}"/>
+		 </field>		 
+	</form>
+	
+	<form name="AttendanceCurrentEmpInfo" target="" title="" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		
+	
+		 <field name="employeeid" title="Employee ID:" >
+		 	<display description="${currentDeviceEmpId}"></display>
+		 </field>
+		 <field name="employeeName" title="Employee Name" >
+		 	<display description="${currentDeviceEmpName}"></display>
+		 </field>
+		 <field name="employeeInOutStatus" title="Current Status:" >
+		 	<display description="${currentDeviceEmpStatus}"></display>
+		 </field>
+		 
+	</form>
+	
+	
+	<form name="EmployeesCurrentStatus" target="" title="" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		
+
+		 
+		 <field name="totalRegisteredEmployee" title="Total Registered Employees" >
+		 	<display description="${registeredEmployee}"></display>
+		 </field>
+		 
+		 <field name="totalInEmployee" title="Total In Employees" >
+		 	<display description="${inEmployee}"></display>
+		 </field>
+		 
+		 <field name="totalOutEmployee" title="Total Out Employees" >
+		 	<display description="${outEmployee}"></display>
+		 </field>
+		 
+		 <field name="totalAtPresentEmployee" title="At Present Employees" >
+		 	<display description="${atPresents}"></display>
+		 </field>
+		 
+		 
+	
+
+	</form>
+	
+	<form name="DeviceInformation" target="" title="" type="single"  header-row-style="header-row" default-table-style="basic-table">
+		<field name="currentLocationId" ><hidden/></field>
+		<field name="userLoginId" title="Device Id">
+			<display description="${terminalSN}"></display>
+		</field>
+		<field name="employeeName" title="Device Name">
+			<display description="${locationName}">
+			<in-place-editor url="updateDevice" cancel-control="button" saving-text="Updating..." submit-on-blur="true" >
+					<simple-editor />
+					<field-map field-name="partyId" from-field="orgPartyId"/>
+					<field-map field-name="currentLocationId" />
+			</in-place-editor>
+			</display>
+		</field>
+	</form>
+	
+	<!-- Building Add Form -->
+	<form name="FormForAddBuilding" target="createBuilding" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="groupName" title="Building Name" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="orgId" parameter-name="orgId" ><hidden/></field>
+		<field name="description" title="Description"><text size="25"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<!-- Floor Add Form -->
+	<form name="FormForAddFloor" target="createFloor" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="groupName" title="Floor Name" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="orgId" parameter-name="orgId" ><hidden/></field>
+		<field name="description" title="Description"><text size="25"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<!-- Gate Add Form -->
+	<form name="FormForAddGate" target="createGate" type="single" header-row-style="header-row" default-table-style="basic-table">
+		
+		<field name="groupName" title="Gate Name" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="orgId" parameter-name="orgId" ><hidden/></field>
+		<field name="description" title="Description"><text size="25"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<!-- Device Add Form -->
+	<form name="FormForAddDevice" target="registerDevice" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="deviceType" id-name="deviceType" title="Device Type" event="onchange" action="getFieldsForAddDevice(this.value)">
+			<radio no-current-selected-key="Actatek">
+				<option key="Actatek" description="Actatek" />
+				<option key="Pegasus" description="Pegasus" />
+			</radio>
+		</field>
+		<field name="partyId" id-name="partyId" title="Model Number" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="terminalIP" id-name="terminalIP" title="Terminal IP" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="pegasusAddress" id-name="pegasusAddress" title="Pegasus Address" tooltip="${uiLabelMap.CommonRequired}" ><text size="25" disabled="true"/></field>
+		<field name="groupName" id-name="groupName" title="Device Name" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="terminalSN" id-name="terminalSN" title="Terminal SN" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="terminalType" id-name="terminalType" title="Terminal Type" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="firmewareVersion" id-name="firmewareVersion" title="Firmeware Version" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="fliVersion" id-name="fliVersion" title="FLI Version" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="userName" id-name="userName" title="User Name" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="userPass" id-name="userPass" title="Password" tooltip="${uiLabelMap.CommonRequired}"><password size="25"></password></field>
+		<field name="endPointIP" id-name="endPointIP" title="Endpoint IP" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="agentVersion" id-name="agentVersion" title="Agent Version" tooltip="${uiLabelMap.CommonRequired}"><text size="25"/></field>
+		<field name="type" title="Type" id-name="type">
+				<radio no-current-selected-key="Auto">
+					<option key="Auto" 
+							description="Auto" />
+					<option key="In"
+							description="In" />
+					<option key="Out"
+							description="Out" />
+				</radio>
+		</field>
+		<field name="currentLocationId" id-name="currentLocationId" parameter-name="currentLocationId" ><hidden/></field>
+		<field name="orgId" id-name="orgId" parameter-name="orgId" ><hidden/></field>
+		<field name="description" id-name="description" title="Description"><text size="25"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+		
+	</form>	
+	<!-- Employee Add Form -->
+	<form name="FormForAddEmployee" target="registerEmployee" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="partyId" title="Emplyoee ID" tooltip="${uiLabelMap.CommonRequired}"><lookup target-form-name="EmployeeLookupForAttendance"/></field>
+		<field name="currentLocationId" parameter-name="currentLocationId"><hidden/></field>
+		<field name="terminalSN" parameter-name="terminalSN"><hidden/></field>
+		<field name="groupName" title="Employee Name"><hidden/></field>
+		<field name="orgId" parameter-name="orgId" ><hidden/></field>
+		<field name="description" title="Description"><text size="25"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>	
+	   
+	<!-- Employee Log Form -->
+	<form name="AddEmployeeLogForm" target="addEmployeeLog" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<!-- <field name="logId"><hidden/></field> -->
+		<field name="userLoginId" title="Emplyoee ID" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><lookup target-form-name="EmployeeLookupForAttendance"/></field>
+		<field name="logDate" title="Log Date"  tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+		
+		<field name="inTime" id-name="inTime" title="In Time" tooltip="Required (click on input field)" required-field="true"><text size="10"/></field>
+		<field name="outTime" id-name="outTime" title="Out Time" tooltip="Required (click on input field)" required-field="true"><text size="10"/></field>
+		<!-- <field name="eventType" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true">
+			<drop-down allow-empty="false">
+				<option key="IN" description="IN" />
+				<option key="OUT" description="OUT" />
+			</drop-down>
+		</field> -->
+		<field name="terminalSN" title="Terminal SN"><text/></field>
+		<field name="senderTerminal" title="Sender Terminal"><text/></field>
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form> 
+    
+    <form name="FindDailyAttendanceLog" type="single" target="DailyAttendanceLog" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="DailyAttendance" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="partyId"><hidden/> </field>
+        <field name="firstInTime"><hidden/> </field>
+        <field name="lastOutTime"><hidden/> </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListDailyAttendanceLog" type="list" paginate-target="DailyAttendanceLog" default-entity-name="EmploymentAndPerson" list-name="listIt" separate-columns="true"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="DailyAttendanceCtx"/>
+                <field-map field-name="entityName" value="DailyAttendance"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            
+        </actions>
+        
+        <row-actions>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and> 
+        </row-actions>
+        
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName} ( ${userLogin[0].userLoginId} )" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="dateOfAttendance"><display/></field>
+        <field name="firstInTime"><display/></field>
+        <field name="lastOutTime"><display/></field>
+        <field name="attendanceStatus"><display/></field>
+        <field name="processStatus"><display/></field>
+        <field name="attendanceResult"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="employeeComments"><display/></field>
+        <field name="supervisorComments"><display/></field>
+        
+		
+		<field name="ViewLink" title="View" widget-style="buttontext">
+            <hyperlink target="ViewAttendanceForm" description="View" also-hidden="false">
+            	<parameter param-name="partyId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="dateOfAttendance"/>
+                <parameter param-name="firstInTime"/>
+                <parameter param-name="lastOutTime"/>
+                <parameter param-name="attendanceStatus"/>
+                <parameter param-name="processStatus"/>
+                <parameter param-name="attendanceResult"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="employeeComments"/>
+                <parameter param-name="supervisorComments"/>
+                
+                
+            </hyperlink>
+        </field>
+        
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditTimeAttendanceForm" description="Edit" also-hidden="false">
+            	<parameter param-name="partyId"/>
+                <parameter param-name="employeeId"/>
+            	<parameter param-name="dateOfAttendance"/>
+                <parameter param-name="firstInTime"/>
+                <parameter param-name="lastOutTime"/>
+                <parameter param-name="attendanceStatus"/>
+                <parameter param-name="processStatus"/>
+                <parameter param-name="attendanceResult"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="employeeComments"/>
+                <parameter param-name="supervisorComments"/>
+            	
+            </hyperlink>
+        </field>
+      <!--   <field name="editLink" title="${uiLabelMap.CommonEmptyHeader}" widget-style="buttontext">
+            <hyperlink target="EditAttendanceForm" description="${uiLabelMap.CommonEdit}">
+                
+                <parameter param-name="employeeComments"/>
+                <parameter param-name="supervisorComments"/>
+                
+            </hyperlink>
+        </field>-->
+        
+        
+        
+        
+    </form>
+    <form name="ViewAttendanceForm" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="employeeId"><display/></field>
+        <field name="dateOfAttendance"><display/></field>
+        <field name="firstInTime"><display/></field>
+        <field name="lastOutTime"><display/></field>
+        <field name="attendanceStatus"><display/></field>
+        <field name="processStatus"><display/></field>
+        <field name="attendanceResult"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="employeeComments"><display/></field>
+        <field name="supervisorComments"><display/></field>
+        
+    </form>
+    <form name="EditTimeAttendanceForm" type="single" target="UpdateTimeAttendanceForm" default-map-name="skillType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><hidden/></field>
+          <field name="dateOfAttendance"><hidden/></field>
+          <field name="dateOfAttendance"><display/></field>
+        <field name="firstInTime"><display/></field>
+        <field name="lastOutTime"><display/></field>
+        <field name="processStatus" >
+			<drop-down allow-empty="false">
+				<option key="Data Loaded" />
+				<option key="Forward To Reporting" />
+				<option key="Process Complete" />
+			</drop-down>
+		</field>
+        <field name="employeeComments"><textarea/></field>
+        <field name="supervisorComments"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+        
+    </form>
+    <form name="EditOrgEmpNote" type="single" target="UpdateOrgEmpNote" default-map-name="skillType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="companyNoteId"><hidden/></field>
+        <field name="title"><text size="60"/></field>
+        <field name="description"><textarea rows="10" cols="100"/></field>
+        <field name="activeStatus" title="Active Status">
+        	<drop-down allow-empty="false">
+        		<auto-complete/>
+	        	<option key="active" description="Active" />
+	        	<option key="inActive" description="De-Active"/>
+        	</drop-down>
+        </field>
+        
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+    </form>
+     
+     
+     
+     
+     
+    <form name="EmplAttendanceList" type="list" list-name="list"
+		odd-row-style="alternate-row" header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar" view-size="31" >
+ 		<actions>
+            
+            <service service-name="performFind" result-map="result" result-map-list="list">
+                <field-map field-name="inputFields" from-field="requestParameters"/>
+                <field-map field-name="entityName" value="DailyAttendance"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+		<field name="partyId"><hidden/></field>
+		<field name="employeeId"><hidden/></field>
+		<field name="dateOfAttendance"><display/></field>
+		<field name="firstInTime"><display/></field>
+		<field name="lastOutTime"><display/></field>
+		<field name="attendanceResult"><display/></field>
+		<field name="employeeComments"><display/></field>
+		
+		<field name="Comments" title=" ">
+            	<hyperlink also-hidden="false" target-type="plain" description="Comments" 
+            		target="javascript:EmployeeAttendanceCommentsPopUp('${partyId}','${dateOfAttendance}','${employeeComments}')"/>
+        </field>
+		<field name="Send" title=" ">
+		    <hyperlink target="SendAttendanceProcessToSuperior" description="Send" also-hidden="true">
+		        <parameter param-name="partyId"/>
+		        <parameter param-name="employeeId"/>
+		        <parameter param-name="dateOfAttendance"/>
+		        <parameter param-name="firstInTime"/>
+		        <parameter param-name="lastOutTime"/>
+		        <parameter param-name="attendanceResult"/>
+		        <parameter param-name="employeeComments"/>     
+		    </hyperlink>
+		</field>
+		
+	</form>
+	
+	
+	
+	<form name="EmployeeAttendanceCommentsPopUp" type="single" target="SetEmployeeAttendanceComments" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><hidden/></field>
+        <field name="dateOfAttendance"><hidden/></field>
+        <field name="employeeComments"><textarea /></field>
+        <field name="submitButton" title="Save" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+    <form name="EmplSupervisorCommentsList" type="list" list-name="list"
+		odd-row-style="alternate-row" header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar">
+ 		<actions>            
+            <service service-name="performFind" result-map="result" result-map-list="list">
+                <field-map field-name="inputFields" from-field="requestParameters"/>
+                <field-map field-name="entityName" value="DailyAttendance"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>        
+        <row-actions>
+	        <entity-one entity-name="Person" value-field="personInfo">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-one> 
+        </row-actions>
+		<field name="partyId"><hidden/></field>
+		<field name="employeeId"><hidden/></field>
+		<field name="attendanceStatus"><display/></field>
+		<field name="employeeName" title="Name"><display description="${personInfo.firstName} ${personInfo.middleName} ${personInfo.lastName} (${employeeId})"></display> </field>
+		<field name="dateOfAttendance" title="Date"><display/></field>
+		<field name="firstInTime" title="First In"><display/></field>
+		<field name="lastOutTime" title="Last Out"><display/></field>
+		<field name="attendanceResult" title="Status"><display/></field>
+		<field name="employeeComments"><display/></field>
+		<field name="supervisorComments"><display/></field>
+		
+		<field name="Comments" title=" ">
+            	<hyperlink also-hidden="false" target-type="plain" description="Comments" 
+            		target="javascript:SupervisorAttendanceCommentsPopUp('${partyId}','${employeeId}','${dateOfAttendance}','${firstInTime}','${lastOutTime}','${attendanceStatus}','${attendanceResult}','${employeeComments}','${supervisorComments}')"/>
+        </field>
+		<field name="Approved" title=" ">
+		    <hyperlink target="ApprovedAttendanceBySupervisor" description="Approve" also-hidden="true">
+		        <parameter param-name="partyId"/>
+		        <parameter param-name="employeeId"/>
+		        <parameter param-name="dateOfAttendance"/>
+		        <parameter param-name="firstInTime"/>
+		        <parameter param-name="lastOutTime"/>
+		        <parameter param-name="attendanceResult"/>    
+		        <parameter param-name="attendanceStatus"/>     
+		    </hyperlink>
+		</field>
+		
+	</form>
+	<form name="SupervisorAttendanceCommentsPopUp" type="single" target="SetSupervisorCommentsForAttendance" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><hidden/></field>
+        <field name="employeeName" title="Name"><display description="${personInfo.firstName} ${personInfo.middleName} ${personInfo.lastName} (${employeeId})"></display> </field>
+		<field name="employeeId"><hidden /></field>
+        <field name="dateOfAttendance"><display /></field>
+        <field name="firstInTime"><display /></field>
+        <field name="lastOutTime"><display /></field>
+        <field name="attendanceResult"><hidden /></field>
+        
+        <field name="attendanceStatus" required-field="true" >
+			<drop-down allow-empty="false">
+				<option key="Normal"/>
+				<option key="Late In"/>
+				<option key="Absence"/>
+				<option key="Missing Out"/>
+				<option key="Non Working day"/>
+			</drop-down>
+		</field>
+        <field name="employeeComments"><display /></field>
+        <field name="supervisorComments"><textarea /></field>
+        <field name="processStatus" >
+			<drop-down allow-empty="true">
+				<option key="Rejected by supervisor" description="Rejected"/>
+				<option key="Approved by supervisor" description="Approved"/>
+			</drop-down>
+		</field>
+        <field name="submitButton" title="Save" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+    
+    <!-- DailyAttendanceLogComments -->
+    
+    
+    <form name="FindDailyAttendanceLogComments" type="single" target="DailyAttendanceLogComments" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="DailyAttendance" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        
+        <field name="partyId"><hidden/> </field>
+        <field name="firstInTime"><hidden/> </field>
+        <field name="lastOutTime"><hidden/> </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListDailyAttendanceLogComments" type="list" paginate-target="DailyAttendanceLog" default-entity-name="EmploymentAndPerson" list-name="listIt" separate-columns="true"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="DailyAttendanceCtx"/>
+                <field-map field-name="entityName" value="DailyAttendance"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            
+        </actions>
+        
+        <row-actions>
+	        <entity-and entity-name="UserLogin" list="userLogin">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and> 
+	        <entity-and entity-name="UserLogin" list="userLoginForSupervisor">
+	        	<field-map field-name="partyId" from-field="partyId"/>
+	        </entity-and>
+        </row-actions>
+        
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName} ( ${userLogin[0].userLoginId} )" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="dateOfAttendance"><display/></field>
+        <field name="firstInTime"><display/></field>
+        <field name="lastOutTime"><display/></field>
+        <field name="attendanceStatus"><display/></field>
+        <!-- <field name="processStatus"><display/></field> -->
+        <field name="attendanceResult"><display/></field>
+        <!-- <field name="dateAdded"><display/></field> -->
+        <field name="employeeComments"><display/></field>        
+		<field name="supervisorPartyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName} ( ${userLoginForSupervisor[0].userLoginId} )" key-field-name="partyId" ></display-entity>
+		</field>
+        <field name="supervisorComments"><display/></field>
+        
+		
+		<field name="ViewLink" title="View" widget-style="buttontext">
+            <hyperlink target="ViewDailyAttendanceLogComments" description="View" also-hidden="false">
+            	<parameter param-name="partyId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="dateOfAttendance"/>
+                <parameter param-name="firstInTime"/>
+                <parameter param-name="lastOutTime"/>
+                <parameter param-name="attendanceStatus"/>
+                <parameter param-name="processStatus"/>
+                <parameter param-name="attendanceResult"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="employeeComments"/>
+                <parameter param-name="supervisorComments"/>
+            </hyperlink>
+        </field>
+        
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditDailyAttendanceLogComments" description="Edit" also-hidden="false">
+            	<parameter param-name="partyId"/>
+                <parameter param-name="employeeId"/>
+            	<parameter param-name="dateOfAttendance"/>
+                <parameter param-name="firstInTime"/>
+                <parameter param-name="lastOutTime"/>
+                <parameter param-name="attendanceStatus"/>
+                <parameter param-name="processStatus"/>
+                <parameter param-name="attendanceResult"/>
+                <parameter param-name="dateAdded"/>
+                <parameter param-name="employeeComments"/>
+                <parameter param-name="supervisorComments"/>
+            	
+            </hyperlink>
+        </field>      
+        
+    </form>
+    <form name="ViewDailyAttendanceLogComments" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="employeeId"><display/></field>
+        <field name="dateOfAttendance"><display/></field>
+        <field name="firstInTime"><display/></field>
+        <field name="lastOutTime"><display/></field>
+        <field name="attendanceStatus"><display/></field>
+        <field name="processStatus"><display/></field>
+        <field name="attendanceResult"><display/></field>
+        <field name="dateAdded"><display/></field>
+        <field name="employeeComments"><display/></field>
+        <field name="supervisorComments"><display/></field>
+        
+    </form>
+    <form name="EditDailyAttendanceLogComments" type="single" target="UpdateDailyAttendanceLogComments" default-map-name="skillType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><hidden/></field>
+          <field name="dateOfAttendance"><hidden/></field>
+          <field name="dateOfAttendance"><display/></field>
+        <field name="firstInTime"><display/></field>
+        <field name="lastOutTime"><display/></field>
+        <field name="processStatus" >
+			<drop-down allow-empty="false">
+				<option key="Data Loaded" />
+				<option key="Forward To Reporting" />
+				<option key="Process Complete" />
+			</drop-down>
+		</field>
+        <field name="employeeComments"><textarea/></field>
+        <field name="supervisorComments"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+        
+    </form>
+    
+</forms>

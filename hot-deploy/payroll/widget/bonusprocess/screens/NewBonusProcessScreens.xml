@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="EditBonusSetup">
+        <section>
+            <actions>
+                <set field="headerItem" value="BonusProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="tabButtonItem" value="BonusTypeSetup"/>
+                <set field="pendingList" from-field="parameters.pendingList"/>
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/PayrollMenus.xml" name="BonusMenus"/>
+                     
+                        <section>
+                            <widgets>
+                                <screenlet id="BonusProcessNewBonusType" title="New Bonus Process Initiation" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="AddNewBonusType" location="component://payroll/widget/bonusprocess/forms/NewBonusProcessForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                                <include-form name="ListBonusType" location="component://payroll/widget/bonusprocess/forms/NewBonusProcessForms.xml"/>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="EditBonusSetupExt">
+        <section>  
+          <actions>
+                <property-map resource="ExampleUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="tabButtonItem" value="BonusTypeSetup"/>
+                <set field="titleProperty" value="PageTitleBonusSetup"/>
+                <set field="bonusId" from-field="parameters.bonusId"/>
+                <!-- <set field="dateAdded" from-field="parameters.dateAdded"/> -->
+                 <entity-one entity-name="BonusType" value-field="bonusId" auto-field-map="false">
+                <field-map field-name="bonusId" from-field="BonusId"/> 
+               <!--  <field-map field-name="dateAdded" from-field="dateAdded"/>  -->
+                </entity-one> 
+            </actions> 
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://payroll/widget/PayrollMenus.xml" name="BonusMenus"/>                                                                                       
+                        <screenlet id="UpdateBonusSetupPanel" title="Update Bonus Setup" collapsible="true">
+                            <include-form name="UpdateBonusTypeExt" location="component://payroll/widget/bonusprocess/forms/NewBonusProcessForms.xml"/>
+                        </screenlet> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+ 
+    
+    </screens>

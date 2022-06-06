@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+	
+	<!-- Lookup for emplPositionId Add Position -->
+    <screen name="LookupForEmplPosition">
+        <section>
+            <actions>
+            	<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+            	<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				<!-- Find the Company -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${partyId}"/>
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+                <property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="${uiLabelMap.HumanResLookupEmplPositionByName}"/>
+                <set field="entityName" value="EmplPositionAndEmplPositionType"/>
+               <!--  <set field="queryString" from-field="result.queryString"/> -->
+                
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="25"/>
+            	  <set field="searchFields" value="[emplPositionId, description, partyId]"/>  
+            	   <!-- optional: fields to display in the given order, default is searchFields -->
+               <set field="displayFields"  value="[description, emplPositionId, partyId]"/>  
+            	<!-- Filter partyId -->
+            	<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/filterCompany.groovy" /> 
+
+                <set field="parameters.partyId" from-field="companyId"/>
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                   
+                        <include-form name="LookupForEmplPosition" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="ListForEmplPositions" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- Lookup for emplPositionId Add Position -->
+    <screen name="LookupForEmplPositionWithOrgFilter">
+        <section>
+            <actions>
+            	<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+            	<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				<!-- Find the Company -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+                <property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="${uiLabelMap.HumanResLookupEmplPositionByName}"/>
+                <set field="entityName" value="EmplPositionAndEmplPositionType"/>
+               <!--  <set field="queryString" from-field="result.queryString"/> -->
+                
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="25"/>
+            	  <set field="searchFields" value="[emplPositionId, description, partyId]"/>  
+            	   <!-- optional: fields to display in the given order, default is searchFields -->
+               <set field="displayFields"  value="[description, emplPositionId, partyId]"/>  
+            	<!-- Filter partyId -->
+            	<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/filterOrganization.groovy" /> 
+            	
+            	 <!-- <entity-and list="emplPositions" entity-name="EmplPosition">
+                	 <field-map field-name="partyId" value="companyId"/> 
+                </entity-and>
+                <set field="andCondition" from-field="emplPositions"/>  -->
+                <set field="parameters.partyId" from-field="partyId"/>
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="LookupForEmplPositionWithFilter" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="ListForEmplPositionsWithOrgFilter" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- Lookup for Total Employee Position tomal -->
+    <screen name="LookupForTotalEmplPosition">
+        <section>
+            <actions>
+            	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>	
+            	<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+            	<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				<!-- Find the Company -->
+				<!-- <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" /> -->
+				<set field="companyId" value="${partyId}"/>
+				<!-- Check Organization or Organization Unit Selection -->
+				<!-- <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" /> -->
+                <property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="${uiLabelMap.HumanResLookupEmplPositionByName}"/>
+                <!-- <set field="entityName" value="EmplPositionAndEmplPositionType"/>
+                <set field="queryString" from-field="result.queryString"/> -->
+                
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="25"/>
+           	    <set field="searchFields" value="[emplPositionId, description, partyId]"/>  
+            	   <!-- optional: fields to display in the given order, default is searchFields -->
+               <set field="displayFields"  value="[description, emplPositionId, partyId]"/>  
+            	<!-- Filter partyId -->
+            	<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/filterCompany.groovy" /> 
+
+                <set field="parameters.partyId" from-field="companyId"/>
+                
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+        		<set field="emplPositionTypeId" from-field="parameters.emplPositionTypeId"/>
+        		
+        		<service service-name="getTotalEmplPosition" auto-field-map="true" />
+        		
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                   
+                        <include-form name="LookupForTotalEmplPosition" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="ListForTotalEmplPositions" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!-- Lookup for emplPositionTypeId Add Position -->
+    <screen name="LookupForEmplPositionType">
+        <section>
+            <actions>
+           		<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+           		<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+           		
+           		<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="${uiLabelMap.HumanResLookupEmplPositionByName} "/>
+                <set field="entityName" value="EmplPositionType"/>
+                <set field="queryString" from-field="result.queryString"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="25"/>
+            	<set field="searchFields" value="[emplPositionTypeId]"/>
+            	<set field="displayFields"  value="[emplPositionTypeId]"/>
+            	<!-- <set field="emplPositionTypeId" from-field="parameters.emplPositionTypeId" default-value="${emplPositionTypeId}"/> -->
+            	<!-- Filter partyId -->
+            	<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/filterParentPosition.groovy" />
+            	 <!-- <entity-and list="emplPositionss" entity-name="EmplPosition">
+                	<field-map field-name="partyId" from-field="companyId"/>
+                </entity-and>
+                <set field="andCondition" from-field="emplPositionss"/> -->
+                <set field="childVaule" from-field="childVaule"/>
+                 
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="LookupForEmplPositionChild" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="ListForEmplPositionsChild" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="OrgLookupUserLoginAndPartyDetails">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+            
+            	<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+            	<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				<!-- Find the Company -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+
+                <set field="title" value="${uiLabelMap.PartyLookupUserLoginAndPartyDetails}"/>
+                <set field="entityName" value="PartyAndPersonAndUserLoginAndEmployment"/>
+                <set field="queryString" from-field="result.queryString"/>
+                <set field="companyName" value="${companyId}" global="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+             <!--  <set field="searchFields" value="[userLoginId, partyId, firstName, lastName, groupName]"/>  -->
+            	<set field="searchFields" value="[userLoginId, firstName, lastName]"/> 
+                <script location="component://humanres/webapp/humanres/WEB-INF/actions/lookup/StatusCondition.groovy"/>                
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="OrgLookupUserLoginAndPartyDetails" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="listOrgLookupUserLoginAndPartyDetails" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!-- lookup for division -->
+    <screen name="ContessaLookupPartyGroupDivision">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="Lookup Division"/>
+                <set field="entityName" value="PartyAndGroup"/>
+                
+                <set field="searchFields" value="[partyId, groupName, comments]"/>
+                <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgStatusCondition.groovy"/>  
+                <set field="andCondition" value="${groovy: return org.ofbiz.entity.condition.EntityCondition.makeCondition([context.andCondition, 
+                    org.ofbiz.entity.condition.EntityCondition.makeCondition(&quot;partyTypeId&quot;, &quot;PARTY_DIVISION&quot;)])}"/>
+                <set field="parameters.partyTypeId" value="PARTY_DIVISION"/>              
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="contessaLookupPartyGroupDivision" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="contessaListLookupPartyGroupDivision" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+        <!-- lookup for department -->
+    <screen name="ContessaLookupPartyGroupDepartment">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="Lookup Department"/>
+                <set field="entityName" value="PartyAndGroup"/>
+                
+                <set field="searchFields" value="[partyId, groupName, comments]"/>
+                <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgStatusCondition.groovy"/>  
+                <set field="andCondition" value="${groovy: return org.ofbiz.entity.condition.EntityCondition.makeCondition([context.andCondition, 
+                    org.ofbiz.entity.condition.EntityCondition.makeCondition(&quot;partyTypeId&quot;, &quot;PARTY_DEPARTMENT&quot;)])}"/>
+                <set field="parameters.partyTypeId" value="PARTY_DEPARTMENT"/>              
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="contessaLookupPartyGroupDepartment" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="contessaListLookupPartyGroupDepartment" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+        <!-- lookup for section -->
+    <screen name="ContessaLookupPartyGroupSection">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="Lookup Section"/>
+                <set field="entityName" value="PartyAndGroup"/>
+                
+                <set field="searchFields" value="[partyId, groupName, comments]"/>
+                <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgStatusCondition.groovy"/>  
+                <set field="andCondition" value="${groovy: return org.ofbiz.entity.condition.EntityCondition.makeCondition([context.andCondition, 
+                    org.ofbiz.entity.condition.EntityCondition.makeCondition(&quot;partyTypeId&quot;, &quot;PARTY_SECTION&quot;)])}"/>
+                <set field="parameters.partyTypeId" value="PARTY_SECTION"/>              
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="contessaLookupPartyGroupSection" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="contessaListLookupPartyGroupSection" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+        <!-- lookup for Line -->
+    <screen name="ContessaLookupPartyGroupLine">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <set field="title" value="Lookup Unit"/>
+                <set field="entityName" value="PartyAndGroup"/>
+                
+                <set field="searchFields" value="[partyId, groupName, comments]"/>
+                <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgStatusCondition.groovy"/>  
+                <set field="andCondition" value="${groovy: return org.ofbiz.entity.condition.EntityCondition.makeCondition([context.andCondition, 
+                    org.ofbiz.entity.condition.EntityCondition.makeCondition(&quot;partyTypeId&quot;, &quot;PARTY_UNIT&quot;)])}"/>
+                <set field="parameters.partyTypeId" value="PARTY_UNIT"/>              
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="contessaLookupPartyGroupLine" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="contessaListLookupPartyGroupLine" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="LookupOrgResponsibilityType">
+        <section>
+            <actions>
+           		<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+           		<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap" global="true"/>
+                
+                <!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+                
+                <set field="title" value="Lookup Employee Responsibilities Type by Name"/>
+                <set field="entityName" value="ResponsibilityType"/>
+                <set field="queryString" from-field="result.queryString"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="25"/>
+            	<set field="searchFields" value="[description, responsibilityTypeId]"/>
+            	<set field="displayFields"  value="[description]"/>
+            	<!-- <set field="emplPositionTypeId" from-field="parameters.emplPositionTypeId" default-value="${emplPositionTypeId}"/> -->
+            
+                 
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="LookupForEmplResponsibilityTypes" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="ListFormplResponsibilityTypes" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="OrgLookupUserLoginAndPartyDetailsAndPosition">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+            
+            	<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<!-- Find the Company -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/getCompany.groovy" />
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+				
+				<set field="emplPositionId"  from-field="parameters.parm0" default-value="${parameters.emplPositionId}"/><!-- from-field="parameters.parm0"/> -->
+				
+				<set field="companyId" value="${companyOfChild.partyIdFrom}"/>
+			
+				<!-- Check Organization or Organization Unit Selection -->
+				<!-- <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" /> -->
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+
+                <set field="title" value="${uiLabelMap.PartyLookupUserLoginAndPartyDetails}"/>
+                <set field="entityName" value="ProttayEmplAndPersonAndFulfillment"/>
+                <set field="queryString" from-field="result.queryString"/>
+                <set field="companyName" value="${companyId}"/>
+               	<set field="positionId" from-field="parameters.parm0" type="String" default-value="${emplPositionId}"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+             <!--  <set field="searchFields" value="[userLoginId, partyId, firstName, lastName, groupName]"/>  -->
+            	<set field="searchFields" value="[userLoginId, firstName, lastName]"/>  
+            	<!-- <set field="andCondition" value="${groovy: return org.ofbiz.entity.condition.EntityCondition.makeCondition(org.ofbiz.base.util.UtilMisc.toMap('emplPositionId', emplPositionId))}" -->/>
+                 <script location="component://humanres/webapp/humanres/WEB-INF/actions/lookup/PositionStatusCondition.groovy"/>     
+                 <!-- <set field="andCondition" value="${groovy: return org.ofbiz.entity.condition.EntityCondition.makeCondition([context.andCondition, 
+                    org.ofbiz.entity.condition.EntityCondition.makeCondition(&quot;emplPositionId&quot;, &quot;4001&quot;)])}"/>  -->          
+            </actions>
+            <widgets>
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="OrgLookupUserLoginAndPartyDetailsWithPositionFilter" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="listOrgLookupUserLoginAndPartyDetailsPositonFilter" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="LookupEmplPosionPartyName">
+        <section>
+            <!-- <condition>
+                <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
+            </condition> -->
+            <actions>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="title" value="Lookup Organization by Name"/>
+                <set field="queryString" from-field="result.queryString"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="20"/>
+                
+                <!-- entries needed for lookup ajax auto completer -->
+                <!-- required: entity to search in -->
+                <set field="entityName" value="PartyNameView"/>
+                
+                <!-- required: fields to search a match -->
+                <!-- the first element from searchFields is returned after user selection --> 
+                <!-- it might be hidden based on widget.autocompleter.displayReturnField property in widget.properties -->                
+                <set field="searchFields" value="[partyId, firstName, middleName, lastName, groupName]"/>
+ 
+                <!-- optional: fields to display in the given order, default is searchFields -->
+                <set field="displayFields" value="[firstName, lastName, groupName]"/>
+                
+                <!-- optional: additional entity condition (named andCondition) added to search query -->
+                <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgStatusConditionLookup.groovy"/>
+                
+            </actions>
+            <widgets>
+                <!-- <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml"> -->
+                <decorator-screen name="LookupDecorator" location="component://common/widget/CommonScreens.xml">
+                    <decorator-section name="search-options">
+                        <include-form name="findLookupEmplPosionPartyName" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                    <decorator-section name="search-results">
+                        <include-form name="lisLookupEmplPosionPartyName" location="component://humanres/widget/organization/forms/OrgLookupForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

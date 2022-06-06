@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+     <request-map uri="Payroll">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPayrollSalaryTemplate"/>
+    </request-map>  
+    
+    <!--====================Pay Template===================================-->
+     <request-map uri="FindPayrollSalaryTemplate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPayrollSalaryTemplate"/>
+    </request-map> 
+     <request-map uri="DetailsPayrollSalaryTemplate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DetailsPayrollSalaryTemplate"/>
+    </request-map>  
+    
+    <request-map uri="EditPayrollSalaryTemplate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditPayrollSalaryTemplate"/>
+    </request-map>
+    <request-map uri="createSalaryTemplate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createSalaryTemplate"/>
+        <response name="success" type="view" value="FindPayrollSalaryTemplate"/>
+        <response name="error" type="view" value="FindPayrollSalaryTemplate"/>
+    </request-map>
+    <request-map uri="updatePayrollSalaryTemplate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateSalaryTemplate"/>
+        <response name="success" type="view" value="FindPayrollSalaryTemplate"/>
+        <response name="error" type="view" value="FindPayrollSalaryTemplate"/>
+    </request-map>
+    <request-map uri="deletePayrollSalaryTemplate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteSalaryTemplate"/>
+        <response name="success" type="view" value="FindPayrollSalaryTemplate"/>
+        <response name="error" type="view" value="FindPayrollSalaryTemplate"/>
+    </request-map>
+    
+    <!--====================SalaryTemplate Item===================================-->
+      
+     <request-map uri="FindPayrollSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindSalaryTemplateDetails"/>
+    </request-map> 
+     <request-map uri="DetailsSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DetailsSalaryTemplateDetails"/>
+    </request-map>      
+    <request-map uri="EditSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewSalaryTemplateDetails"/>
+    </request-map>
+    <request-map uri="createSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createSalaryTemplateDetails"/>
+        <response name="success" type="request-redirect" value="DetailsPayrollSalaryTemplate">
+        <redirect-parameter name="SalaryTemplateId"/>
+        </response>
+        <response name="error" type="request-redirect" value="DetailsPayrollSalaryTemplate"/>
+    </request-map>
+    <request-map uri="UpdateListSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditSalaryTemplateDetails"/>
+    </request-map>
+    <request-map uri="updateSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateSalaryTemplateDetails"/>
+        <response name="success" type="request-redirect" value="DetailsPayrollSalaryTemplate">
+        <redirect-parameter name="SalaryTemplateId"/>
+        </response>
+        <response name="error" type="request-redirect" value="DetailsPayrollSalaryTemplate"/>
+    </request-map>
+    <request-map uri="deleteSalaryTemplateDetails">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteSalaryTemplateDetails"/>
+        <response name="success" type="request-redirect" value="DetailsPayrollSalaryTemplate">
+        	<redirect-parameter name="salaryTemplateId"/>
+        </response>
+        <response name="error" type="request-redirect" value="DetailsPayrollSalaryTemplate"/>
+    </request-map>
+    <!--====================Salary Setup===================================-->
+    
+     <request-map uri="FindSalarySetup">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.configuration.SalarySetup" invoke="findPartyIdByEmployeeId"/>
+        <response name="success" type="view" value="FindSalarySetup"/>
+    </request-map> 
+     <request-map uri="EmployeeSalarySetupCreate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EmployeeSalarySetupCreate"/>
+    </request-map> 
+    <request-map uri="findSalaryTemplate">
+        <security auth="true" https="true"/>
+        <event type="service" invoke="findSalaryTemplate"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+    <request-map uri="findBasicSalaryStep">
+        <security auth="true" https="true"/>
+        <event type="service" invoke="loadBasicSalaryStep"/>        
+        <response name="success" type="request" value="json">
+        	<redirect-parameter name="salaryTemplateId"/>
+        </response>
+        <response name="error" type="request" value="json"/>
+    </request-map>    
+    <request-map uri="saveEmployeeSalarySetup">
+        <security https="true" auth="true"/>
+        <!-- <event type="service" invoke="saveEmployeeSalarySetup"/> -->
+        <event type="java" path="org.ofbiz.configuration.SalarySetup" invoke="saveEmployeeSalarySetup"/>
+        <!-- <response name="success" type="view" value="ViewEmployeeSalarySetup"/> -->
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+    
+     <request-map uri="ViewCurrentEmployeeSalarySetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewCurrentEmployeeSalarySetup"/>
+    </request-map> 
+    
+     <request-map uri="DetailsEmpPresSalItem">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DetailsEmpPresSalItem"/>
+    </request-map> 
+    <request-map uri="updateEmpPresSalItem">
+        <security https="true" auth="true"/>
+        <!-- <event type="service" invoke="updateEmpPresSalItem"/> -->
+        <event type="java" path="org.ofbiz.configuration.SalarySetup" invoke="updateEmpPresSalItem"/>
+        <response name="success" type="request-redirect" value="FindSalarySetup">
+        <redirect-parameter name="partyId"/>
+        </response>
+        <response name="error" type="view" value="FindSalarySetup"/>
+    </request-map>
+    <request-map uri="deleteEmpPresSalItem">
+        <security https="true" auth="true"/>
+        <!-- <event type="service" invoke="deleteEmpPresSalItem"/> -->
+        <event type="java" path="org.ofbiz.configuration.SalarySetup" invoke="deleteEmpPresSalItem"/>
+        <response name="success" type="view" value="FindSalarySetup"/>
+        <response name="error" type="view" value="FindSalarySetup"/>
+    </request-map>
+    <!-- Invoice Item -->
+      <request-map uri="FindInvoiceItem">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindInvoiceItem"/>
+    </request-map>
+    <request-map uri="addInvoiceItem">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="addInvoiceItem"/>
+    </request-map>
+    <request-map uri="LookupGlAccount">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupGlAccount"/>
+    </request-map>
+    <request-map uri="LookupCreditGlAccount">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupCreditGlAccount"/>
+    </request-map>
+     <request-map uri="LookupInvoiceItemTypeParentType">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupInvoiceItemTypeParentType"/>
+    </request-map>
+    <request-map uri="CreateInvoiceItemType">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.configuration.PayrollConfigEvent" invoke="createInvoiceItemType"/>
+        <response name="success" type="request-redirect-noparam" value="addInvoiceItem"/>
+    </request-map>
+    
+    <!--  PayRollItem  -->
+        
+    <request-map uri="AddPayrollItem">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddPayrollItem"/>
+    </request-map>
+    <request-map uri="EditPayrollItem">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditPayrollItem"/>
+    </request-map>
+    <request-map uri="createPayrollItemType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createPayrollItemType"/>
+        <response name="success" type="request-redirect-noparam" value="AddPayrollItem"/>
+    </request-map>
+    <!-- <request-map uri="createPayrollItemType">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.configuration.PayrollSetup" invoke="createPayrollItemType"/>
+        <response name="success" type="view" value="AddPayrollItem"/>
+    </request-map>  -->
+    <request-map uri="updatePayrollItemType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePayrollItemType"/>
+        <response name="success" type="request-redirect-noparam" value="AddPayrollItem"/>
+    </request-map>
+    <request-map uri="deletePayrollItemType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePayrollItemType"/>
+        <response name="success" type="request-redirect-noparam" value="AddPayrollItem"/>
+    </request-map>
+    
+     <!-- BasicSalaryStep -->
+    <request-map uri="EditBasicSalaryStepExt">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditBasicSalaryStepExt"/>
+    </request-map>    
+    <request-map uri="EditBasicSalaryStep">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditBasicSalaryStep"/>
+    </request-map>
+    <request-map uri="createBasicSalaryStep">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createBasicSalaryStep"/>
+        <response name="success" type="request-redirect-noparam" value="EditBasicSalaryStep"/>
+    </request-map>
+    <request-map uri="updateBasicSalaryStep">
+        <security https="true" auth="true"/>
+        <event type="service-multi" invoke="updateBasicSalaryStep"/>
+        <response name="success" type="request-redirect-noparam" value="EditBasicSalaryStep"/>
+        <!-- <response name="success" type="request" value="EditBasicSalaryStep"/> -->
+    </request-map>
+    <request-map uri="updateBasicSalaryStepExt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateBasicSalaryStep"/>
+        <response name="success" type="request-redirect-noparam" value="EditBasicSalaryStep"/>
+    </request-map>
+    <request-map uri="deleteBasicSalaryStep">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteBasicSalaryStep"/>
+        <response name="success" type="request-redirect-noparam" value="EditBasicSalaryStep"/>
+    </request-map>
+    
+    
+        <!-- Template BasicSalaryStep Assign -->
+    <request-map uri="EditTemplateBasicSalaryStepAssignExt">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditTemplateBasicSalaryStepAssignExt"/>
+    </request-map>
+     <request-map uri="EditTemplateBasicSalaryStepAssign">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditTemplateBasicSalaryStepAssign"/>
+    </request-map>
+    <request-map uri="createTemplateBasicSalaryStepAssign">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createTemplateBasicSalaryStepAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditTemplateBasicSalaryStepAssign"/>
+    </request-map>
+    <request-map uri="updateTemplateBasicSalaryStepAssign">
+        <security https="true" auth="true"/>
+        <event type="service-multi" invoke="updateTemplateBasicSalaryStepAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditTemplateBasicSalaryStepAssign"/>
+    </request-map>
+    <request-map uri="updateTemplateBasicSalaryStepAssignExt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateTemplateBasicSalaryStepAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditTemplateBasicSalaryStepAssign"/>
+    </request-map>
+    <request-map uri="deleteTemplateBasicSalaryStepAssign">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTemplateBasicSalaryStepAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditTemplateBasicSalaryStepAssign"/>
+    </request-map>
+    
+    <!--  Position Template Assign  -->
+     <request-map uri="EditPositionTemplateAssign">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditPositionTemplateAssign"/>
+    </request-map>
+    <request-map uri="EditPositionTemplateAssignExt">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditPositionTemplateAssignExt"/>
+    </request-map>
+    <request-map uri="createPositionTemplateAssign">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createPositionTemplateAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditPositionTemplateAssign"/>
+    </request-map>
+    <request-map uri="updatePositionTemplateAssign">
+        <security https="true" auth="true"/>
+        <event type="service-multi" invoke="updatePositionTemplateAssign"/>
+        <response name="success" type="request" value="EditPositionTemplateAssign"/>
+    </request-map>
+    <request-map uri="updatePositionTemplateAssignExt">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePositionTemplateAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditPositionTemplateAssign"/>
+    </request-map>
+    <request-map uri="deletePositionTemplateAssign">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePositionTemplateAssign"/>
+        <response name="success" type="request-redirect-noparam" value="EditPositionTemplateAssign"/>
+    </request-map>
+   <!--  Adjustment  -->
+    <request-map uri="FindPayrollAdjustment">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewSalaryAdjustment"/>
+        <response name="error" type="view" value="FindPayrollAdjustment"/>
+    </request-map> 
+    <request-map uri="NewSalaryAdjustment">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewSalaryAdjustment"/>
+    </request-map> 
+    
+    <request-map uri="CreateSalaryAdjustment">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.configuration.SalarySetup" invoke="CreateSalaryAdjustment"/>
+        <response name="success" type="request-redirect" value="FindSalarySetup">
+        	<redirect-parameter name="partyId"/>
+        </response>
+        <response name="error" type="view" value="FindSalarySetup"/>
+    </request-map>
+    
+    <request-map uri="updateSalaryAdjustment">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.configuration.SalarySetup" invoke="updateSalaryAdjustment"/>
+        <response name="success" type="request-redirect" value="FindSalarySetup">
+        	<redirect-parameter name="partyId"/>
+        </response>
+        <response name="error" type="view" value="FindSalarySetup"/>
+    </request-map>
+    
+    
+   
+   <view-map name="LookupInvoiceItemTypeParentType" type="screen" page="component://payroll/widget/LookupScreens.xml#LookupInvoiceItemTypeParentType"/>
+   <view-map name="addInvoiceItem" type="screen" page="component://payroll/widget/configuration/screens/InvoiceItemScreens.xml#AddInvoiceItemType" ></view-map>
+   <view-map name="LookupGlAccount" type="screen" page="component://payroll/widget/LookupScreens.xml#LookupGlAccount"/>
+   <view-map name="LookupCreditGlAccount" type="screen" page="component://payroll/widget/LookupScreens.xml#LookupCreditGlAccount"/>
+   <view-map name="FindInvoiceItem" type="screen" page="component://payroll/widget/configuration/screens/InvoiceItemScreens.xml#InvoiceItemType" ></view-map>
+   
+   <view-map name="AddPayrollItem" type="screen" page="component://payroll/widget/configuration/screens/PayrollItemScreens.xml#AddPayrollItemType"/>
+   <view-map name="EditPayrollItem" type="screen" page="component://payroll/widget/configuration/screens/PayrollItemScreens.xml#EditPayrollItemType"/>
+   
+   <view-map name="EditBasicSalaryStep" type="screen" page="component://payroll/widget/configuration/screens/BasicSalaryStepScreens.xml#EditBasicSalaryStep"/>
+   <view-map name="EditTemplateBasicSalaryStepAssign" type="screen" page="component://payroll/widget/configuration/screens/TemplateBasicSalaryStepAssignScreens.xml#EditTemplateBasicSalaryStepAssign"/> 
+   <view-map name="EditPositionTemplateAssign" type="screen" page="component://payroll/widget/configuration/screens/PositionTemplateAssignScreens.xml#EditPositionTemplateAssign"/>
+   <view-map name="FindPayrollSalaryTemplate" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateScreens.xml#FindPayrollSalaryTemplate"/>
+   <view-map name="EditPayrollSalaryTemplate" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateScreens.xml#EditPayrollSalaryTemplate"/>
+   <view-map name="DetailsPayrollSalaryTemplate" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateScreens.xml#DetailsPayrollSalaryTemplate"/>
+   <view-map name="EditTemplateBasicSalaryStepAssignExt" type="screen" page="component://payroll/widget/configuration/screens/TemplateBasicSalaryStepAssignScreens.xml#EditTemplateBasicSalaryStepAssignExt"/>
+   <view-map name="EditBasicSalaryStepExt" type="screen" page="component://payroll/widget/configuration/screens/BasicSalaryStepScreens.xml#EditBasicSalaryStepExt"/>
+   <view-map name="EditPositionTemplateAssignExt" type="screen" page="component://payroll/widget/configuration/screens/PositionTemplateAssignScreens.xml#EditPositionTemplateAssignExt"/>
+   
+   <view-map name="FindSalaryTemplateDetails" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateDetailsScreens.xml#FindSalaryTemplateDetails"/>
+   <view-map name="NewSalaryTemplateDetails" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateDetailsScreens.xml#NewSalaryTemplateDetails"/>
+   <view-map name="EditSalaryTemplateDetails" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateDetailsScreens.xml#EditSalaryTemplateDetails"/>
+   <view-map name="DetailsSalaryTemplateDetails" type="screen" page="component://payroll/widget/configuration/screens/SalaryTemplateDetailsScreens.xml#DetailsSalaryTemplateDetails"/>
+   
+   <view-map name="FindSalarySetup" type="screen" page="component://payroll/widget/configuration/screens/SalarySetupScreens.xml#FindSalarySetup"/>
+   
+   <view-map name="FindSalarySetup" type="screen" page="component://payroll/widget/configuration/screens/SalarySetupScreens.xml#FindSalarySetup"/>
+   <view-map name="EmployeeSalarySetupCreate" type="screen" page="component://payroll/widget/configuration/screens/SalarySetupScreens.xml#EmployeeSalarySetupCreate"/>   
+   <view-map name="ViewEmployeeSalarySetup" type="screen" page="component://payroll/widget/configuration/screens/SalarySetupScreens.xml#ViewEmployeeSalarySetup"/>     
+   <view-map name="ViewCurrentEmployeeSalarySetup" type="screen" page="component://payroll/widget/configuration/screens/SalarySetupScreens.xml#ViewCurrentEmployeeSalarySetup"/>     
+   <view-map name="DetailsEmpPresSalItem" type="screen" page="component://payroll/widget/configuration/screens/SalarySetupScreens.xml#DetailsEmpPresSalItem"/>     
+       
+   <view-map name="FindPayrollAdjustment" type="screen" page="component://payroll/widget/configuration/screens/PayrollAdjustmentScreens.xml#FindPayrollAdjustment"/>
+   <view-map name="NewSalaryAdjustment" type="screen" page="component://payroll/widget/configuration/screens/PayrollAdjustmentScreens.xml#NewSalaryAdjustment"/>
+    
+</site-conf>

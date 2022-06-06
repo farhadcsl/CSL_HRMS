@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+
+	<simple-method method-name="updateAllAchievements"
+		short-description="Update">
+		<entity-one entity-name="EmployeeGoalsAndKpi" value-field="lookedUpValue" />
+		<set-nonpk-fields value-field="lookedUpValue" map="parameters" />
+		<store-value value-field="lookedUpValue" />
+		<set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/>
+	</simple-method>
+	
+	<simple-method method-name="updateMonthlyTargets"
+		short-description="Update">
+		<entity-one entity-name="EmployeeGoalsAndKpiMonthly" value-field="lookedUpValue" />
+		<set-nonpk-fields value-field="lookedUpValue" map="parameters" />
+		<store-value value-field="lookedUpValue" />
+		<set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/>
+	</simple-method>
+	
+	<simple-method method-name="saveMonthlyAcievement"
+		short-description="Update">
+		<entity-one entity-name="EmployeeGoalsAndKpiMonthly" value-field="lookedUpValue" />
+		<set-nonpk-fields value-field="lookedUpValue" map="parameters" />
+		<store-value value-field="lookedUpValue" />
+		<set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/>
+	</simple-method>
+	
+<!-- 	<simple-method method-name="saveMonthlyAchievements" -->
+<!-- 		short-description="Update"> -->
+<!-- 		<entity-one entity-name="EmployeeGoalsAndKpiMonthly" value-field="lookedUpValue" /> -->
+<!-- 		<set-nonpk-fields value-field="lookedUpValue" map="parameters" /> -->
+<!-- 		<store-value value-field="lookedUpValue" /> -->
+<!-- 		<set field="partyId" from-field="parameters.partyId"/> -->
+<!--         <field-to-result field="partyId" result-name="partyId"/> -->
+<!-- 	</simple-method> -->
+	
+	<simple-method method-name="saveMonthlyAchievements"
+		short-description="Update">
+		<entity-one entity-name="EmployeeGoalsAndKpiMonthly" value-field="lookedUpValue" />
+		<set-nonpk-fields value-field="lookedUpValue" map="parameters" />
+		<store-value value-field="lookedUpValue" />
+		<set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/>
+        <set field="mMonth" from-field="parameters.mMonth"/>
+        <field-to-result field="mMonth" result-name="mMonth"/>
+        <set field="mYear" from-field="parameters.mYear"/>
+        <field-to-result field="mYear" result-name="mYear"/>
+	</simple-method>
+	
+
+</simple-methods>

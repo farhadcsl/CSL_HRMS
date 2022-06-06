@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+	
+    
+    <form name="viewMonthlyKPIform" type="multi" list-name="listKpiMonthly" target="saveManagerMlyAchts" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  		<field name="mGoalsKpiId"><hidden/></field>
+        <field name="goalsKpiId"><hidden/></field>
+        <field name="partyId"><hidden/></field>
+		<field name="goal" title="Goal"><display/></field>
+		<field name="kpi" title="KPI"><display/></field>
+		<field name="unit" title="Unit"><display/></field>
+		<field name="unitRemarks" title="Unit Remarks"><display /></field>
+		<field name="mTarget" title="Target" ><display/></field>
+		<field name="mAchievement" title="Achievemnt">
+			<text size="10" maxlength="10" />
+		</field>
+		<field name="mEmploeyeRemarks" title="Emploeye Remarks"><display/></field>
+        <field name="mAchievementStatus" title="Achievement Status"><display/></field>
+         <field name="mMgrRemarks" title="Manager Remarks"><text size="10" maxlength="10" /></field>
+        <field name="mMgrApprStatus" title="Status">
+          <drop-down allow-empty="false">
+                <option key="Accepted" description="Accepted"/>
+                <option key="Rejected" description="Rejected"/>               
+            </drop-down>
+        </field>
+        <field name="mMonth" title="Month"><display/></field>
+        <field name="mYear" title="Year"><display/></field>
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+			<hidden value="Y" />
+		</field>
+		
+		<field name="submitButton" title="Achievements Reviewed"
+			widget-style="smallSubmit">
+			<submit />
+		</field>
+<!-- 		<field name="submitButton" title="Send to Review"> -->
+<!-- 			<submit button-type="button" /> -->
+<!-- 		</field>  -->
+    </form>
+    
+    <form name="monthlyOvrlAchvStatus" type="multi" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			<entity-condition entity-name="EmployeeGAKOvrlStatMonthly">
+				<condition-expr field-name="partyId" from-field="partyId" />
+				<condition-expr field-name="mMonth" from-field="mMonth"/>
+		        <condition-expr field-name="mYear" from-field="mYear"/>
+				<order-by field-name="mGoalsKpiId" />
+			</entity-condition>
+		</actions>
+		
+		<field name="partyId"><hidden/></field>
+		<field name="mOverallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="mOverallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="mMonth" title="Month"><display /></field>
+	</form>
+	
+	<form name="monthlyOvrlAchvStatus2" type="multi" list-name="listKpiOverallMonthly" target="" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  		<field name="partyId"><hidden/></field>
+		<field name="mOverallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="mOverallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="mMonth" title="Month"><display /></field>
+    </form>
+    
+    <form name="ShowManagerKpiViewYearly" type="list" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		
+		<actions>		
+			<entity-condition entity-name="EmployeeGoalsAndKpiOverallStatus">
+			<condition-expr field-name="managerId" value="${userLogin.userLoginId}"/>
+			</entity-condition>
+		</actions>
+		
+		<field name="partyId" title="Employee Name">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${middleName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+		
+<!-- 		<field name="partyId"><display/></field> -->
+		<field name="managerId"><hidden/></field>
+		<field name="employeeId" title="Employee ID"><display /></field>
+		<field name="overallAchvResult" title="Overall Achievement Result"><display /></field>
+		<field name="overallAchvStatus" title="Overall Achievement Status"><display /></field>
+		<field name="Details" title="Details" widget-style="buttontext">
+            <hyperlink target="DetailsofKPIYearly" description="Details" also-hidden="false" request-confirmation="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="managerId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="overallAchvResult"/>
+                <parameter param-name="overallAchvStatus"/>
+            </hyperlink>
+        </field>
+	</form>
+	
+	
+	<form name="GAKTestForm" type="multi" title=""
+		target="" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar" default-map-name="record">
+		<actions>
+			<entity-condition entity-name="TestGaK">
+				<order-by field-name="gKId" />
+			</entity-condition>
+		</actions>
+		<row-actions>
+				<entity-and entity-name="managerModel" list="mlList">
+            		<field-map field-name="mId" from-field="mId"/>
+        		</entity-and>
+        		<entity-and entity-name="hodModel" list="hlList">
+            		<field-map field-name="hodId" from-field="hodId"/>
+        		</entity-and>
+		</row-actions>
+		
+		
+		<field name="gKId" title="Goals and KPI ID"><display/></field>
+		<field name="empId" title="Employee"><display /></field>
+		<field name="mname" title="Manager"><display description="${mlList[0].name}"></display></field>
+		<field name="hoName" title="Head of Department"><display description="${hlList[0].name}"></display></field>
+	</form>
+	
+	
+    
+</forms>

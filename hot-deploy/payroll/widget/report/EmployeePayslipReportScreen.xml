@@ -1,0 +1,32 @@
+
+                       
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+
+<screen name="EmployeePayslipReportScreen">
+
+        <section>
+            <actions>
+                <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/>
+                <set field="headerItem" value="report"/>
+                
+                <!-- <set field="fiscalYear" from-field="parameters.fiscalYear"/>
+                <set field="month" from-field="parameters.month"/>-->
+                <!-- <set field="selectedDate" from-field="parameters.selectedDate"/> -->
+                <!--  <service service-name="findActiveEmployeeforSalary" auto-field-map="true"/>-->
+			 </actions>
+            	<widgets>               
+	                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	                    <decorator-section name="body">
+	                        <screenlet title="Employee Payroll Setup Report">
+	                        	<include-form name="EmployeePayslipReportForm" location="component://payroll/widget/report/EmployeePayslipReportForm.xml"/>
+	                        </screenlet>   
+	                    </decorator-section>
+	                </decorator-screen>
+            	</widgets>
+        </section>
+    </screen>
+
+</screens>
+    
+

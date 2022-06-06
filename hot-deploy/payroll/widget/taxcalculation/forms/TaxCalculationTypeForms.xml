@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+<form name="FindTaxCalculationType" type="single" target="FindTaxCalculationType" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+       <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+       <field name="taxCalculationTypeId" title="Tax Payer Group Id"><text></text> </field>
+       <field name="taxCalculationTypeName" title="Tax Payer Group Name">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <entity-options description="${taxCalculationTypeTitle}" key-field-name="taxCalculationTypeId" entity-name="TaxCalculationType">
+                    <entity-order-by field-name="taxCalculationTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>       
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="NewTaxCalculationTypeSetup" type="single" target="createTaxCalculationTypeSetup" header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxCalculationTypeTitle" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" title="Tax Payer Group Name" required-field="true"><text/></field>
+        <field name="comments" title="Comments"><textarea/></field>
+        <field name="isActive" title="Status"><hidden/></field> 
+        <field name="dateAdded" title="Date Added"><hidden/></field> 
+   
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+    
+    <form name="EditTaxCalculationTypeSetup" type="single" target="updateTaxCalculationTypeSetupExt" header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxCalculationTypeId" title="Tax Payer Group Id"><display/></field>  
+        <field name="taxCalculationTypeTitle" title="Tax Payer Group Name" required-field="true"><text/></field>
+        <field name="comments" title="Comments"><textarea/></field>
+        <field name="isActive" title="Status"><hidden/></field> 
+        <field name="dateAdded" title="Date Added"><hidden/></field>    
+        <field name="submitButton" title="Update" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+    <form name="ListTaxCalculationType" type="multi" list-name="listIt" use-row-submit="true" target="updateTaxCalculationTypeSetupExt" paginate-target="FindTaxCalculationType" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="taxCalculationTypeCtx"/>
+                <field-map field-name="entityName" value="TaxCalculationType"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="taxCalculationTypeId" title="Tax Payer Group Id"><display/></field>  
+        <field name="taxCalculationTypeTitle" title="Tax Payer Group Name"><display/></field>
+        <field name="comments" title="Comments"><display/></field>
+        <field name="isActive" title="Status"><display/></field> 
+        <field name="dateAdded" title="Date Added"><display/></field> 
+       
+        <field name="editLink" title="Edit" widget-style="buttontext" >
+            <hyperlink target="editTaxCalculationTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="taxCalculationTypeId"/>  
+                <parameter param-name="taxCalculationTypeTitle"/>
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                
+            </hyperlink>
+        </field>
+       
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink request-confirmation="true" also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteTaxCalculationTypeSetup"
+            	confirmation-message="Do you want to delete tax payer group ${taxCalculationTypeTitle}"> 
+                <parameter param-name="taxCalculationTypeId"/>  
+                <parameter param-name="taxCalculationTypeTitle"/>
+                <parameter param-name="comments"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+            </hyperlink>
+        </field>
+    </form>
+    
+ </forms>

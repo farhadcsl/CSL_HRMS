@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file.   -->
+	 
+	 <request-map uri="LeaveConfig">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="LeaveConfig"/>
+	 </request-map>
+	 
+    <!-- ======================== Leave Process Structure ====================================  -->
+	  <request-map uri="leaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="FindLeaveProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="NewLeaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewLeaveProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="EditLeaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="EditLeaveProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="DetailsLeaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="DetailsLeaveProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="createLeaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="createLeaveProcessStructureSetup"/>
+        <response name="success" type="view" value="FindLeaveProcessStructureSetup"/>
+        <response name="error" type="view" value="NewLeaveProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="updateLeaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="updateLeaveProcessStructureSetup"/>
+        <response name="success" type="view" value="FindLeaveProcessStructureSetup"/>
+        <response name="error" type="view" value="NewLeaveProcessStructureSetup"/>
+	 </request-map>
+	 <request-map uri="FindLeaveProcessStructureSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindLeaveProcessStructureSetup"/>
+    </request-map> 
+     <request-map uri="deleteLeaveProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deleteLeaveProcessStructureSetup"/>
+	 	<response name="success" type="view" value="FindLeaveProcessStructureSetup"/>
+	 </request-map>
+     <!-- =============================================================================   -->
+	 
+    
+    
+    
+    <!-- ======================== Leave Process Step ====================================  -->
+    
+	  <request-map uri="NewLeaveProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewLeaveProcessStepSetup"/>
+	 </request-map>
+	  <request-map uri="EditLeaveProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="EditLeaveProcessStepSetup"/>
+	 </request-map>
+	 
+	  <request-map uri="createLeaveProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="createLeaveProcessStepSetup"/>
+        <response name="success" type="view" value="DetailsLeaveProcessStructureSetup"/>
+        <response name="error" type="view" value="DetailsLeaveProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="updateLeaveProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="updateLeaveProcessStepSetup"/>
+        <response name="success" type="view" value="DetailsLeaveProcessStructureSetup"/>
+        <response name="error" type="view" value="DetailsLeaveProcessStructureSetup"/>
+	 </request-map>
+	 <request-map uri="deleteLeaveProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deleteLeaveProcessStepSetup"/>
+	 	<response name="success" type="view" value="DetailsLeaveProcessStructureSetup"/>
+	 </request-map>
+	 <!-- =============================================================================   -->
+    
+    
+    <!-- ======================== Party Process Assign ====================================  -->
+    <request-map uri="FindPartyProcess">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="FindPartyProcess"/>
+	 </request-map>
+	   <request-map uri="NewPartyProcess">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewPartyProcess"/>
+	 </request-map>
+    
+	  <request-map uri="createPartyProcess">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="createPartyProcess"/>
+        <response name="success" type="view" value="FindPartyProcess"/>
+        <response name="error" type="view" value="NewPartyProcess"/>
+	 </request-map>
+	  <request-map uri="statusChangePartyProcess">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="statusChangePartyProcess"/>
+        <response name="success" type="request-redirect-noparam" value="FindPartyProcess"/>
+        <response name="error" type="view" value="NewPartyProcess"/>
+	 </request-map>
+	 <!-- =============================================================================   -->
+    
+    <!-- ======================== Notification Map ====================================  -->
+    <request-map uri="NotificationMapForProcessStep">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NotificationMapForProcessStep"/>
+	 </request-map>
+	  <request-map uri="createLeaveNotificationMap">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="createLeaveNotificationMap"/>
+        <response name="success" type="view" value="NotificationMapForProcessStep"/>
+        <response name="error" type="view" value="NotificationMapForProcessStep"/>
+	 </request-map>
+     <request-map uri="deleteLeaveNotificationMap">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deleteLeaveNotificationMap"/>
+	 	<response name="success" type="view" value="NotificationMapForProcessStep"/>
+	 </request-map>
+	 <!-- =============================================================================   -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- View Mappings   -->
+    <!-- ======================== Leave Process Structure ====================================   -->
+    
+    <view-map name="LeaveConfig" type="screen" page="component://workflow/widget/leave/screens/LeaveConfigurationScreens.xml#LeaveConfig"/>
+	<view-map name="FindLeaveProcessStructureSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveConfigurationScreens.xml#FindLeaveProcessStructureSetup"/> 
+	<view-map name="NewLeaveProcessStructureSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveConfigurationScreens.xml#NewLeaveProcessStructureSetup"/>
+	<view-map name="EditLeaveProcessStructureSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveConfigurationScreens.xml#EditLeaveProcessStructureSetup"/>
+	<view-map name="DetailsLeaveProcessStructureSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveConfigurationScreens.xml#DetailsLeaveProcessStructureSetup"/>
+	 <!-- =============================================================================   -->
+	 
+	
+    
+    <!-- ======================== Leave Process Step ====================================   -->
+    
+	<view-map name="NewLeaveProcessStepSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveProcessStepScreens.xml#NewLeaveProcessStepSetup"/>
+	<view-map name="EditLeaveProcessStepSetup" type="screen" page="component://workflow/widget/leave/screens/LeaveProcessStepScreens.xml#EditLeaveProcessStepSetup"/>
+	
+	 <!-- =============================================================================   -->
+	 
+    <!-- ======================== Party Process Assign ====================================  -->
+    
+	 <view-map name="FindPartyProcess" type="screen" page="component://workflow/widget/leave/screens/PartyProcessAssignScreens.xml#FindPartyProcess"/>
+	<view-map name="NewPartyProcess" type="screen" page="component://workflow/widget/leave/screens/PartyProcessAssignScreens.xml#NewPartyProcess"/>
+	
+	 <!-- =============================================================================   -->
+	 
+    <!-- ======================== Notification Map ====================================   -->
+    <view-map name="NotificationMapForProcessStep" type="screen" page="component://workflow/widget/leave/screens/LeaveNotificationMapScreens.xml#NotificationMapForProcessStep"/>
+	
+	 <!-- =============================================================================   -->
+    
+</site-conf>

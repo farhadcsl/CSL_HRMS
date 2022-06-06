@@ -1,0 +1,335 @@
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+	
+	<description> Human Resources Manager Recruitment Manage Module Site Configuration File</description>
+	<request-map uri="ContessaFindJobRequisitions">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="ContessaFindJobRequisitions"/>
+    </request-map>
+    <request-map uri="terminate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="Terminate"/>
+        <response name="error" type="view" value="EmployeeProfile"/>
+    </request-map>
+     <request-map uri="terminateEmployee">
+		<security https="true" auth="true" />
+		<event type="service" invoke="terminateEmployee" />
+		<response name="success" type="view" value="EmployeeProfile" />
+		<response name="error" type="view-last" value="EmployeeProfile"/>
+	</request-map>
+	
+    <request-map uri="ChangeEmployeePosition">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ChangeEmployeePosition"/>
+        <response name="error" type="view" value="EmployeeProfile"/>
+    </request-map>    
+	<request-map uri="EmplPositionChange">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.EmployeeService" invoke="EmplPositionChange"/>
+        <response name="success" type="request-redirect" value="EmployeeProfile" />
+        <response name="error" type="view" value="error"/>
+    </request-map>
+    
+    
+    
+    <request-map uri="EditContessaJobRequisition">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="EditContessaJobRequisition"/>
+    </request-map>
+     <request-map uri="createContessaJobRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createContessaJobRequisition"/>
+        <response name="success" type="view" value="EditContessaJobRequisition"/>
+        <response name="error" type="view" value="EditContessaJobRequisition"/>
+    </request-map>
+    <request-map uri="updateContessaJobRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateContessaJobRequisition"/>
+        <response name="success" type="request" value="EditContessaJobRequisition"/>
+        <response name="error" type="view" value="EditContessaJobRequisition"/>
+    </request-map>
+    <request-map uri="deleteContessaJobRequisition">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteContessaJobRequisition"/>
+        <response name="success" type="view" value="ContessaFindJobRequisitions"/>
+    </request-map>
+    <request-map uri="approveRequisition">
+		<security https="true" auth="true" />
+		<event type="service" invoke="approveRequisition" />
+       <response name="success" type="request-redirect" value="ContessaFindJobRequisitions">
+       <redirect-parameter name="emplPositionId"/>
+       </response>
+		<response name="error" type="request-redirect" value="ContessaFindJobRequisitions" />
+	</request-map>
+	<request-map uri="detailofRequisition">
+        <security https="true" auth="true"/>
+       <response name="success" type="view" value="detailofRequisition"/>
+    </request-map>
+    <request-map uri="uploadRequisitionContent">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="uploadRequisitionContent" />
+	</request-map>
+	<request-map uri="uploadPositionRequisitionContent">
+		<security auth="true" https="true" />
+		<event type="service" invoke="uploadRequisitionContentFile" />
+		 <response name="success" type="request" value="detailofRequisition" >
+		 <redirect-parameter name="jobRequisitionId"/>
+		 </response>
+		
+		<response name="error" type="view" value="detailofRequisition" />
+	</request-map>
+	
+	<request-map uri="uploadtotalCvRequisitionContent">
+		<security auth="true" https="true" />
+		<event type="service" invoke="uploadcvRequisitionContentFile" />
+		 <response name="success" type="request" value="ViewCvBank" >
+		 <redirect-parameter name="cvBankId"/>
+		 </response>
+		
+		<response name="error" type="view" value="ViewCvBank" />
+	</request-map>
+	<request-map uri="removeRequisitionDocuments">
+    	<security auth="true" https="true"/>
+    	<event type="simple" path="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="RemoveContentOfRequisition"/>
+    	 <response name="success" type="request" value="detailofRequisition" >
+		 <redirect-parameter name="jobRequisitionId"/>
+		 </response>
+    	<response name="error" type="view" value="detailofRequisition"/>
+    </request-map>
+    <request-map uri="removeCvRequisitionDocuments">
+    	<security auth="true" https="true"/>
+    	<event type="simple" path="component://humanres/script/org/ofbiz/humanres/RecruitmentServices.xml" invoke="RemoveCvContentOfRequisition"/>
+    	 <response name="success" type="request" value="ViewCvBank" >
+		 <redirect-parameter name="cvBankId"/>
+		 </response>
+    	<response name="error" type="view" value="ViewCvBank"/>
+    </request-map>
+     <request-map uri="FindApplicantApps">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindApplicantApps"/>
+     </request-map>
+     <request-map uri="FindApplicantApproval">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindApplicantApproval"/>
+     </request-map>
+     
+       <request-map uri="EditContessaJobApplicant">
+    	 <security https="true" auth="true"/>
+    	 <response name="success" type="view" value="EditContessaJobApplicant"/>
+     </request-map>
+     <request-map uri="createApplicant">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createApplicant"/>
+        <response name="success" type="request-redirect" value="FindApplicantApps"/>
+        <response name="error" type="request-redirect" value="FindApplicantApps"/>
+    </request-map>
+    <request-map uri="ApplicantProfile">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="ApplicantProfile" />
+	</request-map>
+	<request-map uri="editcontessaApplicant">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="EditContessaApplicant"/>
+	</request-map>
+	 <request-map uri="updateApplicantInfo">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateApplicantInfo"/>
+        <response name="success" type="request-redirect" value="ApplicantProfile"/>
+        <response name="error" type="request-redirect" value="ApplicantProfile"/>
+    </request-map>
+    <request-map uri="updateApplicantJoiningDate">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateApplicantJoiningDate" />
+       <response name="success" type="request-redirect" value="ApplicantProfile" />
+		<response name="error" type="view" value="ApplicantProfile" />
+	</request-map>
+	 <request-map uri="updateStatusApproved">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateStatus" />
+       <response name="success" type="request-redirect" value="FindApplicantApproval" />
+		<response name="error" type="view" value="FindApplicantApproval" />
+	</request-map>
+	<request-map uri="updateStatusReject">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateStatus" />
+       <response name="success" type="request-redirect" value="FindApplicantApproval" />
+		<response name="error" type="view" value="FindApplicantApproval" />
+	</request-map>
+	
+	 <request-map uri="updateApplicantStatus">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateApplicantStatus" />
+       <response name="success" type="request-redirect" value="ApplicantProfile">
+       <redirect-parameter name="partyId"/></response>
+		<response name="error" type="view" value="ApplicantProfile">
+		 <redirect-parameter name="partyId"/></response>
+	</request-map>
+	<request-map uri="ApplicantIncAddPopUp"><!-- Request map for Division PopUp view-->
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="ApplicantIncAddPopUp" />
+	</request-map>
+	<request-map uri="discardApplicant">
+        <security https="true" auth="true"/>       
+        <response name="success" type="view" value="DiscardApplicant"/>
+    </request-map> 
+    
+    <request-map uri="processDiscardApplicant">
+        <security https="true" auth="true"/>    
+        <event type="service" invoke="processDiscardApplicant"/>   
+        <response name="success" type="request-redirect" value="ApplicantProfile">
+        <redirect-parameter name="partyId"/>
+        </response>
+    </request-map> 
+    <request-map uri="NewApplicantQual">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewApplicantQual"/>
+    </request-map>
+    
+    <request-map uri="EditApplicantQuals">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditApplicantQuals"/>
+    </request-map>
+    
+    <request-map uri="updateApplicantQual">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateApplicantQual"/>
+        <response name="success" type="view" value="EditApplicantQuals"/>
+    </request-map>
+    
+    <request-map uri="createApplicantQual">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createApplicantQual"/>
+        <response name="success" type="request-redirect" value="ApplicantProfile"/>
+        <response name="error" type="request-redirect" value="NewApplicantQual"/>
+    </request-map>
+    
+    <request-map uri="updateApplicantQual">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateApplicantQual"/>
+        <response name="success" type="request-redirect" value="ApplicantProfile"/>
+        <response name="error" type="view" value="ApplicantProfile"/>
+    </request-map>
+
+	<request-map uri="deleteApplicantQual">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteApplicantQual"/>
+        <response name="success" type="view" value="ApplicantProfile"/>
+        <response name="error" type="view" value="ApplicantProfile"/>
+    </request-map>
+    <request-map uri="addRecruitmentNote">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="addRecruitmentNote"/>
+    </request-map>
+        
+    <request-map uri="createApplicantNote">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createApplicantNote"/>
+        <response name="success" type="view" value="ApplicantProfile"/>
+        <response name="error" type="view" value="addRecruitmentNote"/>
+    </request-map>
+    <request-map uri="uploadContessaApplicantContent">
+        <security auth="true" https="true"/>
+        <event type="service" invoke="uploadPartyContentFile"/>
+        <response name="success" type="view" value="ApplicantProfile"/>
+        <response name="error" type="view-last" value="EventMessages"/>
+    </request-map>
+
+	<request-map uri="removeContessaApplicantContent">
+        <security auth="true" https="true"/>
+        <event type="service" invoke="removePartyApplicantContent"/>
+        <response name="success" type="view" value="ApplicantProfile"/>
+    </request-map>
+    <request-map uri="RequisitionAddPopUp">
+		<security auth="true" https="true" /> 
+		<response name="success" type="view" value="RequisitionAddPopUp" />
+	</request-map>
+	<request-map uri="RequisitionDetail">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="RequisitionDetail" />
+	</request-map>
+	
+	 <request-map uri="createApplicantSalaryNegotiation">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createApplicantSalaryNegotiation" />
+        <response name="success" type="view" value="ApplicantProfile" />
+		<response name="error" type="view" value="ApplicantProfile" />
+	</request-map>
+	 <request-map uri="updateApplicantSalaryNegotiation">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateApplicantSalaryNegotiation" />
+        <response name="success" type="view" value="ApplicantProfile" />
+		<response name="error" type="view" value="ApplicantProfile" />
+	</request-map>
+	
+	<request-map uri="ApplicantSalaryNegotiationModify">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="ApplicantSalaryNegotiationModify" />
+	</request-map>
+	<!-- Recruitment -->
+	<request-map uri="FindReferenceCVForm">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindReferenceCVForm"/>
+    </request-map>
+    <request-map uri="CreateNewReference">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreateNewReference"/>
+    </request-map>
+    <request-map uri="createReference">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createReference"/>
+        <response name="success" type="request-redirect-noparam" value="CreateNewReference"/>
+        <response name="error" type="view" value="CreateNewReference"/>
+    </request-map>
+    <request-map uri="deleteReferance">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteReferance"/>
+        <response name="success" type="request-redirect-noparam" value="FindReferenceCVForm"/>
+    </request-map>
+	<request-map uri="EditReference">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditReference"/>
+    </request-map>
+    <request-map uri="updateReference">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateReference"/>
+        <response name="success" type="request-redirect-noparam" value="FindReferenceCVForm"/>
+        <response name="error" type="view" value="EditReference"/>
+    </request-map>
+    <request-map uri="ViewReferenceForm">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewReferenceForm"/>
+    </request-map>
+	<request-map uri="uploadcvRequisitionContent">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="uploadcvRequisitionContent" />
+	</request-map>
+	<view-map name="uploadcvRequisitionContent" type="screen" page="component://humanres/widget/recruitment/cvbank/CvBankScreens.xml#uploadcvRequisitionContent" />
+	
+	
+	<view-map name="RequisitionAddPopUp" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#RequisitionAddPopUp"/>
+	<view-map name="RequisitionDetail" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#RequisitionDetail"/>
+	<view-map name="Terminate" type="screen" page="component://humanres/widget/LookupScreens.xml#LookupForEmplTerminate"/>
+	<view-map name="ChangeEmployeePosition" type="screen" page="component://humanres/widget/LookupScreens.xml#LookupForEmplPositionChange"/>
+	<view-map name="addRecruitmentNote" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#addRecruitmentNote"/>
+	<view-map name="FindApplicantApproval" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#FindApplicantApproval"/>
+	<view-map name="ApplicantIncAddPopUp" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#ApplicantIncAddPopUp" />
+	 <view-map name="DiscardApplicant" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#DiscardEmployeePopup"/>
+	<view-map name="EditContessaApplicant" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#EditContessaApplicant"/>
+	<view-map name="ApplicantProfile" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#ApplicantProfile"/>
+	<view-map name="FindApplicantApps" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#FindApplicantApps"/>
+	<view-map name="uploadRequisitionContent" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#uploadRequisitionContent" />
+	<view-map name="ContessaFindJobRequisitions" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#ContessaFindJobRequisitions"/>
+	 <view-map name="EditContessaJobRequisition" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#ContessaNewJobRequisitions"/>
+	<view-map name="detailofRequisition" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#detailofRequisition"/>
+	<view-map name="EditContessaJobApplicant" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#EditContessaJobApplicant"/>
+	<view-map name="NewApplicantQual" type="screen" page="component://humanres/widget/recruitment/RecruitmentQualScreens.xml#NewApplicantQual"/>
+	<view-map name="ApplicantSalaryNegotiationModify" type="screen" page="component://humanres/widget/recruitment/ContessaRecruitmentScreens.xml#ApplicantSalaryNegotiationModify"/>
+	
+	
+	<view-map name="FindReferenceCVForm" type="screen" page="component://humanres/widget/recruitment/reference/ContessaReferenceScreens.xml#FindReferenceCVForm"/>
+	<view-map name="CreateNewReference" type="screen" page="component://humanres/widget/recruitment/reference/ContessaReferenceScreens.xml#CreateNewReference"/>
+	<view-map name="EditReference" type="screen" page="component://humanres/widget/recruitment/reference/ContessaReferenceScreens.xml#EditReference"/>
+	<view-map name="ViewReferenceForm" type="screen" page="component://humanres/widget/recruitment/reference/ContessaReferenceScreens.xml#ViewReferenceForm"/>
+	
+	
+	
+</site-conf>

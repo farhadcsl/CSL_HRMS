@@ -1,0 +1,214 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    
+   <form name="FindCvBank" type="single" target="FindCvBank">
+        
+        <auto-fields-entity entity-name="CvBank" default-field-type="find"/>
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="cvBankId"><hidden/></field>
+        <field name="description"><hidden/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form> 
+    
+    <form name="ListCvBank" type="multi" list-name="listIt" use-row-submit="true" separate-columns="true" 
+    	paginate-target="FindCvBank"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+      
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="memberCtx"/>
+                <field-map field-name="entityName" value="CvBank"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+            
+        </actions>
+        <field name="cvBankId"><hidden/></field>
+        <field name="applicantName" title="Applicant Name"><display/></field>
+        <field name="applicantContactNo" title="Contact Number"><display/></field>
+        <field name="referedPosition" title="Position Name"><display/></field>
+        <field name="referedDepartment" title="Department"><display/></field>
+        <field name="priority" ><display/></field>
+        <field name="referdBy" ><display/></field>
+        <field name="collectionType"><display/></field>
+        <field name="cvStatus"><display/></field>
+        <field name="dateAdded" ><display/></field>        
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        
+        <field name="ViewLink" title="View" widget-style="buttontext">
+            <hyperlink target="ViewCvBank" description="View" also-hidden="false">
+                <parameter param-name="cvBankId"/>
+            </hyperlink>
+        </field>
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditCvBank" description="Edit" also-hidden="false">
+            	<parameter param-name="cvBankId"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteCvBank" confirmation-message="Are you sure you want to delete Interview Record of ${applicantName} " description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="cvBankId"/>
+            </hyperlink>
+        </field>
+      </form>
+    
+	
+    <form name="CreateCvBank" type="single" target="createCvBank"
+        header-row-style="header-row" default-table-style="basic-table">
+        
+        
+        <field name="applicantName" title="Applicant Name" required-field="true"><text/></field>
+        <field name="applicantContactNo" title="Contact Number" widget-style="number"><text/></field>
+        <field name="referedPosition" title="Position Name" ><text/></field>        
+        <field name="referedDepartment" title="Department"><text/></field>
+        <field name="collectionType" title="CV Collection Type">
+        	<drop-down allow-empty="true">
+        		<auto-complete/>
+	        	<option key="Reference" description="Reference" />
+	        	<option key="Interview Process" description="Interview Process"/>
+	        	<option key="Others" description="Others"/>
+        	</drop-down>
+        </field>
+        <field name="referdBy" title="Referd By"><text/></field>
+        <field name="priority" title="Priority">
+        	<drop-down allow-empty="true">
+        		<auto-complete/>
+	        	<option key="High" description="High" />
+	        	<option key="Medium" description="Medium"/>
+	        	<option key="Low" description="Low"/>
+        	</drop-down>
+        </field>
+        <field name="description" title="Description" ><textarea/></field>
+        <field name="cvStatus"><hidden value="Created"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+    
+    <form name="EditCvBank" type="single" target="updateCvBank" default-map-name="skillType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="cvBankId"><hidden/></field>
+        <field name="applicantName" tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>
+        <field name="applicantContactNo" title="Contact Number" widget-style="number"><text/></field>        
+        <field name="referedPosition" title="Position Name"><text/></field>
+        <field name="referedDepartment" title="Department" ><text/></field>
+        <field name="collectionType" title="CV Collection Type">
+        	<drop-down allow-empty="true">
+        		<auto-complete/>
+	        	<option key="Reference" description="Reference" />
+	        	<option key="Interview Process" description="Interview Process"/>
+	        	<option key="Others" description="Others"/>
+        	</drop-down>
+        </field>
+       	<field name="priority" title="Priority">
+        	<drop-down allow-empty="false">
+        		<auto-complete/>
+	        	<option key="High" description="High"/>
+	        	<option key="Medium" description="Medium"/>
+	        	<option key="Low" description="Low"/>
+        	</drop-down>
+        </field>        
+        <field name="referdBy" title="Referd By"><text/></field>
+        <field name="dateAdded" title="Date Added"><display/></field>
+        <field name="description" title="Description"><textarea/></field>
+       	<field name="cvStatus" title="Status">
+        	<drop-down allow-empty="false">
+        		<auto-complete/>
+	        	<option key="Created" description="Created"/>
+	        	<option key="Selected" description="Selected"/>
+	        	<option key="Join" description="Join"/>
+        	</drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+    </form>
+     <form name="ViewCvBank" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="cvBankId"><hidden/></field>
+        <field name="applicantName" ><display/></field>
+        <field name="applicantContactNo" title="Contact Number"><display/></field>
+        <field name="referedPosition" title="Position Name"><display/></field>
+        <field name="referedDepartment" title="Department"><display/></field>
+        <field name="collectionType" ><display/></field>
+        <field name="referdBy" ><display/></field>
+        <field name="priority" ><display/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        
+    </form>
+    <form name="addCvBankNotes" type="single" target="createCvBankNotes" 
+        header-row-style="header-row" default-table-style="basic-table">
+        <!-- <field name="cvBankId"><display description="${cvBankId}"></display></field> -->
+        <field name="cvBankId"><hidden/></field>
+        <field name="title"  tooltip="${uiLabelMap.CommonRequired}" required-field="true"><text/></field>        
+   		<field name="description"><textarea/></field>
+               
+        <field name="submitButton" title="Save" widget-style="buttontext">
+        	<submit />
+        </field>
+    </form>    
+
+
+    <form name="ListCvBankNotes" type="multi" list-name="cvNotesList" use-row-submit="true" separate-columns="true" 
+    	paginate-target="ViewCvBank"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+      
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="cvNotesList">
+                <field-map field-name="entityName" value="CvBankNote"/>
+                <field-map field-name="inputFields" from-field="notesCtx"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>            
+        </actions>
+        <field name="cvBankId"><hidden/></field>
+        <field name="title" ><display/></field>        
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteCvBankNotes" confirmation-message="Are you sure you want to delete ${title} " description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="cvBankNoteId"/>
+                <parameter param-name="cvBankId"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="RequisitionCvDocumentList" type="list" list-name="requisitionDocuments" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<row-actions>
+			<entity-one entity-name="CvAndContent" value-field="document">
+			</entity-one>
+			<property-to-field resource="mimetype" property="${document.mimeTypeId}" field="imageType" />
+		</row-actions>
+		<field name="image" title=" ">
+			<image value="${imageType}" />
+		</field>
+		<field name="contentName" title="Title" widget-style="documentTitleEditor">
+			<display>
+				<in-place-editor url="renameImage" ok-text="..." cancel-text="X" saving-text="Updating..." text-between-controls=" " form-class-name="inplaceeditor">
+					<simple-editor />
+					<field-map field-name="contentId" from-field="contentId" />
+				</in-place-editor>
+			</display>
+		</field>
+		<field name="cvBankId"><hidden/></field>
+		
+		<field name="contentId"><hidden/></field>
+		<field name="partyContentTypeId"><hidden/></field>
+		<field name="fromDate"><hidden/></field>
+		
+		<field name="delete" title=" " widget-style="buttontext">
+			<hyperlink target="removeCvRequisitionDocuments" description="delete">
+				
+				<parameter param-name="cvBankId"/>
+				
+		        <parameter param-name="contentId"/>
+		        <parameter param-name="fromDate"/>
+			</hyperlink>
+		</field>
+		<field name="show" title=" " widget-style="buttontext">
+			<hyperlink target-window="_blank" target-type="content" target="img/${contentName}?imgId=${dataResourceId}" description="download"></hyperlink>
+		</field>
+	</form>
+
+</forms>
+    
+    

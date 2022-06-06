@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Human Resources Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    
+
+    <service name="updateTrainingExpenseType" engine="simple" default-entity-name="TrainingExpenseType"
+             location="component://humanres/script/org/ofbiz/humanres/TrainingDevServices.xml" invoke="updateTrExpType" auth="true">
+        <description>Update Training Expense Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="deleteTrExpType" engine="simple" default-entity-name="TrainingExpenseType"
+             location="component://humanres/script/org/ofbiz/humanres/TrainingDevServices.xml" invoke="deleteTrExpType" auth="true">
+        <description>Delete Training Expense Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service> 
+    <!-- Training Offer -->
+    <service name="updateTrainingOffer" engine="simple" default-entity-name="TrainingOffer"
+             location="component://humanres/script/org/ofbiz/humanres/TrainingDevServices.xml" invoke="updateTrainingOffer" auth="true">
+        <description>Update Training Offer</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="deleteTrainingOffer" engine="simple" default-entity-name="TrainingOffer"
+             location="component://humanres/script/org/ofbiz/humanres/TrainingDevServices.xml" invoke="deleteTrainingOffer" auth="true">
+        <description>Delete Training Offer</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service> 
+    <service name="deletePartyTrainingRequest" engine="simple" default-entity-name="PartyTrainingRequest"
+             location="component://humanres/script/org/ofbiz/humanres/TrainingDevServices.xml" invoke="deletePartyTrainingRequest" auth="true">
+        <description>Delete PartyTrainingRequest</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service> 
+    <service name="deletePartyTrainingRequestDetails" engine="simple" default-entity-name="PartyTrainingRequestDetails"
+             location="component://humanres/script/org/ofbiz/humanres/TrainingDevServices.xml" invoke="deletePartyTrainingRequestDetails" auth="true">
+        <description>Delete PartyTrainingRequest</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service> 
+    
+         
+</services>

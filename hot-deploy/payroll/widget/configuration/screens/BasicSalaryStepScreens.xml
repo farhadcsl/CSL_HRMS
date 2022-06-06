@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+        
+   <screen name="EditBasicSalaryStep">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="BasicSalaryStep"/>
+                <set field="titleProperty" value="PageTitleEditBasicSalaryStep"/>
+               <!--  <set field="basicSalaryStepId" from-field="parameters.basicSalaryStepId"/> -->
+                <entity-one entity-name="BasicSalaryStep" value-field="BasicSalaryStep" />
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="AddBasicSalaryStepPanel" title="New Basic Salary Step" collapsible="true">
+                            <include-form name="AddBasicSalaryStep" location="component://payroll/widget/configuration/forms/BasicSalaryStepForms.xml"/>
+                        </screenlet> 
+                        <include-form name="ListBasicSalaryStep" location="component://payroll/widget/configuration/forms/BasicSalaryStepForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+       <screen name="EditBasicSalaryStepExt">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="BasicSalaryStep"/>
+                <set field="titleProperty" value="PageTitleEditBasicSalaryStep"/>
+                <set field="basicSalaryStepId" from-field="parameters.basicSalaryStepId"/>
+                <entity-one entity-name="BasicSalaryStep" value-field="basicSalaryStep" />
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="UpdateBasicSalaryStepPanel" title="Update Basic Salary Step" collapsible="true">
+                            <include-form name="UpdateBasicSalaryStepExt" location="component://payroll/widget/configuration/forms/BasicSalaryStepForms.xml"/>
+                        </screenlet> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+        
+        
+</screens>

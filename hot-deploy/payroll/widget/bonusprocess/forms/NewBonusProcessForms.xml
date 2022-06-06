@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+   
+   
+   
+    <form name="AddNewBonusType" type="single" target="createBonusType" header-row-style="header-row" default-table-style="basic-table">     
+        <actions>
+            <entity-condition entity-name="BonusType"><order-by field-name="bonusId"/></entity-condition>
+        </actions>
+      <!--   <auto-fields-service service-name="createBonusType" map-name="bonusType"/> -->
+        <field name="bonusId" widget-style="required" required-field="true"><text/></field> 
+        <field name="bonusName" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><text/></field> 
+        <field name="payrollItemTypeId" title="Payroll Item Id" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down >
+            <auto-complete/>
+                <entity-options description="${description}" key-field-name="payrollItemTypeId" entity-name="PayrollItem">
+                    <entity-order-by field-name="payrollItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="calculationMode" widget-style="required" tooltip="${uiLabelMap.CommonRequired}">
+            <drop-down >
+            <auto-complete/>
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field> 
+        <field name="bonusValue" required-field="true"  widget-style="number"
+			 tooltip="Only Number Value are allowed eg.(12345)">
+			 <text/>
+		</field> 
+        <field name="isActive"><hidden/></field>
+        <field name="comments" title="Description"><textarea/></field>
+        
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}"><submit/></field>
+    </form>
+    
+    <form name="ListBonusType" type="multi" target="updateBonusType" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="BonusType"><order-by field-name="bonusId"/></entity-condition>
+        </actions>
+       <!--   <auto-fields-service default-field-type="display" service-name="updateBonusType"/> -->
+        <field name="bonusId"><display/></field>
+        <field name="bonusName"><display/></field>
+        <field name="payrollItemTypeId" title="Payroll Item Id"><display/></field>
+        <field name="calculationMode" title="Calculation Mode"><display/></field>
+        <field name="bonusValue"><display/></field> 
+        <field name="comments" title="Comments"><display/></field>
+        <field name="dateAdded"><display/></field> 
+        
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink target="BonusTypeExt" description="Edit" also-hidden="false">
+                <parameter param-name="bonusId"/>  
+                <parameter param-name="bonusName"/>  
+                <parameter param-name="payrollItemTypeId"/>
+                <parameter param-name="bonusValue"/> 
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="calculationMode"/>  
+                <parameter param-name="comments"/>
+                
+                
+            </hyperlink>
+        </field> 
+       
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteBonusType" request-confirmation="true" confirmation-message="Are you Sure you want to delete Bonus Type ${bonusId}"> 
+                <parameter param-name="bonusId"/> 
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="UpdateBonusTypeExt" type="single" target="updateBonusTypeExt" header-row-style="header-row" default-table-style="basic-table">
+        <field name="bonusId"><text/></field>   
+        <field name="bonusName"><text/></field>        
+        <field name="payrollItemTypeId"><display/></field>
+        <field name="bonusValue" required-field="true"  widget-style="number"
+			 tooltip="Only Number Value are allowed eg.(12345)">
+			 <text/>
+		</field> 
+        <field name="isActive" ><display/></field>
+        <field name="dateAdded" title="Date"><textarea/></field>
+        <field name="comments" title="Comments"><textarea/></field>
+        <field name="calculationMode">
+            <drop-down allow-empty="true">
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field> 
+   
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    
+    
+</forms>

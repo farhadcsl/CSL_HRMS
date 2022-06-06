@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	
+	<!-- Company Level Positions Add under organization Tab -->
+    
+    <form name="LookupForTotalEmplPosition" type="single" target="LookupForTotalEmplPosition" header-row-style="header-row" default-table-style="basic-table">
+        <field name="emplPositionId" title="Position"><text-find/></field>
+        <field name="statusId"><hidden/></field>
+        <field name="emplPositionTypeId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType"></entity-options>
+            </drop-down>
+        </field>
+         <!-- <field name="companyId"><display ></display></field> -->
+        <field name="budgetId"><hidden/></field>
+        <field name="budgetItemSeqId"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListForTotalEmplPositions" default-entity-name="EmplPosition" type="list" list-name="listIt" paginate-target="LookupForTotalEmplPosition" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+      
+        <field name="emplPositionId" widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${emplPositionId}" target="javascript:set_value('${emplPositionId}')"/>
+        </field>
+        <field name="partyId" title="Company Id"><display/></field>
+        <field name="emplPositionTypeId"><display/></field>
+    </form>
+    <form name="LookupForEmplPosition" type="single" target="LookupForEmplPosition" header-row-style="header-row" default-table-style="basic-table">
+    
+    	
+       
+        
+        <field name="emplPositionId" title="Position"><text-find/></field>
+        <field name="statusId"><hidden/></field>
+        <field name="emplPositionTypeId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType"></entity-options>
+            </drop-down>
+        </field>
+         <!-- <field name="companyId"><display ></display></field> -->
+        <field name="budgetId"><hidden/></field>
+        <field name="budgetItemSeqId"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <!-- Company Level Positions Add under organization Tab -->
+    <form name="ListForEmplPositionsWithOrgFilter" type="list" list-name="listIt" paginate-target="LookupForEmplPositionWithOrgFilter" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="EmplPositionAndEmplPositionType"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        	<set field="childVaule" from-field="emplPositionId"/>
+        </row-actions>
+        <field name="emplPositionId" widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${emplPositionId}" target="javascript:set_value('${emplPositionId}')"/>
+        </field>
+        <field name="statusId"><hidden/></field>
+        <field name="description" title="Position Type"><display></display></field>
+        <field name="partyId" title="Company Id"><display/></field>
+        <field name="budgetId"><hidden/></field>
+        <field name="budgetItemSeqId"><hidden/></field>
+        <field name="emplPositionTypeId"><hidden/></field>
+    </form>
+    <form name="LookupForEmplPositionWithFilter" type="single" target="LookupForEmplPositionWithOrgFilter" header-row-style="header-row" default-table-style="basic-table">
+    
+    	
+       
+        
+        <field name="emplPositionId" title="Position"><text-find/></field>
+        <field name="statusId"><hidden/></field>
+        <field name="emplPositionTypeId">
+            <drop-down allow-empty="false">
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType"></entity-options>
+            </drop-down>
+        </field>
+         <!-- <field name="companyId"><display ></display></field> -->
+        <field name="budgetId"><hidden/></field>
+        <field name="budgetItemSeqId"><hidden/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+     <!-- Company Level Positions Add under organization Tab -->
+    <form name="ListForEmplPositions" type="list" list-name="listIt" paginate-target="LookupForEmplPosition" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="EmplPositionAndEmplPositionType"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <row-actions>
+        	<set field="childVaule" from-field="emplPositionId"/>
+        </row-actions>
+        <field name="emplPositionId" widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${emplPositionId}" target="javascript:set_value('${emplPositionId}')"/>
+        </field>
+        <field name="statusId"><hidden/></field>
+        <field name="partyId" title="Company Id"><display/></field>
+         <field name="description" title="Position Type"><display></display></field>
+        <field name="budgetId"><hidden/></field>
+        <field name="budgetItemSeqId"><hidden/></field>
+        <field name="emplPositionTypeId"><hidden/></field>
+    </form>
+    <form name="ListForEmplPositionsChild" type="list" list-name="listIt" paginate-target="LookupForEmplPositionType" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="EmplPositionType"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="emplPositionTypeId" title="Empl Position Id"><hyperlink also-hidden="false" target-type="plain" description="${emplPositionTypeId}" target="javascript:set_value('${emplPositionTypeId}')"/></field>
+        <field name="description"  title="Empl Position" widget-style="buttontext">
+            <!-- <hyperlink also-hidden="false" target-type="plain" description="${description}" target="javascript:set_value('${description}')"/> -->
+            <display></display>
+        </field>
+        
+        <!-- <field name="partyId"><display/></field> -->
+        <!-- <field name="emplPositionTypeId" title="Empl Position Id"><display/></field> -->
+         <field name="emplType"><display/></field>
+       
+       
+    </form>
+    <form name="LookupForEmplPositionChild" type="single" target="LookupForEmplPositionType" header-row-style="header-row" default-table-style="basic-table">
+    
+    	 
+        <field name="emplPositionTypeId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType" ></entity-options>
+            </drop-down>
+        </field>
+        <!--  <field name="emplPositionTypeId" title="Position"><text-find/></field> -->
+        
+          <field name="emplType"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <!-- Position Add Form for child -->
+	<form name="FormForMovePositions" target="moveEmplForPosition" type="single" header-row-style="header-row" default-table-style="basic-table">
+		<actions>
+			<!-- <set field="parentTypeId" value="ORGANIZATION_UNIT"/> -->
+			<entity-and entity-name="RoleType" list="roleTypes">
+				<field-map field-name="parentTypeId" value="ORGANIZATION_UNIT"/>
+			</entity-and>
+			
+             <!--  <entity-and entity-name="PartyAndGroup" list="partyAndGroupS">
+              	<field-map field-name="partyTypeId" value="PARTY_DEPARTMENT"/>
+              </entity-and> -->
+              
+              <entity-condition entity-name="PartyAndGroup" list="partyAndGroupS">
+              
+              	<condition-list combine="or">
+              		<condition-expr field-name="partyTypeId" value="PARTY_DEPARTMENT"/>
+              		<condition-expr field-name="partyTypeId" value="PARTY_SECTION"/>
+              		<condition-expr field-name="partyTypeId" value="PARTY_DIVISION"/>
+              		<condition-expr field-name="partyTypeId" value="PARTY_LINE"/>
+              	</condition-list>
+              </entity-condition>
+              
+		</actions>
+		<field name="orgPartyId"><hidden value="${orgPartyId}"/></field>
+		<field name="emplPositionId" title="Source Position"><lookup target-form-name="LookupForEmplPositionWithOrgFilter"/></field>
+		<field name="parentTypeId"><hidden/></field>
+		 <field name="partyId" title="Destination Organization">
+            <drop-down allow-empty="false">
+               <list-options list-name="partyAndGroupS" key-name="partyId" 
+                    description="${groupName}"/>
+                </drop-down>
+        </field>
+		
+        
+		<field name="submitBtn" title="Move" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<!-- empl lookup for organization -->
+      <form name="OrgLookupUserLoginAndPartyDetails" type="single" target="OrgLookupUserLoginAndPartyDetails"
+        paginate-target="LookupUserLoginAndPartyDetails" header-row-style="header-row" default-table-style="basic-table">
+        <field name="userLoginId" title="${uiLabelMap.EmplEmplId}"><text-find/></field>
+      	<!-- <field name="partyId" title="${uiLabelMap.PartyPartyId}"><text-find/></field> -->
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><text-find/></field>
+        <field name="middleName" title="${uiLabelMap.PartyMiddleName}"><text-find/></field>
+        <field name="lastName" title="${uiLabelMap.PartyLastName}"><text-find/></field>
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}"><text-find/></field>
+        <field name="createdDate" title="${uiLabelMap.PartyCreatedDate}"><date-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="listOrgLookupUserLoginAndPartyDetails" type="list" list-name="listIt" paginate-target="OrgLookupUserLoginAndPartyDetails"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="requestParameters"/>
+            <!-- <set field="entityName" value="UserLoginAndPartyDetails"/> -->
+            <set field="entityName" value="PartyAndPersonAndUserLoginAndEmployment"/>
+            <!-- Added company name here to search with specific company -->
+            <set field="companyName" value="${companyId}" global="true"/> 
+            <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgFindLookUp.groovy"/>
+        </actions>
+        <field name="userLoginId" title="${uiLabelMap.EmplEmplId}" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${userLoginId}" target="javascript:set_value('${userLoginId}', '${userLoginId}', '${parameters.webSitePublishPoint}')"/>
+        </field>
+       <!--  <field name="partyId" title="${uiLabelMap.PartyPartyId}">
+            <display description="${partyId}"/>
+        </field> -->
+        <field name="lastName" title="${uiLabelMap.PartyName}"><display description="${firstName} ${middleName} ${lastName}"/></field>
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}"><display description="${groupName}"/></field>
+    </form>
+    <!-- find form for division -->
+     <form name="contessaLookupPartyGroupDivision" type="single" target="contessaLookupPartyGroupDivision"
+        header-row-style="header-row" default-table-style="basic-table">
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="find"/>-->
+        <field name="partyId" title="DivisionId"><text-find/></field>
+        <field name="groupName" title="Division Name"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+	<!-- list form for division -->
+    <form name="contessaListLookupPartyGroupDivision" type="list" list-name="listIt" paginate-target="contessaLookupPartyGroupDivision"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/contessaFindLookUp.groovy"/>
+        </actions>
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="display"/>-->
+        <field name="partyId" title="DivisionId"><display/></field>
+        <field name="groupName" title="Division Name"><display/></field>
+        <field name="comments" title="${uiLabelMap.PartyComments}"><display/></field>
+        <field name="partyId" title="DivisionId" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${partyId}" target="javascript:set_value('${partyId}')"/>
+        </field>
+    </form>
+    
+    <!-- find form for department -->
+     <form name="contessaLookupPartyGroupDepartment" type="single" target="contessaLookupPartyGroupDepartment"
+        header-row-style="header-row" default-table-style="basic-table">
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="find"/>-->
+        <field name="partyId" title="DepartmentId"><text-find/></field>
+        <field name="groupName" title="Department Name"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+	<!-- list form for department -->
+    <form name="contessaListLookupPartyGroupDepartment" type="list" list-name="listIt" paginate-target="contessaLookupPartyGroupDepartment"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/contessaFindLookUp.groovy"/>
+        </actions>
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="display"/>-->
+        <field name="partyId" title="DepartmentId"><display/></field>
+        <field name="groupName" title="Department Name"><display/></field>
+        <field name="comments" title="${uiLabelMap.PartyComments}"><display/></field>
+        <field name="partyId" title="DepartmentId" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${partyId}" target="javascript:set_value('${partyId}')"/>
+        </field>
+    </form>
+    
+     <!-- find form for section -->
+     <form name="contessaLookupPartyGroupSection" type="single" target="contessaLookupPartyGroupSection"
+        header-row-style="header-row" default-table-style="basic-table">
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="find"/>-->
+        <field name="partyId" title="SectionId"><text-find/></field>
+        <field name="groupName" title="Section Name"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+	<!-- list form for section -->
+    <form name="contessaListLookupPartyGroupSection" type="list" list-name="listIt" paginate-target="contessaLookupPartyGroupSection"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/contessaFindLookUp.groovy"/>
+        </actions>
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="display"/>-->
+        <field name="partyId" title="SectionId"><display/></field>
+        <field name="groupName" title="Section Name"><display/></field>
+        <field name="comments" title="${uiLabelMap.PartyComments}"><display/></field>
+        <field name="partyId" title="SectionId" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${partyId}" target="javascript:set_value('${partyId}')"/>
+        </field>
+    </form>
+     <!-- find form for line -->
+     <form name="contessaLookupPartyGroupLine" type="single" target="contessaLookupPartyGroupLine"
+        header-row-style="header-row" default-table-style="basic-table">
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="find"/>-->
+        <field name="partyId" title="LineId"><text-find/></field>
+        <field name="groupName" title="Line Name"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+	<!-- list form for section -->
+    <form name="contessaListLookupPartyGroupLine" type="list" list-name="listIt" paginate-target="contessaLookupPartyGroupLine"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/contessaFindLookUp.groovy"/>
+        </actions>
+        <!--<auto-fields-entity entity-name="PartyGroup" default-field-type="display"/>-->
+        <field name="partyId" title="LineId"><display/></field>
+        <field name="groupName" title="Line Name"><display/></field>
+        <field name="comments" title="${uiLabelMap.PartyComments}"><display/></field>
+        <field name="partyId" title="LineId" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${partyId}" target="javascript:set_value('${partyId}')"/>
+        </field>
+    </form>
+    
+      <form name="FormForAddReportingStruct" target="addContessaReportingStruct" type="single" header-row-style="header-row" default-table-style="basic-table">
+	 
+	 	<field name="emplPositionId"><display description="${emplPositionId}"/></field> 	
+		<field name="parentEmplPositionId" title="Parent Position" ><lookup target-form-name="LookupForEmplPositionWithOrgFilter"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<form name="FormForAddEmplPositionResponsibility" target="addContessaPositionResponsibility" type="single" header-row-style="header-row" default-table-style="basic-table">
+	 
+	 	<field name="emplPositionId"><hidden value="${emplPositionId}"/></field> 	
+		<field name="responsibilityTypeId" title="Responsibility Type" ><lookup target-form-name="LookupOrgResponsibilityType"/></field>
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+    <form name="LookupForEmplResponsibilityTypes" type="single" target="LookupOrgResponsibilityType" header-row-style="header-row" default-table-style="basic-table">
+    	 
+        <field name="responsibilityTypeId">
+            <drop-down allow-empty="false">
+                <entity-options description="${description}" key-field-name="responsibilityTypeId" entity-name="ResponsibilityType"></entity-options>
+            </drop-down>
+        </field>
+        
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListFormplResponsibilityTypes" type="list" list-name="listIt" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="LookupOrgResponsibilityType" odd-row-style="alternate-row">
+    <!--  <form name="ListFormplResponsibilityTypes" type="list" list-name="listIt" paginate-target="LookupOrgResponsibilityType"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar"> -->
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ResponsibilityType"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="description"  title="Empl ResponsibilityType" widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${responsibilityTypeId}" target="javascript:set_value('${responsibilityTypeId}')"/>
+        </field>
+        
+        <!-- <field name="partyId"><display/></field> -->
+        <field name="responsibilityTypeId" title="Responsibility Type Id"><display/></field>
+       
+    </form>
+     <!-- empl lookup for organization with positoin filter-->
+     <form name="OrgLookupUserLoginAndPartyDetailsWithPositionFilter" type="single" target="OrgLookupUserLoginAndPartyDetailsAndPosition"
+        paginate-target="OrgLookupUserLoginAndPartyDetailsAndPosition" header-row-style="header-row" default-table-style="basic-table">
+        <field name="userLoginId" title="${uiLabelMap.EmplEmplId}"><text-find/></field>
+         <field name="emplPositionId" title="emplPositionId"><hidden default-value="{emplPositionId}"/></field>
+         <field name="positionId"><hidden/></field>
+      	<!-- <field name="partyId" title="${uiLabelMap.PartyPartyId}"><text-find/></field> -->
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><text-find/></field>
+        <field name="middleName" title="${uiLabelMap.PartyMiddleName}"><text-find/></field>
+        <field name="lastName" title="${uiLabelMap.PartyLastName}"><text-find/></field>
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}"><text-find/></field>
+        <field name="createdDate" title="${uiLabelMap.PartyCreatedDate}"><date-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="listOrgLookupUserLoginAndPartyDetailsPositonFilter" type="list" list-name="listIt" paginate-target="OrgLookupUserLoginAndPartyDetailsAndPosition"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="requestParameters"/>
+            <!-- <set field="entityName" value="UserLoginAndPartyDetails"/> -->
+            <set field="entityName" value="ProttayEmplAndPersonAndFulfillment"/>
+            <!-- Added company name here to search with specific company -->
+           <!--  <set field="emplPositionId" value="${emplPositionId}" global="true"/> --> 
+          	
+             <set field="companyName" value="${companyId}"/>  
+            <script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/OrgFindLookUp.groovy"/>
+        </actions>
+        <field name="userLoginId" title="${uiLabelMap.EmplEmplId}" widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${userLoginId}" target="javascript:set_value('${userLoginId}', '${userLoginId}', '${parameters.webSitePublishPoint}')"/>
+        </field>
+       
+    
+        <field name="lastName" title="${uiLabelMap.PartyName}"><display description="${firstName} ${middleName} ${lastName}"/></field>
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}"><display description="${groupName}"/></field>
+    </form>
+	<form name="findLookupEmplPosionPartyName" target="LookupEmplPosionPartyName" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <!--<auto-fields-entity entity-name="PartyNameView" default-field-type="find"/>-->
+        <!-- <field name="userLoginId" title="${uiLabelMap.EmplEmplId}"><text-find/></field> -->
+        <field name="partyId" title="Organization Id"><text-find/></field>
+        <field name="partyTypeId" title="Organization Type">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="PartyType"/>
+            </drop-down>
+        </field>
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><hidden/></field>
+        <field name="lastName"  title="${uiLabelMap.PartyLastName}"><hidden/></field>
+        <field name="groupName" title="Organization Name"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+	<form name="lisLookupEmplPosionPartyName" type="list" list-name="listIt" paginate-target="LookupEmplPosionPartyName"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="partyId"/>
+            <set field="entityName" value="PartyNameView"/>
+            <script location="component://order/webapp/ordermgr/WEB-INF/actions/lookup/ProcurementFindLookUp.groovy"/>
+        </actions>
+        
+        <!--<auto-fields-entity entity-name="PartyNameView" default-field-type="display"/>-->
+        <field name="partyId" title="Organization Id"  widget-style="smallSubmit">
+            <hyperlink also-hidden="false" target-type="plain" description="${partyId}" target="javascript:set_value('${partyId}')"/>
+        </field>
+        <field name="partyTypeId" title="Organization Type">
+            <display-entity also-hidden="false" entity-name="PartyType" description="${description}"/>
+        </field>
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><hidden/></field>
+        <field name="lastName"  title="${uiLabelMap.PartyLastName}"><hidden/></field>
+        <field name="groupName" title="Organization Name"><display/></field>
+    </form>
+</forms>

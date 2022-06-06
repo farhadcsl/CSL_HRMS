@@ -1,0 +1,37 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+    <form name="FindEmployeePayslip" type="single" target="GeneratePayslipReport" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+	    <field name="employeeId" title="Employee Id" position="1" >
+	      	<lookup target-form-name="LookupPartyAndUserLoginAndPerson"/>
+	    </field>
+	    <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+	            <drop-down allow-empty="true">
+	                <option key="0" description="January"/>
+	                <option key="1" description="February"/>
+	                <option key="2" description="March"/>
+	                <option key="3" description="April"/>
+	                <option key="4" description="May"/>
+	                <option key="5" description="June"/>
+	                <option key="6" description="July"/>
+	                <option key="7" description="Auguest"/>
+	                <option key="8" description="September"/>
+	                <option key="9" description="October"/>
+	                <option key="10" description="November"/>
+	                <option key="11" description="December"/>
+	            </drop-down>
+	     </field>
+        
+	     <field name="fiscalYear" title="Year" tooltip="e.g.2008" parameter-name="year">
+	         <text/>
+	     </field>
+	      <field name="noConditionFind"><hidden value="Y"/></field>
+	     <field name="searchButton" title="Generate Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+   
+        
+</forms>
+
+
+

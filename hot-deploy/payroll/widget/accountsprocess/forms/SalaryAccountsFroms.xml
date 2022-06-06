@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+
+ <form name="SalaryProcessAccountingProcessInitiation" type="single" target="NewSalaryAccount" odd-row-style="header-row" default-table-style="basic-table">
+        <field name="partyIdFrom" title="Select Company" tooltip="Required" parameter-name="partyIdFrom">
+            <drop-down allow-empty="false" no-current-selected-key="${defaultOrganizationPartyId}">
+                <entity-options description="${groupName}" entity-name="PartyAcctgPrefAndGroup" key-field-name="partyId">
+                    <entity-order-by field-name="groupName"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="month" tooltip="${uiLabelMap.CommonRequired}" title="Select Month" parameter-name="monthNumber">
+            <drop-down allow-empty="true">
+                <option key="0" description="January"/>
+                <option key="1" description="February"/>
+                <option key="2" description="March"/>
+                <option key="3" description="April"/>
+                <option key="4" description="May"/>
+                <option key="5" description="June"/>
+                <option key="6" description="July"/>
+                <option key="7" description="Auguest"/>
+                <option key="8" description="September"/>
+                <option key="9" description="October"/>
+                <option key="10" description="November"/>
+                <option key="11" description="December"/>
+            </drop-down>
+        </field>
+        
+        
+        <field name="fiscalYear" title="Accounting Year" tooltip="e.g.2008" parameter-name="fiscalYear">
+            <text/>
+        </field>
+        <field name="searchButton" title="Show" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    <form name="NewSalaryAccountOverallSalarySummary"  target="finalAccountingProcess" type="single"  odd-row-style="header-row" default-table-style="basic-table">
+        <actions>
+    
+        <set field="finalMonthlyNetPay" from-field="finalMonthlyNetPay"/>
+		<set field="totalListEmplint" from-field="totalListEmplint"/>
+        </actions>
+        <field name="monthName"  position="1">
+           <display description="${parameters.monthName}"/>
+        </field>
+        
+       <field name="year" title="Year" parameter-name="fiscalYear">
+            <display description="${year}"/>
+        </field>
+         <field name="processId" parameter-name="processId">
+            <hidden/>
+        </field>
+         <field name="monthNumber">
+            <hidden value="${parameters.monthNumber}"/>
+        </field>
+         <field name="companyId" parameter-name="companyId"><display/></field>
+        <!-- <field name="totalSalary"  position="1">
+           <display/>
+        </field>
+       <field name="totalEmployee"  position="2">
+           <display/>
+        </field> -->
+        <field name="totalSalary"  position="1">
+           <display description="${finalMonthlyNetPay}"/>
+        </field>
+       <field name="totalEmployee"  position="2">
+           <display description="${totalListEmplint}"/>
+        </field>
+        <field name="submitButton" title="Post on Accounting" widget-style="smallSubmit">
+            <submit/>
+        </field> 
+    </form>
+    
+     <form name="NewSalaryAccountDetailViewlist" type="multi" list-name="employeeSalaryFinal" target="UpdateSalaryAccountsList" paginate-target="findEmployeeFromSalaryList" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" > 
+      <actions>
+      <set field="monthNumber" from-field="parameters.monthNumber"/>
+     
+      </actions>
+        
+        <row-actions>
+        <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        	<set field="partyId" from-field="partyId"/>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+     <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}">
+            <hidden value="Y"/>
+        </field>
+        <field name="isSalary" title="Select" >
+            <check/>
+        </field>
+        <field name="companyId"><display default-value="${companyId}"/></field>
+        <field name="processId"><display/></field>
+        <field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+        <field name="totalSalary"><display/></field>
+        <field name="monthNumber"><hidden/></field>
+        <field name="name">
+        <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+        <field name="detail" title="Detail" widget-style="buttontext" parameter-name="partyId">
+            <hyperlink also-hidden="false" description="Detail View" target="emplAccDetailSalaryItems">
+                <parameter param-name="partyId"/>
+                <parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber"/>
+               <parameter param-name="totalSalary"/>
+                <parameter param-name="year" value="${fiscalYear}"/>
+            </hyperlink>
+        </field>
+         <!-- <field name="details" title="Remove From List" widget-style="buttontext" parameter-name="partyId">
+            <hyperlink also-hidden="false" description="Remove" target="RemoveFromSalaryList">
+                <parameter param-name="partyId"/>
+               	<parameter param-name="processId" from-field="processId"/>
+                <parameter param-name="monthNumber"/>
+               <parameter param-name="year" value="${fiscalYear}"/>
+               <parameter param-name="companyId"/>
+            </hyperlink>
+        </field> -->
+        
+    <field name="submitButton" title="Update List" widget-style="smallSubmit">
+            <submit request-confirmation="true"/>
+        </field> 
+        
+    </form> 
+    <form name="EmployeeInfo" target="updateBenefits" type="single" >
+   <actions>
+   <entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+        	<entity-and entity-name="PartyNameView" list="unamelList">
+            	<field-map field-name="partyId" value="${parameters.partyId}"/>
+        	</entity-and>
+   
+   </actions>
+  	<field name="partyId" title="Employee ID"><display description="${ulList[0].userLoginId}"/></field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="name">
+       <display description="${unamelList[0].firstName} ${unamelList[0].lastName}"/></field>
+  </form>
+    
+     <form name="employeeEarnings" type="list" list-name="emplTempSalaryOptBen" odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	
+  	<field name="payrollItemTypeId" title="Benefit Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="partyId"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amounts">
+  		<display/> 
+  	</field>
+  
+  </form>
+  
+  <form name="employeeDeductions" type="list" list-name="emplTempSalaryOptDed"  odd-row-style="alternate-row" separate-columns="true" default-table-style="basic-table hover-bar" use-row-submit="true" >
+  	<field name="payrollItemTypeId" title="Deduction Items">
+  		<display-entity entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${name}"/>
+  	</field>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	
+  	<field name="amount" parameter-name="amaounts">
+  		<display/> 
+  	</field>
+ 
+  	
+  </form>
+  
+  <form name="NetPayAdmin" type="single"  >
+  <actions>
+ 
+  </actions>
+  	<field name="processId"><hidden/></field>
+  	<field name="monthNumber"><hidden/></field>
+  	<field name="year"><hidden/></field>
+  	<field name="partyId"><hidden/></field>
+
+  	<field name="totalSalary" title="Net Payable">
+  		<display currency="BDT" description="${totalSalary}"/>
+  	</field>
+  	
+  </form>
+  	
+
+  
+    </forms>

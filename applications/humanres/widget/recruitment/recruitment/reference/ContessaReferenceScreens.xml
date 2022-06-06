@@ -1,0 +1,143 @@
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindReferenceCVForm">
+        <section>             
+            <actions>   
+                <set field="titleProperty" value="Find Reference CV"/>
+                <set field="tabButtonItem" value="ReferenceCV"/>
+               <set field="memberCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="HUMANRES" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                        <section>
+                                            <condition>
+                                                <if-has-permission permission="HUMANRES" action="_ADMIN"/>
+                                            </condition>
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <link target="CreateNewReference" text="Create New Reference" style="buttontext create"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindNewReference" location="component://humanres/widget/recruitment/reference/ContessaReferenceForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListNewReference" location="component://humanres/widget/recruitment/reference/ContessaReferenceForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.HumanResViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CreateNewReference">
+        <section>
+            <actions>                
+                <set field="tabButtonItem" value="ReferenceCV"/>
+                <entity-one entity-name="ReferenceCv" value-field="referenceId"/>
+                <set field="PartyTrainingRequestCtx" from-field="parameters"/> 
+                 
+                 
+                 <set field="jobRequisitionId" from-field="parameters.jobRequisitionId"/>
+                <entity-one entity-name="ContessaJobRequisition" value-field="contessaJobRequisition"/> 
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="New Reference Form">
+                            <section>
+                                <widgets>
+                                    <include-form name="NewReferenceForm" location="component://humanres/widget/recruitment/reference/ContessaReferenceForms.xml"/>
+                               </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditReference">
+        <section>
+            <actions>
+                <set field="headerItem" value="Recruitment"/>
+                <set field="tabButtonItem" value="ReferenceCV"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    
+	                    <screenlet id="screenletResident" title="Edit Resident " >
+	                    	<include-form name="EditReference" location="component://humanres/widget/recruitment/reference/ContessaReferenceForms.xml"/>
+	                    </screenlet> 
+               		
+                    
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="ViewReferenceForm">
+        <section>
+            <actions>
+                <set field="headerItem" value="Recruitment"/>
+                <set field="tabButtonItem" value="ReferenceCV"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonRecruitmentDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <container style="profile-left">
+	                    <screenlet title="View Reference" >
+	                    	<include-form name="EditReferenceForm" location="component://humanres/widget/recruitment/reference/ContessaReferenceForms.xml"/>
+	                    </screenlet> 
+               		</container>
+                    <container style="profile-right">
+                   		 <include-screen name="ContentForNormalUser"/>
+                   		 <!-- <include-screen name="CvBankNotes"/> -->
+                    </container>
+                    <container style="profile-right">
+                   		<!--  <include-screen name="ContentForNormalUser"/> -->
+                   		 <include-screen name="CvBankNotes"/>
+                    </container>
+                    
+                   </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="ContentForNormalUser">
+        <section>
+            <widgets>
+                    <container style="profile-right">
+	                    <screenlet id="screenletResident" title="View Reference ">
+	                    <include-form name="ContentForUserForm" location="component://humanres/widget/recruitment/reference/ContessaReferenceForms.xml"/>
+	                    </screenlet> 
+               		</container>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CvBankNotes">
+        <section>
+            <widgets>
+                    <container style="profile-right">
+	                    <screenlet title="Notes"></screenlet> 
+               		</container>
+            </widgets>
+        </section>
+    </screen>
+   </screens> 

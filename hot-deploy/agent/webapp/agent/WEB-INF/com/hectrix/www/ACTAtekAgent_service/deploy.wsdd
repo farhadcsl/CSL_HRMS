@@ -1,0 +1,65 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ACTAtekAgent WSDL service -->
+
+  <service name="ACTAtekAgent" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://www.hectrix.com/ACTAtekAgent.service"/>
+      <parameter name="wsdlServiceElement" value="ACTAtekAgent"/>
+      <parameter name="schemaUnqualified" value="http://www.hectrix.com/ACTAtekAgent.xsd"/>
+      <parameter name="wsdlServicePort" value="ACTAtekAgent"/>
+      <parameter name="className" value="com.hectrix.www.ACTAtekAgent_service.ACTAtekAgentSkeleton"/>
+      <parameter name="wsdlPortType" value="ACTAtekAgentPortType"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <typeMapping
+        xmlns:ns="http://www.hectrix.com/ACTAtekAgent.xsd"
+        qname="ns:eLog"
+        type="java:com.hectrix.www.ACTAtekAgent_xsd.ELog"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.hectrix.com/ACTAtekAgent.xsd"
+        qname="ns:eventType"
+        type="java:com.hectrix.www.ACTAtekAgent_xsd.EventType"
+        serializer="org.apache.axis.encoding.ser.EnumSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.hectrix.com/ACTAtekAgent.xsd"
+        qname="ns:Log"
+        type="java:com.hectrix.www.ACTAtekAgent_xsd.Log"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://www.hectrix.com/ACTAtekAgent.xsd"
+        qname="ns:eLogArray"
+        type="java:com.hectrix.www.ACTAtekAgent_xsd.ELog[]"
+        innerType="cmp-ns:eLog" xmlns:cmp-ns="http://www.hectrix.com/ACTAtekAgent.xsd"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.hectrix.com/ACTAtekAgent.xsd"
+        qname="ns:PhotoPart"
+        type="java:com.hectrix.www.ACTAtekAgent_xsd.PhotoPart"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

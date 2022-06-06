@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+	
+	<screen name="EmplPaygradeView">
+		<section>
+			<actions>
+				<!-- <entity-condition list="payGradeList" entity-name="PayGrade"></entity-condition> -->
+				<set field="emplPositionId" from-field="parameters.emplPositionId" global="true"/>
+				<entity-one entity-name="EmplPosition" value-field="emplPosition" />
+				<entity-and list="emplPositions" entity-name="EmplPosition">
+					<field-map field-name="emplPositionId" value="${emplPositionId}"/>
+				</entity-and>
+				<!-- <entity-and list="emplPosType" entity-name="EmplPositionType">
+					<field-map field-name="emplPositionTypeId" value="${emplPositions[0].emplPositionTypeId}"/>
+				</entity-and> -->
+				
+				<entity-and list="payGradeLists" entity-name="PayGrade">
+					<field-map field-name="payGradeId" from-field="emplPositions[0].payGradeId"/>
+				</entity-and>
+				<set field="payGradeList" from-field="payGradeLists"/>
+				
+			</actions>
+			<widgets>
+				<screenlet name="Paygrade" title="Pay Grade Information" navigation-menu-name="AddPaygrade">
+					<container id="addPaygradePopUp" ></container>
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="AddPaygrade" />
+					<include-form name="FormForPaygradeList" location="component://humanres/widget/organization/forms/OrganizationForms.xml"/>
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<!-- pay grade profile -->
+	<screen name="OrgPaygradeView">
+		<section>
+			<actions>
+				<set field="titleProperty" value="HumanResEmplPositionSummary" />
+				<set field="tabButtonItem" value="EmplPositionView" />
+				<set field="actionButtonItem" value="ListSummary" />
+				<set field="emplPositionId" from-field="parameters.emplPositionId" />
+				<!-- get value from emplPositionType -->
+				<entity-one entity-name="EmplPosition" value-field="emplPosition" />
+				<entity-and list="emplPosType1" entity-name="EmplPositionType">
+					<field-map field-name="emplPositionTypeId" value="${emplPosition.emplPositionTypeId}"/>
+				</entity-and>
+				<set field="emplPosTypeDes" from-field="emplPosType1[0].description"/>
+				<set field="emplPositionTypeId" from-field="emplPosition.emplPositionTypeId" />
+				<!-- get value from emplPositionTypeRate -->
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+				<set field="decorator" value="component://humanres/widget/organization/screens/OrganizationScreens.xml" /> <!-- Decorator -->
+
+	<!-- added for breadcum help -->
+				<entity-and entity-name="PayGrade" list="payGrades">
+			   <field-map field-name="payGradeId" from-field="payGradeId"/>
+			</entity-and>
+			<set field="payGradeName" from-field="payGrades[0].payGradeName"/>
+			<!-- end -->
+			</actions>
+			<widgets>
+				<decorator-screen name="OrganizationMainDecorator" location="${decorator}">
+					<decorator-section name="body">
+					<include-screen name="breadcrumb" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+						<section>
+							<widgets>
+							<container style="profile-full">
+					 		<!-- <include-screen name="breadcrumb" /> -->
+					 	</container>
+								<container style="lefthalf">
+									<screenlet title="Pay Grade ${uiLabelMap.CommonInformation}">
+										<section>
+											<widgets>
+												<include-form name="PaygradeInfo" location="component://humanres/widget/organization/forms/OrganizationForms.xml" />
+											</widgets>
+										</section>
+									</screenlet>
+									<!-- <include-screen name="EmplPositionFulfilmentView" location="component://humanres/widget/organization/screens/OrganizationScreens.xml" />  -->
+									<include-screen name="paygradePositions" />
+								</container>
+								
+								<container style="righthalf">
+									
+									 			<!-- <include-form name="ListSalaryBenefits" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> -->
+									 			<include-screen name="benefitAssignment" />
+											
+												<include-screen name="deductionAssignment" />
+												<include-screen name="addSalarySteps" />
+												
+								</container>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!--salary step profile -->
+	<screen name="OrgSalaryStepView">
+		<section>
+			<actions>
+				<set field="titleProperty" value="HumanResEmplPositionSummary" />
+				<set field="tabButtonItem" value="OrgSalaryStepView" />
+				<set field="actionButtonItem" value="ListSummary" />
+				<set field="emplPositionId" from-field="parameters.emplPositionId" />
+				<!-- get value from emplPositionType -->
+				<entity-one entity-name="EmplPosition" value-field="emplPosition" />
+				<entity-and list="emplPosType1" entity-name="EmplPositionType">
+					<field-map field-name="emplPositionTypeId" value="${emplPosition.emplPositionTypeId}"/>
+				</entity-and>
+				<set field="emplPosTypeDes" from-field="emplPosType1[0].description"/>
+				<set field="emplPositionTypeId" from-field="emplPosition.emplPositionTypeId" />
+				<!-- get value from emplPositionTypeRate -->
+				<set field="payGradeId" from-field="parameters.payGradeId" default-value="${payGradeId}"/>
+				 <set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId" default-value="${salaryStepSeqId}"/>
+				<set field="decorator" value="component://humanres/widget/organization/screens/OrganizationScreens.xml" /> <!-- Decorator -->
+		
+		<!-- added for bread-cum after call any of the service -->
+				<entity-one entity-name="EmplPosition" value-field="emplPosition" />
+				<entity-and list="emplPosType1" entity-name="EmplPositionType">
+					<field-map field-name="emplPositionTypeId" value="${emplPosition.emplPositionTypeId}"/>
+				</entity-and>
+				<!-- <entity-and list="emplPosType" entity-name="EmplPositionType">
+				<field-map field-name="emplPositionTypeId" value="${emplPosition.emplPositionTypeId}"/>
+				</entity-and> -->
+				<set field="emplPosTypeDes" from-field="emplPosType1[0].description"/>
+				<set field="emplPosTypeId" from-field="emplPosType1[0].emplPositionTypeId"/>
+		<!-- added for breadcum help -->
+				<entity-and entity-name="PayGrade" list="payGrades">
+			   <field-map field-name="payGradeId" from-field="payGradeId"/>
+			</entity-and>
+			<set field="payGradeName" from-field="payGrades[0].payGradeName"/>
+			
+			<set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId"/>
+			<entity-and list="salarySteps" entity-name="SalaryStep">
+				<field-map field-name="payGradeId" from-field="payGradeId"/>
+				<field-map field-name="salaryStepSeqId" from-field="salaryStepSeqId"/>
+			</entity-and>
+			<set field="salaryStepName" from-field="salarySteps[0].salaryStepSeqId"/>
+			<!-- end -->
+			</actions>
+			<widgets>
+				<decorator-screen name="OrganizationMainDecorator" location="${decorator}">
+					<decorator-section name="body">
+					<include-screen name="breadcrumb" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+						<section>
+							<widgets>
+							<container style="profile-full">
+					 		<!-- <include-screen name="breadcrumb" /> -->
+					 	</container>
+								<container style="lefthalf">
+									<screenlet title="Increment ${uiLabelMap.CommonInformation}">
+										<section>
+											<widgets>
+												<include-form name="SalaryStepInfo" location="component://humanres/widget/organization/forms/OrganizationForms.xml" />
+											</widgets>
+										</section>
+									</screenlet>
+									<!-- <include-screen name="EmplPositionFulfilmentView" location="component://humanres/widget/organization/screens/OrganizationScreens.xml" />  -->
+									<!-- <include-screen name="paygradePositions" /> -->
+									<include-screen name="incrementPersonAssignment" />
+								</container>
+								
+								<container style="righthalf">
+									
+									 			
+									 			<include-screen name="incrementBenefitAssignment" />
+												<include-screen name="incrementDeductionAssignment" />
+												
+												
+								</container>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!-- from pay Grade profile -->
+	<screen name="benefitAssignment">
+		<section>
+			<actions>
+					
+			</actions>
+			<widgets>
+				
+				<screenlet name="benefitAssingments" title="Benefit Assignments" navigation-menu-name="AssignBenefit">
+					<container id="assignPaygradeBenfitPopUp"></container>
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="AssignBenefit" />
+					<include-form name="ListSalaryBenefits" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> 
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="deductionAssignment">
+		<section>
+			<actions>
+					
+			</actions>
+			<widgets>
+				
+				<screenlet name="deductionAssingments" title="Deduction Assignments" navigation-menu-name="AssignDeduction">
+					<container id="assignPaygradeDeductionPopUp"></container>
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="AssignDeduction" />
+					<include-form name="ListSalaryDeduction" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> 
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+		<screen name="paygradePositions">
+		<section>
+			<actions>
+					<entity-condition list="positions" entity-name="EmplPosition">
+							<condition-list>
+								<condition-expr field-name="payGradeId" from-field="payGradeId" />
+							</condition-list>
+					</entity-condition>
+			</actions>
+			<widgets>
+				<screenlet name="positions" title="Pay Grade Level Positions">
+					<include-form location="component://humanres/widget/organization/forms/OrganizationForms.xml" name="PaygradePositions" />
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="addSalarySteps">
+		<section>
+			<actions>
+					
+			</actions>
+			<widgets>
+				
+				<screenlet name="Increments" title="Increments" navigation-menu-name="addIncrements">
+					<container id="addPayGradeIncrementsPopUp"></container>
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="addIncrements" />
+					<include-form name="ListSalaryIncrements" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> 
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<!-- from increments profile -->
+	<screen name="incrementBenefitAssignment">
+		<section>
+			<actions>
+					 <set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId"/>
+			</actions>
+			<widgets>
+				
+				<screenlet name="benefitAssingments" title="Increment Benefit Assignments" navigation-menu-name="AssignIncrementBenefit">
+					<container id="assignIncrementBenfitPopUp"></container>
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="AssignIncrementBenefit" />
+					<include-form name="ListIncrementBenefits" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> 
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="incrementDeductionAssignment">
+		<section>
+			<actions>
+					
+			</actions>
+			<widgets>
+				
+				<screenlet name="incrementDeductionAssingments" title="Increment Deduction Assignments" navigation-menu-name="AssignIncrementDeduction">
+					<container id="assignIncrementDeductionPopUp"></container>
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="AssignIncrementDeduction" />
+					<include-form name="ListIncrementDeduction" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> 
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+		<screen name="incrementPersonAssignment">
+		<section>
+			<actions>
+					
+			</actions>
+			<widgets>
+				
+				<screenlet name="incrementPersonAssingments" title="Increment Person Assignments" navigation-menu-name="AssignIncrementPerson">
+					 <container id="assignIncrementPersonPopUp"></container> 
+					<include-menu location="component://humanres/widget/organization/menus/OrganizationMenus.xml" name="AssignIncrementPerson" />
+					<include-form name="ListIncrementPerson" location="component://humanres/widget/organization/forms/OrganizationForms.xml" /> 
+				</screenlet>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="AssignPaygradeBenfitAddPopUp">
+		<section>
+			<actions>
+			
+				<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			
+				<entity-one entity-name="PartyGroup" value-field="company">
+					<!-- <field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+					<field-map field-name="partyId" value="${partyId}" />
+				</entity-one>
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+			<!-- 	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> -->
+				<set field="orgPartyId" value="${partyId}"/>
+				<set field="emplPositionId" value="${parameters.emplPositionId}" />
+				<!-- Determining Division/Department/Section -->
+				<entity-condition list="roles" entity-name="PartyRole">
+					<condition-list>
+					<!-- 	<condition-expr field-name="partyId"
+							from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+							<condition-expr field-name="partyId"
+							value="${partyId}"/>
+					</condition-list>
+				</entity-condition>
+				<entity-condition list="emplPosition" entity-name="EmplPosition"></entity-condition>
+				
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+				<include-screen name="ProttayActions" location="component://common/widget/CommonScreens.xml" />
+					<section>
+						<widgets>
+						<!-- <screenlet title="Assign Benefit for Paygrade">
+						  <include-form location="component://humanres/widget/organization/forms/OrganizationForms.xml" name="FormForAddPaygrade"/>
+						</screenlet> -->
+						<platform-specific>
+											<html>
+												<html-template
+													location="component://humanres/webapp/humanres/humanres/organization/paygradeBenefitRuleAssignment.ftl" />
+											</html>
+						</platform-specific>
+						</widgets>
+					</section>
+				
+				
+			</widgets>
+		</section>
+	</screen>
+	<screen name="AssignPaygradeDeductionAddPopUp">
+		<section>
+			<actions>
+			
+				<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			
+				<entity-one entity-name="PartyGroup" value-field="company">
+					<!-- <field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+					<field-map field-name="partyId" value="${partyId}"/>
+				</entity-one>
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+				<!-- <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> -->
+				<set field="orgPartyId" value="${partyId}"/>
+				<set field="emplPositionId" value="${parameters.emplPositionId}" />
+				<!-- Determining Division/Department/Section -->
+				<entity-condition list="roles" entity-name="PartyRole">
+					<condition-list>
+					<!-- 	<condition-expr field-name="partyId"
+							from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+							<condition-expr field-name="partyId"
+							value="${partyId}"/>
+					</condition-list>
+				</entity-condition>
+				<entity-condition list="emplPosition" entity-name="EmplPosition"></entity-condition>
+				
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+				<include-screen name="ProttayActions" location="component://common/widget/CommonScreens.xml" />
+					<section>
+						<widgets>
+						
+						<platform-specific>
+											<html>
+												<html-template
+													location="component://humanres/webapp/humanres/humanres/organization/paygradeDeductionRuleAssignment.ftl" />
+											</html>
+						</platform-specific>
+						</widgets>
+					</section>
+				
+				
+			</widgets>
+		</section>
+	</screen>
+	<screen name="AddPaygradeIncrementsPopUp">
+		<section>
+			<actions>
+			
+				<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			
+				<entity-one entity-name="PartyGroup" value-field="company">
+				<!-- 	<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+						<field-map field-name="partyId" value="${partyId}"/>
+				</entity-one>
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+			<!-- 	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> -->
+				<set field="orgPartyId" value="${partyId}"/>
+				<set field="emplPositionId" value="${parameters.emplPositionId}" />
+				<!-- Determining Division/Department/Section -->
+				<entity-condition list="roles" entity-name="PartyRole">
+					<condition-list>
+					<!-- 	<condition-expr field-name="partyId"
+							from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+							<condition-expr field-name="partyId"
+							value="${partyId}" />
+					</condition-list>
+				</entity-condition>
+				<entity-condition list="emplPosition" entity-name="EmplPosition"></entity-condition>
+				
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+                <set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!-- get the benefit type for create increment -->
+                <entity-and list="glAccounts" entity-name="GlAccount">
+                	<field-map field-name="accountName" value="BASIC SALARY"/>
+                </entity-and>
+                <entity-and list="invoiceItemTypes" entity-name="InvoiceItemType">
+                	<field-map field-name="defaultGlAccountId" from-field="glAccounts[0].glAccountId"/>
+                	<field-map field-name="category" value="M"/>
+                </entity-and>
+                <entity-and list="benefitTypes" entity-name="BenefitType">
+                	<field-map field-name="invoiceItemTypeId" from-field="invoiceItemTypes[0].invoiceItemTypeId"/>
+                </entity-and>
+                <set field="benefitType" from-field="benefitTypes[0].benefitTypeId"/>
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+				<include-screen name="ProttayActions" location="component://common/widget/CommonScreens.xml" />
+					<section>
+						<widgets>
+						
+						 	<include-form name="OrgAddSalaryStep" location="component://humanres/widget/organization/forms/OrganizationForms.xml"/>
+						</widgets>
+					</section>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="AssignIncrementBenfitAddPopUp">
+		<section>
+			<actions>
+			
+				<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			
+				<entity-one entity-name="PartyGroup" value-field="company">
+				<!-- 	<field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+					<field-map field-name="partyId" value="${partyId}"/>
+				</entity-one>
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+			<!-- 	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> -->
+				<set field="orgPartyId" value="${partyId}"/>
+				<set field="emplPositionId" value="${parameters.emplPositionId}" />
+				<!-- Determining Division/Department/Section -->
+				<entity-condition list="roles" entity-name="PartyRole">
+					<condition-list>
+				<!-- 		<condition-expr field-name="partyId"
+							from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+							<condition-expr field-name="partyId"
+							value="${partyId}"/>
+					</condition-list>
+				</entity-condition>
+				<entity-condition list="emplPosition" entity-name="EmplPosition"></entity-condition>
+				
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+				<set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId"/>
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+				<include-screen name="ProttayActions" location="component://common/widget/CommonScreens.xml" />
+					<section>
+						<widgets>
+						
+						<platform-specific>
+											<html>
+												<html-template
+													location="component://humanres/webapp/humanres/humanres/organization/incrementBenefitRuleAssignment.ftl" />
+											</html>
+						</platform-specific>
+						</widgets>
+					</section>
+				
+				
+			</widgets>
+		</section>
+	</screen>
+	<screen name="AssignIncrementDeductionAddPopUp">
+		<section>
+			<actions>
+			
+				<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+			
+				<entity-one entity-name="PartyGroup" value-field="company">
+					<!-- <field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+					<field-map field-name="partyId" value="${partyId}" />
+				</entity-one>
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+				<!-- <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> -->
+				<set field="orgPartyId" value="${partyId}"/>
+				<set field="emplPositionId" value="${parameters.emplPositionId}" />
+				<!-- Determining Division/Department/Section -->
+				<entity-condition list="roles" entity-name="PartyRole">
+					<condition-list>
+					<!-- 	<condition-expr field-name="partyId"
+							from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+							<condition-expr field-name="partyId"
+							value="${partyId}" />
+					</condition-list>
+				</entity-condition>
+				<entity-condition list="emplPosition" entity-name="EmplPosition"></entity-condition>
+				
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+				<set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId"/>
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+				<include-screen name="ProttayActions" location="component://common/widget/CommonScreens.xml" />
+					<section>
+						<widgets>
+						
+						<platform-specific>
+											<html>
+												<html-template
+													location="component://humanres/webapp/humanres/humanres/organization/incrementDeductionRuleAssignment.ftl" />
+											</html>
+						</platform-specific>
+						</widgets>
+					</section>
+				
+				
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="AssignassignIncrementPersonAddPopUp">
+		<section>
+			<actions>
+			
+				<set field="partyId" value="${userPreferences.ORGANIZATION_PARTY}" global="true"/>
+				<set field="partyUnit" value="${userPreferences.ORGANIZATION_UNIT}" global="true"/>
+				
+				<!-- Check Organization or Organization Unit Selection -->
+				<script location="component://humanres/webapp/humanres/WEB-INF/actions/organization/SelectOrganizationOrOrgUnit.groovy" />
+		
+				<entity-one entity-name="PartyGroup" value-field="company">
+					<!-- <field-map field-name="partyId" from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+					<field-map field-name="partyId" value="${partyId}" />
+				</entity-one>
+				<set field="parameters.partyId" value="${defaultOrganizationPartyId}" />
+				<!-- <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}"/> -->
+				<set field="orgPartyId" value="${partyId}"/>
+				<set field="emplPositionId" value="${parameters.emplPositionId}" />
+				<!-- Determining Division/Department/Section -->
+				<entity-condition list="roles" entity-name="PartyRole">
+					<condition-list>
+					<!-- 	<condition-expr field-name="partyId"
+							from-field="userPreferences.ORGANIZATION_PARTY" /> -->
+						<condition-expr field-name="partyId"
+							value="${partyId}"/>
+					</condition-list>
+				</entity-condition>
+				<entity-condition list="emplPosition" entity-name="EmplPosition"></entity-condition>
+				
+				<set field="payGradeId" from-field="parameters.payGradeId"/>
+				<set field="salaryStepSeqId" from-field="parameters.salaryStepSeqId"/>
+				
+			</actions>
+			<widgets>
+				<include-screen name="PopupActions" location="component://humanres/widget/organization/screens/OrganizationScreens.xml"/>
+				<include-screen name="ProttayActions" location="component://common/widget/CommonScreens.xml" />
+					<section>
+						<widgets>
+						
+						<include-form name="AssignIncrementPerson" location="component://humanres/widget/organization/forms/OrganizationForms.xml"/>
+						</widgets>
+					</section>
+				
+				
+			</widgets>
+		</section>
+	</screen>
+	
+	
+</screens>

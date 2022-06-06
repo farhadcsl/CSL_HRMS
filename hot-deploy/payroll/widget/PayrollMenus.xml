@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    <menu name="MainAppBar" title="${uiLabelMap.PayrollApplication}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="main" title="${uiLabelMap.CommonMain}"><link target="main"/></menu-item>
+        <menu-item name="payrollConfiguration" title="Configuration"><link target="FindInvoiceItem"/></menu-item>
+        <menu-item name="SalaryProcess" title="Salary Process"><link target="SalaryProcess"/></menu-item>
+        <menu-item name="AccountProcess" title="Account Process"><link target="AccountProcess"/></menu-item>
+        <menu-item name="PFProcess" title="Provident Fund Process"><link target="PFProcess"/></menu-item>
+        <menu-item name="BonusProcess" title="Bonus Process"><link target="BonusTypeSetup"/></menu-item>
+        <menu-item name="TaxCalculation" title="Tax Calculation"><link target="TaxCalculationTypeSetup"/></menu-item>
+	   	<menu-item name="IncrementManagement" title="Increment Management"><link target="incrementMng"/></menu-item>
+	   	<menu-item name="report" title="Report"><link target="PayrollReportCoverPage"/></menu-item>
+    </menu>
+    <menu name="salaryProcessGen" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Salary Process Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="salaryProcess" title="Initiate Salary">
+            <link target="SalaryProcess"/>
+        </menu-item>
+        <menu-item name="ExtProMod" title="Existing Process Modification">
+            <link target="ExtProMod"/>
+        </menu-item> 
+        <menu-item name="ExtProcess" title="Employee Salary Process Re-active">
+            <link target="ExtProcess"/>
+        </menu-item>       
+    </menu>
+    
+    <menu name="TaxCalculationMenus" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Tax Calculation" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        
+        <menu-item name="TaxCalculationType" title="Tax Payer Group">
+            <link target="TaxCalculationTypeSetup"/>
+        </menu-item>   
+        <menu-item name="TaxExamptionSet" title="Taxable Item Settings">
+            <link target="TaxExamptionSetup"/>
+        </menu-item>   
+        <menu-item name="TaxCondition" title="Govt. Tax Slab Settings">
+            <link target="TaxConditionSetup"/>
+        </menu-item>   
+        <menu-item name="PartyTaxTypeSetup" title="Employee Tax Payer Setup">
+            <link target="PartyTaxTypeSetup"/>
+        </menu-item>   
+        <menu-item name="MonthlyTaxCalculate" title="Monthly Tax Calculate">
+            <link target="MonthlyTaxCalculate"/>
+        </menu-item>     
+    </menu>
+    
+    
+    <menu name="PFMenus" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Salary Process Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        
+        <menu-item name="PFView" title="Provident Fund Information View">
+            <link target="PFProcess"/>
+        </menu-item>   
+        <menu-item name="PFSetup" title="Employee Provident Fund Setup">
+            <link target="NewProvidentFundSetup"/>
+        </menu-item>     
+    </menu>
+    
+    <menu name="BonusMenus" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Salary Process Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="BonusTypeSetup" title="Bonus Type">
+            <link target="BonusTypeSetup"/>
+        </menu-item>
+        <menu-item name="BonusSetup" title="Bonus Setup">
+            <link target="BonusSetup"/>
+        </menu-item>    
+        <menu-item name="BonusProcessForAllEmpl" title="Bonus Setup For All Employee">
+            <link target="BonusProcessForAllEmpl"/>
+        </menu-item>   
+        <menu-item name="BonusProcess" title="Bonus Process For All">
+            <link target="BonusProcess"/>
+        </menu-item>      
+    </menu>
+    
+    <menu name="PayrollConfigurationMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="Employee Leave Reason Type" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="InvoiceItem" title="Invoice item">
+            <link target="FindInvoiceItem"/>
+        </menu-item>
+        <menu-item name="PayrollItem" title="Payroll item">
+            <link target="AddPayrollItem"/>
+        </menu-item>
+        <menu-item name="SalaryTemplate" title="Salary Template">
+            <link target="FindPayrollSalaryTemplate"/>
+        </menu-item>
+        <menu-item name="BasicSalaryStep" title="Basic Salary Step">
+            <link target="EditBasicSalaryStep"/>
+        </menu-item>
+        <menu-item name="TemplateBasicSalaryStepAssign" title="Template and Step Assignment">
+            <link target="EditTemplateBasicSalaryStepAssign"/>
+        </menu-item>
+        <menu-item name="PositionTemplateAssign" title="Position Template Assign">
+            <link target="EditPositionTemplateAssign"/>
+        </menu-item> 
+        <menu-item name="SalarySetup" title="Salary setup">
+            <link target="FindSalarySetup"/>
+        </menu-item>
+        <menu-item name="PayrollAdjustment" title="Adjustment">
+            <link target="FindPayrollAdjustment"/>
+        </menu-item> 
+    </menu>
+    
+	<menu name="LinkForAddSalaryTemplateDetails">		
+		<menu-item name="addIncrement" title="">
+			<link style="addCompanyScreenLet" id="addSalaryTemplateDetailsBtn">
+				<image src="/flatgrey/images/custom/add-16.png" id="addSalaryTemplateDetailsBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu> 
+	
+	<menu name="LinkForAddNewItem">		
+		<menu-item name="LinkForAddNewItem" title="">
+			<link style="addCompanyScreenLet" id="addNewSalaryItemConte">
+				<image src="/flatgrey/images/custom/add-16.png" id="addNewSalaryItemConte" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>		
+	</menu>
+	<menu name="LinkForAddDDNewItem">	
+		<menu-item name="LinkForAddDDNewItem" title="">
+			<link style="addCompanyScreenLet" id="addNewSalaryDDItemConte">
+				<image src="/flatgrey/images/custom/add-16.png" id="addNewSalaryDDItemConte" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+</menus>

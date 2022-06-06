@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+     
+   <form name="PayrollItemListForExamption" type="multi" target="updatePayrollItemType" list-name="payrollItemTaxList" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <!-- <entity-condition entity-name="PayrollItem">
+            <order-by field-name="payrollItemTypeId"/>
+            <condition-expr field-name="isCalculatable" value=T"/>
+            </entity-condition> -->
+            <entity-and entity-name="PayrollItem" list="payrollItemTaxList">
+            <field-map field-name="isCalculatable" value="T"/>
+            </entity-and> 
+           
+        </actions>
+        <field name="payrollItemTypeId" title="Payroll Item"><display/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+        <field name="payrollItemName" title="Name"><display/></field>
+        <field name="invoiceItemTypeId" title="Invoice Item"><display/></field>
+        <field name="payrollType" title="Payroll Type"><display description="${groovy: if(payrollType=='V') return 'Variable'; if(payrollType=='F') return 'Fixed';}"/></field>
+        <field name="isCalculatable" title="Calculatable"><display description="${groovy: if(isCalculatable=='T') return 'True'; if(isCalculatable=='F') return 'False';}"/></field>
+        <field name="isCondition" title="Examption"><display  description="${groovy: if(isCondition=='T') return 'True'; if(isCondition=='F') return 'False';}"/></field>
+        <field name="examptionType" title="Examption Type"><display/></field>
+        <field name="examptionAmount" title="Examption Amount"><display/></field>
+        <field name="examptionPrecentage" title="Examption Percentage"><display/></field>
+        <field name="configureLink" title="Configure" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="Configure" target="EditPayrollItemForExamption"> 
+                <parameter param-name="payrollItemTypeId"/> 
+                <parameter param-name="invoiceItemTypeId"/> 
+                <parameter param-name="hasTable"/> 
+                <parameter param-name="description"/> 
+                <parameter param-name="fromDate"/> 
+                <parameter param-name="thruDate"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="payrollItemName"/> 
+                <parameter param-name="payrollType"/> 
+                <parameter param-name="isCalculatable"/> 
+                <parameter param-name="isCondition"/> 
+                <parameter param-name="examptionType"/> 
+                <parameter param-name="examptionAmount"/> 
+                <parameter param-name="examptionPrecentage"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    
+    <form name="EditPayrollItemForExamption" type="single" target="updatePayrollItemTypeForExamption" 
+     	header-row-style="header-row" default-table-style="basic-table" default-map-name="payrollItem">
+        <actions>
+        	<set field="payrollType" value="${parameters.payrollType}"></set>
+        	<set field="isCalculatable" value="${parameters.isCalculatable}"></set>
+        </actions>
+        <field name="payrollItemTypeId" title="Payroll Item"><display/></field>
+        <field name="payrollItemName" title="Name"><display/></field>
+        <field name="description" ><display/></field> 
+        <field name="invoiceItemTypeId" ><display/></field> 
+        <field name="payrollType" ><display description="${groovy: if(payrollType=='V') return 'Variable'; if(payrollType=='F') return 'Fixed';}"/></field> 
+        <field name="isCalculatable" ><display  description="${groovy: if(isCalculatable=='T') return 'True'; if(isCalculatable=='F') return 'False';}"/></field>  
+        <field name="isCondition" title="Tax Examption">
+            <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="T" description="True"/>
+                <option key="F" description="False"/>
+            </drop-down>
+        </field> 
+        <field name="examptionType">        
+           <drop-down allow-empty="true">
+            <auto-complete/>
+                <option key="Fiexd" description="Fixed"/>
+                <option key="High" description="High"/>
+                <option key="Low" description="Low"/>
+            </drop-down>
+        </field>
+        <field name="examptionAmount" title="Examption amount" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+        <field name="examptionPrecentage" title="Examption percentage(%)" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+         <field name="isActive" title="Value"><hidden/></field>
+        
+        <field name="submitButton" title="Setup" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+ </forms>

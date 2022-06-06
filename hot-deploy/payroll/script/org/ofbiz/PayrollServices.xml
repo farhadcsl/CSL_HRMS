@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+        
+    <simple-method method-name="createPayrollItemType" short-description="Create PayrollItem">
+        <make-value entity-name="PayrollItem" value-field="newEntity"/>
+        <set field="newEntity.isActive" from-field="Y"/>
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Payroll Item Created Successfully"/>
+    </simple-method>
+    <simple-method method-name="updatePayrollItemType" short-description="Update PayrollItem">
+        <entity-one entity-name="PayrollItem" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Payroll Item Update Successfully"/>
+    </simple-method>
+    
+    <simple-method method-name="deletePayrollItemType" short-description="Delete PayrollItem">
+        <entity-one entity-name="PayrollItem" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Payroll Item Successfully Deleted"/>
+    </simple-method>
+    
+    
+    <!-- ================================= Salary BasicSalary Type ================================= -->
+           
+   <simple-method method-name="createBasicSalaryStep" short-description="Create SalaryBasicSalary">
+        <make-value entity-name="BasicSalaryStep" value-field="newEntity" />
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <if-empty field="parameters.basicSalaryStepId">
+            <sequenced-id sequence-name="BasicSalaryStep" field="newEntity.basicSalaryStepId"/>
+        <else>
+            <set from-field="parameters.basicSalaryStepId" field="newEntity.basicSalaryStepId"/>
+        </else>
+        </if-empty>
+        <field-to-result field="newEntity.basicSalaryStepId" result-name="basicSalaryStepId"/>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Basic Salary Type Created Successfully"/>
+    </simple-method>
+    
+    <simple-method method-name="updateBasicSalaryStep" short-description="Update SalaryBasicSalary">
+        <entity-one entity-name="BasicSalaryStep" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Basic Salary Step Updated Successfully"/>
+    </simple-method>
+    
+    <simple-method method-name="deleteBasicSalaryStep" short-description="Delete SalaryBasicSalary">
+        <entity-one entity-name="BasicSalaryStep" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Basic Salary Step Successfully Deleted"/>
+    </simple-method>
+            
+            
+            
+   <!--  ======================================== Salary Template ==================================== -->
+    <simple-method method-name="createSalaryTemplate" short-description="Create a Salary Template">
+        <make-value entity-name="SalaryTemplate" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <if-not-empty field="parameters.salaryTemplateId">
+            <set field="newEntity.salaryTemplateId" from-field="parameters.salaryTemplateId"/>
+        <else>
+            <sequenced-id sequence-name="SalaryTemplate" field="newEntity.salaryTemplateId"/>
+        </else>
+        </if-not-empty>
+        <field-to-result field="newEntity.salaryTemplateId" result-name="salaryTemplateId"/>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Salary Template Created Successfully"/>
+    </simple-method>
+
+    <simple-method method-name="updateSalaryTemplate" short-description="Update Salary Template">
+        <entity-one entity-name="SalaryTemplate" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Salary Template Updated Successfully"/>
+    </simple-method>
+
+    <simple-method method-name="deleteSalaryTemplate" short-description="Delete Salary Template">
+        <entity-one entity-name="SalaryTemplate" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Salary Template Successfully Deleted"/>
+    </simple-method>
+    
+    <!--  ======================================== Salary Template Details ==================================== -->
+    <simple-method method-name="createSalaryTemplateDetails" short-description="Create SalaryTemplateDetails">   
+        <make-value entity-name="SalaryTemplateDetails" value-field="newEntity" />
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <if-empty field="newEntity.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set field="newEntity.isActive" default-value="Y"/>
+        <create-value value-field="newEntity"/>
+        <field-to-result field="newEntity.salaryTemplateId" result-name="salaryTemplateId"/>
+        <field-to-result field="newEntity.fromDate" result-name="fromDate"/>
+    </simple-method>
+    
+    <simple-method method-name="updateSalaryTemplateDetails" short-description="Update Salary Template Details">
+        <entity-one entity-name="SalaryTemplateDetails" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <field-to-result field="lookedUpValue.salaryTemplateId" result-name="salaryTemplateId"/>
+    </simple-method>
+    
+    <!-- <simple-method method-name="updateSalaryTemplateDetails" short-description="Update Salary Template Details">
+        <make-value entity-name="SalaryTemplateDetails" value-field="newEntity" />    
+        <entity-one entity-name="PayrollItem" value-field="newEntity"/>
+        <now-timestamp field="nowTimestamp"/>
+        <set field="newEntity.fromDate" from-field="nowTimestamp"/>
+        <set field="newEntity.isActive" from-field="Y"/>
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>    
+        <store-value value-field="newEntity"/>
+        <field-to-result field="newEntity.salaryTemplateId" result-name="salaryTemplateId"/>
+    </simple-method>
+     -->
+    <simple-method method-name="deleteSalaryTemplateDetails" short-description="Delete SalaryTemplateDetails"> 
+        <make-value entity-name="SalaryTemplateDetails" value-field="SalaryTemplateDetails" />
+        <set-pk-fields map="parameters" value-field="SalaryTemplateDetails"/>
+        <now-timestamp field="nowTimeStamp"/>
+        <set field="SalaryTemplateDetails.thruDate" from-field="nowTimeStamp"/>
+        <set-nonpk-fields map="parameters" value-field="SalaryTemplateDetails"/>
+        <set field="SalaryTemplateDetails.isActive" default-value="N"/>   
+        <store-value value-field="SalaryTemplateDetails"/>
+        <set field="successMessage" value="SalaryTemplateDetails Successfully Deleted"/>
+    </simple-method>
+    
+        <!--  =================================Employee Present salary setup================================= -->
+        
+   
+    <simple-method method-name="updateSalarySetup" short-description="Update Salary Setup">
+        <entity-one entity-name="EmplPresentSalary" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Salary Setup Updated Successfully"/>
+    </simple-method>
+  
+    
+    
+        <!--  =================================Position Grade Assign================================= -->
+        
+    <simple-method method-name="createPositionTemplateAssign" short-description="Create PositionSalTempAssign">
+        <make-value entity-name="PositionSalTempAssign" value-field="newEntity" />
+        <set field="newEntity.isActive" from-field="Y"/>
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Position Wise Template Assign Created Successfully"/>
+    </simple-method>
+    
+    <simple-method method-name="updatePositionTemplateAssign" short-description="Update PositionSalTempAssign">
+        <entity-one entity-name="PositionSalTempAssign" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Position Template Assign Updated Successfully"/>
+    </simple-method>
+    
+   <simple-method method-name="deletePositionTemplateAssign" short-description="Delete PositionSalTempAssign">
+        <entity-one entity-name="PositionSalTempAssign" value-field="positionSalTempAssign"/>
+        <remove-value value-field="positionSalTempAssign"/>
+        <set field="successMessage" value="Position Template Assign Successfully Deleted"/>
+   </simple-method> 
+   
+    
+    
+        <!--  =================================Template BasicSalary Assign================================= -->
+        
+   <simple-method method-name="createTemplateBasicSalaryStepAssign" short-description="Create SalTempBasSalAssign">
+        <make-value entity-name="SalTempBasSalAssign" value-field="newEntity" />
+        <set field="newEntity.isActive" from-field="Y"/>
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Basic Salary Template Created Successfully"/>
+    </simple-method>
+    
+    <simple-method method-name="updateTemplateBasicSalaryStepAssign" short-description="Update SalTempBasSalAssign">
+        <entity-one entity-name="SalTempBasSalAssign" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Basic Salary Template Update Successfully"/>
+    </simple-method>    
+ 
+    <simple-method method-name="deleteTemplateBasicSalaryStepAssign" short-description="Delete SalTempBasSalAssign">
+        <entity-one entity-name="SalTempBasSalAssign" value-field="salTempBasSalAssign"/>
+        <remove-value value-field="salTempBasSalAssign"/>
+        <set field="successMessage" value="Basic Salary Template Successfully Deleted"/>
+   </simple-method>
+   
+
+    <!--  =================================Bonus Type================================= -->
+        
+   <simple-method method-name="createBonusType" short-description="Create Bonus Type">
+        <make-value entity-name="BonusType" value-field="newEntity" />
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set field="newEntity.isActive" from-field="Y"/>
+        <if-empty field="newEntity.bonusId">
+            <sequenced-id sequence-name="BonusType" field="newEntity.bonusId" />
+            <else>
+                <check-id field="newEntity.bonusId" />
+                <check-errors />
+            </else>
+        </if-empty>
+        <if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Bonus Type Created Successfully"/>
+        
+    </simple-method>
+    
+    <simple-method method-name="updateBonusType" short-description="Update Bonus Type">
+        <make-value entity-name="BonusType" value-field="newEntity" />    
+        <now-timestamp field="nowTimestamp"/>
+        <set field="newEntity.dateAdded" from-field="nowTimestamp"/>
+        <set field="newEntity.isActive" from-field="Y"/>
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>    
+        <store-value value-field="newEntity"/>
+        <set field="successMessage" value="Bonus Type Updated Successfully"/>
+    </simple-method>    
+    
+    
+    <simple-method method-name="deleteBonusType" short-description="Delete Bonus Type">
+      <entity-one entity-name="BonusType" value-field="bonusId"/>
+        <remove-value value-field="bonusId"/>
+        <set field="successMessage" value="Bonus Type Successfully Deleted"/>
+       <!--  <entity-one entity-name="BonusType" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/> -->
+   </simple-method> 
+  
+    <!--  =================================Tax Calculation Type================================= -->
+   <simple-method method-name="deleteTaxCalculationTypeSetup" short-description="Delete Tax Calculation Type">
+        <!-- <entity-one entity-name="TaxCalculationType" value-field="taxCalculationTypeId"/>
+        <remove-value value-field="taxCalculationTypeId"/> -->
+        <entity-one entity-name="TaxCalculationType" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+   </simple-method> 
+       <simple-method method-name="updateTaxCalculationTypeSetup" short-description="Update Tax Calculation Type">
+        <entity-one entity-name="TaxCalculationType" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    
+    
+    <!-- Tax Condition -->
+   <simple-method method-name="deleteTaxCondition" short-description="Delete Tax Condition">
+        <entity-one entity-name="TaxCondition" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Tax Condition Successfully Deleted"/>
+   </simple-method>
+   
+    <simple-method method-name="quickCreateAcctgTransAndEntries" short-description="Creates an AcctgTrans and two offsetting AcctgTransEntry records">
+        <!-- TODO: Do we need to create a GlJournal record here? -->
+
+        <!-- first, create the AcctgTrans -->
+        <set-service-fields service-name="createAcctgTrans" to-map="createAcctgTransParams" map="parameters"/>
+        <if-empty field="createAcctgTransParams.transactionDate">
+            <now-timestamp field="createAcctgTransParams.transactionDate"/>
+        </if-empty>
+        <call-service service-name="createAcctgTrans" in-map-name="createAcctgTransParams">
+            <result-to-field result-name="acctgTransId"/>
+        </call-service>
+
+        <!-- TODO: if someday there are more than one type of acctgTransEntryTypeId (other than _NA_, we should get rid of the lines below
+            that fix those values -->
+        <!-- now, create the debit AcctgTransEntry -->
+        <set-service-fields service-name="createAcctgTransEntry" map="parameters" to-map="createAcctgTransEntryParams"/>
+        <set field="createAcctgTransEntryParams.acctgTransId" from-field="acctgTransId"/>
+        <set field="createAcctgTransEntryParams.glAccountId" from-field="parameters.debitGlAccountId"/>
+        <set field="createAcctgTransEntryParams.debitCreditFlag" value="D"/>
+        <set field="createAcctgTransEntryParams.acctgTransEntryTypeId" value="_NA_"/>
+        <call-service service-name="createAcctgTransEntry" in-map-name="createAcctgTransEntryParams"/>
+
+        <!-- now the credit AcctgTransEntry -->
+        <set-service-fields service-name="createAcctgTransEntry" map="parameters" to-map="createAcctgTransEntryParams"/>
+        <set field="createAcctgTransEntryParams.acctgTransId" from-field="acctgTransId"/>
+        <set field="createAcctgTransEntryParams.glAccountId" from-field="parameters.creditGlAccountId"/>
+        <set field="createAcctgTransEntryParams.debitCreditFlag" value="C"/>
+        <set field="createAcctgTransEntryParams.acctgTransEntryTypeId" value="_NA_"/>
+        <call-service service-name="createAcctgTransEntry" in-map-name="createAcctgTransEntryParams"/>
+        <entity-one entity-name="AcctgTrans" value-field="acctgTrans" auto-field-map="true"/>
+
+        <set field="postAcctgTransCtx.acctgTransId" from-field="acctgTransId"/>
+        <!-- <set field="postAcctgTransCtx.organizationPartyId" value="Company"/> -->
+        <call-service service-name="postAcctgTrans" in-map-name="postAcctgTransCtx"/>
+
+        <field-to-result field="acctgTransId" result-name="acctgTransId"/>
+    </simple-method>
+    
+</simple-methods>

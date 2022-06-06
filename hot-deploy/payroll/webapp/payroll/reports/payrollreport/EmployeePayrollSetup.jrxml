@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Employee Payroll Setup" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f525feb1-1c54-494f-819f-1237801f5395">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="20"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/../../../home/tutul/project/new/contessawork/hot-deploy/payroll/webapp/payroll/reports/payrollreport/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportsDirPath" class="java.lang.String"/>
+	<field name="employeeId" class="java.lang.String"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="salaryTemplateName" class="java.lang.String"/>
+	<field name="basicSalaryStepName" class="java.lang.String"/>
+	<field name="taxPayerTypeName" class="java.lang.String"/>
+	<field name="emplPresentSalList" class="java.util.List"/>
+	<field name="totalAmount" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="86" y="1" width="401" height="21" uuid="9150c9f4-44eb-46a3-9654-356e09e29031"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contessa Solutions and Consultants Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="23" width="480" height="20" uuid="aa428d05-c639-4c48-b819-2302a4bfccc8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="43" width="571" height="1" uuid="2a8b26ea-5452-4fd2-808d-f5daad3b26ae"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="158" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="109" width="143" height="20" uuid="df8b740c-f334-4a8c-b819-919a6e538b38"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tax Payer Group Version No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="207" y="44" width="235" height="20" uuid="edee676a-a7c5-4148-b51e-9cde38fd2cf0"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="87" width="143" height="20" uuid="bbaa12e7-16c7-4cdd-9483-8141a0137f78"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Basic Salary ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="207" y="23" width="235" height="20" uuid="c402e785-44d6-45a9-bb73-585f5e8c4c86"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="44" width="143" height="20" uuid="1aa335aa-86a7-4034-b28c-0cdf3d247eed"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name                          ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="23" width="143" height="20" uuid="813791c7-5825-4798-aea9-17e6accfedb7"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Id                                  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="3" width="370" height="20" uuid="c41f52cd-a2c5-48b9-a139-41b589b6dc1b"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Payroll Setup]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="207" y="87" width="197" height="20" uuid="898e10b1-6585-490c-b351-df50ec4356d7"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{basicSalaryStepName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="109" width="197" height="20" uuid="c2d35cc4-2e18-4051-a1bb-ab624446a3c7"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxPayerTypeName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="461" y="134" width="108" height="20" uuid="419f896b-2640-4c91-9084-cd70c14cca12"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="169" y="44" width="15" height="20" uuid="d8e9dc69-54e8-4e40-b17d-c97367d640ea"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="23" width="15" height="20" uuid="a49dcb2d-82a3-4443-9f02-f7c98f723bfe"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="87" width="15" height="20" uuid="c98bf25f-15b8-49fb-9658-938d7a08aede"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="109" width="15" height="20" uuid="9553942b-1b66-43c3-afd6-9ac87b394bba"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="66" width="143" height="20" uuid="1adedd5b-fdf8-4f5a-9c82-19aa6eb0d7a5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salary Template]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="66" width="15" height="20" uuid="4669e5f0-853a-4607-8c97-b819bf51b779"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="207" y="64" width="235" height="20" uuid="10f6eb34-8f24-43f9-ae27-479c5e15e700"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salaryTemplateName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="169" y="131" width="15" height="20" uuid="ffded139-d978-4e82-927c-b3b40c552d21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="207" y="131" width="197" height="20" uuid="75efd1be-a04a-4959-93db-4ddece9e6464"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="131" width="143" height="20" uuid="b515f3e5-d54c-41a2-a994-680f54efffc6"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="70" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="0" width="362" height="61" uuid="43223d94-d127-426f-906f-86ad2971d094"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+            ($F{emplPresentSalList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{reportsDirPath} + "/EmployeePayrollSetup_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="445" y="14" width="80" height="20" uuid="21c0aa74-4028-4026-84f4-158a8d8a8fc7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="525" y="14" width="40" height="20" uuid="69f11a37-5c0b-418f-bde3-9ad875b98628"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

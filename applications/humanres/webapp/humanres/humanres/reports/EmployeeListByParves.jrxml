@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeListByParves" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="156fcb73-9fc3-40ff-9a06-5b05c9cb5b23">
+	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1"/>
+	<field name="employeeId" class="java.lang.String"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="empFathName" class="java.lang.String"/>
+	<field name="empDob" class="java.lang.String"/>
+	<field name="empEmail" class="java.lang.String"/>
+	<field name="empMobile" class="java.lang.String"/>
+	<field name="empBlood" class="java.lang.String"/>
+	<field name="empDesig" class="java.lang.String"/>
+	<field name="empDepart" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement x="45" y="12" width="438" height="30" uuid="29066580-1c0c-44da-873f-419d6a487d2e"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Computer Services Limited ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="45" width="517" height="22" uuid="38a8f1c6-746e-4bed-a89e-993bd7cee2a3"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[House No: 450 ,Road No: 31 (1st Floor) , Mohakhali New DOHS,Dhaka-1206, Bangladesh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="193" y="67" width="192" height="33" forecolor="#000000" backcolor="#FFFFFF" uuid="ca2e8b83-579e-4a2c-87f4-971eee3f7555"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLOYEES LIST]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="209" y="13" width="58" height="18" uuid="06eb31da-a8d1-4512-8f99-ce63b3b13e76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="456" y="13" width="62" height="18" uuid="ddeeeb43-5173-46d6-b1a6-556bcd39bb90"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Designation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="13" width="51" height="18" uuid="aad5e096-0595-4222-ad61-405e3d4e0250"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="13" width="78" height="18" uuid="e0330d85-e916-4714-ac44-e8170887f071"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email Adress]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="13" width="44" height="18" uuid="e78481dd-0500-4aaa-a1d9-2bb7a33ac5fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Blood Group]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="13" width="84" height="18" uuid="c9f21324-291e-4ff3-9e28-edc08ea11479"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Father Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="13" width="68" height="18" uuid="6ef567ab-8414-4c0b-b41e-5c19088c8cc3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="13" width="56" height="18" uuid="34d4e3bf-77f2-43c7-95e3-802fd58d0005"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Employee Id]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="0" y="0" width="1" height="1" uuid="80309ffa-9de0-4f5b-ba42-805fb8b64608"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="267" y="13" width="67" height="18" uuid="8f6e114c-5cc5-4ac2-b1b2-f8f70d4f0387"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mobile No.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="56" height="20" uuid="eb28f20b-a790-4711-8548-fe8086d143e1"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="0" width="68" height="20" uuid="1d2e7824-1ed3-4b8a-8f56-0aec4e749e0c"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="0" width="84" height="20" uuid="f6467c18-deb6-45d4-ac59-ee0b5bd429dd"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empFathName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="0" width="58" height="20" uuid="2c096eea-50ac-45b2-a0ec-5317e87317f0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empDob}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="0" width="67" height="20" uuid="4fc44b89-86e2-4ceb-9ed2-23ddce39f409"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empMobile}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="0" width="78" height="20" uuid="14f4e885-9c3f-4eb5-8555-c72aaeeb6eef"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empEmail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="0" width="44" height="20" uuid="3c556a4c-3d60-4a49-a573-5dedf9b01f12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empBlood}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="1" width="62" height="20" uuid="c7b83f98-7c5e-4001-b013-19243b0464ce"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empDesig}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="518" y="1" width="51" height="20" uuid="09beb097-babe-4d30-86eb-3e03131b6266"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empDepart}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="45" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

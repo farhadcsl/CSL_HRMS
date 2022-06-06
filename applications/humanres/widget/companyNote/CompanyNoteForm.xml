@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    
+    <form name="CreateOrgNoteForEmp" type="single" target="CreateEmpNote"
+        header-row-style="header-row" default-table-style="basic-table">
+        
+        
+        <field name="title" title="Title" ><text size="60"/></field>
+        
+        <field name="description" title="Description" ><textarea rows="10" cols="100"/></field>
+        
+        
+        <field name="submitButton" title="${uiLabelMap.Save}" widget-style="buttontext">
+        	<submit/>
+        </field>
+    </form>
+       
+    <form name="ListOrgNoteForEmp" list-name="listIt" type="list" odd-row-style="alternate-row" 
+    	header-row-style="header-row-2"
+        paginate-target="FindCompanyNotes" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="CompanyNote">
+            	<condition-expr field-name="activeStatus" value="active"/>
+            	<order-by field-name="dateAdded"/>
+            </entity-condition>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="companyNoteCtx"/>
+                <field-map field-name="entityName" value="CompanyNote"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        
+        <field name="companyNoteId"><display/></field>
+        <field name="title"><display/></field>
+        <field name="dateAdded" title="Published Date"><display/></field>
+        <field name="activeStatus" title="Status"><display/></field>
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteOrgEmpNote" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true" confirmation-message="Do you want delete Employee Note">
+                <parameter param-name="companyNoteId"/>
+            </hyperlink>
+        </field>
+        <field name="EditLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="EditOrgEmpNote" description="Edit" also-hidden="false">
+            	<parameter param-name="companyNoteId"/>
+            	<parameter param-name="title"/>
+            	<parameter param-name="description"/>
+            	<parameter param-name="activeStatus"/>
+            </hyperlink>
+        </field>
+	
+        <field name="activeInactiveLink" title="Active" widget-style="buttontext" use-when="${activeStatus =='active'}">
+            <hyperlink also-hidden="false" description="De-Active" target="StatusChangeCompanyNote"  request-confirmation="true" 
+            	confirmation-message="Do you want to de-active this Note"> 
+          		<parameter param-name="companyNoteId"/>
+            	<parameter param-name="title"/>
+            	<parameter param-name="description"/>
+            	<parameter param-name="activeStatus"/>
+                <parameter param-name="dateAdded"/> 
+               
+            </hyperlink>
+        </field>
+        <field name="activeInactiveLink" title="Active" widget-style="buttontext" use-when="${activeStatus=='inActive'}">
+            <hyperlink also-hidden="false" description="Active" target="StatusChangeCompanyNote"  request-confirmation="true" 
+            	confirmation-message="Do you want to Active this Note"> 
+             	<parameter param-name="companyNoteId"/>
+            	<parameter param-name="title"/>
+            	<parameter param-name="description"/>
+            	<parameter param-name="activeStatus"/>
+                <parameter param-name="dateAdded"/> 
+            </hyperlink>
+        </field>
+        
+    </form>
+    
+    <form name="EditOrgEmpNote" type="single" target="UpdateOrgEmpNote" default-map-name="skillType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="companyNoteId"><hidden/></field>
+        <field name="title"><text size="60"/></field>
+        <field name="description"><textarea rows="10" cols="100"/></field>
+        <field name="activeStatus" title="Active Status">
+        	<drop-down allow-empty="false">
+        		<auto-complete/>
+	        	<option key="active" description="Active" />
+	        	<option key="inActive" description="De-Active"/>
+        	</drop-down>
+        </field>
+        
+        <field name="submitButton" title="${uiLabelMap.Update}" widget-style="buttontext">
+        	<submit />
+        </field>
+    </form>
+	<form name="FindCompanyNotes" type="single" target="FindCompanyNotes"
+        odd-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="CompanyNote" default-field-type="find"/>
+        
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+</forms>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+        
+     
+
+    <service name="CompanyNoteView" engine="java"
+        location="org.ofbiz.humanres.CompanyNoteService" invoke="findCompanyNoteView">
+        <description>Get Company Note List</description>
+        <attribute name="companyNoteList" type="List" mode="OUT" optional="false"/>       
+    </service>
+    
+	<service name="CreateEmpNote" engine="simple" default-entity-name="CompanyNote"
+             location="component://humanres/script/org/ofbiz/humanres/CompanyNoteServices.xml" invoke="CreateEmpNote" auth="true">
+        <description>Create Company Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+	<service name="deleteOrgEmpNote" engine="simple" default-entity-name="CompanyNote"
+             location="component://humanres/script/org/ofbiz/humanres/CompanyNoteServices.xml" invoke="deleteOrgEmpNote" auth="true">
+        <description>Delete a Company Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    <service name="UpdateOrgEmpNote" engine="simple" default-entity-name="CompanyNote"
+             location="component://humanres/script/org/ofbiz/humanres/CompanyNoteServices.xml" invoke="UpdateOrgEmpNote" auth="true">
+        <description>Update a Company Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+	   
+</services>

@@ -1,0 +1,1933 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+ 	
+  	<form name="FindDailyAbsenceReport" type="single" target="DailyAbsentReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	
+	<form name="FindDailyAbsenceReport1" type="single" target="DailyAbsentReport1" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+  
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+	
+	 <form name="ListDailyAbsenceReport" type="list" list-name="absenceList"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+
+        <field name="SL"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="EmployeeId" widget-style="tabletextright">
+        	<hyperlink target="EmployeeProfile" description="${EmployeeId}">
+	        	<parameter param-name="partyId" from-field="${partyId}"/>
+	        </hyperlink>                   
+        </field>
+        
+        <field name="Card"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Process" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="TotalAbsence" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="ContinuesAbsence" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+    </form>
+
+     <form name="ExportDailyAbsenceReport" type="single" list-name="absenceList" target="exportDailyAbsenceToExcel">
+ 
+    
+		<field name="h"><hidden/></field>
+		
+        <field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+    <form name="ExportDailyAbsenceReport1" type="single" list-name="absenceList" target="exportDailyAbsenceToExcel1">
+ 
+    
+		<field name="h"><hidden/></field>
+		
+        <field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+
+    <form name="DailyMonthlyAbsenteeismForm" type="single" target="DailyMonthlyAbsenteeism" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+       	<field name="toDate" id-name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+  
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    <form name="DailyMonthlyAbsenteeismList"  type="list" list-name="absenteeismList"  use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+          
+
+        <field name="Date" title="DATE" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="AbsentPersent" title="ABSENT %" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+    </form>
+
+    <form name="AditionalInfo" type="single" default-map-name="additionalInfo"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+        <field name="avgAbsent" title="AVERAGE ABSENT" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+
+    </form>
+
+	<form name="FindDailyLateReport" type="single" target="DailyLateReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	
+	<form name="FindDailyLateReport1" type="single" target="DailyLateReport1" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate"  title="From Date"><date-time type="date"/></field>
+     	<field name="toDate" title="To Date"><date-time type="date"/></field>
+		<field name="fromTime"  title="From Time"><text/></field>
+		<field name="toTime"  title="To Date"><text/></field>
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+ 		<field name="employeeId" title="Employee ID"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	
+	 <form name="ListDailyLateReport" type="list" list-name="lateList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="EmployeeId">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName">
+            <display/>
+                  
+        </field>
+        
+        <field name="Date" title="Date">
+            <display/>
+                  
+        </field>
+        
+        <field name="EntryTime" title="Entry Time">
+            <display/>
+                  
+        </field>
+        <field name="LateEntryTime" title="Late Entry Time">
+            <display/>
+                  
+        </field>
+        
+
+    </form>
+    
+    <form name="ListDailyLateReport1" type="list" list-name="lateList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="SL" title="SL">
+            <display/>
+                  
+        </field>
+        
+        <field name="date" title="Date">
+            <display/>                 
+        </field>
+        
+        <field name="EmployeeId" title="PIN">
+            <display/>
+                  
+        </field>
+    	
+    	<field name="Card">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation">
+            <display/>
+                  
+        </field>
+        
+        
+        <field name="Department">
+            <display/>
+                  
+        </field>
+        
+       <field name="Process" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+         <field name="EntryTime" title="Entry Time">
+            <display/>
+                  
+        </field>
+
+    </form>
+    
+    <form name="ListManpowerPositionReport" type="list" list-name="manpowerList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="SL" title="SL">
+            <display/>
+                  
+        </field>
+        <field name="Grade" title="Grade">
+            <display/>
+        </field>
+    	
+    	<field name="Male" title="Male">
+            <display/>
+        </field>
+    	<field name="Female" title="Female">
+            <display/>
+        </field>
+        <field name="Unspecified" title="Unspecified">
+        	<display/>	
+        </field>
+        <field name="Total" title="Total">
+            <display/>
+        </field>
+        
+    </form>
+
+	<!-- <form name="FindLeaveSummeryForPermanent" type="single" target="LeaveSummeryReportPermanent" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate"  title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="ListLeaveSummeryForPermanent" type="list" list-name="ListLeaveSummeryReportPermanent" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="SL" title="SL">
+            <display/>
+                  
+        </field>
+        <field name="PIN" title="PIN">
+            <display/>
+                  
+        </field>
+    	
+    	<field name=" EmployeeName" title="Employee Name">
+            <display/>
+                  
+        </field>
+    	<field name="Designation" title="Designation">
+            <display/>
+        </field>
+        
+        <field name="Department" title="Department">
+            <display/>
+        </field>
+        
+        <field name="JoinDate" title="JoinDate">
+            <display/>
+        </field>
+        
+        <field name="LeaveEnjoyedDate" title="Leave Enjoyed Date">
+            <display/>
+        </field>
+        
+        <field name="LeaveType" title="Leave Type">
+            <display/>
+        </field>
+        
+        <field name="Remarks" title="Remarks">
+            <display/>
+        </field>
+        
+    </form> -->
+    
+    <form name="FindMonthlySummeryForLateAbsentLeaveHalfday" type="single" target="MonthlyLateAbsentLeaveHalfDay" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate"  title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	<form name="ListMonthlySummeryForLateAbsentLeaveHalfday" type="list" list-name="MonthlySummeryForLateAbsentLeaveHalfdayList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		
+        <field name="SL" title="SL"><display/></field>
+        <field name="PIN" title="PIN"><display/></field>
+    	<field name="EmployeeName" title="Employee Name"><display/></field>
+    	<field name="JoinDate" title="JoinDate"><display/></field>
+    	<field name="Designation" title="Designation"><display/></field>
+        <field name="Department" title="Department"><display/></field>
+        <field name="Late" title="Late"><display/></field>
+        <field name="EarlyOut" title="Early Out"><display/></field>
+        <field name="PunchMissing" title="Punch Missing"><display/></field>
+        <field name="Absent" title="Absent"><display/></field>
+        <field name="Leave" title="Leave"><display/></field>
+        <field name="HalfDayAbsent" title="Half Day Absent"><display/></field>
+        <field name="Remarks" title="Remarks"><display/></field>
+        
+    </form>
+    
+    <form name="FindEarlyoutReport" type="single" target="DailyEarlyoutReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate"  title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	<form name="ListEarlyoutReport" type="list" list-name="EarlyoutList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		
+        <field name="SL" title="SL"><display/></field>
+        <field name="PIN" title="PIN"><display/></field>
+    	<field name="EmployeeName" title="Employee Name"><display/></field>
+    	<field name="JoinDate" title="JoinDate"><display/></field>
+    	<field name="Designation" title="Designation"><display/></field>
+        <field name="Department" title="Department"><display/></field>
+        <field name="EarlyOut" title="Early Out"><display/></field>
+        <field name="Remarks" title="Remarks"><display/></field>
+        
+    </form>
+  <form name="ExportDailyLateReport" type="single" list-name="lateList" target="exportDailyLateToExcel">
+
+    
+		<field name="h"><hidden/></field>
+		
+        <field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+    
+  <form name="FindOTReport" type="single" target="OverTimeReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	
+	<form name="ListOTReport" type="list" list-name="overtimeList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="EmployeeId">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName">
+            <display/>
+                  
+        </field>
+        
+        <field name="Date" title="Date">
+            <display/>
+                  
+        </field>
+        
+        <field name="EntryTime" >
+            <display/>
+                  
+        </field>
+        
+        <field name="ExitTime" >
+            <display/>
+                  
+        </field>
+        
+        <field name="OTHours" title="OT Hours">
+            <display/>
+                  
+        </field>
+
+
+    </form>
+    
+    
+ 
+    <form name="ExportOTReport" type="single" list-name="overtimeList" target="exportOTReportToExcel">
+    
+		<field name="h"><hidden/></field>
+   	
+		
+        <field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+    
+    <!-- <form name="FindLeaveSummeryProbition" type="single" target="LeaveSummeryReportProbition" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	
+	<form name="ListLeaveSummeryProbition" type="list" list-name="probitionLeaveList" use-row-submit="true" separate-columns="true" paginate-target="LeaveSummeryReportProbition"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<field name="SL" title="SL"> <display/></field>
+        <field name="PIN" title="PIN"> <display/></field>
+    	<field name="EmployeeName"> <display/></field>
+        
+        <field name="Designation" title="Designation"><display/> </field>
+        
+        <field name="Department" title="Department"> <display/></field>
+        
+        <field name="JoinDate" title="JoinDate"><display/> </field>
+        
+        <field name="LeaveEnjoyedDate" title="Leave Enjoyed Date"> <display/> </field>
+
+		<field name="LeaveType" title="Leave Type"><display/> </field>
+        <field name="Remarks" title="Remarks"><display/></field>
+    </form> -->
+     
+
+ <form name="ExportLeaveSProbitionReport" type="single" list-name="probitionLeaveList" target="exportLeaveSummeryReportProbitionToExcel">
+    	<field name="h"><hidden/></field>
+   		<field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form> 
+   
+   <!-- Designation wise leave report -->
+       
+    <form name="FindDesignationWiseLeaveSummery" type="single" target="LeaveSummeryReportDesignation" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+	
+<form name="ListDesignationWiseLeaveSummery" type="list" list-name="designationWiseLeaveList" use-row-submit="true" separate-columns="true" paginate-target="LeaveSummeryReportDesignation"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		
+		<field name="SL" title="SL"> <display/></field>
+		<field name="Designation" title="Designation"><display/> </field>		
+        <field name="PIN" title="PIN"> <display/></field>
+    	<field name="EmployeeName"> <display/></field>
+        <field name="Department" title="Department"> <display/></field>		
+		<field name="LeaveType" title="Leave Type"><display/> </field>
+		<field name="MaxAvailableLeave" title="Allowed"><display/> </field>
+		 <field name="Enjoyed" title="Enjoyed Day" id-name="emplLeaveNoOfLeave"> <display/> </field>
+        <field name="Balance" title="Balance"><display/></field>
+ </form>
+
+
+ <form name="ExportDesignationWiseLeaveReport" type="single" list-name="designationWiseLeaveList" target="exportLeaveSummeryReportDesignationToExcel">
+    	<field name="h"><hidden/></field>
+   		<field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>  
+    
+   <form name="ExportBonusReport" type="single" list-name="employeeBonusList" target="exportMonthlyBonusToExcel">
+  		<row-actions>
+           	<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetMonthlyAttenBonusList.groovy" />	
+        </row-actions>
+    
+		<field name="h"><hidden/></field>
+		
+        <field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+    
+    <form name="MonthSelectionForm" type="single"  target="MonthlyAttendanceBonusReport" default-table-style="basic-table" header-row-style="header-row">
+    
+         <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+     	
+ 		 <field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" id-name="monthSelectionButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+    <form name="MonthlyBonusReportList" type="list" list-name="employeeBonusList" use-row-submit="true" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="employeeId">
+            <display/>
+                  
+        </field>
+    	<field name="employeeName">
+            <display/>
+                  
+        </field>
+        
+        <field name="holidays">
+            <display/>
+                  
+        </field>
+      <field name="absenceDates" title="Absence Dates">
+            <display/>
+                  
+        </field>
+        <field name="lateDates" title="Late Dates">
+            <display/>
+                  
+        </field>
+        
+         <field name="intimeDates" title="In Time Dates">
+            <display/>
+                  
+        </field>
+  
+        <field name="monthlyBonus" title="Bonus Amount (TK)">
+            <display/>          
+        </field>
+
+    </form>
+    
+        
+    <form name="MonthSelectForm" type="single"  target="findAttendanceBonus" default-table-style="basic-table" header-row-style="header-row" target-window="_BLANK">
+    
+         <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+     	
+ 		 <field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" id-name="monthSelectionButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+   <form name="OvertimeStatement" type="single"  target="findOvertimeStatement" default-table-style="basic-table" header-row-style="header-row" target-window="_BLANK">
+    
+         <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+     	
+ 		 <field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" id-name="monthSelectionButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+   <form name="SalaryManpower" type="single"  target="findSalaryManpower" default-table-style="basic-table" header-row-style="header-row" target-window="_BLANK">
+    
+         <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+     	
+ 		 <field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" id-name="monthSelectionButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+     <form name="FindSalaryOtSummery" type="single" target="findSalaryOtSummery" header-row-style="header-row"
+          default-table-style="basic-table" target-window="_BLANK">      
+        <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+        <field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    
+      	<field name="empType" title="Employee Type">
+ 			  <drop-down allow-empty="false">
+ 			    <option key="STAFF" description="STAFF"/>
+	 			<option key="WORKERS" description="WORKERS"/>
+              </drop-down>
+        </field>	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="findRecruitAbsenteeismMigration" type="single" target="findRecruitAbsenteeismMigration" header-row-style="header-row"
+          default-table-style="basic-table" target-window="_BLANK">
+
+     	<field name="fromDate" id-name="fromDate" title="FromDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+        <field name="toDate" id-name="toDate" title="ToDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+  <form name="YearSelectionForm" type="single"  target="YearlyAttendanceBonusReport" default-table-style="basic-table" header-row-style="header-row">
+       <actions>
+            <set field="yearField" value="${date:nowTimestamp()}" type="Timestamp"/>
+        </actions>
+        <field name="years" title="Select Year" >
+            <drop-down allow-empty="false"  text-size="5" no-current-selected-key="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(yearField, &quot;yyyy&quot;);}">
+                <auto-complete choices="1"/>
+                <list-options key-name="year" list-name="yearList" description="${year}"/> 
+            </drop-down>
+        </field>   	
+ 		 <field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+
+    </form>
+    
+     <form name="YearlyBonusReportList" type="list" list-name="yearlyBonusList" use-row-submit="true" separate-columns="true" 
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="employeeId">
+            <display/>
+                  
+        </field>
+    	<field name="employeeName">
+            <display/>
+                  
+        </field>
+        
+        <field name="lateDates" title="Late Dates">
+            <display/>
+                  
+        </field>
+        <field name="absenceDates" title="Absence Dates">
+            <display/>
+                  
+        </field>
+        <field name="intimeDates" title="In Time Dates">
+            <display/>
+                  
+        </field>
+        <field name="holiday" title="Holidays">
+            <display/>
+                  
+        </field>
+        <field name="yearlyBonus" title="Bonus Amount (TK)">
+            <display/>          
+        </field>
+
+    </form>
+    
+    <form name="ExportYABReport" type="single" list-name="yearlyBonusList" target="exportYABReportToExcel">
+    
+		<field name="h"><hidden/></field>
+   	
+		
+        <field name="submitButton" title="Export To Excel" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <!--JobCard-->
+    <form name="JobCard" type="single" target="JobCard" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" required-field="true"><date-time type="date"/></field>
+     	<!-- <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field> -->
+     	<field name="employeeId" title="Employee ID" required-field="true"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+ 		<field name="orgPartyId"><hidden value="${orgPartyId}"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    <form name="JobCardList" type="list" list-name="employeeLogList" use-row-submit="true" separate-columns="true" 
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="date" title="Date">
+            <display/>                  
+        </field>
+    	<field name="entryStatus" title="Status">
+            <display/>                  
+        </field>        
+        <field name="leaveDescription" title="Leave Description">
+            <display/>                  
+        </field>
+        <field name="timeIn" title="Time In">
+            <display/>                  
+        </field>
+        <field name="timeOut" title="Time Out">
+            <display/>                  
+        </field>
+        <field name="days" title="Days">
+            <display/>                  
+        </field>
+        <field name="endOfficeTime" title="End Office">
+            <display/>
+                  
+        </field>
+        <field name="overTime" title="Over Time">
+            <display/>
+                  
+        </field>
+    </form>    
+    <form name="JobCardSummeryList" type="list" list-name="summeryReport" use-row-submit="true" separate-columns="true" 
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+        <field name="summeryWorkDay" title="Total Work Day">
+            <display/>                  
+        </field>
+    	<field name="summeryAbsentDay" title="Total Absent Day">
+            <display/>                  
+        </field>
+        
+        <field name="summeryLeaveDay" title="Total Leave Day">
+            <display/>                  
+        </field>
+        <field name="summeryHoliDay" title="Total HoliDay">
+            <display/>                  
+        </field>
+        <field name="summeryTotalHalfDay" title="Total HalfDay">
+            <display/>                  
+        </field>
+        <field name="summeryTotalOtInHour" title="Total OverTime InHour">
+            <display/>                  
+        </field>
+    </form>    
+   <form name="FindTwoDaysReport" type="single" target="Attendance2daysReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+  
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+     <form name="ListTwoDaysReport" type="list" list-name="twodaysReportList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+           <set field="sDate" from-field="twodaysReportList[0].SelectedDate"/>
+            <set field="pDate" from-field="twodaysReportList[0].PreviousDate"/>
+         </actions>
+
+        <field name="SL"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="EmployeeId" title="PIN" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Card"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Process" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+         <field name="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="PIn" widget-style="tabletextright" title="InTime[${pDate}]">
+            <display/>
+                  
+        </field>
+        <field name="POut" widget-style="tabletextright" title="OutTime[${pDate}]">
+            <display/>
+                  
+        </field>
+         <field name="SIn" widget-style="tabletextright" title="InTime[${sDate}]">
+            <display/>
+                  
+        </field>
+
+    </form>
+    
+    <form name="FindThreeDaysReport" type="single" target="Attendance3daysReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+  
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+     <form name="ListThreeDaysReport" type="list" list-name="threedaysReportList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+           <set field="sDate" from-field="threedaysReportList[0].SelectedDate"/>
+            <set field="pDate" from-field="threedaysReportList[0].PreviousDate"/>
+            <set field="tDate" from-field="threedaysReportList[0].TwoPreviousDate"/>
+         </actions>
+
+        <field name="SL"  id-name="tabletextcenter" >
+            <display/>
+                  
+        </field>
+
+        <field name="EmployeeId" title="PIN" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Card"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Process" widget-style="tabletextright">
+            <display/>                
+        </field>
+         <field name="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="tPIn" widget-style="tabletextright" title="In[${tDate}]" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+        <field name="tPOut" widget-style="tabletextright" title="Out[${tDate}]">
+            <display/>
+                  
+        </field>
+
+        <field name="PIn" widget-style="tabletextright" title="In[${pDate}]">
+            <display/>
+                  
+        </field>
+        <field name="POut" widget-style="tabletextright" title="Out[${pDate}]">
+            <display/>
+                  
+        </field>
+         <field name="SIn" widget-style="tabletextright" title="In[${sDate}]">
+            <display/>
+                  
+        </field>
+
+    </form>
+    
+    
+       <form name="FindSectionWiseReport" type="single" target="SectionWiseStrenth" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+  
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="ListSectionWiseStrenth" type="list" list-name="sectionWiseStrenthList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+
+
+        <field name="SL"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="Department" title="Department Name" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+     
+        <field name="Required"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Existing"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Need"  widget-style="tabletextright" title="Need">
+            <display/>
+                  
+        </field>
+        <field name="Over"  widget-style="tabletextright" title="Over">
+            <display/>
+                  
+        </field>
+    	<field name="Present" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Absent" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Leave" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="absentPersentance" widget-style="tabletextright" title="Absent %">
+            <display/>
+                  
+        </field>
+        
+       <field name="LeavePersentance" widget-style="tabletextright" title="Leave %">
+            <display/>
+                  
+        </field>
+        <field name="Remarks" widget-style="tabletextright" title="Remarks">
+            <display/>
+                  
+        </field>
+
+    </form>
+    
+    
+    <form name="FindInAttendanceMissing" type="single" target="InAttendanceMissing" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field> 
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field> 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+     <form name="ListInAttendanceMissing" type="list" list-name="inMissingList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+           <set field="sDate" from-field="inMissingList[0].SelectedDate"/>
+            <set field="pDate" from-field="inMissingList[0].PreviousDate"/>
+         </actions>
+
+        <field name="SL"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="EmployeeId" title="PIN" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Card"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Process" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+         <field name="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+
+        <field name="PIn" widget-style="tabletextright" title="InTime[${pDate}]">
+            <display/>
+                  
+        </field>
+        <field name="POut" widget-style="tabletextright" title="OutTime[${pDate}]">
+            <display/>
+                  
+        </field>
+         <field name="SIn" widget-style="tabletextright" title="InTime[${sDate}]">
+            <display/>
+                  
+        </field>
+
+    </form>
+    
+    
+    <!-- Start Out Time Missing -->
+    
+    <form name="FindOutAttendanceMissing" type="single" target="OutAttendanceMissing" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field> 
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field> 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+     <form name="ListOutAttendanceMissing" type="list" list-name="outMissingList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+           <set field="sDate" from-field="outMissingList[0].SelectedDate"/>
+            <set field="pDate" from-field="outMissingList[0].PreviousDate"/>
+         </actions>
+
+        <field name="SL"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="EmployeeId" title="PIN" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Card"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Process" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+         <field name="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="PIn" widget-style="tabletextright" title="InTime[${pDate}]">
+            <display/>
+                  
+        </field>
+        <field name="POut" widget-style="tabletextright" title="OutTime[${pDate}]">
+            <display/>
+                  
+        </field>
+         <field name="SIn" widget-style="tabletextright" title="InTime[${sDate}]">
+            <display/>
+                  
+        </field>
+
+    </form>
+    
+    <!-- End Out Time Missing -->
+    
+        <!-- Start Lost Card Info -->
+    
+    <form name="FindLostCardInfo" type="single" target="LostCardInfo" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="FromDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+        <field name="toDate" id-name="toDate" title="ToDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+      	<!-- <field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	 -->
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+	
+	 <form name="ListLostCardInfo" type="list" list-name="cardLostList"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+
+       <field name="sl" title="SL" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+        <field name="PIN" title="PIN" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="Name" title="NAME" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" title="DESIGATION" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="Process" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+         <field name="Department" title="DEPARTMENT" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="CardType" title="Card Type" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+    	<field name="CardNo" title="RFID NO" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="IssuedDate" title="ISSUE DATE" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="LostDate" title="INFORM DATE" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="reIssueReason" title="REASON OF RE-ISSUE" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        <field name="chargeAmount" title="RE-ISSUE CHARGE" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+
+    </form>
+    
+    <!-- End Lost Card Info -->
+    
+    <!-- Start Tiffin Bill Summary -->
+    <form name="FindTiffinBillSummary" type="single" target="MonthlyTiffinBillSummary" header-row-style="header-row"
+          default-table-style="basic-table">
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field> 
+     	<field name="toDate" id-name="toDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="selectedTiffin">
+     		<drop-down allow-empty="false" no-current-selected-key="firsTiffin"  >
+     			<auto-complete auto-select="true" ignore-case="true" partial-search="true"/>
+     			<option key="firsTiffin" description="First Tiffin"/>
+     			<option key="secondTiffin" description="Second Tiffin"/>
+     			<option key="night" description="Night"/>
+     		</drop-down>
+     	</field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <!-- End Tiffin Bill Summary -->
+    
+    <!-- Start Tiffin Bill Report -->
+    <form name="FindTiffinBills" type="single" target="TiffinReport" header-row-style="header-row"
+          default-table-style="basic-table">
+     	<field name="fromDate" id-name="fromDate" title="Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field> 
+ 		<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="ListTiffinBills" type="list" list-name="outMissingList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+           <set field="sDate" from-field="outMissingList[0].SelectedDate"/>
+            <set field="pDate" from-field="outMissingList[0].PreviousDate"/>
+         </actions>
+
+        <field name="SL"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="EmployeeId" title="PIN" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Card"  widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+    	<field name="EmployeeName" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+         <field name="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="PIn" widget-style="tabletextright" title="InTime[${pDate}]">
+            <display/>
+                  
+        </field>
+        <field name="POut" widget-style="tabletextright" title="OutTime[${pDate}]">
+            <display/>
+                  
+        </field>
+         <field name="SIn" widget-style="tabletextright" title="InTime[${sDate}]">
+            <display/>
+                  
+        </field>
+
+    </form>
+    <!-- End Tiffin Bill Report -->
+    
+    <!-- Start DailyMonthlyMigration -->
+    <form name="FindDailyMonthlyMigration" type="single" target="DailyMonthlyMigration" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+  		<field name="toDate" id-name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    	
+	 <form name="ListDailyMonthlyMigration" type="list" list-name="dailyMonthlyMigrationList"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+
+        <field name="date"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="value" title="Resigned" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+       
+
+    </form>
+    
+    <!-- End DailyMothlyMigration -->
+    
+    <!--Start NewEmplStatusReport-->
+    <form name="FindNewEmplStatusReport" type="single" target="NewEmplStatusReport" header-row-style="header-row"
+          default-table-style="basic-table">
+		<field name="fromDate"  title="From Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" title="To Date" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+     	<!-- <field name="date" id-name="date" title="Date"><date-time type="date"/></field> -->
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    
+    <form name="ListNewEmplStatusReport" type="list" list-name="newEmplList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="sl" title="SL" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="emplId" title="Empl ID" widget-style="tabletextright">
+	        <hyperlink target="EmployeeProfile" description="${emplId}">
+	        	<parameter param-name="partyId" from-field="parameter.emplId"/>
+	        </hyperlink>                  
+        </field>
+        
+        <field name="name" title="Name" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="deptName" title="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+    	<field name="designation" title="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="fromDate" title="Joining Date" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+         <field name="cardId" title="RFID#" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="Remarks" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+    </form>
+    <!--End NewEmplStatusReport-->
+    
+    
+  <!--Start ResignedEmployeeReport-->
+    <form name="FindResignedEmployeeReport" type="single" target="ResignedEmployeeReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" required-field="true"><date-time type="date"/></field>
+     	
+     	<field name="terminationReasonId" title="Separation Reason">
+			<drop-down allow-empty="false">
+				<entity-options description="${description}" key-field-name="terminationReasonId" entity-name="TerminationReason" />
+			</drop-down>
+		</field>
+		<field name="terminationTypeId" title="Separation Type">
+			<drop-down allow-empty="false">
+				<entity-options description="${description}" key-field-name="terminationTypeId" entity-name="TerminationType" />
+			</drop-down>
+		</field>
+		
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    
+    <form name="ListResignedEmployeeReport" type="list" list-name="resignedEmplList"  odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+         <actions>
+           <set field="sDate" from-field="outMissingList[0].SelectedDate"/>
+            <set field="pDate" from-field="outMissingList[0].PreviousDate"/>
+            
+            <entity-and list="terminationReason" entity-name="TerminationReason">
+            	<field-map field-name="terminationReasonId" from-field="parameters.terminationReasonId"/>
+            </entity-and>
+            
+            <entity-and list="terminationType" entity-name="TerminationType">
+            	<field-map field-name="terminationTypeId" from-field="parameters.terminationTypeId"/>
+            </entity-and>
+            
+         </actions>
+
+        <field name="sl" title="SL" id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+
+        <field name="emplId" title="Empl ID" widget-style="tabletextright">
+	        <hyperlink target="EmployeeProfile" description="${emplId}">
+	        	<parameter param-name="partyId" from-field="parameter.emplId"/>
+	        </hyperlink>                  
+        </field>
+        
+        <field name="name" title="Name" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="terminationReasonId" title="Termination Reason" widget-style="tabletextright">
+            <display description="${terminationReason[0].description}"/>
+                  
+        </field>
+        
+        <field name="terminationTypeId" title="Termination Type" widget-style="tabletextright">
+            <display description="${terminationType[0].description}"/>
+                  
+        </field>
+        
+        <field name="deptName" title="Department" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+    	<field name="designation" title="Designation" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="fromDate" title="Joining Date" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+        <field name="thruDate" title="Resigned Date" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+        
+         <field name="cardId" title="RFID#" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="Remarks" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+    </form>
+    <!--End ResignedEmployeeReport-->
+  <!-- Start OTHolidayAndCostReport -->
+  <form name="FindOTHolidayAndCostReport" type="single" target="OTHolidayAndCostReport" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    	
+	 <form name="ListOTHolidayAndCostReport" type="list" list-name="oTHolidayAndCostReports"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+          
+        <field name="date" title="Date" widget-style="tabletextright">
+            <display/>
+                  
+        </field>
+
+        <field name="section"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+        <field name="hour"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+        <field name="manPower"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+        <field name="totalCost"  id-name="tabletextcenter">
+            <display/>
+                  
+        </field>
+     
+
+    </form>
+    
+    <!-- End OTHolidayAndCostReport -->
+    <!-- MonthlyAttendanceSummary form start -->
+    <form name="FindMonthlyAttendanceSummary" type="single" target="MonthlyAttendanceSummary" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" required-field="true"><date-time type="date"/></field>
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="ListMonthlyAttendanceSummary" type="list" list-name="ListMonthlyAttendanceSummary"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar" 
+    					paginate-target="MonthlyAttendanceSummary">
+          
+        <field name="pin" title="PIN" widget-style="tabletextright">
+            <display/>
+        </field>
+        <field name="cardId" title="Card">
+            <display/>
+        </field>
+        <field name="employeeName" title="Name">
+            <display/>
+        </field>
+        <field name="designation" title="Designation">
+            <display/>
+        </field>
+        <field name="grade" title="Grade">
+            <display/>
+        </field>
+        <field name="dateOfJoin" title="Joining Date">
+            <display/>
+        </field>
+        <field name="daysOfMonth" title="Days of Month">
+            <display/>
+        </field>
+        <field name="workDays" title="Work Days">
+            <display/>
+        </field>
+        <field name="totalLeave" title="Leave">
+            <display/>
+        </field>
+        <field name="absent" title="Absent">
+            <display/>
+        </field>
+        <field name="holidays" title="Holidays">
+            <display/>
+        </field>
+        <field name="halfDayAbsent" title="Half Day Absent">
+            <display/>
+        </field>
+        <field name="eotHours" title="Total EOT Hours">
+            <display/>
+        </field>
+        <field name="totalHolidayHours" title="Holiday OT Hours">
+            <display/>
+        </field>
+        <field name="totalOT" title="Total OT (Hours)">
+            <display/>
+        </field>
+    </form>
+    
+    <!-- MonthlyAttendanceSummary form end -->
+    <form name="FindHolidayBenefitReport" type="single" target="findHolidayBenefitReport" header-row-style="header-row"
+          default-table-style="basic-table" target-window="_BLANK">
+       
+        <field name="fromDate" id-name="fromDate" title="FromDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+        <field name="toDate" id-name="toDate" title="ToDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>      	
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    
+      	<field name="empType" title="Employee Type">
+ 			  <drop-down allow-empty="false">
+ 			    <option key="STAFF" description="STAFF"/>
+	 			<option key="WORKERS" description="WORKERS"/>
+              </drop-down>
+        </field>	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="FindHolidayOtLedgerForm" type="single" target="findHolidayOtLedgerReport" header-row-style="header-row"
+          default-table-style="basic-table" target-window="_BLANK">
+       
+        <field name="fromDate" id-name="fromDate" title="FromDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+        <field name="toDate" id-name="toDate" title="ToDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>      	
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    
+      	<field name="empType" title="Employee Type">
+ 			  <drop-down allow-empty="false">
+<!--  			    <option key="STAFF" description="STAFF"/>
+ -->	 			<option key="WORKERS" description="WORKERS"/>
+              </drop-down>
+        </field>	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+      <form name="FindHolidayWorkSummery" type="single" target="findHolidayWorkSummery" header-row-style="header-row"
+          default-table-style="basic-table" target-window="_BLANK">
+       
+        <field name="fromDate" id-name="fromDate" title="FromDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+        <field name="toDate" id-name="toDate" title="ToDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>      	
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    
+      	<field name="empType" title="Employee Type">
+ 			  <drop-down allow-empty="false">
+ 			    <!-- <option key="STAFF" description="STAFF"/> -->
+	 			<option key="WORKERS" description="WORKERS"/>
+              </drop-down>
+        </field>	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="FindExtraOvertimeSummary" type="single" target="findExtraOvertimeSummary" header-row-style="header-row"
+          default-table-style="basic-table" target-window="_BLANK">
+       
+        <field name="fromDate" id-name="fromDate" title="FromDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>
+        <field name="toDate" id-name="toDate" title="ToDate" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" required-field="true"><date-time type="date"/></field>      	
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>    
+      	<field name="empType" title="Employee Type">
+ 			  <drop-down allow-empty="false">
+ 			    <!-- <option key="STAFF" description="STAFF"/> -->
+	 			<option key="WORKERS" description="WORKERS"/>
+              </drop-down>
+        </field>	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <!-- ExtraOvertimePaymentSheet form start -->
+    <form name="FindExtraOvertimePaymentSheet" type="single" target="ExtraOvertimePaymentSheet" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" required-field="true"><date-time type="date"/></field>
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="ListExtraOvertimePaymentSheet" type="list" list-name="ListExtraOvertimePaymentSheet"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+        <field name="pin" title="PIN" widget-style="tabletextright">
+            <display/>
+        </field>
+        <field name="employeeName" title="Name">
+            <display/>
+        </field>
+        <field name="designation" title="Designation">
+            <display/>
+        </field>
+        <field name="department" title="Department">
+            <display/>
+        </field>
+        <field name="grade" title="Grade">
+            <display/>
+        </field>
+        <field name="basicSalary" title="Basic">
+            <display/>
+        </field>
+        <field name="perHourTaka" title="Per Hours Tk">
+            <display/>
+        </field>
+        <field name="totalHours" title="Total Hours">
+            <display/>
+        </field>
+        <field name="totalTk" title="Total EOT Taka">
+            <display/>
+        </field>    
+   </form>
+<!-- ExtraOvertimePaymentSheet form end -->
+
+<!-- ExtraOvertimePaymentSheet Ledger form start -->
+    <form name="FindExtraOvertimePaymentSheetLedger" type="single" target="ExtraOvertimePaymentSheetLedger" header-row-style="header-row"
+          default-table-style="basic-table">
+
+     	<field name="fromDate" id-name="fromDate" title="From Date" required-field="true"><date-time type="date"/></field>
+     	<field name="toDate" id-name="toDate" title="To Date" required-field="true"><date-time type="date"/></field>
+      	<field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	
+ 		<field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    <form name="ListExtraOvertimePaymentSheetLedger" type="list" list-name="ListExtraOvertimePaymentSheet"  odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+          
+        <field name="pin" title="PIN" widget-style="tabletextright">
+            <display/>
+        </field>
+        <field name="employeeName" title="Name">
+            <display/>
+        </field>
+        <field name="designation" title="Designation">
+            <display/>
+        </field>
+        <field name="department" title="Department">
+            <display/>
+        </field>
+        <field name="grade" title="Grade">
+            <display/>
+        </field>
+        <field name="basicSalary" title="Basic">
+            <display/>
+        </field>
+        <field name="perHourTaka" title="Per Hours Tk">
+            <display/>
+        </field>
+        <field name="totalHours" title="Total Hours">
+            <display/>
+        </field>
+        <field name="totalTk" title="Total EOT Taka">
+            <display/>
+        </field>    
+   </form>
+<!-- ExtraOvertimePaymentSheet Ledger form end -->
+	<!-- ExtraOvertimeStatement start-->
+	<form name="FindExtraOvertimeStatement" type="single"  target="ExtraOvertimeStatement" default-table-style="basic-table" header-row-style="header-row">
+    
+         <field name="selectMonthYear" id-name="a" title="Select Month:" tooltip="( click on the input )"><text size="20"/></field>
+     	 
+     	 <field name="division" id-name="division"><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	 <field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	 <field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	 <field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+ 		 
+ 		 <field name="orgPartyId" id-name="orgPartyId" ><hidden/></field>
+ 
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    <form name="ListExtraOvertimeStatement" type="list" list-name="ListExtraOvertimeStatement"  target="ExtraOvertimeStatement" default-table-style="basic-table" header-row-style="header-row" target-window="_BLANK">
+    
+        <field name="totalTaka" title="Total Taka" widget-style="tabletextright">
+            <display/>
+        </field>
+        <field name="totalStaffAllowance" title="Total Staff Allowance">
+            <display/>
+        </field>
+        <field name="totalWorkerAllowance" title="Total Worker Allowance">
+            <display/>
+        </field>
+        <field name="total" title="Net Pay">
+            <display/>
+        </field>
+    </form> 
+    
+   	<form name="DailyAttendanceViewForm" type="single" target="DailyAttendanceViewReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+         <actions>
+	 		<entity-and entity-name="EmploymentAndPerson" list="employee">
+	 			<field-map field-name="partyId" value="${userLogin.partyId}"/>
+	 		</entity-and>
+	 	</actions>
+        <field name="fromDate" id-name="emplLeaveFromDate" required-field="true"><date-time type="date"/></field>
+        <field name="thruDate" id-name="emplLeaveThruDate" required-field="true"><date-time type="date"/></field>
+        <field name="positionPartyId" title="Department Name"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+        <field name="numberOfDays" id-name="emplLeaveNoOfLeave"><hidden read-only="true"/></field>
+       	<field name="noConditionFind"><hidden value="Y"/></field>
+       	<field name="companyId" id-name="companyId"><hidden value="${employee[0].partyIdFrom}"/></field>
+     	<field name="searchButton" title="Show Report" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="IndividualAttendanceReport" type="single" target="IndividualAttendanceReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <actions>
+	 		<entity-and entity-name="EmploymentAndPerson" list="employee">
+	 			<field-map field-name="partyId" value="${userLogin.partyId}"/>
+	 		</entity-and>
+	 	</actions>
+        <field name="userLoginId" title="Employee Id" position="1" required-field="true"><lookup target-form-name="LookupPartyAndUserLoginAndPerson"/></field>
+      	<field name="fromDate" id-name="emplLeaveFromDate" required-field="true"><date-time type="date"/></field>
+        <field name="thruDate" id-name="emplLeaveThruDate" required-field="true"><date-time type="date"/></field>
+        <field name="numberOfDays" id-name="emplLeaveNoOfLeave"><hidden /></field>
+       	<field name="noConditionFind"><hidden value="Y"/></field>
+       	<field name="companyId" id-name="companyId"><hidden value="${employee[0].partyIdFrom}"/></field>
+     	<field name="searchButton" title="Show Report" widget-style="smallSubmit">
+     		<submit/>
+     	</field>
+    </form>
+    
+    <form name="UserAttendaceReport" type="single" target-window="_BLANK" target="IndividualAttendanceReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        
+	 	<actions>
+        <entity-and entity-name="EmploymentAndPerson" list="employee">
+	 			<field-map field-name="partyId" value="${userLogin.partyId}"/>
+	 		</entity-and>
+        	<entity-and entity-name="UserLogin"  list="userLogin">
+             	 <field-map field-name="userLoginId" value="${userLogin.partyId}"/>
+             </entity-and>
+        	<entity-and entity-name="PartyAndPerson"  list="partyAndPerson">
+             	 <field-map field-name="partyId" value="${person[0].partyId}"/>
+             </entity-and>
+        </actions>
+        <field name="partyId"><hidden/></field>
+        <field name="employeeId" parameter-name="userLoginId"><display/></field>
+      	<field name="fromDate" id-name="emplLeaveFromDate" required-field="true"><date-time type="date"/></field>
+        <field name="thruDate" id-name="emplLeaveThruDate" required-field="true"><date-time type="date"/></field>
+        <field name="numberOfDays" id-name="emplLeaveNoOfLeave"><hidden /></field>
+       	<field name="noConditionFind"><hidden value="Y"/></field>
+       	<field name="companyId" id-name="companyId"><hidden value="${employee[0].partyIdFrom}"/></field>
+     	<field name="searchButton" title="Show Report" widget-style="smallSubmit">
+     		<submit/>
+     	</field>
+    </form>
+    
+    <!-- ExtraOvertimeStatement end-->
+    	<form name="DepartmentAttendanceReport" type="single" target="DepartmentAttendanceReport.pdf" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+         <actions>
+	 		<entity-and entity-name="EmploymentAndPerson" list="employee">
+	 			<field-map field-name="partyId" value="${userLogin.partyId}"/>
+	 		</entity-and>
+	 	</actions>
+        <field name="fromDate" title="Date" required-field="true"><date-time type="date"/></field>
+        <field name="positionPartyId" title="Department Name"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+       	<field name="noConditionFind"><hidden value="Y"/></field>
+       	<field name="companyId" id-name="companyId"><hidden value="${employee[0].partyIdFrom}"/></field>
+     	<field name="searchButton" title="Show Report" widget-style="smallSubmit"><submit/></field>
+    </form>
+</forms>

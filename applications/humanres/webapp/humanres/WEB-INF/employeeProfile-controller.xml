@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+     <!-- Login Employees profile -->
+    <request-map uri="emplProfile">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ShowEmployeeProfile"/>
+    </request-map> 
+    <request-map uri="loginEmployeesProfile">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LoginEmployeesProfile" save-home-view="true"/>
+    </request-map>
+    <request-map uri="loginEmployeesbasicInfo">
+    <security https="true" auth="true"/>
+        <response name="success" type="view" value="LoginEmployeesbasicInfo"/>
+    </request-map>
+    <request-map uri="loginEmployeescurrectEmploymentStatus">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeescurrectEmploymentStatus" save-home-view="true"/>
+    </request-map>
+    <request-map uri="loginEmployeescurrentJobDescription">
+    	<security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeescurrentJobDescription"/>
+    </request-map>
+    <request-map uri="loginEmployeesemploymentHistory">
+    	<security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeesemploymentHistory"/>
+    </request-map>
+    <request-map uri="loginEmployeesemergencyContactsAndNomaineeInformation">
+    	<security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeesemergencyContactsAndNomaineeInformation"/>
+    </request-map>
+    <request-map uri="loginEmployeestrainingInfo">
+    	<security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeestrainingInfo"/>
+    </request-map>
+    <request-map uri="loginEmployeescontentForProfile">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeescontentForProfile"/>
+    </request-map>
+    <request-map uri="loginEmployeeseducationBackground">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeeseducationBackground"/>
+    </request-map>
+    <request-map uri="loginEmployeesprofessionalCertificates">
+    	<security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeesprofessionalCertificates"/>
+    </request-map>
+    <request-map uri="loginEmployeeslogisticSupport">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeeslogisticSupport"/>
+    </request-map>
+    <request-map uri="loginEmployeesNotes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="loginEmployeesnotes"/>
+    </request-map>
+    <request-map uri="AddEmployeeNoteForLoginEmpl"><security https="true" auth="true"/><response name="success" type="view" value="AddEmployeeNoteForLoginEmpl"/></request-map>
+        <request-map uri="createPartyNoteforLoginEmployee">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createPartyNote"/>
+        <response name="success" type="view" value="loginEmployeesnotes"/>
+        <response name="error" type="view" value="loginEmployeesnotes"/>
+    </request-map>
+    <request-map uri="editlogisticSupportForLoginEmpl">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editlogisticSupportForLoginEmpl"/>
+    </request-map>
+    <request-map uri="createLogisticsRequisitionForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createLogisticsRequisition"/>
+        <response name="success" type="view" value="loginEmployeeslogisticSupport"/>
+    </request-map> 
+    <request-map uri="editProfessionalCertificatesForLoginEmpl">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="editProfessionalCertificatesForLoginEmpl"/>
+    </request-map>
+    <request-map uri="deleteProfQualfromProfileForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteProfQual"/>
+        <response name="success" type="view" value="loginEmployeesprofessionalCertificates"/>
+    </request-map> 
+    <request-map uri="createProfQualForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createProfQual"/>
+        <response name="success" type="view" value="loginEmployeesprofessionalCertificates"/>
+    </request-map>
+    <request-map uri="editEducationBackgroundForLoginEmpl">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editEducationBackgroundForLoginEmpl"/>
+    </request-map>
+    <request-map uri="deletePartyQualfromProfileForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePartyQual"/>
+        <response name="success" type="view" value="loginEmployeeseducationBackground"/>
+    </request-map>
+    <request-map uri="createQualificationInProfileForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createQualification"/>
+        <response name="success" type="view" value="loginEmployeeseducationBackground"/>
+    </request-map>
+    <request-map uri="editEmergencyContactsAndNomaineeInformationForLoginEmpl">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="editEmergencyContactsAndNomaineeInformationForLoginEmpl"/>
+    </request-map>
+    <request-map uri="addUpdateEmergencyContactForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="addUpdateEmergencyContact"/>
+        <response name="success" type="view" value="loginEmployeesemergencyContactsAndNomaineeInformation"/>
+        <response name="error" type="view" value="loginEmployeesemergencyContactsAndNomaineeInformation"/>
+    </request-map>
+    <request-map uri="addPreviousEmploymentHistoryForLoginEmpl">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="addPreviousEmploymentHistoryForLoginEmpl"/>
+        <response name="error" type="view" value="addPreviousEmploymentHistoryForLoginEmpl"/>
+    </request-map>
+    <request-map uri="createPreviousEmploymentHistoryForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createPreviousEmploymentHistory"/>
+        <response name="success" type="view" value="loginEmployeesemploymentHistory"/>
+        <response name="error" type="view" value="loginEmployeesemploymentHistory"/>
+    </request-map>
+    <request-map uri="deletePreviousEmploymentHistoryForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePreviousEmploymentHistory"/>
+        <response name="success" type="view" value="loginEmployeesemploymentHistory"/>
+        <response name="error" type="view" value="loginEmployeesemploymentHistory"/>
+    </request-map>
+    <request-map uri="editCorrentJobDescriptionForLoginEmpl">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="editCorrentJobDescriptionForLoginEmpl"/>
+    </request-map>
+    <request-map uri="createEmplResponsibilityForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createEmplResponsibility"/>
+        <response name="success" type="view" value="loginEmployeescurrentJobDescription"/>
+    </request-map>
+    <request-map uri="deleteEmplResponsibilityForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteEmplResponsibility"/>
+        <response name="success" type="view" value="loginEmployeescurrentJobDescription"/>
+    </request-map>
+    <request-map uri="editContessaPersonForLoginEmpl">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="editContessaPersonForLoginEmpl"/>
+    </request-map>
+    <request-map uri="updateContessaPersonForLoginEmpl">
+        <security https="true" auth="true"/>
+        <event type="service" path="" invoke="updatePerson"/>
+        <response name="success" type="view-last"/>
+        <response name="error" type="view" value="editContessaPersonForLoginEmpl"/>
+    </request-map>       
+        <request-map uri="IndividualuploadContessaContent">
+        <security auth="true" https="true"/>
+        <event type="service" invoke="uploadPartyContentFile"/>
+       <response name="success" type="view" value="loginEmployeescontentForProfile"/>
+    </request-map>
+ <!--  Login Employee Profile --> 
+   <view-map name="ShowEmployeeProfile" type="screen" page="component://humanres/widget/ShowEmployeeProfileScreens.xml#ShowEmployeeProfile"/>
+   <view-map name="LoginEmployeesProfile" type="screen" page="component://humanres/widget/ShowEmployeeProfileScreens.xml#ShowEmployeeProfile"/>
+   <view-map name="LoginEmployeesbasicInfo" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#PartyEdit"/>
+   <view-map name="loginEmployeescurrectEmploymentStatus" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#currectEmploymentStatus"/>
+   <view-map name="loginEmployeescurrentJobDescription" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#currentJobDescription"/>
+   <view-map name="loginEmployeesemploymentHistory" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#employmentHistory"/>
+   <view-map name="loginEmployeesemergencyContactsAndNomaineeInformation" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#emergencyContactsAndNomaineeInformation"/>
+   <view-map name="loginEmployeestrainingInfo" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#trainingInfo"/>
+   <view-map name="loginEmployeescontentForProfile" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#content"/>
+   <view-map name="loginEmployeeseducationBackground" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#educationBackground"/>
+   <view-map name="loginEmployeesprofessionalCertificates" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#professionalCertificates"/>
+   <view-map name="loginEmployeeslogisticSupport" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#logisticSupport"/>
+   <view-map name="loginEmployeesnotes" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#Notes"/>
+   <view-map name="AddEmployeeNoteForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#AddPartyNote"/>
+   <view-map name="editlogisticSupportForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#editlogisticSupport"/>
+   <view-map name="editProfessionalCertificatesForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#editProfessionalCertificates"/>
+   <view-map name="editEducationBackgroundForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#editEducationBackground"/>
+   <view-map name="editEmergencyContactsAndNomaineeInformationForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#editEmergencyContactsAndNomaineeInformation"/>
+   <view-map name="addPreviousEmploymentHistoryForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#addPreviousEmploymentHistory"/>
+   <view-map name="editCorrentJobDescriptionForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#editCorrentJobDescription"/>
+   <view-map name="editContessaPersonForLoginEmpl" type="screen" page="component://humanres/widget/contessa/ShowEmplProfileScreens.xml#EditContessaPerson"/>
+   
+</site-conf>

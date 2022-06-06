@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="InvoiceItemType">
+        <section>
+            <actions>
+
+                <set field="titleProperty" value="Invoice Item Type"/>
+              <set field="category" from-field="parameters.category"/>
+                <set field="tabButtonItem" value="InvoiceItem"/>
+                <set field="category" from-field="parameters.category"/>
+                
+
+            </actions>
+
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+						
+						
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindInvoiceItemType" location="component://payroll/widget/configuration/forms/InvoiceItemForms.xml"/>
+                            </decorator-section>
+                                <decorator-section name="menu-bar">
+                                        <section>
+                                           
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <link target="addInvoiceItem" text="Create New Invoice Item Type" style="buttontext create"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListInvoiceItemType" location="component://payroll/widget/configuration/forms/InvoiceItemForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="AddInvoiceItemType">
+        <section>
+            <actions>
+
+                <set field="titleProperty" value="Invoice Item Type"/>
+           
+                <set field="tabButtonItem" value="InvoiceItem"/>
+                <set field="actionButtonItem" value="AddInvoiceItemType"/>
+
+            </actions>
+
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+
+                      
+
+                        <screenlet id="AddInvoiceItemTypeScreenlet" title="Add Invoice Item Type" collapsible="true">
+                            <include-form name="AddInvoiceItemType" location="component://payroll/widget/configuration/forms/InvoiceItemForms.xml"/>
+                        </screenlet>
+
+                    </decorator-section>
+
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+   
+
+</screens>

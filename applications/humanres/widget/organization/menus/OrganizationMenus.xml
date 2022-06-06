@@ -1,0 +1,196 @@
+<!-- This file lists all sub menus and action menus of Organization Application Menu (#see HumanresMenus#organization) -->
+
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+	<menu name="OrganizationSubMenu" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem">
+		<menu-item name="structure" title="Structure">
+			<link target="#"></link>
+		</menu-item>
+		<menu-item name="chart" title="Chart">
+			<link target="#"></link>
+		</menu-item>
+		<menu-item name="content" title="Contents">
+			<link target="#"></link>
+		</menu-item>
+	</menu>
+<menu name="OrganizationMenus" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+          selected-menuitem-context-field-name="tabButtonItem">
+		<menu-item name="profile" title="Organization Setup">
+			<link target="OrganizationMain"></link>
+		</menu-item>
+		<menu-item name="orgChart" title="Organization Chart">
+			<condition>
+				<if-compare operator="equals" value="0" field="${userPreferences.ORGANIZATION_UNIT}"/>
+			</condition>
+			<link target="orgChartNew">
+				<parameter param-name="partyId" value="${userPreferences.ORGANIZATION_PARTY}"/>
+			</link>
+		</menu-item>
+	<menu-item name="orgChartNew" title="Organization Chart">
+			<condition>
+				<if-compare operator="not-equals" value="0" field="${userPreferences.ORGANIZATION_UNIT}"/>
+			</condition>
+			<link target="orgChartNew">
+				<parameter param-name="partyId" value="${userPreferences.ORGANIZATION_UNIT}"/>
+			</link>
+		</menu-item>
+	</menu>
+
+	<menu name="AddCompany">
+		<menu-item name="addCompany" title=" ">
+		<!-- <condition>
+		<if-compare operator="equals" value="admin" field="userLogin.partyId"/>
+		</condition> -->
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addCompanyIcon" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddCompany1">
+		<menu-item name="addCompany" title=" ">
+		<condition>
+		<if-compare operator="equals" value="admin" field="userLogin.partyId"/>
+		</condition>
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addCompanyIcon" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddDocument">
+		<menu-item name="addDocument" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDocumentGroup" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AddBudgetDocument">
+		<menu-item name="addBudgetDocument" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDocumentBudget" style="addCompanyScreenLet"/>
+				<!-- <parameter param-name="emplPositionId" from-field="parameters.emplPositionId"/> -->
+			</link>
+			
+		</menu-item>
+	</menu>
+	
+	
+	<menu name="UnDocument">
+		<menu-item name="unDocument" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDocumentUnit" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="LinkForPosition">
+		 <menu-item name="movePosition" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/move.png" id="movePositionBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item> 
+		<menu-item name="addPosition" title="">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPositionBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+
+	
+	<menu name="AddPaygrade" >
+		<menu-item name="addPaygrade" title=" " >
+			<link style="addCompanyScreenLet" parameters-map="parameters.emplPositionId">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPaygradeIcon" style="addCompanyScreenLet" >
+				 
+				</image>
+				
+				
+			</link>
+		</menu-item>
+	</menu>
+	
+	<menu name="AssignBenefit">
+		<menu-item name="AssignBenefit" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="assignPaygradeBenfit" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	  <menu name="AssignDeduction">
+		<menu-item name="AssignDeduction" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="assignPaygradeDeduction" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>  
+	<menu name="addIncrements">
+		<menu-item name="AssignDeduction" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addPaygradeIncrements" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>  
+	<menu name="AssignIncrementBenefit">
+		<menu-item name="AssignIncrementBenefit" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="assignIncrementBenfit" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+
+	<menu name="AssignIncrementDeduction">
+		<menu-item name="AssignIncrementDeduction" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="assignIncrementDeduction" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	<menu name="AssignIncrementPerson">
+		<menu-item name="AssignIncrementPerson" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="assignIncrementPerson" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	<menu name="AssignFulfillmentPerson">
+		<menu-item name="AssignFulfillmentPerson" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="assignFulfillmentPerson" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+	<menu name="AddReportingStruct" >
+		<menu-item name="addPaygrade" title=" " >
+			<link style="addCompanyScreenLet" parameters-map="parameters.emplPositionId">
+				<image src="/flatgrey/images/custom/add-16.png" id="addReportingStructBtn" style="addCompanyScreenLet" >
+				 
+				</image>
+				<!-- <parameter param-name="emplPositionId" from-field="parameters.emplPositionId"/> -->
+			</link>
+		</menu-item>
+	</menu>
+	<menu name="AddOrgPositionResponsibilities" >
+		<menu-item name="addPaygrade" title=" " >
+			<link style="addCompanyScreenLet" parameters-map="parameters.emplPositionId">
+				<image src="/flatgrey/images/custom/add-16.png" id="addOrgPositionResponsibilityBtn" style="addCompanyScreenLet" >
+				 
+				</image>
+				<!-- <parameter param-name="emplPositionId" from-field="parameters.emplPositionId"/> -->
+			</link>
+		</menu-item>
+	</menu>
+	
+    <menu name="LinkForOrganizationHeadAssign">
+		<!--  <menu-item name="moveOrganizationHeadAssign" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/move.png" id="moveOrganizationHeadAssignBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>  -->
+		<menu-item name="addOrganizationHeadAssign" title="">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addOrganizationHeadAssignBtn" style="addCompanyScreenLet"/>
+			</link>
+		</menu-item>
+	</menu>
+</menus>

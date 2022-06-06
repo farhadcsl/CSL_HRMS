@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="EditSalaryItems">
+        <section>
+            <actions>
+            <set field="headerItem" value="SalaryProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="processId" from-field="parameters.processId"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="year" from-field="${parameters.year}"/>
+                 <set field="tabButtonItem" value="ExtProMod"/>
+          <entity-condition list="emplTempSalaryOptBen" entity-name="EmplTempSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="processId" operator="equals" value="${parameters.processId}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="B"/>
+		            </condition-list>
+            </entity-condition>
+             <entity-condition list="emplTempSalaryOptDed" entity-name="EmplTempSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="processId" operator="equals" value="${parameters.processId}"/>
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="D"/>
+		            </condition-list>
+            </entity-condition> 
+           <!--  <set field="eligiblePayableBenefitMap" from-field="parameters.eligiblePayableBenefitMap"/>
+            <set field="eligiblePayableDedMap" from-field="parameters.eligiblePayableDedMap"/> -->
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="emplDetail" title="Employee Information" collapsible="true">
+                                        <include-form name="EmployeeInfo" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-left">
+                                    <screenlet title="Earnings" navigation-menu-name="LinkForAddNewItem">
+                                    <container id="addSalaryItemPopUp"></container>
+                                  <include-menu  name="LinkForAddNewItem" location="component://payroll/widget/PayrollMenus.xml"/> 
+                                        <include-form name="employeeEarnings" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-right">
+                                    <screenlet title="Deductions" navigation-menu-name="LinkForAddDDNewItem">
+                                    <container id="addSalaryDDItemPopUp"></container>
+                                     <include-menu  name="LinkForAddDDNewItem" location="component://payroll/widget/PayrollMenus.xml"/> 
+                                        <include-form name="employeeDeductions" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="leftclear">
+                                    <screenlet>
+                                        <include-form name="NetPayAdmin" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+               
+               
+               
+               
+               
+               
+    <screen name="updateBenefitScreens">
+        <section>
+            <actions>
+        	<set field="headerItem" value="SalaryProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="processId" from-field="parameters.processId"/>
+                <set field="monthNumber" from-field="parameters.monthNumber"/>
+                <set field="year" from-field="${parameters.year}"/>
+                 <set field="tabButtonItem" value="ExtProMod"/>
+             <entity-condition list="emplTempSalaryOptDed" entity-name="EmplTempSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="processId" operator="equals" value="${parameters.processId}"/>
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="D"/>
+		            </condition-list>
+            </entity-condition> 
+           <!--  <set field="eligiblePayableBenefitMap" from-field="parameters.eligiblePayableBenefitMap"/>
+            <set field="eligiblePayableDedMap" from-field="parameters.eligiblePayableDedMap"/> -->
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="emplDetail" title="Employee Information" collapsible="true">
+                                        <include-form name="EmployeeInfo" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-left">
+                                    <screenlet title="Earnings">
+                                        <include-form name="employeeEarningsFroms" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-right">
+                                    <screenlet title="Deductions">
+                                        <include-form name="employeeDeductions" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="leftclear">
+                                    <screenlet>
+                                        <include-form name="NetPayAdmin" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+            
+            
+            
+            
+            
+            <screen name="updateDeductionScreens">
+        <section>
+            <actions>
+        	<set field="headerItem" value="SalaryProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="processId" from-field="parameters.processId"/>
+                <set field="monthNumber" from-field="parameters.monthNumber"/>
+                <set field="year" from-field="${parameters.year}"/>
+                 <set field="tabButtonItem" value="ExtProMod"/>
+              <entity-condition list="emplTempSalaryOptBen" entity-name="EmplTempSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="processId" operator="equals" value="${parameters.processId}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="B"/>
+		            </condition-list>
+            </entity-condition>
+           <!--  <set field="eligiblePayableBenefitMap" from-field="parameters.eligiblePayableBenefitMap"/>
+            <set field="eligiblePayableDedMap" from-field="parameters.eligiblePayableDedMap"/> -->
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="emplDetail" title="Employee Information" collapsible="true">
+                                        <include-form name="EmployeeInfo" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-left">
+                                    <screenlet title="Earnings">
+                                        <include-form name="employeeEarnings" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-right">
+                                    <screenlet title="Deductions">
+                                        <include-form name="employeeDeductionsFroms" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="leftclear">
+                                    <screenlet>
+                                        <include-form name="NetPayAdmin" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+         
+            <screen name="NewSalaryItemModify">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Payroll Information"/>
+                <set field="tabButtonItem" value="PayGrade"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="year" from-field="parameters.year"/>
+                <set field="monthNumber" from-field="parameters.monthNumber"/>
+                <set field="processId" from-field="parameters.processId"/>
+                
+            </actions>
+            <widgets>
+            <!-- <decorator-section name="body"> -->
+               <!--  <screenlet title="Add New Benefits Item "> -->
+                    <section>
+                        <widgets>
+                            <include-form name="NewSalaryItemModify" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                        </widgets>
+                    </section>
+              <!--   </screenlet> -->
+           <!--  </decorator-section> -->
+            </widgets>
+        </section>
+    </screen>
+            
+         
+        <screen name="NewSalaryItemDDModify">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Payroll Information"/>
+                <set field="tabButtonItem" value="PayGrade"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="year" from-field="parameters.year"/>
+                <set field="monthNumber" from-field="parameters.monthNumber"/>
+                <set field="processId" from-field="parameters.processId"/>
+                
+            </actions>
+            <widgets>
+            <!-- <decorator-section name="body"> -->
+               <!--  <screenlet title="Add New Benefits Item "> -->
+                    <section>
+                        <widgets>
+                            <include-form name="NewSalaryItemDDModify" location="component://payroll/widget/salaryprocess/forms/UpdatableSalaryItemForms.xml"/>
+                        </widgets>
+                    </section>
+              <!--   </screenlet> -->
+           <!--  </decorator-section> -->
+            </widgets>
+        </section>
+    </screen>     
+            
+            
+    </screens>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of Lc Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+    
+	<entity entity-name="LcPi" package-name="org.ofbiz.humanres.lc">
+	    <field name="piId" type="id-ne"></field>
+    	<field name="piNo" type="id-long"></field>
+    	<field name="date" type="date-time"></field>
+    	<field name="dateAdded" type="date-time"></field>
+	    <field name="amount" type="currency-amount"></field>
+	    <field name="currency" type="short-varchar"></field>
+	    <field name="beneficiary" type="short-varchar"></field>
+	    <field name="goodsDescription" type="description"></field>
+		<field name="shipmentBy" type="short-varchar"></field>		
+		<field name="status" type="short-varchar"></field>
+    	<prim-key field="piId"/>
+    </entity>
+    <entity entity-name="LcBank" package-name="org.ofbiz.humanres.lc">
+    	<field name="lcId" type="id-ne"></field>
+	    <field name="lcNo" type="id-long"></field>
+    	<field name="piId" type="id-ne"></field>
+    	<field name="date" type="date-time"></field>
+	    <field name="cost" type="currency-amount"></field>
+	    <field name="lcExpiryDate" type="date-time"></field>
+    	<field name="lastShipmentDate" type="date-time"></field>
+    	<field name="shipmentType" type="short-varchar"></field>
+		<field name="issuingBank" type="short-varchar"></field>
+		<field name="actualShipmentDate" type="date-time"></field>
+		<field name="eta" type="date-time"></field>
+		<field name="shiperName" type="short-varchar"></field>
+		<field name="insuranceCompanyName" type="short-varchar"></field>
+		<field name="insuranceCoverNote" type="short-varchar"></field>
+    	<field name="dateAdded" type="date-time"></field>
+    	<prim-key field="lcId"/>
+    	<relation type="one" fk-name="LC_BANK" rel-entity-name="LcPi">
+	        <key-map field-name="piId"/>       
+	    </relation>
+    </entity>
+    <entity entity-name="LcTt" package-name="org.ofbiz.humanres.lc">
+    	<field name="ttId" type="id-ne"></field>
+	    <field name="ttNo" type="id-long"></field>
+    	<field name="piId" type="id-ne"></field>
+	    <field name="ttCost" type="currency-amount"></field>
+	    <field name="date" type="date-time"></field>
+    	<field name="dateAdded" type="date-time"></field>
+    	<prim-key field="ttId"/>
+    	<relation type="one" fk-name="LC_TT" rel-entity-name="LcPi">
+	        <key-map field-name="piId"/>       
+	    </relation>
+    </entity>
+    <entity entity-name="LcNote" package-name="org.ofbiz.humanres.lc"
+		title="Lc Note Entity">
+		<field name="lcNoteId" type="id-ne" />
+		<field name="lcId" type="id-ne" />
+		<field name="title" type="short-varchar" />
+		<field name="description" type="comment" />
+		<field name="dateAdded" type="date-time"></field>
+		<prim-key field="lcNoteId" />
+		<relation type="one" fk-name="LC_NOTES" rel-entity-name="LcBank">
+	        <key-map field-name="lcId"/>       
+	    </relation>
+	</entity>
+	<entity entity-name="TtNote" package-name="org.ofbiz.humanres.lc"
+		title="TtNote Entity">
+		<field name="ttNoteId" type="id-ne" />
+		<field name="ttId" type="id-ne" />
+		<field name="title" type="short-varchar" />
+		<field name="description" type="comment" />
+		<field name="dateAdded" type="date-time"></field>
+		<prim-key field="ttNoteId" />
+		<relation type="one" fk-name="TT_NOTES" rel-entity-name="LcTt">
+	        <key-map field-name="ttId"/>
+	    </relation>
+	</entity>
+    <entity entity-name="LcShiperInfo" package-name="org.ofbiz.humanres.lc">
+    	<field name="lcShiperId" type="id-ne"></field>
+	    <field name="shiperName" type="short-varchar"></field>
+	    <field name="shiperAddress" type="short-varchar"></field>
+    	<field name="description" type="description"></field>
+    	<prim-key field="lcShiperId"/>
+    </entity>
+    <entity entity-name="LcBankInfo" package-name="org.ofbiz.humanres.lc">
+    	<field name="lcBankInfoId" type="id-ne"></field>
+	    <field name="bankName" type="short-varchar"></field>
+	    <field name="bankAddress" type="short-varchar"></field>
+    	<field name="description" type="description"></field>
+    	<prim-key field="lcBankInfoId"/>
+    </entity>
+    <entity entity-name="LcInsuranceCoverNote" package-name="org.ofbiz.humanres.lc">
+    	<field name="lcInsuranceCoverNoteId" type="id-ne"></field>
+	    <field name="insuranceCompanyName" type="short-varchar"></field>
+	    <field name="insuranceAddress" type="short-varchar"></field>
+    	<field name="description" type="description"></field>
+    	<prim-key field="lcInsuranceCoverNoteId"/>
+    </entity>
+	
+	<entity entity-name="LcContent" package-name="org.ofbiz.humanres.lc" title="LC Content Entity">
+      <field name="piId" type="id-ne"></field>
+       
+      <field name="contentId" type="id-ne"></field>
+      <field name="partyContentTypeId" type="id-ne"></field>
+      <field name="fromDate" type="date-time"></field>
+      <field name="thruDate" type="date-time"></field>
+      <prim-key field="piId"/>
+      <prim-key field="contentId"/>
+  
+      <relation type="one" fk-name="LC_CNT_BUD" rel-entity-name="LcPi">
+        <key-map field-name="piId"/>
+       
+      </relation>
+      <relation type="one" fk-name="LC_CNT_CNT" rel-entity-name="Content">
+        <key-map field-name="contentId"/>
+      </relation>
+    </entity>
+    
+    <view-entity entity-name="LcAndContent"
+      package-name="org.ofbiz.humanres.lc"
+      title="LC And Content View Entity">
+      <description>Show Content of CustRequest</description>
+      <member-entity entity-alias="LC" entity-name="LcContent"/>
+      <member-entity entity-alias="CT" entity-name="Content"/>
+      <alias-all entity-alias="LC">
+        <exclude field="contentId"/>
+      </alias-all>
+      <alias-all entity-alias="CT"/>
+      <view-link entity-alias="LC" rel-entity-alias="CT">
+        <key-map field-name="contentId"/>
+      </view-link>
+    </view-entity>
+  
+  
+  <entity entity-name="LcBankContent" package-name="org.ofbiz.humanres.lc" title="LC Content Entity">
+      <field name="lcId" type="id-ne"></field>
+       
+      <field name="contentId" type="id-ne"></field>
+      <field name="partyContentTypeId" type="id-ne"></field>
+      <field name="fromDate" type="date-time"></field>
+      <field name="thruDate" type="date-time"></field>
+      <prim-key field="lcId"/>
+      <prim-key field="contentId"/>
+  
+      <relation type="one" fk-name="LC_CNT_BUD" rel-entity-name="LcBank">
+        <key-map field-name="lcId"/>
+       
+      </relation>
+      <relation type="one" fk-name="LC_CNT_CNT" rel-entity-name="Content">
+        <key-map field-name="contentId"/>
+      </relation>
+    </entity>
+    
+    <view-entity entity-name="LcBankAndContent"
+      package-name="org.ofbiz.humanres.lc"
+      title="LC And Content View Entity">
+      <description>Show Content of CustRequest</description>
+      <member-entity entity-alias="LC" entity-name="LcBankContent"/>
+      <member-entity entity-alias="CT" entity-name="Content"/>
+      <alias-all entity-alias="LC">
+        <exclude field="contentId"/>
+      </alias-all>
+      <alias-all entity-alias="CT"/>
+      <view-link entity-alias="LC" rel-entity-alias="CT">
+        <key-map field-name="contentId"/>
+      </view-link>
+    </view-entity>
+    
+      <entity entity-name="LcTtContent" package-name="org.ofbiz.humanres.lc" title="TT Content Entity">
+      <field name="ttd" type="id-ne"></field>
+       
+      <field name="contentId" type="id-ne"></field>
+      <field name="partyContentTypeId" type="id-ne"></field>
+      <field name="fromDate" type="date-time"></field>
+      <field name="thruDate" type="date-time"></field>
+      <prim-key field="ttId"/>
+      <prim-key field="contentId"/>
+  
+      <relation type="one" fk-name="LC_CNT_BUD" rel-entity-name="LcTt">
+        <key-map field-name="ttId"/>
+       
+      </relation>
+      <relation type="one" fk-name="LC_CNT_CNT" rel-entity-name="Content">
+        <key-map field-name="contentId"/>
+      </relation>
+    </entity>
+    
+    <view-entity entity-name="LcTtAndContent"
+      package-name="org.ofbiz.humanres.lc"
+      title="TT And Content View Entity">
+      <description>Show Content of CustRequest</description>
+      <member-entity entity-alias="LC" entity-name="LcTtContent"/>
+      <member-entity entity-alias="CT" entity-name="Content"/>
+      <alias-all entity-alias="LC">
+        <exclude field="contentId"/>
+      </alias-all>
+      <alias-all entity-alias="CT"/>
+      <view-link entity-alias="LC" rel-entity-alias="CT">
+        <key-map field-name="contentId"/>
+      </view-link>
+    </view-entity>
+</entitymodel>

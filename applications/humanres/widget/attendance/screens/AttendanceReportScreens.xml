@@ -1,0 +1,3638 @@
+<!-- This is for all the screens related to attendance structures e.g. company, 
+	Building, Floor, Gate, Device and Employee -->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="AttendanceMainDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" /> 
+				<set field="tabButtonItem" value="structure" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+					
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="AttendanceReportDecorator">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="pre-body">
+						<include-menu
+							location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"
+							name="StructureActionMenu" />
+						<include-menu name="ReportsMenus" location="component://humanres/widget/attendance/menus/AttendanceMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<decorator-section-include name="body" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+		
+	<screen name="AttendanceReports">
+
+			<section>
+			<actions>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="tabButtonItem" value="DailyAbsentReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findDailyAbsence" auto-field-map="true"/>			
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+
+                     
+                         <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           		<include-form name="ExportDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                     
+				</decorator-section></decorator-screen>
+					
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyAbsentReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Daily Absent Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyAbsentReport" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findDailyAbsence" auto-field-map="true" />	
+							
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            	<include-form name="ExportDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyAbsentReport1">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Daily Absent Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyAbsentReport1" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findDailyAbsenceReport" auto-field-map="true" />	
+					
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDailyAbsenceReport1" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListDailyAbsenceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                              <link text="Export as Excel" style="button" target="exportDailyAbsenceToExcel1">
+		                              <parameter param-name="absenceList" value="{absenceList}"/>
+		                       </link>
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="DailyAbsentReportPdf.pdf" target-window="_BLANK">
+		                              <parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                              <parameter param-name="division" from-field="parameters.division"/>
+		                              <parameter param-name="department" from-field="parameters.department"/>
+		                              <parameter param-name="section" from-field="parameters.section"/>
+		                              <parameter param-name="line" from-field="parameters.line"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyAbsentReportpdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Daily Absent Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyAbsentReport1" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="selectedDate" from-field="parameters.fromDate"/> 
+				<set field="division" from-field="parameters.division"/>
+				<set field="department" from-field="parameters.department"/>
+				<set field="section" from-field="parameters.section"/>
+				<set field="line" from-field="parameters.line"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findDailyAbsenceReport" auto-field-map="true" />	
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/dailyAbsentReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/dailyAbsentReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+       <screen name="DailyMonthlyAbsenteeism">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Daily And Monthly Absenteeism%"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyMonthlyAbsenteeism" />				
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="20" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findDailyMonthlyAbsenteeism" auto-field-map="true" />	
+					
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="DailyMonthlyAbsenteeismForm" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                              <container style="leftside">
+                                <include-form name="DailyMonthlyAbsenteeismList"  location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                             
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="DailyMonthlyAbsenteeismPdf" target-window="_BLANK">
+		                              <parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                              <parameter param-name="toDate" from-field="parameters.toDate"/>
+		                              <parameter param-name="division" from-field="parameters.division"/>
+		                              <parameter param-name="department" from-field="parameters.department"/>	
+		                              <parameter param-name="section" from-field="parameters.section"/>	
+		                              <parameter param-name="line" from-field="parameters.line"/>		                              
+		                       </link>
+                              </container>
+                              <container style="rightside">
+					            <include-form name="AditionalInfo"  location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>					
+				             </container>
+                      
+                            </decorator-section>
+                            
+                           
+                        </decorator-screen>
+				</decorator-section>
+				
+				<decorator-section name="footer">
+										<platform-specific>
+											<html>
+												<html-template location="component://baby/themes/flatgrey/includes/footer.ftl" />
+											</html>
+										</platform-specific>
+									</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyMonthlyAbsenteeismPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Daily And Monthly Absenteeism Report"/>					
+                <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyMonthlyAbsenteeism" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+					
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="division" from-field="parameters.division"/>
+				<set field="department" from-field="parameters.department"/>
+				<set field="section" from-field="parameters.section"/>
+				<set field="line" from-field="parameters.line"/>
+					
+				<service service-name="findDailyMonthlyAbsenteeism" auto-field-map="true" />	
+					
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				 <entity-one entity-name="PartyGroup" value-field="unit">
+				  <field-map field-name="partyId" value="${additionalInfo.unit}"/>
+				 </entity-one>
+				 
+				
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/dailyMonthlyAbsenteeismHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/dailyMonthlyAbsenteeismBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	
+	<screen name="DailyLateReport">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Daily Late Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyLateReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->			
+				<service service-name="findDailyLate" auto-field-map="true" />	
+					
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDailyLateReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListDailyLateReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            	<include-form name="ExportDailyLateReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyLateReport1">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Daily Late Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyLateReport1" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->			
+				<service service-name="findDailyLate1" auto-field-map="true" />	
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDailyLateReport1" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListDailyLateReport1" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            	
+                            	<link text="Export as Excel" style="button" target="exportDailyLateToExcel">
+                              		<parameter param-name="lateList" value="{lateList}"/>
+		                       </link>
+		                       
+		                        <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="DailyLateReportPdf1.pdf" target-window="_BLANK">
+		                             <parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                             <parameter param-name="toDate" from-field="parameters.toDate"/>
+		                           	 <parameter param-name="fromTime" from-field="parameters.fromTime"/>
+		                             <parameter param-name="toTime" from-field="parameters.toTime"/>
+		                             <parameter param-name="division" from-field="parameters.division"/>
+		                             <parameter param-name="department" from-field="parameters.department"/>	
+		                             <parameter param-name="section" from-field="parameters.section"/>	
+		                             <parameter param-name="line" from-field="parameters.line"/>	
+		                             <parameter param-name="employeeId" from-field="parameters.employeeId"/>	
+		                             <parameter param-name="selectedDate" value="${selectedDate}"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyLateReportPdf1">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Daily Late Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyAbsentReport1" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="fromTime" from-field="parameters.fromTime"/>
+				<set field="toTime" from-field="parameters.toTime"/> 
+				<set field="division" from-field="parameters.division"/>
+				<set field="department" from-field="parameters.department"/>
+				<set field="section" from-field="parameters.section"/>
+				<set field="line" from-field="parameters.line"/>
+				<set field="employeeId" from-field="parameters.employeeId"/>
+				
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="selectToDate" from-field="parameters.selectToDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png" />
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findDailyLate1" auto-field-map="true" />	
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/dailyLateReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/dailyLateReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+		
+	<screen name="ManpowerPositionReport">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Manpower Position Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="ManpowerPositionReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->			
+				<service service-name="ManpowerPositionReport" auto-field-map="true" />	
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+							<screenlet title="Manpower Position List">
+                        		
+                        		<include-form name="ListManpowerPositionReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            	
+                            	<link text="Export as Excel" style="button" target="exportManpowerPositionReportToExcel">
+                              		<parameter param-name="orgPartyId" from-field="orgPartyId"/>
+		                       </link>
+		                       
+		                        <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="ManpowerPositionReportPdf.pdf" target-window="_BLANK">
+		                             <parameter param-name="manpowerList" value="${manpowerList}"/>
+		                             <parameter param-name="finalRowList" value="${finalRowList}"/>
+		                             <parameter param-name="selectedDate" value="${selectedDate}"/>
+		                       </link>
+		                </screenlet>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="ManpowerPositionReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Grade And Gender wise Manpower Summary"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="ManpowerPositionReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+			
+				<set field="selectedDate" from-field="parameters.selectedDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<entity-and list="payGrade" entity-name="PayGrade" />
+				<service service-name="ManpowerPositionReport" auto-field-map="true" />	
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/manpowerPositionReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/manpowerPositionReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>	
+		
+	<!-- <screen name="LeaveSummeryReportPermanent">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Leave Summery Report(Permanent)"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> App Menu
+				<set field="actionButtonItem" value="report" /> Action Menu
+				<set field="tabButtonItem" value="LeaveSummeryReportPermanent" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> Decorator			
+				
+				<service service-name="findLeaveSummeryReportPermanentList" auto-field-map="true" />	
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+	                            <decorator-section name="search-options">
+	                                <include-form name="FindLeaveSummeryForPermanent" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>	
+	                            </decorator-section>
+	
+	                            <decorator-section name="search-results">
+									<include-form name="ListLeaveSummeryForPermanent" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+	                            	<link text="Export as Excel" style="button" target="exportLeaveSummeryReportPermanentToExcel">
+			                       		 <parameter param-name="ListLeaveSummeryReportPermanent" value="${ListLeaveSummeryReportPermanent}"/>
+			                       </link>
+			                       
+			                        <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="LeaveSummeryReportPermanentPdf.pdf" target-window="_BLANK">
+			                            
+			                             <parameter param-name="selectedDateFrom" value="${selectedDateFrom}"/>
+			                             <parameter param-name="selectedDateTo" value="${selectedDateTo}"/>
+			                       </link>
+	                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="LeaveSummeryReportPermanentPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Leave Summery Report(Permanent)"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> App Menu
+				<set field="actionButtonItem" value="report" /> Action Menu
+				<set field="tabButtonItem" value="LeaveSummeryReportPermanent" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> Decorator
+				
+				
+				<set field="selectedDateFrom" from-field="parameters.selectedDateFrom"/>
+				<set field="selectedDateTo" from-field="parameters.selectedDateTo"/> 
+					
+				<set field="fromDate" from-field="parameters.selectedDateFrom"/>
+				<set field="toDate" from-field="parameters.selectedDateTo"/> 
+				
+				<set field="logoImageUrl" value="/images/contessa-logo.gif" />
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findLeaveSummeryReportPermanentList" auto-field-map="true" />	
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/leaveSummeryReportPermanentHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/leaveSummeryReportPermanentBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen> -->
+    	
+	<screen name="MonthlyLateAbsentLeaveHalfDay">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Monthly Summary for Late Absent Leave HalfDay"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="MonthlyLateAbsentLeaveHalfDay" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->			
+				
+				<service service-name="findMonthlySummeryForLateAbsentLeaveHalfdayList" auto-field-map="true" />
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+	                            <decorator-section name="search-options">
+	                                <include-form name="FindMonthlySummeryForLateAbsentLeaveHalfday" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>	
+	                            </decorator-section>
+	
+	                            <decorator-section name="search-results">
+									<include-form name="ListMonthlySummeryForLateAbsentLeaveHalfday" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+	                            	<!-- <link text="Export as Excel" style="button" target="exportMonthlySummeryForLateAbsentLeaveHalfdayReportToExcel">
+			                       		 <parameter param-name="ListLeaveSummeryReportPermanent" value="${ListLeaveSummeryReportPermanent}"/>
+			                       </link> -->
+			                       
+			                        <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="MonthlyLateAbsentLeaveHalfDayPdf.pdf" target-window="_BLANK">
+			                            
+			                             <parameter param-name="selectedDateFrom" value="${selectedDateFrom}"/>
+			                             <parameter param-name="selectedDateTo" value="${selectedDateTo}"/>
+			                       </link>
+	                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="MonthlyLateAbsentLeaveHalfDayPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Monthly Summery For (Late, Absent,Leave,Halfday Absent) "/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="MonthlyLateAbsentLeaveHalfDay" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				
+				
+				<set field="selectedDateFrom" from-field="parameters.selectedDateFrom"/>
+				<set field="selectedDateTo" from-field="parameters.selectedDateTo"/>
+				 
+				<set field="fromDate" from-field="parameters.selectedDateFrom"/>
+				<set field="toDate" from-field="parameters.selectedDateTo"/>
+				
+				<set field="format" value="dd/MM/yyyy"/>
+				<set field="selectedFromDate" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getFormatedDate(selectedDateFrom,format)}" type="String"/>
+				<set field="selectedToDate" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getFormatedDate(selectedDateTo,format)}" type="String"/>
+				
+				<service service-name="findMonthlySummeryForLateAbsentLeaveHalfdayList" auto-field-map="true" />					
+				
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png" />
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/MonthlyLateAbsentLeaveHalfDayHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/MonthlyLateAbsentLeaveHalfDayBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+		
+	<screen name="DailyEarlyoutReport">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Early Out Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyEarlyoutReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->			
+				
+				<service service-name="findEarlyoutReportList" auto-field-map="true" />
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+							<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+	                            <decorator-section name="search-options">
+	                                <include-form name="FindEarlyoutReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>	
+	                            </decorator-section>
+	
+	                            <decorator-section name="search-results">
+									<include-form name="ListEarlyoutReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+	                            	<!-- <link text="Export as Excel" style="button" target="exportMonthlySummeryForLateAbsentLeaveHalfdayReportToExcel">
+			                       		 <parameter param-name="ListLeaveSummeryReportPermanent" value="${ListLeaveSummeryReportPermanent}"/>
+			                       </link> -->
+			                       
+			                        <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="DailyEarlyoutReportPdf.pdf" target-window="_BLANK">
+			                            
+			                             <parameter param-name="selectedDateFrom" value="${selectedDateFrom}"/>
+			                             <parameter param-name="selectedDateTo" value="${selectedDateTo}"/>
+			                       </link>
+	                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyEarlyoutReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Earlyout Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyEarlyoutReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				
+				
+				<set field="selectedDateFrom" from-field="parameters.selectedDateFrom"/>
+				<set field="selectedDateTo" from-field="parameters.selectedDateTo"/>
+				 
+				<set field="fromDate" from-field="parameters.selectedDateFrom"/>
+				<set field="toDate" from-field="parameters.selectedDateTo"/>
+
+				<service service-name="findEarlyoutReportList" auto-field-map="true" />					
+				
+				<set field="logoImageUrl" value="/images/contesssa-logo.gif" />
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/EarlyoutReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/EarlyoutReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	<screen name="OverTimeReport">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Over Time Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="OverTimeReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->		
+				<service service-name="findOverTimes" auto-field-map="true" />	
+			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindOTReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListOTReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            	<include-form name="ExportOTReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="MonthlyAttendanceBonusReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Monthly Attendance Bonus Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear" />					
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="MonthlyAttendanceBonusReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findMonthlyAttendanceBonusReport" auto-field-map="true" />	
+						
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+			<decorator-section name="body">
+
+				 <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                     <decorator-section name="search-options">
+				        <include-form location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml" name="MonthSelectionForm"/>
+                      </decorator-section>
+                      <decorator-section name="search-results">
+
+                       
+                        <include-form name="MonthlyBonusReportList" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                        <include-form name="ExportBonusReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+            
+                       </decorator-section>
+                   
+                 </decorator-screen>
+			</decorator-section>
+			</decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="YearlyAttendanceBonusReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Yearly Attendance Bonus Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="YearlyAttendanceBonusReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="getYearList" auto-field-map="true" />			
+				<service service-name="findYearlylyAttendanceBonusReport" auto-field-map="true" />		
+				
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					 <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                     <decorator-section name="search-options">
+				        <include-form location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml" name="YearSelectionForm"/>
+                      </decorator-section>
+                      <decorator-section name="search-results">
+
+                        <include-form name="YearlyBonusReportList" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                       	<include-form name="ExportYABReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                      
+                       </decorator-section>
+                   
+                 </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+
+
+	<!-- Main Screen For Attendance Information Management -->
+	<screen name="structure">
+		<section>
+			<actions>
+				<!-- Setting Menu -->
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="profile" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				<set field="currentLocationId" from-field="userPreferences.ATTENDANCE_LOCATION" />
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendancegetCompany.groovy" />
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/attendanceRole.groovy" />
+				<set field="orgId" value="${orgId}" />
+
+			</actions>
+			<widgets>
+
+				<section>
+					<condition>
+						<!-- If selected Organization Id is "Company", it determines that Mother 
+							Group is selected -->
+						<if-compare operator="equals" value="Company"
+							field="userPreferences.ORGANIZATION_PARTY" />
+					</condition>
+					<!-- ============================== GROUP ==================================== -->
+					<widgets>
+						<include-screen name="AttendanceGroup" />
+					</widgets>
+					<!-- ============================== COMPANY ==================================== -->
+					<fail-widgets>
+
+						<section>
+							<condition>
+								<and>
+									<if-empty field="isBuilding" />
+									<if-empty field="isFloor" />
+									<if-empty field="isGate" />
+									<if-empty field="isDevice" />
+									<if-empty field="isEmployee" />
+
+								</and>
+
+								<!-- <if-compare operator="equals" value="BUILDING" field="isBuilding"/> -->
+							</condition>
+							<widgets>
+								<include-screen name="Company" />
+							</widgets>
+
+							<fail-widgets>
+
+								<section>
+									<condition>
+										<and>
+											<if-empty field="isFloor" />
+											<if-empty field="isGate" />
+											<if-empty field="isDevice" />
+											<if-empty field="isEmployee" />
+										</and>
+									</condition>
+
+									<widgets>
+										<!-- ======================Building================ -->
+										<include-screen name="Building" />
+									</widgets>
+									<fail-widgets>
+										<section>
+											<condition>
+												<and>
+													<if-empty field="isGate" />
+													<if-empty field="isDevice" />
+													<if-empty field="isEmployee" />
+												</and>
+											</condition>
+											<widgets>
+												<!-- ======================Floor================ -->
+												<include-screen name="Floor" />
+											</widgets>
+
+											<fail-widgets>
+
+
+												<section>
+													<condition>
+														<and>
+															<if-empty field="isDevice" />
+															<if-empty field="isEmployee" />
+														</and>
+													</condition>
+													<widgets>
+														<!-- ======================Gate================ -->
+														<include-screen name="Gate" />
+													</widgets>
+													<fail-widgets>
+														<section>
+															<condition>
+																<if-empty field="isEmployee" />
+															</condition>
+															<widgets>
+																<!-- ======================Device================ -->
+																<include-screen name="Device" />
+															</widgets>
+															<fail-widgets>
+																<!-- ======================Device================ -->
+																
+																<include-screen name="Employee" />
+															</fail-widgets>
+														</section>
+
+													</fail-widgets>
+												</section>
+											</fail-widgets>
+										</section>
+									</fail-widgets>
+								</section>
+							</fail-widgets>
+						</section>
+
+					</fail-widgets>
+				</section>
+			</widgets>
+		</section>
+	</screen>
+
+	<!-- A Simple Decorator for Popups -->
+	<screen name="PopupActions">
+		<section>
+			<actions>
+				<property-map resource="HumanResUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="contessaHRResUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="contessaOrgResUiLabels"
+					map-name="uiLabelMap" global="true" />
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="PartyUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="AccountingUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="OrderUiLabels" map-name="uiLabelMap"
+					global="true" />
+				<property-map resource="WorkEffortUiLabels" map-name="uiLabelMap"
+					global="true" />
+			</actions>
+			<widgets />
+		</section>
+	</screen>
+
+	<!--JobCard  -->
+	<screen name="JobCard">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Job Card"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="JobCard" />
+				<set field="employeeId" from-field="parameters.employeeId"/> 
+				<!-- <set field="selectMonthYear" from-field="parameters.selectMonthYear"/>  -->
+				<set field="fromDate" from-field="parameters.fromDate"/> 
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findJobCard" auto-field-map="true" />			
+							
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+				<decorator-section name="body">
+					<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                     <decorator-section name="search-options">
+				        <include-form location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml" name="JobCard"/>
+                     </decorator-section>
+                     <decorator-section name="search-results">
+						<screenlet title="Monthly Details Report">
+                        <include-form name="JobCardList" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"  />
+                         </screenlet>
+                         <screenlet title="Monthly Summery Report">
+                        <include-form name="JobCardSummeryList" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"  />
+                        </screenlet>                       	                                             	                       
+                       	<link text="Export as Excel" style="button" target="ExportJobCardReportToExcel">
+		                   <parameter param-name="employeeLogList" value="${employeeLogList}"/>
+		                </link>
+                      	<link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="JobCardReportPdf" target-window="_BLANK">
+                      	  <!-- <parameter param-name="selectMonthYear" value="${selectMonthYear}"/>	 -->
+                      	  <parameter param-name="fromDate" value="${fromDate}"/>	
+                      	  <parameter param-name="toDate" value="${toDate}"/>	
+                      	  <parameter param-name="employeeId" value="${employeeId}"/>		                  
+		                </link>
+                      </decorator-section>
+                   
+                 	</decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	<screen name="JobCardReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Employee Attendance Ledger"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="JobCardReport" />
+				
+				<set field="employeeId" from-field="parameters.employeeId"/> 
+<!-- 				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>  -->
+				<set field="fromDate" from-field="parameters.fromDate"/> 
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="logoImageUrl" value="/images/prottay-logo.gif" />
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findJobCard" auto-field-map="true" />	
+				<set field="nowDate" value="${bsh:org.ofbiz.base.util.UtilDateTime.nowDateString(&quot;dd-MM-yyyy HH:MM&quot;)}" type="String"/>
+            </actions>
+            <widgets>
+             <decorator-screen name="ForJobCardAttendanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/JobCardReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/JobCardReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>                                           
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+ <screen name="Attendance2daysReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Two Days Attendance Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="Attendance2daysReport" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="20" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findTowDaysAttendanceReport" auto-field-map="true" />	
+							 		<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetTwoDaysReportListAttribute.groovy" />			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindTwoDaysReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListTwoDaysReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                              <link text="Export as Excel" style="button" target="exportTwoDaysReportToExcel">
+		                              <parameter param-name="twodaysReportList" value="{twodaysReportList}"/>
+		                       </link>
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="TwoDaysReportPdf.pdf" target-window="_BLANK">
+		                              <parameter param-name="twodaysReportList" value="{twodaysReportList}"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="TwoDaysReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Attendance Report (two days)"/>	
+             	<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="Attendance2daysReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="twodaysReportList" from-field="parameters.twodaysReportList"/>
+				<set field="selectedDate" from-field="twodaysReportList[0].SelectedDate"/>
+                <set field="previousDate" from-field="twodaysReportList[0].PreviousDate"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				 		<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetTwoDaysReportListAttribute.groovy" />				 
+				<set field="nowDate" value="${bsh:org.ofbiz.base.util.UtilDateTime.nowDateString(&quot;dd-MM-yyyy HH:MM&quot;)}" type="String"/>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/TwoDaysAttandanceReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/TwoDaysAttandanceReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+     <screen name="Attendance3daysReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Three Days Attendance Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="Attendance3daysReport" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="20" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findThreeDaysAttendanceReport" auto-field-map="true" />	
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetThreeDaysReportListAttribute.groovy" />			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+										
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindThreeDaysReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListThreeDaysReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                              <link text="Export as Excel" style="button" target="exportThreeDaysReportToExcel">
+		                              <parameter param-name="threedaysReportList" value="{threedaysReportList}"/>
+		                       </link>
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="ThreeDaysReportPdf.pdf" target-window="_BLANK">
+		                              <parameter param-name="threedaysReportList" value="{threedaysReportList}"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="ThreeDaysReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Attendance Three Days Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="Attendance3daysReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="threedaysReportList" from-field="parameters.threedaysReportList"/>
+				<set field="selectedDate" from-field="threedaysReportList[0].SelectedDate"/>
+                <set field="previousDate" from-field="threedaysReportList[0].PreviousDate"/>
+                <set field="twoPreviousDate" from-field="threedaysReportList[0].TwoPreviousDate"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetThreeDaysReportListAttribute.groovy" />
+				<set field="nowDate" value="${bsh:org.ofbiz.base.util.UtilDateTime.nowDateString(&quot;dd-MM-yyyy HH:MM&quot;)}" type="String"/>	
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ThreeDaysAttandanceReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ThreeDaysAttandanceReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+        
+    
+    <screen name="SectionWiseStrenth">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Section Wise Strenth"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="SectionWiseStrenth" />			
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findSectionWiseStrenth" auto-field-map="true" />	
+					
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindSectionWiseReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+						
+                                <include-form name="ListSectionWiseStrenth" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                                <platform-specific>
+                               	<html>
+                               		<html-template location="component://humanres/webapp/humanres/reports/totalsummary.ftl"/>
+                               	</html>
+                               </platform-specific>
+                               
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="SectionWiseReportPdf.pdf" target-window="_BLANK">
+		                              <parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                              <parameter param-name="division" from-field="parameters.division"/>
+		                              <parameter param-name="department" from-field="parameters.department"/>
+		                              <parameter param-name="section" from-field="parameters.section"/>
+		                              <parameter param-name="line" from-field="parameters.line"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="SectionWiseReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Daily Strength of Employee (Section Wise)"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="SectionWiseStrenth" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<set field="fromDate" from-field="parameters.fromDate"/> 
+				<set field="division" from-field="parameters.division"/> 
+				<set field="department" from-field="parameters.department"/> 
+				<set field="section" from-field="parameters.section"/>
+				<set field="line" from-field="parameters.line"/> 
+				<service service-name="findSectionWiseStrenth" auto-field-map="true" />		
+				<set field="nowDate" value="${bsh:org.ofbiz.base.util.UtilDateTime.nowDateString(&quot;dd-MM-yyyy HH:MM&quot;)}" type="String"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/SectionWiseAttandanceReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>                              
+                        <decorator-section name="body">
+                           <platform-specific>
+                             	<xsl-fo><html-template location="component://humanres/webapp/humanres/reports/SectionWiseAttandanceReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	
+   <screen name="InAttendanceMissing">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Attendance Missing List - Yesterday In Time"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 				
+				<set field="tabButtonItem" value="AttendanceMissingReport" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="20" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findInAttendanceMissing" auto-field-map="true" />	
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetInMissingReportListAttribute.groovy" />			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindInAttendanceMissing" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListInAttendanceMissing" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                              <link text="Export as Excel" style="button" target="exportInMissingListReportToExcel">
+		                              <parameter param-name="inMissingList" value="{inMissingList}"/>
+		                       </link>
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="InAttenMissingReportPdf.pdf" target-window="_BLANK">
+		                              <parameter param-name="inMissingList" value="{inMissingList}"/>
+		                       </link>
+		                       
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="InAttenMissingReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Attendance Missing List - Yesterday In Time"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="nowDate" value="${bsh:org.ofbiz.base.util.UtilDateTime.nowDateString(&quot;dd-MM-yyyy &quot;)}" type="String"/>
+				<set field="tabButtonItem" value="AttendanceMissingReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> 	
+				<set field="inMissingList" from-field="parameters.inMissingList"/>
+				<set field="selectedDate" from-field="inMissingList[0].SelectedDate"/>
+                <set field="previousDate" from-field="inMissingList[0].PreviousDate"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetInMissingReportListAttribute.groovy" />
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/InAttanMissingReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/InAttanMissingReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                           
+                      </decorator-section> 
+                      
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- Start Out Time Missing -->
+           <screen name="OutAttendanceMissing">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Attendance Missing List - Yesterday Out Time"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="OutAttendanceMissingReport" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="20" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findOutAttendanceMissing" auto-field-map="true" />	
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetOutMissingReportListAttribute.groovy" />			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindOutAttendanceMissing" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListOutAttendanceMissing" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                              <link text="Export as Excel" style="button" target="exportOutMissingListReportToExcel">
+		                              <parameter param-name="outMissingList" value="{outMissingList}"/>
+		                       </link>
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="OutAttenMissingReportPdf.pdf" target-window="_BLANK">
+		                              <parameter param-name="outMissingList" value="{outMissingList}"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="OutAttenMissingReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Attendance Missing List - Yesterday Out Time"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="OutAttendanceMissingReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> 	
+				<set field="outMissingList" from-field="parameters.outMissingList"/>
+				<set field="selectedDate" from-field="outMissingList[0].SelectedDate"/>
+                <set field="previousDate" from-field="outMissingList[0].PreviousDate"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetOutMissingReportListAttribute.groovy" />
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/OutAttanMissingReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/OutAttanMissingReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!-- End Out Time Missing -->
+    
+        <!-- Lost Card Info -->
+
+    	<screen name="LostCardInfo">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Department Wise Proximity Lost Card Information"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				 <set field="fromDate" from-field="parameters.fromDate"/>
+			     <set field="toDate" from-field="parameters.toDate"/>
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="LostCard" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="20" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findLostCardInfo" auto-field-map="true" />
+				<!-- <script			
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetLostCardAttribute.groovy" />			
+		 -->
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindLostCardInfo" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                              <include-form name="ListLostCardInfo" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                              <link text="Export as Excel" style="button" target="exportLostCardInfo">
+		                              <parameter param-name="cardLostList" value="${cardLostList}"/>
+		                       </link>
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="LostCardInfoPdf" target-window="_BLANK">
+		                        <parameter param-name="cardLostList" value="${cardLostList}"/>	                      
+		                        <parameter param-name="orgPartyId" value="${orgPartyId}"/>
+		                        <parameter param-name="fromDate" value="${fromDate}"/>
+		                        <parameter param-name="toDate" value="${toDate}"/>
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="LostCardInfoPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Department Wise Proximity Lost Card Information"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="LostCard" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="cardLostList" from-field="parameters.cardLostList"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				 <set field="fromDate" from-field="parameters.fromDate"/>
+			     <set field="toDate" from-field="parameters.toDate"/>				 
+				 <service service-name="findLostCardInfo" auto-field-map="true" /> 
+				 
+				<!-- <script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetLostCardAttribute.groovy" />
+					 -->
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/LostCardInfoHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/LostCardInfoBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- End Lost Card Info -->
+	
+	<!-- Start Tiffin Report -->
+	<screen name="TiffinReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Attendance Tiffin Bill Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="TiffinReport" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findTiffinBillsReport" auto-field-map="true" />	
+					
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindTiffinBills" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+                            	<platform-specific>
+                         			<html> <html-template location="component://humanres/webapp/humanres/reports/tiffinbill.ftl"/></html>
+                    			</platform-specific>
+  				
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="TiffinReport.pdf" target-window="_BLANK">
+		                         	<parameter param-name="fromDate" value="${fromDate}"/>   
+		                         	<parameter param-name="division" from-field="parameters.division"/>  
+		                         	<parameter param-name="department" from-field="parameters.department"/>  
+		                         	<parameter param-name="section" from-field="parameters.section"/>  
+		                         	<parameter param-name="line" from-field="parameters.line"/>   
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="TiffinReportpdf">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Attendance Tiffin Bill Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="TiffinReport" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml" /> <!-- Decorator -->	
+					
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="division" from-field="parameters.division"/>
+				<set field="department" from-field="parameters.department"/>
+				<set field="section" from-field="parameters.section"/>
+				<set field="line" from-field="parameters.line"/>
+				
+				<service service-name="findTiffinBillsReport" auto-field-map="true" />	
+				<set field="logoImageUrl" value="/images/contessa-logo.gif" />
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				 <set field="departmentEmployeeInfoList" value="${departmentEmployeeInfoList}"/>
+				 <set field="currentDate" value="${currentDate}"/>
+				
+				
+			</actions>
+			 <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/TiffinBillReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                     		   <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/TiffinReportBody.fo.ftl"/></xsl-fo> 
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<!-- End Tiffin Report -->
+	
+	<!-- Start Tiffin Bill Summary -->
+	<screen name="MonthlyTiffinBillSummary">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Monthly Tiffin Bill Summary"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="MonthlyTiffinBillSummary" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findTiffinBillSummary" auto-field-map="true" />	
+				<set field="selectedTiffin" from-field="parameters.selectedTiffin"/>	
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindTiffinBillSummary" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+                            	<platform-specific>
+                         			<html> <html-template location="component://humanres/webapp/humanres/reports/tiffinbillSummary.ftl"/></html>
+                    			</platform-specific>
+  				
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="MonthlyTiffinBillSummary.pdf" target-window="_BLANK">
+		                         	<parameter param-name="fromDate" value="${fromDate}"/>   
+		                         	<parameter param-name="toDate" value="${toDate}"/>   
+		                         	<parameter param-name="selectedTiffin" value="${selectedTiffin}"/>   
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	
+	<screen name="MonthlyTiffinBillSummarypdf">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Attendance Tiffin Bill Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="TiffinReport" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml" /> <!-- Decorator -->	
+					
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/>
+				<set field="selectedTiffin" from-field="parameters.selectedTiffin"/>
+				
+				<service service-name="findTiffinBillSummary" auto-field-map="true" />	
+				<set field="logoImageUrl" value="/images/contessa-logo.gif" />
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				
+				
+			</actions>
+			 <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/TiffinBillSummaryReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                     		 <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/TiffinSummaryReportBody.fo.ftl"/></xsl-fo> 
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+			
+		</section>
+
+	</screen>
+	
+	<!-- End Tiffin Bill Summary -->
+	
+<!-- Start NewEmplStatusReport -->
+	<screen name="NewEmplStatusReport">
+		<section>
+			<actions>
+				<set field="titleProperty" value="New Employee Status Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="NewEmplStatusReport" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml" /> <!-- Decorator -->
+				<service service-name="findNewEmplStatusReport" auto-field-map="true" />	
+				<set field="fromDate" from-field="parameters.fromDate" type="Date"/>
+				<set field="toDate" from-field="parameters.toDate" type="Date"/>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetNewEmployeeStatusReport.groovy" />				 
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator" location="${decorator}">
+					<decorator-section name="body">
+						<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+							<decorator-section name="search-options">
+								 <include-form name="FindNewEmplStatusReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+							</decorator-section>
+							<decorator-section name="search-results">
+								<include-form name="ListNewEmplStatusReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                     
+                              	<link text="Export as Excel" style="button" target="exportNewEmplStatusReportToExcel">
+		                        	<parameter param-name="newEmplList" value="${newEmplList}"/>
+		                        	<parameter param-name="date" value="${date}"/>
+		                       	</link>
+							   	<link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="NewEmplStatusReportPdf.pdf" target-window="_BLANK">
+		                        	<parameter param-name="fromDate" value="${fromDate}"/>
+		                        	<parameter param-name="toDate" value="${toDate}"/>
+		                       	</link>
+							</decorator-section>
+						</decorator-screen>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>		
+	</screen>
+	
+	<screen name="NewEmplStatusReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="New Employee Status"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="New Employee Status Report" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> 	
+				<set field="newEmplList" from-field="parameters.newEmplList"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png" />
+				<set field="fromDate" from-field="parameters.fromDate" type="Date"/>
+				<set field="toDate" from-field="parameters.toDate" type="Date"/>		
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<!-- <script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetNewEmployeeStatusReport.groovy" /> -->
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/NewEmployeeStatusReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/NewEmployeeStatusReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+<!-- End NewEmplStatusReport -->
+	
+<!-- Start LeaveSummeryReport(Probition) -->	
+<!-- <screen name="LeaveSummeryReportProbition">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Leave Summery Report(Probition)"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> App Menu
+				<set field="actionButtonItem" value="report" /> Action Menu
+				<set field="tabButtonItem" value="LeaveSummeryReportProbition" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> Decorator		
+				<service service-name="findLeavesummeryProbition" auto-field-map="true" />	
+			
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetLeaveSProbitionListAttribute.groovy" />	
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindLeaveSummeryProbition" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                              <include-form name="ListLeaveSummeryProbition" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+               				 <include-form name="ExportLeaveSProbitionReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+							 <link text="${uiLabelMap.ProbisionLeaveExportAsPdf}" style="button" target="ProbitionLeaveReportPdf.pdf" target-window="_BLANK">
+		                    		<parameter param-name="probitionLeaveList" value="${probitionLeaveList}"/>
+		                            <parameter param-name="selectedDate" value="${selectedDate}"/>
+		                            <parameter param-name="selectedToDate" value="${selectedToDate}"/>  
+		                    </link>
+							</decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	<screen name="ProbitionLeaveReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Leave Summery Report(Probition)"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> App Menu
+				<set field="actionButtonItem" value="report" /> Action Menu
+				<set field="tabButtonItem" value="LeaveSummeryReportProbition" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> Decorator
+				<set field="probitionLeaveList" from-field="parameters.probitionLeaveList"/>
+				<set field="selectedToDate" from-field="parameters.selectedToDate"/>
+				<set field="selectedDate" from-field="parameters.selectedDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>				
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetLeaveSProbitionListAttribute.groovy" />
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ProbitionLeaveSReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ProbitionLeaveSReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>	 -->
+	
+	
+
+
+	<screen name="LeaveSummeryReportDesignation">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Designation Wise Leave Summery Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="LeaveSummeryReportDesignation" />
+<!-- 				<set field="selectedDate" from-field="parameters.selectedDate"/>
+ -->				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->		
+				<service service-name="designationWiseLeaveSummery" auto-field-map="true" />	
+			
+				 <script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetDesignationWiseLeaveListAttribute.groovy" />	
+		 	</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDesignationWiseLeaveSummery" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                              <include-form name="ListDesignationWiseLeaveSummery" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+               				 <include-form name="ExportDesignationWiseLeaveReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+							 <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="DesignationLeaveReportPdf.pdf" target-window="_BLANK">
+		                    		<!-- <parameter param-name="designationWiseLeaveList" value="${designationWiseLeaveList}"/> -->
+		                    		 <parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                              <parameter param-name="toDate" from-field="parameters.toDate"/>
+		                            <parameter param-name="selectedDate" value="${selectedDate}"/>
+		                            <parameter param-name="selectedToDate" value="${selectedToDate}"/>  
+		                    </link>
+							</decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+			
+		</section>
+
+	</screen>
+	<screen name="DesignationLeaveReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Designation Wise Leave Summery Report"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="LeaveSummeryReportProbition" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+				<set field="designationWiseLeaveList" from-field="parameters.designationWiseLeaveList"/>
+				<set field="selectedToDate" from-field="parameters.selectedToDate"/>
+				<set field="selectedDate" from-field="parameters.selectedDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>				
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<!-- <script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetDesignationWiseLeaveListAttribute.groovy" />
+				 -->	
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/DesignationWiseLeaveSReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/DesignationWiseLeaveSReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>	
+	
+	<!--Start DailyMonthlyMigration  -->
+	<screen name="DailyMonthlyMigration">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Daily Monthly Migration"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="DailyMonthlyMigration" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findDailyMonthlyMigration" auto-field-map="true" />	
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindDailyMonthlyMigration" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                               <include-form name="ListDailyMonthlyMigration" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="DailyMonthlyMigration.pdf" target-window="_BLANK">
+		                              <parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                              <parameter param-name="toDate" from-field="parameters.toDate"/>
+		                              <parameter param-name="division" from-field="parameters.division"/>
+		                              <parameter param-name="department" from-field="parameters.department"/>
+		                              <parameter param-name="section" from-field="parameters.section"/>
+		                              <parameter param-name="line" from-field="parameters.line"/> 
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="DailyMonthlyMigrationpdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Migration report"/>	
+                <set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="DailyMonthlyMigration" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="selectedDate" from-field="parameters.fromDate"/>
+            	<set field="fromDate" from-field="parameters.fromDate"/>
+            	<set field="toDate" from-field="parameters.toDate"/>
+            	<set field="division" from-field="parameters.division"/>
+            	<set field="department" from-field="parameters.department"/>
+            	<set field="section" from-field="parameters.section"/>
+            	<set field="line" from-field="parameters.line"/>
+            	<set field="ResignedPercent" from-field="parameters.ResignedPercent"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>				
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findDailyMonthlyMigration" auto-field-map="true" />
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/DailyMonthlyMigrationReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/DailyMontlyMigrationReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	
+	
+	<!--End DailyMonthlyMigration  -->
+	
+	
+<!-- Start ResignedEmployeeReport -->
+	<screen name="ResignedEmployeeReport">
+		<section>
+			<actions>
+				<set field="titleProperty" value="Resigned Employee Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="ResignedEmployeeReport" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceReportScreens.xml" /> <!-- Decorator -->
+				<service service-name="findResignedEmployeeReport" auto-field-map="true" />	
+				<set field="fromDate" from-field="parameters.fromDate" type="Date"/>
+				<set field="toDate" from-field="parameters.toDate" type="Date"/>
+				<script
+					location="component://humanres/webapp/humanres/WEB-INF/actions/attendance/SetResignedEmployeeReport.groovy" />				 
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator" location="${decorator}">
+					<decorator-section name="body">
+						<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+							<decorator-section name="search-options">
+								 <include-form name="FindResignedEmployeeReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+							</decorator-section>
+							<decorator-section name="search-results">
+								<include-form name="ListResignedEmployeeReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                     
+                              	<link text="Export as Excel" style="button" target="exportResignedEmployeeReportToExcel">
+		                        	<parameter param-name="date" value="${date}"/>
+		                       	</link>
+							   	<link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="ResignedEmployeeReportPdf.pdf" target-window="_BLANK">
+		                        	<parameter param-name="fromDate" value="${fromDate}"/>
+		                        	<parameter param-name="toDate" value="${toDate}"/>
+		                       	</link>
+							</decorator-section>
+						</decorator-screen>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>		
+	</screen>
+	
+	<screen name="ResignedEmployeeReportPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Resigned Employee Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="Resigned Employee Report" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> 	
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png" />
+				<set field="resignedEmplList" from-field="parameters.resignedEmplList"/>
+				<set field="fromDate" from-field="parameters.fromDate" type="Date"/>
+				<set field="toDate" from-field="parameters.toDate" type="Date"/>		
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>						
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ResignedEmployeeReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ResignedEmployeeReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+<!-- End ResignedEmployeeReport -->
+
+	<!--Start OTHolidayAndCostReport  -->
+	<screen name="OTHolidayAndCostReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="OT, Holiday And Cost Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="OTHolidayAndCostReport" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer"
+					default-value="50" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<service service-name="findOTHolidayAndCostReport" auto-field-map="true" />	
+				<set field="unitName" value="${unitName}"/>	
+		
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+					
+			             <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindOTHolidayAndCostReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                                <include-form name="ListOTHolidayAndCostReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                     
+                      
+							   <link text="${uiLabelMap.AccountingExportAsPdf}" style="button" target="OTHolidayAndCostReport.pdf" target-window="_BLANK">
+		                              <parameter param-name="selectMonthYear" from-field="parameters.selectMonthYear" />   
+		                       </link>
+                            </decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="OTHolidayAndCostReportpdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Attendance Three Days Report"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="OTHolidayAndCostReport" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>
+				<set field="logoImageUrl" value="/images/contessa-logo.gif" />
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				 <service service-name="findOTHolidayAndCostReport" auto-field-map="true" />	
+			 </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+ 
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/EOTHolidayTotalCostReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/EOTHolidayTotalCostReportBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section> 
+                                       
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	
+	
+	<!--End OTHolidayAndCostReport  -->
+	
+	 <screen name="HolidayBenefitReport">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Holiday Benefit Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="HolidayBenefit" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Holiday Benefit Statement"> 
+                              <include-form name="FindHolidayBenefitReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="findHolidayBenefitReport">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Statement Of Holiday Work"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="holidayBenifitsList" from-field="parameters.holidayBenifitsList"/>
+				<set field="fromToDate" from-field="parameters.fromToDate"/>
+				<set field="empType" from-field="parameters.empType"/>								
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="LandscapePdfReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayBenefitsStatementHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayBenefitsStatementBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                      <decorator-section name="footer">
+                           <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayBenefitsStatementFooter.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="HolidayOtLedger">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Holiday Over Time Ledger"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="HolidayOtLedger" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Holiday Over Time Ledger"> 
+                              <include-form name="FindHolidayOtLedgerForm" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>		
+	<screen name="findHolidayOtLedgerReport">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Holiday Work Ledger"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="holidayOTLedgerList" from-field="parameters.holidayOTLedgerList"/>
+				<set field="fromToDate" from-field="parameters.fromToDate"/>
+				<set field="empType" from-field="parameters.empType"/>								
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<set field="profileImageUrl" value="/runtime/data/29937.png"/>
+				
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="LandscapeReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayOtLedgerHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayOtLedgerBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="HolidayWorkSummery">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Statement Of Holiday Work Summery"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="HolidayWorkSummery" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Statement Of Holiday Work Summery"> 
+                              <include-form name="FindHolidayWorkSummery" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="findHolidayWorkSummery">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Statement Of Holiday Work Summery"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="holidayWorkSummeryList" from-field="parameters.holidayWorkSummeryList"/>
+				<set field="fromToDate" from-field="parameters.fromToDate"/>
+				<set field="grandTotalHrs" from-field="parameters.grandTotalHrs"/>
+				<set field="grandTotalTk" from-field="parameters.grandTotalTk"/>				
+				<set field="empType" from-field="parameters.empType"/>								
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayWorkSummeryHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/HolidayWorkSummeryBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="AttendanceBonus">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Attendance Bonus Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="AttendanceBonus" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Attendance Bonus Statement">                 
+                              <include-form name="MonthSelectForm" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                               
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	<screen name="findAttendanceBonus">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Attendance Bonus Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>
+ 				<set field="totalWorkerBonus" from-field="parameters.totalWorkerBonus"/>
+ 				<set field="totalStaffBonus" from-field="parameters.totalStaffBonus"/>				
+				<set field="totalBonus" from-field="parameters.totalBonus"/>				
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/AttendanceBonusHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/AttendanceBonusBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+       <screen name="OvertimeStatement">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Overtime Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="OvertimeStatement" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Overtime Statement">                 
+                              <include-form name="OvertimeStatement" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                               
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="findOvertimeStatement">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Overtime Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>
+ 				<set field="totalWorkerOverTimeAmount" from-field="parameters.totalWorkerOverTimeAmount"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/OvertimeStatementHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/OvertimeStatementBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+     <screen name="ExtraOvertimeSummary">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Statement Of Extra Over Time Summary"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="ExtraOvertimeSummary" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Statement Of Extra Over Time Summary"> 
+                              <include-form name="FindExtraOvertimeSummary" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="findExtraOvertimeSummary">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Statement Of Extra Over Time Summary"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="extraOtSummeryList" from-field="parameters.extraOtSummeryList"/>
+				<set field="fromToDate" from-field="parameters.fromToDate"/>
+				<set field="grandTotalHrs" from-field="parameters.grandTotalHrs"/>
+				<set field="grandTotalTk" from-field="parameters.grandTotalTk"/>				
+				<set field="empType" from-field="parameters.empType"/>								
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOTSummeryHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOTSummeryBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+   <screen name="SalaryManpower">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Salary Manpower"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="SalaryManpower" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Salary Manpower">                 
+                              <include-form name="SalaryManpower" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                               
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="findSalaryManpower">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Salary Manpower"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>
+ 				<set field="salaryManpowerList" from-field="parameters.salaryManpowerList"/>
+ 				<set field="totalStaff" from-field="parameters.totalStaff"/>
+ 				<set field="totalWorker" from-field="parameters.totalWorker"/>
+ 				<set field="totalManager" from-field="parameters.totalManager"/>
+ 				<set field="totalAll" from-field="parameters.totalAll"/>
+ 				
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/SalaryManpowerHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/SalaryManpowerBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    	   <screen name="SalaryOtSummery">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Salary and Overtime Summery (In Bangla)"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="SalaryOtSummery" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Salary and Overtime Summery (In Bangla)">                 
+                              <include-form name="FindSalaryOtSummery" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                               
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+    
+    <screen name="findSalaryOtSummery">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Salary and Overtime Summery (In Bangla) "/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="salaryOtSummeryList" from-field="parameters.salaryOtSummeryList"/>
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>
+				<set field="monthYearBanglaFormat" from-field="parameters.monthYearBanglaFormat"/>	
+				<set field="empType" from-field="parameters.empType"/>								
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+			<widgets>
+				<platform-specific>
+    	           	<html>
+                     	<html-template location="component://humanres/webapp/humanres/reports/findSalaryOtSummery.ftl"/>
+                     </html>
+                 </platform-specific>
+			</widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="RecruitAbsenteeismMigration">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Recruit, Absent And Migration Status"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="RecruitAbsenteeismMigration" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Recruit, Absent And Migration Status">                 
+                              <include-form name="findRecruitAbsenteeismMigration" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>                               
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="findRecruitAbsenteeismMigration">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Recruitment Absent And Migration Status"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/>
+ 				<set field="recruitAbsentMigraData" from-field="parameters.recruitAbsentMigraData"/>
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/RecruitAbsenteeismMigrationHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/RecruitAbsenteeismMigrationBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+	<!-- MonthlyAttendanceSummary start -->
+	<screen name="MonthlyAttendanceSummary">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Monthly Attendance Summary"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="MonthlyAttendanceSummary" />
+				<set field="selectedDate" from-field="parameters.selectedDate"/>
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->		
+				<service service-name="findMonthlyAttendanceSummary" auto-field-map="true" />			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindMonthlyAttendanceSummary" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                              <include-form name="ListMonthlyAttendanceSummary" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+<!--                				 <include-form name="ExportLeaveSProbitionReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/> -->
+							 <link text="Print Report" style="button" target="MonthlyAttendanceSummaryPdf.pdf" target-window="_BLANK">
+		                    		<parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                            <parameter param-name="toDate" from-field="parameters.toDate"/>  
+		                    </link>
+							</decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="MonthlyAttendanceSummaryPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Monthly Attendance Summary"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="MonthlyAttendanceSummary" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+			
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findMonthlyAttendanceSummaryListForPdf" auto-field-map="true" />	
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="LandscapeReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/MonthlyAttendanceSummaryReportHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/MonthlyAttendanceSummaryBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- MonthlyAttendanceSummary end -->
+    
+    <!-- Extra overtime payment sheet start -->
+	<screen name="ExtraOvertimePaymentSheet">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Extra Overtime Payment Sheet"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="ExtraOvertimePaymentSheet" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->		
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/>		
+				<set field="format" value="dd/MM/yyyy"/>
+				
+				<set field="selectedFromDate" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getFormatedDate(fromDate,format)}" type="String"/>
+				<set field="selectedToDate" value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getFormatedDate(toDate,format)}" type="String"/>
+				<service service-name="findExtraOvertimePaymentSheet" auto-field-map="true" />
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindExtraOvertimePaymentSheet" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+							<decorator-section name="search-results">
+                              <include-form name="ListExtraOvertimePaymentSheet" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+<!--                				 <include-form name="ExportLeaveSProbitionReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/> -->
+							 <link text="Print Report" style="button" target="ExtraOvertimePaymentSheetPdf.pdf" target-window="_BLANK">
+		                    		<parameter param-name="fromDate" from-field="selectedFromDate" />
+		                            <parameter param-name="toDate" from-field="selectedToDate"/>
+		                    </link>
+							</decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="ExtraOvertimePaymentSheetPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Extra Overtime Payment Sheet"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="ExtraOvertimePaymentSheet" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+			
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				 <service service-name="findExtraOvertimePaymentSheetForPdf" auto-field-map="true" />
+            </actions>
+            <widgets>
+                <decorator-screen name="LandscapeReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimePaymentSheetHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimePaymentSheetBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                      <decorator-section name="footer">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimePaymentSheetFooter.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- Extra overtime payment sheet end -->
+    
+    <!-- Extra overtime payment sheet Ledger start -->
+	<screen name="ExtraOvertimePaymentSheetLedger">
+
+			<section>
+			<actions>	
+			    <set field="titleProperty" value="Extra Overtime Payment Sheet Ledger"/>
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="ExtraOvertimePaymentSheetLedger" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->		
+				<service service-name="findExtraOvertimePaymentSheet" auto-field-map="true" />			
+			</actions>
+			<widgets>
+			<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+
+					<decorator-section name="body">
+			       		<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindExtraOvertimePaymentSheetLedger" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                            </decorator-section>
+
+                            <decorator-section name="search-results">
+
+                              <include-form name="ListExtraOvertimePaymentSheetLedger" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+							 <link text="Print Report" style="button" target="ExtraOvertimePaymentSheetLedgerPdf.pdf" target-window="_BLANK">
+		                    		<parameter param-name="fromDate" from-field="parameters.fromDate"/>
+		                            <parameter param-name="toDate" from-field="parameters.toDate"/>  
+		                    </link>
+							</decorator-section>
+                        </decorator-screen>
+				</decorator-section></decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="ExtraOvertimePaymentSheetLedgerPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Extra Overtime Payment Sheet Ledger"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="tabButtonItem" value="ExtraOvertimePaymentSheetLedger" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->
+			
+				<set field="fromDate" from-field="parameters.fromDate"/>
+				<set field="toDate" from-field="parameters.toDate"/> 
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				 </entity-one>
+				<service service-name="findExtraOvertimePaymentSheetForPdf" auto-field-map="true" />	
+					
+            </actions>
+            <widgets>
+                <decorator-screen name="LandscapeReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimePaymentSheetLedgerHeader.fo.ftl"/></xsl-fo>
+                            </platform-specific>
+                       </decorator-section>          
+                     
+                       <decorator-section name="body">
+                           <platform-specific>
+                             <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimePaymentSheetLedgerBody.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                      </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- Extra overtime payment sheet Ledger end -->
+    <!--     ExtraOvertimeStatement start-->
+	<screen name="ExtraOvertimeStatement">
+
+			<section>
+			<actions>
+			    <set field="titleProperty" value="Extra Over Time Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> 
+				<set field="actionButtonItem" value="report" /> 
+				<set field="tabButtonItem" value="ExtraOvertimeStatement" />
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				
+				<service service-name="findExtraOvertimeStatement" auto-field-map="true" />
+			</actions>
+			<widgets>
+				<decorator-screen name="AttendanceReportDecorator"
+					location="${decorator}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+						 <section>								
+						  <widgets>									
+                           <screenlet title="Extra Over Time Statement"> 
+                              <include-form name="FindExtraOvertimeStatement" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           	  <include-form name="ListExtraOvertimeStatement" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                           	  <link text="Print Report" style="button" target="ExtraOvertimeStatementPdf" target-window="_BLANK">
+		                    		<parameter param-name="selectMonthYear" from-field="parameters.selectMonthYear"/>
+		                     </link>
+                           </screenlet>
+						  </widgets>
+						 </section>
+						</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+		
+			</widgets>
+			
+		</section>
+
+	</screen>
+	
+	<screen name="ExtraOvertimeStatementPdf">
+        <section>
+            <actions>
+             	<set field="viewSize" value="99999"/>
+                <set field="titleProperty" value="Extra Over Time Statement"/>	
+				<set field="orgPartyId" value="${userPreferences.ORGANIZATION_PARTY}" />
+				<set field="headerItem" value="attendance" /> <!-- App Menu -->
+				<set field="actionButtonItem" value="report" /> <!-- Action Menu -->
+				<set field="decorator"
+					value="component://humanres/widget/attendance/screens/AttendanceScreens.xml" /> <!-- Decorator -->	
+				
+				<set field="logoImageUrl" value="/humanres/images/babylonLogo.png"/>
+				<set field="selectMonthYear" from-field="parameters.selectMonthYear"/>
+				
+				<entity-one entity-name="PartyGroup" value-field="partyGroup">
+				  <field-map field-name="partyId" from-field="orgPartyId"/>
+				</entity-one>
+				<service service-name="findExtraOvertimeStatement" auto-field-map="true" />	
+            </actions>
+            <widgets>
+                <decorator-screen name="FoAttandanceReportDecorator" location="component://common/widget/CommonScreens.xml">
+                      <decorator-section name="header">
+                            <platform-specific>
+                               <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimeStatementHeader.fo.ftl"/></xsl-fo>
+                           </platform-specific>
+                       </decorator-section>          
+                     
+                      <decorator-section name="body">
+                           <platform-specific>
+                              <xsl-fo><html-template location="component://humanres/webapp/humanres/reports/ExtraOvertimeStatementBody.fo.ftl"/></xsl-fo>
+                          </platform-specific>                            
+                      </decorator-section>
+                       
+                    
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+	<!-- 	ExtraOvertimeStatement end-->
+    
+     <screen name="DailyAttendanceViewForm">
+        <section>
+            <actions>
+               <set field="headerItem" value="Report"/>
+            </actions>
+             <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="Employee Attendance View">
+                              <include-form name="DailyAttendanceViewForm" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                    	</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    
+     <screen name="IndividualAttendanceReport">
+        <section>
+            <actions>
+               <set field="headerItem" value="Report"/>
+            </actions>
+	    <condition>
+		<if-has-permission permission="HUMANRES" action="_ADMIN" />
+	    </condition>
+             <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="Individual Employee Attendance View">
+                                <include-form name="IndividualAttendanceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                    	</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    <screen name="UserAttendaceReport">
+        <section>
+            <actions>
+                <set field="headerItem" value="UserAttendaceReport"/>
+                <set field="partyId" from-field="parameters.partyId" />
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId"  from-field="parameters.partyId"/>
+             	</entity-and>
+             	<set field="employeeId" from-field="userLoginList[0].userLoginId"/>
+            </actions>
+             <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="Employee Attendance View">
+                                <include-form name="UserAttendaceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                    	</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    <screen name="DepartmentAttendanceReport">
+        <section>
+            <actions>
+               <set field="headerItem" value="Report"/>
+            </actions>
+             <widgets>               
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	<screenlet title="Individual Employee Attendance View">
+                                <include-form name="DepartmentAttendanceReport" location="component://humanres/widget/attendance/forms/AttendanceReportForms.xml"/>
+                    	</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+</screens>

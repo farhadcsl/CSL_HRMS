@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+        
+        
+        <screen name="EditTemplateBasicSalaryStepAssign">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="TemplateBasicSalaryStepAssign"/>
+                <set field="titleProperty" value="PageTitleTemplateBasicSalaryAssign"/>
+                <set field="salaryTemplateId" from-field="parameters.salaryTemplateId"/>
+                <set field="basicSalaryStepId" from-field="parameters.basicSalaryStepId"/>
+                
+                <entity-one entity-name="SalTempBasSalAssign" value-field="salTempBasSalAssign" auto-field-map="false">
+	                <field-map field-name="salaryTemplateId" from-field="salaryTemplateId"/> 
+	                <field-map field-name="basicSalaryStepId" from-field="basicSalaryStepId"/> 
+                </entity-one>
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="AddTemplateBasicSalaryAssignPanel" title="Assign Basic Salary Step Into Salary Template " collapsible="true">
+                            <include-form name="AddTemplateBasicSalaryStepAssign" location="component://payroll/widget/configuration/forms/TemplateBasicSalaryStepAssignForms.xml"/>
+                        </screenlet> 
+                        <include-form name="ListTemplateBasicSalaryStepAssign" location="component://payroll/widget/configuration/forms/TemplateBasicSalaryStepAssignForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    
+    
+       <screen name="EditTemplateBasicSalaryStepAssignExt">
+       	<section>                        
+            <actions>
+                <set field="tabButtonItem" value="TemplateBasicSalaryStepAssign"/>
+                <set field="titleProperty" value="PageTitleTemplateBasicSalaryAssign"/>
+                <set field="salaryTemplateId" from-field="parameters.salaryTemplateId"/>
+                <set field="basicSalaryStepId" from-field="parameters.basicSalaryStepId"/>                
+                <entity-one entity-name="SalTempBasSalAssign" value-field="salTempBasSalAssign" auto-field-map="false">
+	                <field-map field-name="salaryTemplateId" from-field="salaryTemplateId"/> 
+	                <field-map field-name="basicSalaryStepId" from-field="basicSalaryStepId"/>
+                </entity-one>
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="UpdateTemplateBasicSalaryStepAssignPanel"  collapsible="true" title="Assign Basic Salary Step Into Salary Template Modification">
+                            <include-form name="UpdateTemplateBasicSalaryStepAssignExt" location="component://payroll/widget/configuration/forms/TemplateBasicSalaryStepAssignForms.xml"/>
+                        </screenlet> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+
+         </screens>

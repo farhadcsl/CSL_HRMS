@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="SalaryAccountProcess">
+        <section>
+            <actions>
+                <set field="headerItem" value="AccountProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+              
+                <set field="pendingList" from-field="parameters.pendingList"/>
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <!-- <include-menu location="component://payroll/widget/PayrollMenus.xml" name="salaryProcessGen"/> -->
+                      
+                        <section>
+                           
+                            <widgets>
+                                <screenlet id="SalaryProcessNewSalaryProcessInitiation" title="Payroll Process Accounting" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="SalaryProcessAccountingProcessInitiation" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="detailSalaryAccountProcessList">
+        <section>
+            <actions>
+                <set field="headerItem" value="AccountProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="processId" from-field="parameters.processId"/>
+                 <set field="monthNumber" from-field="parameters.monthNumber"/>
+              <entity-and list="employeeSalaryFinal" entity-name="EmployeeSalaryFinal">
+              
+              <field-map field-name="monthNumber" from-field="monthNumber"/>
+              <field-map field-name="isActive" value="Y"/>
+              
+              </entity-and>
+             
+           
+			<!-- <entity-one value-field="monthlyTotalSalary" entity-name="MonthlyTotalSalary">
+				<field-map field-name="processId" from-field="processId"/>
+			</entity-one> -->
+			<set field="companyId" from-field="parameters.companyId" />
+			<set field="monthName" from-field="parameters.monthName"/>
+			<set field="year" from-field="parameters.year"/>
+			<set field="finalMonthlyNetPay" from-field="parameters.finalMonthlyNetPay"/>
+			<set field="totalListEmplint" from-field="parameters.totalListEmplint"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <!--  <include-menu location="component://payroll/widget/PayrollMenus.xml" name="salaryProcessGen"/> -->
+                     <screenlet id="CreatePayrollTypePanel" title="Overall Salary Summary(To Be posted on Accounting)" collapsible="true">
+                            <section>
+                                <widgets>
+                                    <include-form name="NewSalaryAccountOverallSalarySummary" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                    
+
+                                </widgets>
+                            </section>
+                        </screenlet> 
+                        <screenlet id="FindPayrollTypePanel2" title="Salary List For Accounting Processing" collapsible="true">
+                            <section>
+                                <widgets>
+                                        <!-- <include-form name="FindSalaryDetailView" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/> -->
+                                        <include-form name="NewSalaryAccountDetailViewlist" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                       
+                                </widgets>
+                            </section>
+                        </screenlet>
+                     
+                        
+                       
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="EditSalaryItems">
+        <section>
+            <actions>
+            <set field="headerItem" value="SalaryProcess"/>
+                <set field="titleProperty" value="HumanResCreatePayroll"/>
+                <set field="processId" from-field="parameters.processId"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="year" from-field="${parameters.year}"/>
+                 <set field="tabButtonItem" value="ExtProMod"/>
+                 <set field="totalSalary" from-field="parameters.totalSalary"/>
+          <entity-condition list="emplTempSalaryOptBen" entity-name="EmplFinalSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="processId" operator="equals" value="${parameters.processId}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="B"/>
+		            </condition-list>
+            </entity-condition>
+             <entity-condition list="emplTempSalaryOptDed" entity-name="EmplFinalSalaryOpt">
+		            <condition-list combine="and">
+		            <condition-expr field-name="processId" operator="equals" value="${parameters.processId}"/>
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="monthNumber" operator="equals" value="${parameters.monthNumber}"/>
+		            <condition-expr field-name="calculationType" operator="equals" value="D"/>
+		            </condition-list>
+            </entity-condition> 
+           <!--  <set field="eligiblePayableBenefitMap" from-field="parameters.eligiblePayableBenefitMap"/>
+            <set field="eligiblePayableDedMap" from-field="parameters.eligiblePayableDedMap"/> -->
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="emplDetail" title="Employee Information" collapsible="true">
+                                        <include-form name="EmployeeInfo" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-left">
+                                    <screenlet title="Earnings">
+                                  
+                                 
+                                        <include-form name="employeeEarnings" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="profile-right">
+                                    <screenlet title="Deductions">
+                                   
+                                     
+                                        <include-form name="employeeDeductions" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                    </screenlet>
+                                </container>
+                                <container style="leftclear">
+                                    <screenlet>
+                                        <include-form name="NetPayAdmin" location="component://payroll/widget/accountsprocess/forms/SalaryAccountsFroms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+    </screens>

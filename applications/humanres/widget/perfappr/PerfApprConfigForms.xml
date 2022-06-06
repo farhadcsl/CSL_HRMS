@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+       
+  <form name="ListPerfType" type="multi" title="" target="updatePerfType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprType"><order-by field-name="perfApprTypeId"/></entity-condition>
+        </actions>
+        <field name="perfApprTypeId" title="Type Id"><display/></field>
+        <field name="perfApprTypeName" title="Performance Type Name"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive" title="Active/InActive"><hidden/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="perfApprTypeId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editperfTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="perfApprTypeId"/>  
+                <parameter param-name="perfApprTypeName"/>
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="description"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPerfType" type="single" target="createPerfType" default-map-name="perfApprType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApprTypeId"><hidden/></field>
+        <field name="perfApprTypeName" title="Performance Appriasal Type Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdatePerfApprType" type="single" target="updateSinglePerfType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApprTypeId"><hidden/></field>
+        <field name="perfApprTypeName" title="Performance Appriasal Type Name"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>     
+    <form name="ListPerfObjectiveType" type="multi" title="" target="updatePerfObjectiveType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="ObjectiveType"><order-by field-name="objectiveTypeId"/></entity-condition>
+        </actions>
+        <field name="objectiveTypeId" title="Objective Type Id"><display/></field>
+        <field name="objectiveTypeName" title="Performance Appraisal Objective Type Name"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive" title="Active/InActive"><hidden/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfObjectiveType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="objectiveTypeId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editPerfObjectiveTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="objectiveTypeId"/>  
+                <parameter param-name="objectiveTypeName"/>
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="description"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPerfObjectiveType" type="single" target="createPerfObjectiveType" default-map-name="perfApprObjectiveType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="objectiveTypeId"><hidden/></field>
+        <field name="objectiveTypeName" title="Performance Appraisal Objective Type Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdatePerfApprObjectiveType" type="single" target="updateSinglePerfObjectiveType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="objectiveTypeId"><hidden/></field>
+        <field name="objectiveTypeName" title="Performance Appraisal Objective Type Name"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form> 
+    
+    <form name="ListPerfKpi" type="multi" title="" target="updatePerfKpiType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprKpi"><order-by field-name="perfApprKpiId"/></entity-condition>
+        </actions>
+        <field name="perfApprKpiId" title="KPI Id"><display/></field>
+        <field name="perfApprKpiName" title="Performance Appraisal KPI Name"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive" title="Active/InActive"><hidden/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfKpiType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="perfApprKpiId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editperfKpiTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="perfApprKpiId"/>  
+                <parameter param-name="perfApprKpiName"/>
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="description"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPerfKpi" type="single" target="createPerfKpiType" default-map-name="perfApprKpi"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApprKpiId"><hidden/></field>
+        <field name="perfApprKpiName" title="Performance Appraisal KPI Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdatePerfApprKpi" type="single" target="updateSinglePerfKpiType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApprKpiId"><hidden/></field>
+        <field name="perfApprKpiName" title="Performance Appraisal KPI Name"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+    <form name="ListPerfDevReq" type="multi" title="" target="updatePerfDevReqType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApprDevReq"><order-by field-name="perfApprDevReqId"/></entity-condition>
+        </actions>
+        <field name="perfApprDevReqId" title="Development Requirement Id"><display/></field>
+        <field name="perfApprDevReqName" title="Performance Development Requirement Name"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive" title="Active/InActive"><hidden/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfDevReqType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="perfApprDevReqId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editperfDevReqTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="perfApprDevReqId"/>  
+                <parameter param-name="perfApprDevReqName"/>
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="description"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPerfDevReq" type="single" target="createPerfDevReqType" default-map-name="perfApprDevReq"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApprDevReqId"><hidden/></field>
+        <field name="perfApprDevReqName" title="Development Requirement Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdatePerfApprDevReq" type="single" target="updateSinglePerfDevReqType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApprDevReqId"><hidden/></field>
+        <field name="perfApprDevReqName" title="Development Requirement Name"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="description"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+    <!-- Performance Appraisal Review -->
+    
+    <form name="ListPerfReviewType" type="multi" title="" target="updatePerfReviewType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfReviewType"><order-by field-name="perfReviewTypeId"/></entity-condition>
+        </actions>
+        <field name="perfReviewTypeId" title="Performance Appraisal Review Id"><display/></field>
+        <field name="perfReviewTypeName" title="Performance Appraisal Review Name"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive" title="Active/InActive"><hidden/></field>
+        <field name="comments" title="Description"><display/></field>
+        <field name="behaviorIndicators" title="Behavior Indicators"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfReviewType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="perfReviewTypeId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink  target="editperfReviewTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="perfReviewTypeId"/>  
+                <parameter param-name="perfReviewTypeName"/>
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="comments"/> 
+                <parameter param-name="behaviorIndicators"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPerfReviewType" type="single" target="createPerfReviewType" default-map-name="perfReviewType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfReviewTypeId"><hidden/></field>
+        <field name="perfReviewTypeName" title="Performance Appraisal Review Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="comments" title="Description"><textarea/></field>
+        <field name="behaviorIndicators" title="Behavior Indicators"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdateperfReviewType" type="single" target="updateSinglePerfReviewType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfReviewTypeId"><hidden/></field>
+        <field name="perfReviewTypeName" title="Performance Appraisal Review Name"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="comments" title="Description"><textarea/></field>
+        <field name="behaviorIndicators"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+    <!-- Performance Appraisal Rating -->
+    <form name="ListPerfRatingType" type="multi" title="" target="updatePerfRatingType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="PerfApRatingType"><order-by field-name="perfApRatingTypeId"/></entity-condition>
+        </actions>
+        <field name="perfApRatingTypeId" title="Performance Appraisal Rating Id"><display/></field>
+        <field name="perfApRatingTypeName" title="Performance Appraisal Rating Type Name"><display/></field>
+        <field name="perfApRatingScore" title="Performance Appraisal Rating Score"><display/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive" title="Active/InActive"><hidden/></field>
+        <field name="comments" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deletePerfRatingType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="perfApRatingTypeId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink target="editperfRatingTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="perfApRatingTypeId"/>  
+                <parameter param-name="perfApRatingTypeName"/>
+                <parameter param-name="dateAdded"/> 
+                <parameter param-name="isActive"/> 
+                <parameter param-name="perfApRatingScore"/> 
+                <parameter param-name="comments"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddPerfRatingType" type="single" target="createPerfRatingType" default-map-name="perfRatingType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApRatingTypeId"><hidden/></field>
+        <field name="perfApRatingTypeName" title="Performance Appraisal Rating Type Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="perfApRatingScore" title="Performance Appraisal Rating Score" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="comments" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdateperfRatingType" type="single" target="updateSinglePerfRatingType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="perfApRatingTypeId"><hidden/></field>
+        <field name="perfApRatingTypeName" title="Performance Appraisal Rating Type Name"><text/></field>
+        <field name="dateAdded"><hidden/></field>
+        <field name="perfApRatingScore" title="Performance Appraisal Rating Score"><text/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="comments" title="Description"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    
+</forms> 

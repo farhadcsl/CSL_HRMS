@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+   <simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+   <simple-method method-name="createRequisitionContent" short-description="Create Party Content Entity">
+        <make-value value-field="requisitionContent" entity-name="RequisitionContent"/>
+        <set-pk-fields value-field="requisitionContent" map="parameters"/>
+        <set-nonpk-fields value-field="requisitionContent" map="parameters"/>
+        
+        <if-empty field="requisitionContent.contentId">
+             <sequenced-id-to-env sequence-name="Content" env-name="contentId"/>
+             <to-string field-name="contentId"/>
+             <set from-field="contentId" field="parameters.contentId"/>
+        </if-empty>
+
+        <if-empty field="requisitionContent.fromDate">
+            <now-timestamp field="nowTimestamp"/>
+            <set field="requisitionContent.fromDate" from-field="nowTimestamp"/>
+        </if-empty>
+
+        <create-value value-field="requisitionContent"/>
+    </simple-method>
+    
+     <simple-method method-name="createCvRequisitionContent" short-description="Create Party Content Entity">
+        <make-value value-field="requisitionContent" entity-name="CvContent"/>
+        <set-pk-fields value-field="requisitionContent" map="parameters"/>
+        <set-nonpk-fields value-field="requisitionContent" map="parameters"/>
+        
+        <if-empty field="requisitionContent.contentId">
+             <sequenced-id-to-env sequence-name="Content" env-name="contentId"/>
+             <to-string field-name="contentId"/>
+             <set from-field="contentId" field="parameters.contentId"/>
+        </if-empty>
+
+        <if-empty field="requisitionContent.fromDate">
+            <now-timestamp field="nowTimestamp"/>
+            <set field="requisitionContent.fromDate" from-field="nowTimestamp"/>
+        </if-empty>
+
+        <create-value value-field="requisitionContent"/>
+    </simple-method>
+    
+    <simple-method method-name="RemoveContentOfRequisition" short-description="Remove Requisition Content">
+        <entity-one entity-name="RequisitionContent" value-field="lookedUpValue"/>
+        <set-pk-fields value-field="lookedUpValue" map="parameters"/>
+       	<set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <remove-value value-field="lookedUpValue"/>              
+        <set field="successMessage" value="Request Accepted Successfully"/>
+        
+    </simple-method>
+    <simple-method method-name="RemoveCvContentOfRequisition" short-description="Remove Requisition Content">
+        <entity-one entity-name="CvContent" value-field="lookedUpValue"/>
+        <set-pk-fields value-field="lookedUpValue" map="parameters"/>
+       	<set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <remove-value value-field="lookedUpValue"/>              
+        <set field="successMessage" value="Request Accepted Successfully"/>
+        
+    </simple-method>
+     <simple-method method-name="removePartyApplicantContent" short-description="Update Party Content Entity">
+        <make-value value-field="lookupPkMap" entity-name="PartyContent"/>
+        <set-pk-fields value-field="lookupPkMap" map="parameters"/>
+		<find-by-primary-key map="lookupPkMap" value-field="partyContent"/>
+        <remove-value value-field="partyContent"/>
+        <set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/> 
+    </simple-method>
+    
+    
+     <simple-method method-name="createApplicantQual" short-description="Create a Party Qualification">
+    	<make-value entity-name="PartyQual" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <if-empty field="newEntity.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+          <set field="newEntity.verifStatusId" default-value="PQV_VERIFIED"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+      
+        <if>
+            <condition>
+                <if-empty field="parameters.partyQualTypeId"></if-empty>
+            </condition>
+            <then>
+            	<add-error>
+                    <fail-property property="HumanResExamTitleFieldCanNotBeEmpty" resource="HumanResUiLabels"/>
+                </add-error>
+                <check-errors/>
+               </then>
+            <else>
+                <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Thanks! Qualification Added Successfully"/>
+            </else>
+        </if>
+        
+        <set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/> 
+        
+    </simple-method>
+    
+    <simple-method method-name="updateApplicantQual" short-description="Update Qualification of a Party">
+        <entity-one entity-name="PartyQual" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Qualification Updated Successfully"/>
+         <set field="partyId" from-field="parameters.partyId"/>
+        <field-to-result field="partyId" result-name="partyId"/>
+    </simple-method>
+
+    <simple-method method-name="deleteApplicantQual" short-description="Delete Qualification of a Party">
+        <entity-one entity-name="PartyQual" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Qualification Deleted Successfully"/>
+    </simple-method>
+    <simple-method method-name="terminateEmployee" short-description="Update Employment">
+       
+        <entity-and list="employments" entity-name="Employment">
+        	<field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+        </entity-and>
+        
+       
+        <entity-and list="userLogin" entity-name="UserLogin">
+        	<field-map field-name="partyId" from-field="parameters.partyId"/>
+        </entity-and>
+        <set field="employments[0].terminationReasonId" from-field="parameters.terminationReasonId"/>
+        <set field="employments[0].terminationTypeId" from-field="parameters.terminationTypeId"/>
+        <set field="employments[0].thruDate" from-field="parameters.tdate"/>        
+       
+        <set field="userLogin[0].enabled" value="N"/>
+        <entity-one value-field="party" entity-name="Party">
+           <field-map field-name="partyId" from-field="parameters.partyId"/>
+        </entity-one>
+        
+        <!-- <set field="party.statusId" value="EMPL_POS_INACTIVE"/> -->
+        <set field="party.statusId" value="PARTY_DISABLED"/>
+        <field-to-result field="parameters.partyId" result-name="partyId"/>
+        
+        <store-value value-field="employments[0]"/>
+        <store-value value-field="party"/>
+        <store-value value-field="userLogin[0]"/>
+        <set field="successMessage" value="Employment Terminate Updated Successfully"/>
+    </simple-method>
+        
+        
+        
+    <!-- <simple-method method-name="updateApplicantSalaryNegotiation" short-description="update Applicant Salary Negotiation">
+        <make-value entity-name="ApplicantSalarySetup" value-field="entityObject" />
+        <set-pk-fields value-field="entityObject" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="entityObject"/>
+        
+        <if-empty field="entityObject.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+        	<set field="entityObject.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+       
+       	<create-value value-field="entityObject"/>
+        <set field="successMessage" value="Employee Educational Qualification Successfully Added"/>        
+    </simple-method> -->
+    <simple-method method-name="createApplicantSalaryNegotiation" short-description="Create Resume for Party">
+        <make-value entity-name="ApplicantSalarySetup" value-field="newEntity"/>
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+        	<set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+        <set field="partyId" from-field="parameters.partyId"/>
+    </simple-method>
+   <simple-method method-name="updateApplicantSalaryNegotiation" short-description="update Applicant Salary Negotiation">
+        <entity-one entity-name="ApplicantSalarySetup" value-field="lookedUpValue"/>
+        <set-pk-fields value-field="lookedUpValue" map="parameters"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="partyId" from-field="parameters.partyId"/>
+	    <set field="successMessage" value="Applicant Salary Negotiation Successfully Updated"/>
+    </simple-method>
+    
+    
+     <!-- CvBank -->
+     
+     <simple-method method-name="createCvBank" short-description="create a Cv Bank">
+        <make-value entity-name="CvBank" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <sequenced-id sequence-name="CvBank" field="newEntity.cvBankId"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+		<if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+        	<set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value=" Applicant Information Successfully Created"/>
+    </simple-method>
+     <simple-method method-name="updateCvBank" short-description="Update Cv Bank">
+        <entity-one entity-name="CvBank" value-field="lookedUpValue"/>
+        <set-nonpk-fields value-field="lookedUpValue" map="parameters"/>
+        <store-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Applicant Information Successfully Updated"/>
+    </simple-method>
+    <simple-method method-name="deleteCvBank" short-description="Delete Cv Bank">
+        <entity-one entity-name="CvBank" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Applicant Information Successfully Deleted"/>
+    </simple-method>
+    
+     <!-- Cv Bank Note -->
+     
+     <simple-method method-name="createCvBankNotes" short-description="Cv Bank Note">
+        <make-value entity-name="CvBankNote" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <sequenced-id sequence-name="CvBankNote" field="newEntity.cvBankNoteId"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+		<if-empty field="newEntity.dateAdded">
+            <now-timestamp field="nowTimeStamp"/>
+        	<set field="newEntity.dateAdded" from-field="nowTimeStamp"/>
+        </if-empty>
+        <create-value value-field="newEntity"/>
+        <set field="successMessage" value="Applicant Information Note Successfully Created"/>
+    </simple-method>
+    <simple-method method-name="deleteCvBankNotes" short-description="Delete Cv Bank Note">
+        <entity-one entity-name="CvBankNote" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+        <set field="successMessage" value="Applicant Information Note Successfully Deleted"/>
+        <set field="cvBankId" from-field="lookedUpValue.cvBankId" />
+        <field-to-result field="cvBankId" result-name="cvBankId"/> 
+    </simple-method>
+    
+    
+</simple-methods>
+
+
+

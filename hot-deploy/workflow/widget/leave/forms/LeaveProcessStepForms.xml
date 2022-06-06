@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	
+    <form name="ListLeaveWorkflowStep" type="multi" list-name="processStepList" use-row-submit="true" title="" target="updatePayrollPayGrade"
+     	paginate-target="FindLeaveProcessStructureSetup"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+  		<actions>
+  			<entity-and entity-name="ProcessSteps" list="processStepList">  				
+				<field-map field-name="processStrId" from-field="processStrId" />
+  			</entity-and>
+  		</actions>
+        <field name="processStrId" title="Process Structure Id"><display></display></field>
+        <field name="stepId" title="Step Id"><display></display></field>
+        <field name="stepOrder" title="Step Order"><display></display></field>
+       <!--  <field name="authPartyId" title="Authorize Party"><hidden/></field> -->
+        
+		<field name="authPartyId" title="Authorize Person">
+			<display-entity entity-name="PartyAndPerson" description="${firstName} ${lastName}" key-field-name="partyId"></display-entity>
+		</field>
+        <field name="authEmployeeId" title="Authorize Person"><display></display></field>
+        <field name="description"><display></display></field>
+        <field name="dateAdded"><display></display></field>
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink target="EditLeaveProcessStepSetup" description="Edit" also-hidden="false">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="stepId"/>
+                <parameter param-name="stepOrder"/>
+                <parameter param-name="authPartyId"/>
+                <parameter param-name="authEmployeeId"/>
+                <parameter param-name="description"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+        <field name="notificationMapLink" title="" widget-style="buttontext" >
+            <hyperlink target="NotificationMapForProcessStep" description="Notification Map" also-hidden="false">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="stepId"/>
+                <parameter param-name="stepOrder"/>
+                <parameter param-name="processName"/>
+                <parameter param-name="strDescription"/>
+                <parameter param-name="strIsActive"/>
+                <parameter param-name="strFromDate"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="" widget-style="buttontext">
+            <hyperlink target="deleteLeaveProcessStepSetup" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="stepId"/>
+                <parameter param-name="stepOrder"/>
+                <parameter param-name="authPartyId"/>
+                <parameter param-name="authEmployeeId"/>
+                <parameter param-name="description"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="dateAdded"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    
+    
+    <form name="NewLeaveProcessStepSetup" type="single" target="createLeaveProcessStepSetup" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="processStructure">
+       <field name="processStrId" title="Structure Id"><display/></field>
+       <!-- <field name="stepId" tooltip="${uiLabelMap.CommonRequired}"  widget-style="required" title="Step Id"> <text/></field> -->
+        <field name="stepOrder" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" title="Step Order"><text/></field>
+        <field name="authEmployeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="description" ><textarea/></field>
+        <field name="submitButton" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+    
+    </form>
+    
+    
+    <form name="EditLeaveProcessStepSetup" type="single" target="updateLeaveProcessStepSetup" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="processStructure">
+       <field name="processStrId" title="Structure Id"><display/></field>
+       <field name="stepId" ><display/></field>
+        <field name="stepOrder" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" title="Step Order"><text/></field>
+        <field name="authEmployeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="description" ><textarea/></field>
+        <field name="isActive" ><display/></field>
+        <field name="dateAdded" ><display/></field>
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+    
+    </form>
+</forms>

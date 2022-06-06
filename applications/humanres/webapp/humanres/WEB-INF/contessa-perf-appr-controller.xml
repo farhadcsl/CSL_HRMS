@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+    <request-map uri="InitiatePerformanceAppriasal">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="InitiatePerformanceAppriasal"/>
+    </request-map> 
+    <request-map uri="PerfApprGlobalHrSettings">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ShowPerfReviewType"/>
+    </request-map> 
+    <request-map uri="PerfAppraisal">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPerformanceAppraisal"/>
+    </request-map> 
+    <request-map uri="CreatePerfAppraisal">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ConfigurePerfAppraisal"/>
+    </request-map>
+  
+    <request-map uri="createInitiatePerformanceAppriasal">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="createInitiatePerformanceAppriasal"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+        <response name="error" type="view" value="InitiatePerformanceAppriasal"/>
+    </request-map>
+    
+    <request-map uri="ConfigurePerfAppraisal">
+        <security https="true" auth="true"/>
+        <!--   <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="ConfigurePerfAppraisal"/>   -->
+        <response name="success" type="view" value="ConfigurePerfAppraisal"/>
+    </request-map>
+    <request-map uri="FindPerformanceAppraisal">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindPerformanceAppraisal"/>
+    </request-map>
+    
+    <request-map uri="editPerformanceAppraisal">
+        <security https="true" auth="true"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+    </request-map>
+     <request-map uri="SendForProcessPerfAppraisal">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="SendForProcessPerfAppraisal"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+        <response name="error" type="view" value="FindPerformanceAppraisal"/>
+    </request-map>
+     <request-map uri="RemovePerfAppraisal">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="RemovePerfAppraisal"/>
+        <response name="success" type="view" value="FindPerformanceAppraisal"/>
+        <response name="error"   type="view" value="FindPerformanceAppraisal"/>
+    </request-map>
+    
+    
+    
+    
+    <!--   Performance appraisal Review   -->
+    <request-map uri="EditPerfReviewType">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ShowPerfReviewType"/>
+    </request-map> 
+    <request-map uri="createPerfReviewType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfReviewType"/>
+       <response name="success" type="request-redirect-noparam" value="EditPerfReviewType"/>
+       <response name="error" type="view" value="ShowPerfReviewType"/>
+   </request-map>
+    <request-map uri="updateSinglePerfReviewType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfReviewType"/>
+        <response name="success" type="request-redirect-noparam" value="EditPerfReviewType"/>
+    </request-map>
+    <request-map uri="updatePerfReviewType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfReviewType"/>
+        <response name="success" type="request" value="ShowPerfReviewType"/>
+    </request-map>
+    <request-map uri="deletePerfReviewType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfReviewType"/>
+        <response name="success" type="view" value="ShowPerfReviewType"/>
+    </request-map>
+    <request-map uri="editperfReviewTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editperfReviewTypeSetup"/>
+    </request-map> 
+   
+ <!--  ==============Performance appraisal Rating==================  -->  
+
+    <request-map uri="EditPerfRatingType">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ShowPerfRatingType"/>
+    </request-map>
+   <request-map uri="createPerfRatingType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfRatingType"/>
+       <response name="success" type="request-redirect-noparam" value="EditPerfRatingType"/>
+       <response name="error" type="view" value="ShowPerfRatingType"/>
+   </request-map>
+    <request-map uri="updateSinglePerfRatingType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfRatingType"/>
+        <response name="success" type="request-redirect-noparam" value="EditPerfRatingType"/>
+    </request-map>
+    <request-map uri="updatePerfRatingType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfRatingType"/>
+        <response name="success" type="request" value="ShowPerfRatingType"/>
+    </request-map>
+    <request-map uri="deletePerfRatingType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfRatingType"/>
+        <response name="success" type="view" value="ShowPerfRatingType"/>
+    </request-map>
+    <request-map uri="editperfRatingTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editperfRatingTypeSetup"/>
+    </request-map> 
+    <!--  ==============Performance appraisal KPI==================  --> 
+    <request-map uri="PerfApprKpi">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddPerfApprKpi"/>
+    </request-map> 
+    <request-map uri="createPerfKpiType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfKpiType"/>
+       <response name="success" type="request-redirect-noparam" value="PerfApprKpi"/>
+       <response name="error" type="view" value="AddPerfApprKpi"/>
+   </request-map>
+    <request-map uri="updateSinglePerfKpiType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfKpiType"/>
+        <response name="success" type="request-redirect-noparam" value="PerfApprKpi"/>
+    </request-map>
+    <request-map uri="updatePerfKpiType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfKpiType"/>
+        <response name="success" type="view" value="AddPerfApprKpi"/>
+    </request-map>
+    <request-map uri="deletePerfKpiType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfKpiType"/>
+        <response name="success" type="view" value="AddPerfApprKpi"/>
+    </request-map>
+    <request-map uri="editperfKpiTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editperfKpiTypeSetup"/>
+    </request-map> 
+      <!--  ==============Performance appraisal DevReq==================  --> 
+    <request-map uri="PerfApprDevReq">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddPerfApprDevReq"/>
+    </request-map> 
+    <request-map uri="createPerfDevReqType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfDevReqType"/>
+       <response name="success" type="request-redirect-noparam" value="PerfApprDevReq"/>
+       <response name="error" type="view" value="AddPerfApprDevReq"/>
+   </request-map>
+    <request-map uri="updateSinglePerfDevReqType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfDevReqType"/>
+        <response name="success" type="request-redirect-noparam" value="PerfApprDevReq"/>
+    </request-map>
+    <request-map uri="updatePerfDevReqType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfDevReqType"/>
+        <response name="success" type="view" value="AddPerfApprDevReq"/>
+    </request-map>
+    <request-map uri="deletePerfDevReqType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfDevReqType"/>
+        <response name="success" type="view" value="AddPerfApprDevReq"/>
+    </request-map>
+    <request-map uri="editperfDevReqTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editperfDevReqTypeSetup"/>
+    </request-map> 
+          <!--  ==============Performance appraisal Type==================  --> 
+    <request-map uri="PerfApprTypeSettings">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddPerfApprType"/>
+    </request-map> 
+    <request-map uri="createPerfType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfType"/>
+       <response name="success" type="request-redirect-noparam" value="PerfApprTypeSettings"/>
+       <response name="error" type="view" value="AddPerfApprType"/>
+   </request-map>
+    <request-map uri="updateSinglePerfType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfType"/>
+        <response name="success" type="request-redirect-noparam" value="PerfApprTypeSettings"/>
+    </request-map>
+    <request-map uri="updatePerfType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfType"/>
+        <response name="success" type="view" value="AddPerfApprType"/>
+    </request-map>
+    <request-map uri="deletePerfType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfType"/>
+        <response name="success" type="view" value="AddPerfApprType"/>
+    </request-map>
+    <request-map uri="editperfTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editperfTypeSetup"/>
+    </request-map> 
+              <!--  ==============Performance appraisal Objective Type==================  --> 
+    <request-map uri="PerfApprObjectiveTypeSettings">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddPerfApprObjectiveType"/>
+    </request-map> 
+    <request-map uri="createPerfObjectiveType">
+       <security https="true" auth="true"/>
+       <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfObjectiveType"/>
+       <response name="success" type="request-redirect-noparam" value="PerfApprObjectiveTypeSettings"/>
+       <response name="error" type="view" value="AddPerfApprObjectiveType"/>
+   </request-map>
+    <request-map uri="updateSinglePerfObjectiveType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfObjectiveType"/>
+        <response name="success" type="request-redirect-noparam" value="PerfApprObjectiveTypeSettings"/>
+    </request-map>
+    <request-map uri="updatePerfObjectiveType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfObjectiveType"/>
+        <response name="success" type="view" value="AddPerfApprObjectiveType"/>
+    </request-map>
+    <request-map uri="deletePerfObjectiveType">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfObjectiveType"/>
+        <response name="success" type="view" value="AddPerfApprObjectiveType"/>
+    </request-map>
+    <request-map uri="editPerfObjectiveTypeSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editPerfObjectiveTypeSetup"/>
+    </request-map> 
+    
+    
+    <!--   Business KPI    -->
+
+    <request-map uri="CreatePerfApprBusinessKPI">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="CreatePerfApprBusinessKPI"/>
+    </request-map>
+
+    <request-map uri="createPerfApprBusinessKPI">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="createPerfApprBusinessKPI"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+        <response name="error" type="view" value="InitiatePerformanceAppriasal"/>
+    </request-map>
+   
+    <request-map uri="deletePerfApprBusinessKpi">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfApprBusinessKpi"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal">
+        	<redirect-parameter name="processId"/>
+        </response>
+    </request-map>
+    
+    <!--   Behavioral KPI    -->
+    
+    <request-map uri="NewBehaviourKPI">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="BehaviorKpiPopup"/>
+    </request-map> 
+    
+    <request-map uri="createPerfApprBehaviorKpi">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="createPerfApprBehaviorKpi"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+        <response name="error" type="view" value="InitiatePerformanceAppriasal"/>
+    </request-map>
+    <request-map uri="deletePerfApprBehaviorKpi">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfApprBehaviorKpi"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+    </request-map>
+    
+    <!--   Development Plan    -->
+    <request-map uri="NewDevelopmentPlan">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="DevelopmentPlanPopup"/>
+    </request-map> 
+    <request-map uri="createDevelopmentPlan">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="createDevelopmentPlan"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+        <response name="error" type="view" value="ConfigurePerfAppraisal"/>
+    </request-map>
+    <request-map uri="deletePerfApprDevelopmentPlan">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfApprDevelopmentPlan"/>
+        <response name="success" type="request-redirect" value="ConfigurePerfAppraisal"/>
+    </request-map>
+    
+    <!--   PerfAppr WaitingView    -->
+     <request-map uri="PerfApprView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PerfApprListView"/>
+    </request-map> 
+    
+     <request-map uri="PerfApprWaitingView">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PerfApprWaitingView"/>
+    </request-map>
+    <request-map uri="editPerformanceAppraisalWaiting">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ConfigurePerfAppraisalWaiting"/>
+    </request-map>
+    <!--   PerfAppr Approver Assign    -->
+    <request-map uri="PerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PerfApprApproverAssign"/>
+    </request-map> 
+    <request-map uri="NewPerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewPerfApprApproverAssign"/>
+    </request-map>
+    <request-map uri="createPerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprConfig" invoke="createPerfApprApproverAssign"/>
+        <response name="success" type="view" value="PerfApprApproverAssign"/>
+        <response name="error" type="view" value="NewPerfApprApproverAssign"/>
+    </request-map>
+    <request-map uri="FindPerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="PerfApprApproverAssign"/>
+    </request-map>
+    <request-map uri="updatePerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updatePerfApprApproverAssign"/>
+        <response name="success" type="view" value="PerfApprApproverAssign"/>
+    </request-map>
+    <request-map uri="deletePerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deletePerfApprApproverAssign"/>
+        <response name="success" type="view" value="PerfApprApproverAssign"/>
+    </request-map>
+    <request-map uri="editPerfApprApproverAssign">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="editPerfApprApproverAssign"/>
+    </request-map>
+  
+  
+    <request-map uri="RejectPreformanceApproval">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="RejectPreformanceApproval"/>
+        <response name="success" type="view" value="InitiatePerformanceAppriasal"/>
+    </request-map>
+    <request-map uri="ApprovedPerformanceApproval">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.humanres.contessaPerfAppr.PerfApprProcess" invoke="ApprovedPerformanceApproval"/>
+        <response name="success" type="view" value="InitiatePerformanceAppriasal"/>
+    </request-map>
+    
+    
+	<view-map name="InitiatePerformanceAppriasal" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#InitiatePerformanceAppriasal"/>
+   <view-map name="ShowPerfReviewType" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#EditPerfReviewType"/>
+    <view-map name="ShowPerfRatingType" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#EditPerfRatingType"/>
+    <view-map name="editperfReviewTypeSetup" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#UpdatePerfReviewType"/>
+    <view-map name="editperfRatingTypeSetup" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#UpdatePerfRatingType"/>
+    <view-map name="FindPerformanceAppraisal" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#FindPerformanceAppraisal"/>
+    <view-map name="ConfigurePerfAppraisal" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#ConfigurePerfAppraisal"/>
+    <view-map name="AddPerfApprKpi" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#AddPerfApprKpi"/>
+    <view-map name="editperfKpiTypeSetup" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#UpdatePerfApprKpiSetting"/>
+    <view-map name="AddPerfApprDevReq" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#AddPerfApprDevReq"/>
+    <view-map name="editperfDevReqTypeSetup" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#UpdatePerfApprDevReqSetting"/>
+    <view-map name="AddPerfApprType" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#AddPerfApprType"/>
+    <view-map name="editperfTypeSetup" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#UpdatePerfApprTypeSetting"/>
+    <view-map name="AddPerfApprObjectiveType" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#AddPerfApprObjectiveType"/>
+    <view-map name="editPerfObjectiveTypeSetup" type="screen" page="component://humanres/widget/perfappr/PerfApprConfigScreens.xml#UpdatePerfApprObjectiveTypeSetting"/>
+	<view-map name="CreatePerfApprBusinessKPI" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#CreatePerfApprBusinessKPI"/>
+   
+   <view-map name="BehaviorKpiPopup" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#BehaviorKpiPopup"/>
+   <view-map name="DevelopmentPlanPopup" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#CreatePerfApprDevelopmentPlan"/>
+   <view-map name="PerfApprListView" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#PerfApprListView"/>
+   
+	<view-map name="PerfApprWaitingView" type="screen" page="component://humanres/widget/perfappr/PerfApprWaitingScreens.xml#PerfApprWaitingListView"/>
+    <view-map name="ConfigurePerfAppraisalWaiting" type="screen" page="component://humanres/widget/perfappr/PerfApprWaitingScreens.xml#ConfigurePerfAppraisalWaiting"/>
+    <view-map name="PerfApprListView" type="screen" page="component://humanres/widget/perfappr/PerfApprScreens.xml#PerfApprListView"/>
+    <view-map name="PerfApprApproverAssign" type="screen" page="component://humanres/widget/perfappr/PerfApprApproverAssignScreens.xml#FindPerfApprApproverAssignView"/>
+    <view-map name="NewPerfApprApproverAssign" type="screen" page="component://humanres/widget/perfappr/PerfApprApproverAssignScreens.xml#NewPerfApprApproverAssign"/>
+    <view-map name="editPerfApprApproverAssign" type="screen" page="component://humanres/widget/perfappr/PerfApprApproverAssignScreens.xml#UpdatePerfApprApproverAssign"/>
+</site-conf>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+        
+        
+        <screen name="EditPositionTemplateAssign">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="PositionTemplateAssign"/>
+                <set field="titleProperty" value="PageTitlePositionTemplateAssign"/>
+                <set field="salaryTemplateId" from-field="parameters.salaryTemplateId"/>
+                <set field="emplPositionTypeId" from-field="parameters.emplPositionTypeId"/>
+                <entity-one entity-name="PositionSalTempAssign" value-field="positionTemplateAssign" 
+                	auto-field-map="false">
+	                <field-map field-name="salaryTemplateId" from-field="salaryTemplateId"/> 
+	                <field-map field-name="emplPositionTypeId" from-field="emplPositionTypeId"/> 
+                </entity-one> 
+            </actions>            
+            <widgets>
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="AddPositionTemplateAssignPanel" title="Assign Salary Template Into Position" collapsible="true">
+                            <include-form name="AddPositionTemplateAssign" location="component://payroll/widget/configuration/forms/PositionTemplateAssignForms.xml"/>
+                        </screenlet> 
+                        <include-form name="ListPositionTemplateAssign" location="component://payroll/widget/configuration/forms/PositionTemplateAssignForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    <screen name="EditPositionTemplateAssignExt">
+        <section>                        
+            <actions>
+                <property-map resource="ExampleUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="tabButtonItem" value="PositionTemplateAssign"/>
+                <set field="titleProperty" value="PageTitlePositionTemplateAssign"/>
+                <set field="salaryTemplateId" from-field="parameters.salaryTemplateId"/>
+                <set field="emplPositionTypeId" from-field="parameters.emplPositionTypeId"/>
+                 <entity-one entity-name="PositionSalTempAssign" value-field="positionTemplateAssign" auto-field-map="false">
+                <field-map field-name="salaryTemplateId" from-field="salaryTemplateId"/> 
+                <field-map field-name="emplPositionTypeId" from-field="emplPositionTypeId"/> 
+                </entity-one> 
+            </actions>
+             
+            <!-- <condition>
+               <if-has-permission permission="PAYROLL" action="_VIEW"/>
+            </condition>  --> 
+            <widgets>
+            
+                <decorator-screen name="PayrollDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">                                                                                       
+                        <screenlet id="UpdatePositionTemplateAssignPanel" title="Assign Salary Template Into Position Modification" collapsible="true">
+                            <include-form name="UpdatePositionTemplateAssignExt" location="component://payroll/widget/configuration/forms/PositionTemplateAssignForms.xml"/>
+                        </screenlet> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+         </screens>

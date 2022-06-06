@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>Conetessa Data Adapter</name><driver>com.mysql.jdbc.Driver</driver><username>root</username><password>rezvy</password><savePassword>true</savePassword><url>jdbc:mysql://localhost/ofbiz</url><database></database><serverAddress></serverAddress><classpath>/home/rezvy/project/contessawork/framework/entity/lib/jdbc/mysql-connector-java-5.1.26-bin.jar</classpath></jdbcDataAdapter>

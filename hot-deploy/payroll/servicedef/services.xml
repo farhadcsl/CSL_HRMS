@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Payroll Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+    
+    <!-- Report Services -->
+    
+    <service name="findActiveEmployeeforSalary" auth="false" engine="java" invoke="findActiveEmployee" location="org.ofbiz.salaryprocess.NewSalaryEvents">
+       
+		<permission-service service-name="humanResManagerPermission" main-action="CREATE" />		
+		
+		<attribute name="fromDate" mode="IN" type="String" optional="true" field-name="fromDate"/>
+		<attribute name="year" mode="IN" type="String" optional="true" field-name="year"/>
+		<attribute name="month" mode="IN" type="String" optional="true" field-name="month"/>
+		<attribute name="division" mode="IN" type="String" optional="true" field-name="division"/>
+		<attribute name="department" mode="IN" type="String" optional="true" field-name="department"/>
+		<attribute name="section" mode="IN" type="String" optional="true" field-name="section"/>	
+		<attribute name="line" mode="IN" type="String" optional="true" field-name="line"/>
+		<attribute name="employmentType" mode="IN" type="String" optional="true" field-name="employmentType"/>
+		<attribute name="orgPartyId" mode="IN" type="String" optional="false" field-name="orgPartyId"/>
+		<attribute name="absenceList" type="List" mode="OUT" optional="true"/>
+		<attribute name="selectedDate" type="String" mode="OUT" optional="true"/>
+		
+		<attribute name="isSuccess" type="String" mode="OUT" optional="true"/>
+		
+		
+	</service>
+    
+    
+</services>

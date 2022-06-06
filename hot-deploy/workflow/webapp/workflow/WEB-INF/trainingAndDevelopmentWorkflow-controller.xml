@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+ 
+     <request-map uri="TrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="FindTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>	 
+	  <request-map uri="NewTrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+	 
+	  <request-map uri="createTrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.trainingAndDevelopmentProcess.TrainingAndDevelopmentWorkflowConfig" invoke="createTrainingAndDevelopmentProcessStructureSetup"/>
+        <response name="success" type="view" value="FindTrainingAndDevelopmentProcessStructureSetup"/>
+        <response name="error" type="view" value="NewTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+	 
+	 <request-map uri="FindTrainingAndDevelopmentProcessStructureSetup">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindTrainingAndDevelopmentProcessStructureSetup"/>
+    </request-map> 
+    
+	  <request-map uri="EditTrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="EditTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+    
+	  <request-map uri="updateTrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.trainingAndDevelopmentProcess.TrainingAndDevelopmentWorkflowConfig" invoke="updateTrainingAndDevelopmentProcessStructureSetup"/>
+        <response name="success" type="view" value="FindTrainingAndDevelopmentProcessStructureSetup"/>
+        <response name="error" type="view" value="NewTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+    
+     <request-map uri="deleteTrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deleteTrainingAndDevelopmentProcessStructureSetup"/>
+	 	<response name="success" type="view" value="FindTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+    
+	  <request-map uri="DetailsTrainingAndDevelopmentProcessStructureSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+    
+    
+	 
+	
+	
+	
+	
+	
+    <!-- ======================== TrainingAndDevelopment Process Step ====================================  -->
+    
+	  <request-map uri="NewTrainingAndDevelopmentProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewTrainingAndDevelopmentProcessStepSetup"/>
+	 </request-map>
+	  <request-map uri="EditTrainingAndDevelopmentProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="EditTrainingAndDevelopmentProcessStepSetup"/>
+	 </request-map>
+	 
+	  <request-map uri="createTrainingAndDevelopmentProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="createLeaveProcessStepSetup"/>
+        <response name="success" type="view" value="DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+        <response name="error" type="view" value="DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+	  <request-map uri="updateTrainingAndDevelopmentProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.leaveprocess.LeaveProcessConf" invoke="updateLeaveProcessStepSetup"/>
+        <response name="success" type="view" value="DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+        <response name="error" type="view" value="DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+	 <request-map uri="deleteTrainingAndDevelopmentProcessStepSetup">
+	 	<security https="true" auth="true"/>
+	 	 <event type="service" invoke="deleteTrainingAndDevelopmentProcessStepSetup"/>
+	 	<response name="success" type="view" value="DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+	 </request-map>
+	 
+    <!-- ======================== TrainingAndDevelopment Process Step ====================================   -->
+    
+	
+	
+	
+	
+	
+	
+    <!-- ======================== Party Process Assign ====================================  -->
+    <request-map uri="TrainingAndDevelopmentPartyProcessAssign">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="TrainingAndDevelopmentPartyProcessAssign"/>
+	 </request-map>
+	   <request-map uri="NewTrainingAndDevelopmentPartyProcessAssign">
+	 	<security https="true" auth="true"/>
+	 	<response name="success" type="view" value="NewTrainingAndDevelopmentPartyProcessAssign"/>
+	 </request-map>
+    
+	  <request-map uri="createTrainingAndDevelopmentPartyWorkflowAssign">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.trainingAndDevelopmentProcess.TrainingAndDevelopmentWorkflowConfig" invoke="createPartyProcess"/>
+        <response name="success" type="view" value="TrainingAndDevelopmentPartyProcessAssign"/>
+        <response name="error" type="view" value="NewTrainingAndDevelopmentPartyProcessAssign"/>
+	 </request-map>
+	  <request-map uri="statusChangePartyTrainingAndDevelopmentProcess">
+	 	<security https="true" auth="true"/>
+	 	<event type="java" path="org.ofbiz.workflow.trainingAndDevelopmentProcess.TrainingAndDevelopmentWorkflowConfig" invoke="statusChangePartyProcess"/>
+        <response name="success" type="request-redirect-noparam" value="TrainingAndDevelopmentPartyProcessAssign"/>
+        <response name="error" type="view" value="NewTrainingAndDevelopmentPartyProcessAssign"/>
+	 </request-map>
+	 <!-- =============================================================================   -->
+    
+    <!-- ======================== Party Process Assign ====================================  -->
+    
+	 <view-map name="TrainingAndDevelopmentPartyProcessAssign" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentPartyWorkflowAssignScreens.xml#TrainingAndDevelopmentPartyProcessAssign"/>
+	<view-map name="NewTrainingAndDevelopmentPartyProcessAssign" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentPartyWorkflowAssignScreens.xml#NewTrainingAndDevelopmentPartyProcessAssign"/>
+	<view-map name="FindTrainingAndDevelopmentProcessStructureSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentConfigurationScreens.xml#FindTrainingAndDevelopmentProcessStructureSetup"/>
+	<view-map name="NewTrainingAndDevelopmentProcessStructureSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentConfigurationScreens.xml#NewTrainingAndDevelopmentProcessStructureSetup"/>
+	<view-map name="FindTrainingAndDevelopmentProcessStructureSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentConfigurationScreens.xml#FindTrainingAndDevelopmentProcessStructureSetup"/>
+	<view-map name="EditTrainingAndDevelopmentProcessStructureSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentConfigurationScreens.xml#EditTrainingAndDevelopmentProcessStructureSetup"/>
+	<view-map name="DetailsTrainingAndDevelopmentProcessStructureSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentConfigurationScreens.xml#DetailsTrainingAndDevelopmentProcessStructureSetup"/>
+	<view-map name="NewTrainingAndDevelopmentProcessStepSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentProcessStepScreens.xml#NewTrainingAndDevelopmentProcessStepSetup"/>
+	<view-map name="EditTrainingAndDevelopmentProcessStepSetup" type="screen" page="component://workflow/widget/trainingAndDevelopment/screens/TrainingAndDevelopmentProcessStepScreens.xml#EditTrainingAndDevelopmentProcessStepSetup"/>
+	
+	
+</site-conf>

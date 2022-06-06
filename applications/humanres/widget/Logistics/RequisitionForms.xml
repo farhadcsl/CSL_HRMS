@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+    <form name="AddLogisticsRequisition" type="single" target="createLogisticsRequisition"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="logisticsItemTypeId" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="logisticsItemTypeId" entity-name="LogisticsItemType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+    	<field name="requisitionDate" title="Requisition date" ><date-time type="timestamp"/></field>
+    	<field name="description" title="Description" ><textarea/></field>
+        <!-- <field name="statusId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LOG_REQUE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field> -->
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+       
+    <form name="EditLogisticsRequisition" type="single" target="updateLogisticsRequisition"
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="logisticsRequisition">
+        
+        <auto-fields-entity entity-name="LogisticsItem"/>
+        <field name="issueId"><display/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="logisticsItemTypeId" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="logisticsItemTypeId" entity-name="LogisticsItemType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+    	
+    	<field name="description" title="Description" ><textarea/></field>
+        <field name="statusId" >
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LOG_REQUE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="issueLogisticsRequisition" type="single" target="issueLogisticsRequisition" 
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="logisticsIssue">
+        
+      
+        <field name="issueId" title="Issue id" ><display/></field>
+        <field name="partyId"><hidden/></field>
+        <field name="quantity" title="Expected Quantity"><display/></field>
+        <field name="issueQuantity"><text/></field>
+        <field name="issuedDate"><date-time type="date"/></field>
+        <field name="remarks"><textarea cols="60" rows="3"/></field>
+        <field name="submitButton" title="Issued" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+       
+	<form name="FindLogisticsRequisition" type="single" target="FindLogisticRequisition" header-row-style="header-row" default-table-style="basic-table">
+       <!--  <auto-fields-entity entity-name="LogisticsItem" default-field-type="find"/> -->
+        <field name="partyId"><hidden/></field>
+        <field name="employeeId" title="Employee Id"><lookup target-form-name="LookupUserLoginAndPartyDetails"/></field>
+        <field name="logisticsItemTypeId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="logisticsItemTypeId" entity-name="LogisticsItemType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+    	
+    	 <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="statusId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LOG_REQUE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListLogisticsRequisition" type="multi" list-name="listIt" use-row-submit="true" separate-columns="true" 
+	    paginate-target="FindLogisticsRequisition" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+              <field-map field-name="inputFields" from-field="logisticsRequisitionCtx"/>
+                <field-map field-name="entityName" value="LogisticsItem"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+       <row-actions>
+        	<entity-and entity-name="UserLogin" list="ulList">
+            	<field-map field-name="partyId" from-field="partyId"/>
+        	</entity-and>
+        </row-actions>
+          <!-- <auto-fields-service service-name="updateLogisticsRequisition"/> -->
+        <field name="issueId" title="Logistic Id">
+        	<display/>
+        </field>
+        <field name="partyId" title="Employee Id">
+  			<display description="${ulList[0].userLoginId}"></display>
+        </field>
+        <field name="logisticsItemTypeId" title="Item type"><display-entity entity-name="LogisticsItemType" description="${description}"/></field>
+        <field name="requisitionDate" title="Requisition Date"><display/></field>
+        <field name="approvedDate" title="Date of Approval"><display/></field>
+        <field name="issuedDate" title="Date of Issue"><display/></field>
+        <field name="cancelDate" title="Date of cancellation"><display/></field>
+        <field name="expireDate" title="Date of Expire"><display/></field>
+        <field name="quantity"><display/></field>
+         <field name="issueQuantity"><display/></field>
+        <field name="description" title="Description"><display/></field>
+        <!-- <field name="statusId" title="Status">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LOG_REQUE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field> -->
+        <field name="statusId" title="Status"><display-entity entity-name="StatusItem" description="${description}"/></field>
+        <field name="_rowSubmit" title="${uiLabelMap.CommonSelect}"><hidden value="Y"/></field>
+        <field name="actionLink"  title="Action" widget-style="buttontext" use-when="${statusId == 'REQ_PEND'}">
+  		<hyperlink target="approveLogisticsRequisition" also-hidden="false" description="Approved" >
+                <parameter param-name="issueId"/>
+                <parameter param-name="partyId"/>
+            </hyperlink>
+           </field>
+        
+        <field name="cancelation" title="Cancel" widget-style="buttontext" use-when="${statusId == 'REQ_PEND'}">
+            <hyperlink target="CancelLogisticsRequisition" also-hidden="false" description="cancel">
+                <parameter param-name="issueId"/>
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+        <field name="actionLink" title="Action" widget-style="buttontext" use-when="${statusId == 'REQ_APPR'}">
+            <hyperlink target="issueLogistics" also-hidden="false" description="Issued">
+                <parameter param-name="issueId"/>
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteLogisticsRequisition" also-hidden="false" description="${uiLabelMap.CommonDelete}">
+                <parameter param-name="issuedId"/>
+            </hyperlink>
+        </field>
+        <!-- <field name="detail" title="Detail" widget-style="buttontext">
+            <hyperlink target="detailLogistics" also-hidden="false" description="Detail">
+                <parameter param-name="issuedId"/>
+            </hyperlink>
+        </field> -->
+        
+        <field name="editLink" title="Detail" widget-style="buttontext">
+             <hyperlink target="DetailLogistics" also-hidden="false" description="Detail">
+                <parameter param-name="issueId"/>
+                <parameter param-name="logisticsItemTypeId"/>
+                <parameter param-name="partyId"/>
+                <parameter param-name="issuedDate"/>
+                <parameter param-name="approvedDate"/>
+                <parameter param-name="requisitionDate"/>
+                <parameter param-name="lostDate"/>
+                <parameter param-name="cancelDate"/>
+                <parameter param-name="expireDate"/>
+                <parameter param-name="reIssueReason"/>
+                <parameter param-name="chargeAmount"/>
+                <parameter param-name="issuedTimes"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="statusId"/>
+                <parameter param-name="quantity"/>
+                <parameter param-name="issueQuantity"/>
+                <parameter param-name="returned"/>
+                <parameter param-name="description"/>
+                <parameter param-name="remarks"/>
+            </hyperlink>   
+        </field>
+        
+        
+        
+        
+    </form>
+
+
+
+
+
+	<form name="FindLogisticsApproval" type="single" target="logisticsApprove" header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="LogisticsRequisition" default-field-type="find"/>
+        <field name="partyId"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="logisticsItemTypeId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="logisticsItemTypeId" entity-name="LogisticsItemType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+    	<field name="requisitionDate" title="Requisition date" ><date-time type="timestamp"/></field>
+    	<field name="description" title="Description" ><textarea/></field>
+        <field name="statusId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LOG_REQUE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListLogisticApproval" type="multi" list-name="listIt" use-row-submit="true" separate-columns="true" 
+	    paginate-target="FindLogisticsRequisition"
+	    odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+              <field-map field-name="inputFields" from-field="logisticsRequisitionCtx"/>
+                <field-map field-name="entityName" value="LogisticsRequisition"/>
+                <field-map field-name="orderBy" value="requisitionDate"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+       <auto-fields-service service-name="updateLogisticsRequisition"/> 
+       
+        <field name="requisitionId" title="Requisition Id" widget-style="buttontext">
+        	<hyperlink description="${requisitionId}" target="EditLogisticsRequisition">
+        	<parameter param-name="requisitionId"/>
+        	</hyperlink>
+        </field>
+        <field name="partyId" title="Party">
+            <display-entity description="${firstName} ${middleName} ${lastName} ${groupName}" entity-name="PartyNameView">
+                <sub-hyperlink target="viewprofile" link-style="smallSubmit" target-type="inter-app" description="${partyId}">
+                    <parameter param-name="partyId"/>
+                </sub-hyperlink>
+            </display-entity>
+        </field>
+        <field name="logisticsItemTypeId" title="Item type"><display-entity entity-name="LogisticsItemType" description="${description}"/></field>
+        <field name="requisitionDate" title="Date"><display/></field>
+        <field name="description" title="Description"><display/></field>
+        <!-- <field name="statusId" title="Status">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="LOG_REQUE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field> -->
+        <field name="statusId" title="Status"><display-entity entity-name="StatusItem" description="${description}"/></field>
+        
+        <field name="approvalLink" title="Approval" widget-style="buttontext">
+            <hyperlink target="approvalLogisticsRequisition" also-hidden="false" description="Approve">
+                <parameter param-name="requisitionId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+</forms>

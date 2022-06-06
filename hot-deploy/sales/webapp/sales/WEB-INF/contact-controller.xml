@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/leads-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/oppertunity-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/contact-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/requiest-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/quotation-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/salesOrder-controller.xml"/>
+    <include location="component://sales/webapp/WEB-INF/accounts-controller.xml"/>
+
+    <description>Sales Component Site Configuration File</description>
+     <!-- Request Mappings -->
+   <request-map uri="FindContacts">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindContacts" save-home-view="true"/>
+    </request-map>
+    <request-map uri="viewprofile">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="viewprofile" save-home-view="true"/>
+    </request-map>
+    <request-map uri="NewContact">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewContact" save-home-view="true"/>
+    </request-map>
+    <request-map uri="createContact">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createContact"/>
+        <response name="success" type="request" value="viewprofile"/>
+        <response name="error" type="view" value="NewContact"/>
+    </request-map>
+     <request-map uri="NewContactFromVCard">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewContactFromVCard"/>
+    </request-map>
+     <request-map uri="createContactFromVCard">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="importVCard"/>
+        <response name="success" type="request" value="viewprofile"/><!-- What would be the view in case a vCard contains more than one contact -->
+        <response name="error" type="view" value="NewContactFromVCard"/>
+    </request-map>
+    <request-map uri="MergeContacts">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="MergeContacts"/>
+    </request-map>
+    <request-map uri="mergeContacts">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="mergeContacts"/>
+        <response name="success" type="request" value="viewprofile"/>
+        <response name="error" type="view" value="MergeContacts"/>
+    </request-map>
+      <!-- <request-map uri="ListPartyCommEvents">
+      <security https="true" auth="true"/>
+      <response name="success" type="view" value="ListPartyCommEvents"/>
+      </request-map> -->
+    <!-- View Mappings -->
+     <!--  <view-map name="ListPartyCommEvents" type="screen"  page="component://sales/widget/contact/screens/ContactScreens.xml#ListPartyCommEvents"/> -->
+     <view-map name="viewprofile" type="screen"  page="component://sales/widget/CommonScreens.xml#ViewProfile"/>
+    <view-map name="MergeContacts" type="screen" page="component://sales/widget/contact/screens/ContactScreens.xml#MergeContacts"/>
+    <view-map name="NewContact" type="screen" page="component://sales/widget/contact/screens/ContactScreens.xml#NewContact"/>
+    <view-map name="FindContacts" type="screen" page="component://sales/widget/contact/screens/ContactScreens.xml#FindContacts"/>
+    <view-map name="NewContactFromVCard" type="screen" page="component://sales/widget/contact/screens/ContactScreens.xml#NewContactFromVCard"/>
+   
+</site-conf>

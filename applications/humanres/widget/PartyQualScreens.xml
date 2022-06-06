@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindPartyQuals">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find Educational Qualification"/>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="AddPartyEducationalQuals"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="partyQualTypeId" from-field="parameters.partyQualTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <set field="partyQualCtx" from-field="parameters"/>
+                <entity-and list="partyqualList" entity-name="PartyQual">
+			 		<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and> 
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             	</entity-and>
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <!-- <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="NewPartyQual" text="Add Qualification" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section> -->
+                            </decorator-section>
+                           <decorator-section name="search-options">
+                               <include-form name="FindPartyQuals" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                           </decorator-section>
+                           <decorator-section name="search-results">
+                               <include-form name="ListPartyQuals" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                           </decorator-section>
+                       </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditPartyQuals2">
+        <section>
+            <actions>
+            	 <set field="partyId" from-field="parameters.partyId"/>
+            	<set field="tabButtonItem" value="AddPartyEducationalQuals"/>
+                <set field="headerItem" value="PartyQual"/>
+                <entity-one entity-name="PartyQual" value-field="partyQual"/>
+           	<entity-and list="partyqualList" entity-name="PartyQual">
+			 <field-map field-name="partyId" value="${parameters.partyId}"/>
+			</entity-and> 
+			<entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             </entity-and>
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <screenlet title="Edit Educational Qualification">
+                            <section>
+                                <widgets>
+                                	
+                                    <include-form name="EditPartyQual" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditPartyQuals">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResEditPartyQual"/>
+                <set field="headerItem" value="Employee"/>
+                <set field="tabButtonItem" value="AddPartyEducationalQuals"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="partyQualCtx.partyId" from-field="parameters.partyId"/>
+                <set field="parameters.insideEmployee" value="true"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPartyDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddPartyQualPanel" title="${uiLabelMap.HumanResAddPartyQual}" collapsible="true">
+                            <include-form name="AddPartyQual" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                        </screenlet>
+                        <include-form name="ListPartyQuals" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="NewPartyQual">
+        <section>
+            <actions>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="AddPartyEducationalQuals"/>
+                <entity-one entity-name="PartyQual" value-field="partyQual"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <screenlet title="Add New Educational Qualification For an Employee">
+                            <section>
+                                <widgets>
+                                
+                                    <include-form name="AddPartyQual" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                                </widgets>
+                            </section>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    <!-- ============================Professional Qualification============================== -->
+    <screen name="FindProfQual">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find Professional Qualification"/>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="addPartyProfesionalQualification"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="profQualCtx" from-field="parameters"/>
+                
+				<entity-and list="partyqualList" entity-name="ProfQual">
+			 		<field-map field-name="partyId" value="${parameters.partyId}"/>
+				</entity-and> 
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="partyId" value="${partyId}"/>
+             	</entity-and>
+                <set field="emplId" from-field="userLoginList[0].userLoginId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                     <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <!-- <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="NewProfQual" text="Add Professional Qualification" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section> -->
+                            </decorator-section>
+                           <decorator-section name="search-options">
+                              <include-form name="FindProfQual" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                           </decorator-section>
+                           <decorator-section name="search-results">
+                              <include-form name="ListProfQual" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                           </decorator-section>
+                       </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditProfQual">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResEditProfQual"/>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="addPartyProfesionalQualification"/>              
+                <set field="partyId" from-field="parameters.partyId"/>                 
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <screenlet title="Edit Professional Qualification">
+                            <include-form name="EditProfQual" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!-- ======================== Prevoius Employment History Screen ============================== -->
+    
+    <screen name="FindPreviousEmploymentHistory">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Previous Employment History"/>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="findPreviousEmploymentHistory"/>       
+                <set field="profEmplCtx" from-field="parameters"/>               
+                <entity-and entity-name="UserLogin" list="userLoginList">
+                    <field-map field-name="userLoginId"  from-field="parameters.employeeId"/>
+             	</entity-and>
+				<set field="partyId" value="${userLoginList[0].partyId}"/>
+             	<!-- <entity-and entity-name="PrevEmployment" list="prevEmploymentList">
+                    <field-map field-name="partyId"  from-field="partyId"/>
+             	</entity-and> -->
+             	<entity-condition entity-name="PrevEmployment" list="prevEmploymentList">
+             	 	<condition-list>
+	             	 	<condition-expr field-name="partyId" operator="equals" ignore-if-null="true" from-field="partyId"/>
+			            <condition-expr field-name="statusId" operator="equals" from-field="parameters.statusId" ignore-if-empty="true"/>
+		            </condition-list>		            
+		        </entity-condition>
+            </actions>
+            <widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+		           <decorator-section name="body" >
+                	 <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                     <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml" >
+                           <decorator-section name="search-options" >
+                              <include-form name="FindPreviousEmploymentHistory" location="component://humanres/widget/forms/PartyQualForms.xml"/>
+                           </decorator-section>
+                           <decorator-section name="search-results">
+                              <include-form name="ListPreviousEmploymentHistory" location="component://humanres/widget/forms/PartyQualForms.xml"/> 
+                           </decorator-section>
+                       </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditPreviousEmploymentHistory">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Previous Employment History"/>
+                <set field="headerItem" value="PartyQual"/>
+                <set field="tabButtonItem" value="findPreviousEmploymentHistory"/>              
+                <set field="partyId" from-field="parameters.partyId"/>  
+                <set field="profEmplCtx" from-field="parameters"/>               
+            </actions>
+            <widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+		           <decorator-section name="body" >
+                	 <include-menu location="component://humanres/widget/HumanresMenus.xml" name="QualificationMenu"/>
+                        <screenlet title="Edit Previous Employement History">
+                          <include-form name="EditPreviousEmploymentHistory" location="component://humanres/widget/forms/PartyQualForms.xml"/> 
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+  
+    
+</screens>

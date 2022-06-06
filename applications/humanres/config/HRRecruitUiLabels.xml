@@ -1,0 +1,63 @@
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	 <property key="HumanResEditJobPosting">
+        <value xml:lang="en">Add/Edit Job Posting</value>
+    </property>
+    
+    <property key="HumanResJobList">
+        <value xml:lang="en">Job List</value>
+    </property>
+    
+    <property key="HumanResRecruitment">
+        <value xml:lang="en">Recruitment</value>
+    </property>
+    
+    <property key="PageTitleEditApplicantInformation">
+        <value xml:lang="en">Edit Applicant Information</value>
+    </property>
+    
+    <property key="HumanResRequisitionCreationSuccess">
+        <value xml:lang="en">Job Requisition Added Successfully</value>
+    </property>
+    
+    <property key="PostalAddress.create.db_error">
+        <value xml:lang="en">Unable to save data of postal address</value>
+    </property>
+
+    <property key="TelecomNumber.create.db_error">
+        <value xml:lang="en">Unable to save data of telephone number</value>
+    </property>
+    
+      <property key="EmailAddress.create.db_error">
+        <value xml:lang="en">Unable to save data of Email Address</value>
+    </property>
+    
+    <property key="HumanResApplicantProfile">
+        <value xml:lang="en">The Profile of Applicant</value>
+    </property>
+    
+    <property key="HumanResNoNotesForParty">
+        <value xml:lang="en">There is no Notes for this Applicant.</value>
+    </property>
+    
+    <property key="ApplicantContent">
+        <value xml:lang="en">Applicant Content</value>
+    </property>
+    
+    <property key="HumanResNewApplicantQual">
+        <value xml:lang="en">Applicant Qualification</value>
+    </property>
+     <property key="PartyQualDesc">
+        <value xml:lang="en">Institute</value>
+    </property>
+    <property key="PartyQualYear">
+        <value xml:lang="en">Passing Year</value>
+    </property>
+    <property key="PartyQualTitle">
+        <value xml:lang="en">Result</value>
+    </property>
+    <property key="PartyQualExamTitle">
+        <value xml:lang="en">Exam Title</value>
+    </property>
+    
+    
+</resource>

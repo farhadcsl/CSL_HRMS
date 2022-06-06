@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    
+    
+<!--     This below screen is for Yearly KPI Achievement  -->
+<!--     It is under Yearly Achievement Tab under Goals and KPI Menu -->
+<!-- 		This screen is for Yearly KPI View for Employee -->
+
+	<screen name="ShowGoalsAndKpi">
+        <section>
+            <actions>
+            
+				<set field="headerItem" value="GoalsAndKpi"/>
+				<set field="tabButtonItem" value="GoalsAndKpi"/>
+                <set field="titleProperty" value="GoalsAndKpi"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="year" from-field="${parameters.year}"/>
+          <entity-condition list="listKpiYearly" entity-name="EmployeeGoalsAndKpi">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="year" operator="equals" value="${parameters.year}"/>
+		            </condition-list>
+          </entity-condition>
+          <entity-condition list="listKpiOverallYearly" entity-name="EmployeeGoalsAndKpiOverallStatus">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="year" operator="equals" value="${parameters.year}"/>
+		            </condition-list>
+          </entity-condition>
+          <set field="layoutSettings.javaScripts[+0]" value="/bizznesstime/js/KpiJScript.js" global="true" />
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                          <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+                         
+						<section>	       
+                                 <widgets>
+                                    <include-form name="OverallAchvStatusYearly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>                                     
+                                </widgets>
+                         </section>
+                        <section>
+                                <widgets>
+                                    <include-form name="ListEmployeeGoalsAndKpiYearly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                </widgets>
+                            </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+     </screen>
+
+    <screen name="ShowGoalsAndKpi2">
+        <section>
+            <actions>
+    <set field="partyId" from-field="parameters.partyId" />
+    <set field="titleProperty" value="GoalsAndKpi" />
+    <set field="headerItem" value="GoalsAndKpi" />
+     <set field="tabButtonItem" value="GoalsAndKpi"/>
+     <set field="layoutSettings.javaScripts[+0]" value="/bizznesstime/js/KpiJScript.js" global="true" />
+    <entity-one entity-name="Party" value-field="party"/>
+                <entity-one entity-name="Person" value-field="lookupPerson"/>
+                <entity-one entity-name="PartyGroup" value-field="lookupGroup"/>
+    <!-- <set field="tabButtonItem" value="GoalsAndKpi" /> -->
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+                     <screenlet title="The Goals and KPI Of ${lookupPerson.personalTitle} ${lookupPerson.firstName} ${lookupPerson.middleName} ${lookupPerson.lastName} ${lookupPerson.suffix} ${lookupGroup.groupName} ">
+                            <section>
+                                 <widgets>
+                                    <include-form name="OverallAchvStatus" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                </widgets>
+                            </section>
+                            <section>
+                                <widgets>
+                                    <include-form name="ListEmployeeGoalsAndKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                </widgets>
+                            </section>
+<!--                             <section> -->
+<!--         						<widgets> -->
+<!--          							<platform-specific> -->
+<!--           								<html><html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpi/GoalsAndKpiYearly.ftl" /></html> -->
+<!--          							</platform-specific> -->
+<!--         						</widgets> -->
+<!--        						</section> -->
+              		</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+<!--   this is for Yearly manager KPI view page -->
+<!--   		this is under Manager KPI view Menu -->
+<!-- 		this Screen is for Employees Yearly Details with Achievement and result -->
+    <screen name="ShowDetailsofKPI">
+        <section>
+            <actions>
+    <set field="partyId" from-field="parameters.partyId" />
+    <set field="year" from-field="parameters.year" />
+    <set field="titleProperty" value="ManagerKpiView" />
+    <set field="headerItem" value="ManagerKpiView" />
+    <set field="tabButtonItem" value="Yearly"/>
+    <entity-one entity-name="Party" value-field="party"/>
+                <entity-one entity-name="Person" value-field="lookupPerson"/>
+                <entity-one entity-name="PartyGroup" value-field="lookupGroup"/>
+    <!-- <set field="tabButtonItem" value="GoalsAndKpi" /> -->
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="ManagerKpiViewTab" location="component://humanres/widget/HumanresMenus.xml"/>
+                </decorator-section>
+                    <decorator-section name="body">
+                     <screenlet title="The Goals and KPI Of ${lookupPerson.personalTitle} ${lookupPerson.firstName} ${lookupPerson.middleName} ${lookupPerson.lastName} ${lookupPerson.suffix} ${lookupGroup.groupName} ">
+                            <section>
+                                 <widgets>
+                                    <include-form name="OverallAchvStatus" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                </widgets>
+                            </section>
+                            <section>
+                                <widgets>
+                                    <include-form name="ListManagerKPIView" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                </widgets>
+                            </section>
+              		</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <!--   this is for Yearly manager KPI view page -->
+<!--   		this is under Manager KPI view Menu -->
+<!--  	this screen is for showing Employee list for Yearly KPI -->
+    
+    <screen name="ShowManagerKpiView">
+        <section>
+            <actions>
+			    <!-- <set field="entityName" from-field="EmployeeGoalsAndKpiOverallStatus" />
+			    <set field="partyId" from-field="parameters.partyId"/> -->
+			    
+			    <set field="titleProperty" value="ManagerKpiView" />
+			    <set field="headerItem" value="ManagerKpiView" />
+			    <set field="tabButtonItem" value="Yearly"/>
+		    </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}" >
+                <decorator-section name="pre-body">
+                        <include-menu name="ManagerKpiViewTab" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Employee List for Yearly KPI">
+                         	<include-form name="ShowManagerKpiView" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+<!--       this is for Yearly manager KPI view page -->
+<!--       this is under Manager KPI view Menu -->
+<!--       Employee List for Monthwise KPI under Monthly Tab -->
+    
+    <screen name="ManagerMonthlyKpi">
+        <section>
+            <actions>
+			    <!-- <set field="entityName" from-field="EmployeeGoalsAndKpiOverallStatus" />
+			    <set field="partyId" from-field="parameters.partyId"/> -->
+			    
+			    <set field="titleProperty" value="ManagerKpiView" />
+			    <set field="headerItem" value="ManagerKpiView" />
+			    <set field="tabButtonItem" value="Monthly"/>
+		    </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}" >
+                <decorator-section name="pre-body">
+                        <include-menu name="ManagerKpiViewTab" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+<!--                			 <screenlet title="Show Monthly Manager Kpi "> -->
+<!--                          	<include-form name="ManagerMonthlyKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                          </screenlet>      -->
+                              <screenlet title="Employee List for Monthly KPI">
+                         	<include-form name="ManagerMonthlyKpi1" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+<!--     this is for Yearly manager KPI view page -->
+<!--     this is under Manager KPI view Menu -->
+<!--     It gives a view of Montwise KPI list of an Employee to Manager  -->
+
+    <screen name="IndividualMonthlyDetails">
+        <section>
+            <actions>
+			    <!-- <set field="entityName" from-field="EmployeeGoalsAndKpiOverallStatus" />-->
+			    <set field="partyId" from-field="parameters.partyId"/> 
+			    <set field="year" from-field="parameters.year"/> 
+			    
+			    <set field="titleProperty" value="ManagerKpiView" />
+			    <set field="headerItem" value="ManagerKpiView" />
+			    <set field="tabButtonItem" value="Monthly"/>
+		    </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}" >
+                <decorator-section name="pre-body">
+                        <include-menu name="ManagerKpiViewTab" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Month Wise KPI List">
+                         	<include-form name="ManagerMonthlyKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+
+    
+    <screen name="ShowEmployeeGoalsAndKpi">
+        <section>
+            <actions>
+				<set field="titleProperty" value="EmployeeGoalsAndKpi" />
+				<set field="headerItem" value="EmployeeGoalsAndKpi" />
+				<set field="tabButtonItem" value="GenerateKPIReport"/>
+				
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+<!--                         <screenlet id="GoalsAndKpi" title="Goals And Kpi" > -->
+<!--                         <section> -->
+<!--                            <widgets> -->
+<!--                             <include-form name="Reports" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                            </widgets> -->
+<!--                         </section> -->
+<!--                         <section> -->
+<!--                            <widgets> -->
+<!--  							  <platform-specific> -->
+<!--                                  <html><html-template location="component://humanres/webapp/humanres/humanres/HRReportCoverPage.ftl"/></html> -->
+<!--                               </platform-specific>                           -->
+<!--                            </widgets> -->
+<!--                         </section> -->
+<!--                         </screenlet> -->
+                        <screenlet title="KPI Reports Generator">
+                        <section>
+                           <widgets>
+ 							  <platform-specific>
+                                 <html><html-template location="component://humanres/webapp/humanres/humanres/HRReportCoverPage2.ftl"/></html>
+                              </platform-specific>                          
+                           </widgets>
+                        </section>
+                        </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="individualKpiReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="GenerateKPIReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Generate Individual KPI Report">
+                         	<include-form name="individualKpiReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    
+    
+    
+    
+    <screen name="FindIndividualKpi">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Individual Employee KPI Report"/>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="EmployeeKpi"/>
+                <set field="employeeId" from-field="parameters.employeeId"/>
+                <set field="EmployeeGoalsAndKpiCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                 <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options" >
+                                <include-form name="FindIndividualKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListIndividualKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                <include-form name="ListOverallKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                            </decorator-section> 
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="FindDeptWiseKpi">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Department Wise KPI Report"/>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="DeptWiseKpi"/>
+                <set field="department" from-field="parameters.department"/>
+                <set field="DeptWiseKpiCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options" >
+                                <include-form name="FindDeptWiseKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListDeptWiseKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                <include-form name="ListOverallDeptWiseKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                            </decorator-section> 
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="FindCompanyWiseKpi">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Company KPI Report"/>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="CompanyKPI"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Company KPI Report">
+                         	<include-form name="CompanyWiseKpiReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                         <screenlet>
+                         	
+							        <platform-specific>
+							         <html> <html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpi/CompanyKPIReport.ftl" /></html>
+							        </platform-specific>
+							       
+                         </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="DeptWiseKpiform">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="GenerateKPIReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                   <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Generate Department Wise KPI Report">
+                         	<include-form name="DeptWiseKpiform" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>  
+<!--                          <screenlet title="Test"> -->
+<!--                          	<include-form name="GAKTestForm" location="component://humanres/widget/goalsandkpi/managerkpiview/GoalsAndKpiForms.xml"/> -->
+<!--                          </screenlet>     -->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    
+    
+    
+    
+    
+    <!--     Modified by Parves -->
+<!-- 	<screen name="FindMonthlyKPI"> -->
+<!--         <section> -->
+<!--             <actions> -->
+<!--                 <set field="titleProperty" value="EmployeeGoalsAndKpiMonthly"/> -->
+<!--                 <set field="headerItem" value="EmployeeGoalsAndKpiMonthly"/> -->
+<!--                 <set field="mMonth" from-field="parameters.mMonth"/> -->
+<!--                 <set field="mYear" from-field="parameters.mMonth"/> -->
+<!--                 <set field="EmpGoalsAndKpiMonthlyCtx" from-field="parameters"/> -->
+ 
+<!--             </actions> -->
+<!--             <widgets> -->
+<!--                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}"> -->
+<!--                     <decorator-section name="body"> -->
+<!--                         <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml"> -->
+<!--                             <decorator-section name="search-options" > -->
+<!--                                 <include-form name="FindIndividualKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                             </decorator-section> -->
+<!--                             <decorator-section name="search-results"> -->
+<!--                                 <include-form name="ListIndividualKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                                 <include-form name="ListOverallKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                             </decorator-section>  -->
+<!--                         </decorator-screen> -->
+<!--                     </decorator-section> -->
+<!--                 </decorator-screen> -->
+<!--             </widgets> -->
+<!--         </section> -->
+<!--     </screen> -->
+    
+<!--     <screen name="ShowMonthlyGoalsAndKpi"> -->
+<!--         <section> -->
+<!--             <actions> -->
+<!--     <set field="partyId" from-field="parameters.partyId" /> -->
+<!--     <set field="headerItem" value="GoalsAndKpi" /> -->
+<!--     <set field="tabButtonItem" value="MonthlyGoalsAndKpi"/> -->
+<!--     <set field="titleProperty" value="Monthly Goals And Kpi" /> -->
+<!--     <entity-one entity-name="Party" value-field="party"/> -->
+<!--                 <entity-one entity-name="Person" value-field="lookupPerson"/> -->
+<!--                 <entity-one entity-name="PartyGroup" value-field="lookupGroup"/> -->
+<!--             </actions> -->
+<!--             <widgets> -->
+<!--                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}"> -->
+<!--                     <decorator-section name="body"> -->
+<!--                     <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" /> -->
+<!--                      <screenlet title="The Goals and KPI Of ${lookupPerson.personalTitle} ${lookupPerson.firstName} ${lookupPerson.middleName} ${lookupPerson.lastName} ${lookupPerson.suffix} ${lookupGroup.groupName} "> -->
+<!--                          <section> -->
+<!--                              <widgets> -->
+<!--                                  <include-form name="GenerateMonthlyGoalsAndKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                              </widgets> -->
+<!--                          </section> -->
+<!--               		</screenlet> -->
+<!--               		<screenlet title="Serach monthly KPI"> -->
+<!--                          <section> -->
+<!--                              <widgets> -->
+<!--                                  <include-form name="viewKpiMonthly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                              </widgets> -->
+<!--                          </section> -->
+<!--               		</screenlet> -->
+<!--                     </decorator-section> -->
+<!--                 </decorator-screen> -->
+<!--             </widgets> -->
+<!--         </section> -->
+<!--     </screen> -->
+
+
+     <screen name="ShowMonthlyGoalsAndKpi">
+        <section>
+            <actions>
+			    <set field="partyId" from-field="parameters.partyId" />
+			    <set field="headerItem" value="GoalsAndKpi" />
+			    <set field="tabButtonItem" value="MonthlyGoalsAndKpi"/>
+			    <set field="mMonth" from-field="parameters.mMonth"/>
+                <set field="mYear" from-field="parameters.mYear"/>
+                <set field="EmpGoalsAndKpiMonthlyCtx" from-field="parameters"/>
+			    <entity-one entity-name="Party" value-field="party"/>
+                <entity-one entity-name="Person" value-field="lookupPerson"/>
+                <entity-one entity-name="PartyGroup" value-field="lookupGroup"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                    <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options" >
+                                <include-form name="FindGoalsAndKpiMonthly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListGoalsAndKpiMonthly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                            </decorator-section> 
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+<!--      <screen name="ShowMonthlyGoalsAndKpi"> -->
+<!--         <section> -->
+<!--             <actions> -->
+<!--                 <set field="titleProperty" value="GoalsAndKpi"/> -->
+<!--                 <set field="headerItem" value="MonthlyGoalsAndKpi"/> -->
+<!--                 <set field="partyId" from-field="parameters.partyId"/> -->
+<!--                 <set field="EmpGoalsAndKpiMonthlyCtx" from-field="parameters"/> -->
+<!--             </actions> -->
+<!--             <widgets> -->
+<!--                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}"> -->
+<!--                     <decorator-section name="body"> -->
+<!--                         <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml"> -->
+<!--                             <decorator-section name="search-options" > -->
+<!--                                 <include-form name="FindGoalsAndKpiMonthly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                             </decorator-section> -->
+<!--                             <decorator-section name="search-results"> -->
+<!--                                 <include-form name="ListGoalsAndKpiMonthly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+<!--                             </decorator-section>  -->
+<!--                         </decorator-screen> -->
+<!--                     </decorator-section> -->
+<!--                 </decorator-screen> -->
+<!--             </widgets> -->
+<!--         </section> -->
+<!--     </screen> -->
+
+
+ 
+ <!--    This Screen is under Goals and KPI Menu And Monthly KPI Settings  Tab -->
+<!--    Employees Use this Generate and Set Monthwise KPI Targets -->
+    
+    <screen name="monthlyGenerateKPI">
+        <section>
+            <actions>
+                <set field="partyId" from-field="parameters.partyId" />
+                <set field="tabButtonItem" value="GenerateKPI"/>
+                <set field="headerItem" value="GoalsAndKpi"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+                           <screenlet title="Generate Monthly Goals And Kpi">
+                    	  <section> 
+		                        <widgets>
+		                            <include-form name="GenerateMonthlyGoalsAndKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+		                        </widgets>
+                    	  </section>
+                        </screenlet> 
+                        <screenlet title="List Monthly Goals And Kpi">
+                    	  <section> 
+		                        <widgets>
+		                            <include-form name="ListMonthlyGoalsAndKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+		                        </widgets>
+                    	  </section>
+                        </screenlet> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+<!--    This Screen is under Goals and KPI Menu And Monthly Achievement  Tab -->
+<!--    Employees Use this for Monthly KPI Search -->
+    <screen name="monthlyKPI">
+        <section>
+            <actions>
+                <set field="headerItem" value="GoalsAndKpi" />
+			    <set field="tabButtonItem" value="MonthlyKpi"/>
+			    <set field="titleProperty" value="MonthlyKpi" />
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                           <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+                  
+                        <section>
+                            <widgets>
+                                <screenlet id="monthlyKPI" title="Search Monthly KPI" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="monthlyKPI" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    <screen name="yearlyKpi">
+        <section>
+            <actions>
+                <set field="headerItem" value="GoalsAndKpi" />
+			    <set field="tabButtonItem" value="GoalsAndKpi"/>
+			    <set field="titleProperty" value="GoalsAndKpi" />
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                           <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+                  
+                        <section>
+                            <widgets>
+                                <screenlet id="yearlyKpi" title="Search Yearly KPI" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="yearlyKpi" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+<!--    This Screen is under Goals and KPI Menu And Monthly Achievement  Tab -->  
+<!-- This Screen is for KPI view of a selected month  -->
+<!-- Employee put their achievement and send for review to manager from this screen -->
+    <screen name="viewMonthlyKPI">
+        <section>
+            <actions>
+            
+				<set field="headerItem" value="GoalsAndKpi"/>
+				<set field="tabButtonItem" value="MonthlyKpi"/>
+                <set field="titleProperty" value="MonthlyKpi"/>
+                <set field="mMonth" from-field="parameters.mMonth"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="mYear" from-field="${parameters.mYear}"/>
+          <entity-condition list="listKpiMonthly" entity-name="EmployeeGoalsAndKpiMonthly">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="mMonth" operator="equals" value="${parameters.mMonth}"/>
+		            <condition-expr field-name="mYear" operator="equals" value="${parameters.mYear}"/>
+		            </condition-list>
+          </entity-condition>
+          <entity-condition list="listKpiOverallMonthly" entity-name="EmployeeGAKOvrlStatMonthly">
+		            <condition-list combine="and">
+		            <condition-expr field-name="partyId" operator="equals" value="${parameters.partyId}"/>
+		            <condition-expr field-name="mMonth" operator="equals" value="${parameters.mMonth}"/>
+		            <condition-expr field-name="mYear" operator="equals" value="${parameters.mYear}"/>
+		            </condition-list>
+          </entity-condition>
+          <set field="layoutSettings.javaScripts[+0]" value="/bizznesstime/js/KpiJScript.js" global="true" />
+             </actions>
+             <widgets>
+         <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                          <include-menu name="KPITab" location="component://humanres/widget/HumanresMenus.xml" />
+						<!-- <section> -->
+<!-- 	<widgets> -->
+<!-- 		<platform-specific> -->
+<!-- 			<html> -->
+<!-- 				<html-template -->
+<!-- 					location="component://humanres/webapp/humanres/humanres/goalsAndKpi/OverallMonthlyAchievement.ftl" /> -->
+<!-- 			</html> -->
+<!-- 		</platform-specific> -->
+<!-- 	</widgets> -->
+<!-- </section> -->
+						<section>	       
+                                 <widgets>
+<!--                                     <include-form name="monthlyOvrlAchvStatus" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/> -->
+                                    <include-form name="monthlyOvrlAchvStatus2" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>   
+                                </widgets>
+                         </section>
+                         <section>
+        						<widgets>
+         							<platform-specific>
+          								<html><html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpi/GoalsAndKpiMonthly.ftl" /></html>
+         							</platform-specific>
+        						</widgets>
+       						</section>
+                    	 <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="viewMonthlyKPI" title="KPI Information" collapsible="true">
+                                        <include-form name="viewMonthlyKPIform" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+<!--                     	 <section> -->
+<!--         						<widgets> -->
+<!--          							<platform-specific> -->
+<!--           								<html><html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpi/GoalsAndKpiMonthly.ftl" /></html> -->
+<!--          							</platform-specific> -->
+<!--         						</widgets> -->
+<!--        				 </section> -->
+       					  <section>
+                    	 	<widgets>
+                    	 		<container>
+                                    <screenlet id="sendToManager" title="Send to Manager for Review" collapsible="true">
+                                        <include-form name="sendToManagerMail" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                    </screenlet>
+                                </container>
+                    		</widgets>
+                    	 </section>
+                    	 
+                    </decorator-section>
+          </decorator-screen>
+          </widgets>
+            </section>
+               </screen>
+               
+               
+      <screen name="editAchievement">
+        <section>
+            <actions>
+                <set field="headerItem" value="GoalsAndKpi"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                  
+                        <section>
+                            <widgets>
+                                <screenlet id="testKPI" title="testKPI" collapsible="true">
+                                    <section>
+                                        <widgets>
+                                            <include-form name="editAchievement" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                                        </widgets>
+                                    </section>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen> 
+    
+    <screen name="FindPrintReport">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Print KPI Report"/>
+                <set field="headerItem" value="PrintReport"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="Print KPI Reports">
+                        <section>
+                           <widgets>
+ 							  <platform-specific>
+                                 <html><html-template location="component://humanres/webapp/humanres/humanres/HRPrintReportCoverPage.ftl"/></html>
+                              </platform-specific>                          
+                           </widgets>
+                        </section>
+                        </screenlet>
+                     </decorator-section>
+                 </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="PrintIndividualReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Print Individual KPI Report">
+                         	<include-form name="printIndividualReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen>  
+     <screen name="PrintIndividualReportHome">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="Print KPI Reports">
+                        <section>
+                           <widgets>
+ 							  <platform-specific>
+                                 <html><html-template location="component://humanres/webapp/humanres/humanres/HRPrintReportCoverHome.ftl"/></html>
+                              </platform-specific>                          
+                           </widgets>
+                        </section>
+                        </screenlet>
+                     </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    <screen name="PrintIndividualReportYearly">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="View Individual KPI Yearly Report">
+                         	<include-form name="printIndividualReportYearly" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen>
+    <screen name="ViewDepartmentReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="Department Wise Report">
+                        <section>
+                           <widgets>
+ 							  <platform-specific>
+                                 <html><html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpi/HRReportDeptCoverList.ftl"/></html>
+                              </platform-specific>                          
+                           </widgets>
+                        </section>
+                        </screenlet>
+                     </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    <screen name="GenerateDepartementWiseReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Generate Department wise KPI Report">
+                         	<include-form name="genDeptWiseReportForm" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen>
+    <screen name="DepartmentWiseMonthlyReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Generate Department wise KPI Report">
+                         	<include-form name="genDeptWiseMonthlyReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+     <screen name="DepartmentWiseAnnualReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Generate Department wise KPI(Annual) Report">
+                         	<include-form name="DepartmentWiseAnnualReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen>
+     <screen name="ViewCompanyReport">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="Department Wise Report">
+                        <section>
+                           <widgets>
+ 							  <platform-specific>
+                                 <html><html-template location="component://humanres/webapp/humanres/humanres/goalsAndKpi/HRReportCompanyHome.ftl"/></html>
+                              </platform-specific>                          
+                           </widgets>
+                        </section>
+                        </screenlet>
+                     </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+    <screen name="FindCompWiseReportForm">
+       <section>
+        <actions>
+                <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+                <set field="tabButtonItem" value="PrintReport"/>
+            </actions>
+             <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                        <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+               			 <screenlet title="Generate Company wise KPI Report">
+                         	<include-form name="FindCompWiseReportForm" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+                         </screenlet>     
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>     
+    </screen> 
+	 <screen name="CompanyWiseAnnualReport">
+	   <section>
+	    <actions>
+	            <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+	            <set field="tabButtonItem" value="PrintReport"/>
+	        </actions>
+	         <widgets>
+	            <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	            <decorator-section name="pre-body">
+	                    <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+	                </decorator-section>
+	                <decorator-section name="body">
+	           			 <screenlet title="Generate Company Annual Report">
+	                     	<include-form name="CompanyWiseAnnualReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+	                     </screenlet>     
+	                </decorator-section>
+	            </decorator-screen>
+	        </widgets>
+	    </section>     
+	</screen>
+	 <screen name="CompanyWiseMonthlyReport">
+	   <section>
+	    <actions>
+	            <set field="headerItem" value="EmployeeGoalsAndKpi"/>
+	            <set field="tabButtonItem" value="PrintReport"/>
+	        </actions>
+	         <widgets>
+	            <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+	            <decorator-section name="pre-body">
+	                    <include-menu name="EmplKpiReportTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+	                </decorator-section>
+	                <decorator-section name="body">
+	           			 <screenlet title="Generate Company KPI(Monthly) Report">
+	                     	<include-form name="CompanyWiseMonthlyReport" location="component://humanres/widget/goalsandkpi/JobReqCompSettingForms.xml"/>
+	                     </screenlet>     
+	                </decorator-section>
+	            </decorator-screen>
+	        </widgets>
+	    </section>     
+	</screen>                                    
+    
+</screens>

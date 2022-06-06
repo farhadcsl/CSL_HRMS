@@ -1,0 +1,13 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+  
+   <form name="ListEmployeeReport" type="multi" list-name="listIt" use-row-submit="true" target="AllEmployeeList.pdf" paginate-target="FindEmployeeListReport" odd-row-style="alternate-row"  header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+              <field name="submitButton" title="Export Report" widget-style="smallSubmit">
+            <submit button-type="button"/></field>
+    </form> 
+    
+     <form name="EmployeeReportByParves" type="multi" list-name="listIt" use-row-submit="true" target="EmployeeListByParves.pdf" paginate-target="FindEmployeeListReport" odd-row-style="alternate-row"  header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+              <field name="submitButton" title="Export Report Test" widget-style="smallSubmit">
+            <submit button-type="button"/></field>
+    </form> 
+ </forms>

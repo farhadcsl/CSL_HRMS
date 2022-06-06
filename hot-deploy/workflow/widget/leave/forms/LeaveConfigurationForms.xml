@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	<form name="ConfigurationType" type="single">
+		<field name="configurationSelection">
+		<check><option key="ReportingStructure" description="As Per Organization Structure"/><option key="custom" description="Custom Configuration"/></check>
+		</field>
+		<field name="submit" title="Apply"><submit/></field>
+	</form>
+ 
+ 
+ 
+  <form name="FindLeaveProcessStructureSetup" type="single" target="FindLeaveProcessStructureSetup" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+         <auto-fields-entity entity-name="ProcessStructure" default-field-type="find"/> 
+        
+        <field name="processStrId" title="Structure Id"></field>
+        <field name="processType"> <hidden value="Leave"></hidden></field>
+              
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+       <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="CreateLeaveProcessStructureSetup" type="single" target="createLeaveProcessStructureSetup" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="processStructure">
+       <!-- <field name="processStrId" tooltip="${uiLabelMap.CommonRequired}"  widget-style="required" title="Leave Structure Id"> <text/></field> -->
+        <field name="processName" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" title="Leave Structure Name"><text/></field>
+        <field name="description" ><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="EditLeaveProcessStructureSetup" type="single" target="updateLeaveProcessStructureSetup" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="processStructure">
+        <field name="processStrId"  title="Leave Structure Id"> <display/></field>
+        <field name="processName" tooltip="${uiLabelMap.CommonRequired}" widget-style="required" title="Leave Structure Name"><text/></field>
+        <field name="description" ><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="DetailsLeaveProcessStructureSetup" type="single" target="updateLeaveProcessStructureSetup" title=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="processStructure">
+        <field name="processStrId" title="Leave Structure Id"> <display/></field>
+        <field name="processName"  title="Leave Structure Name"> <display/></field>
+        <field name="description" ><display/></field>
+        
+    </form>
+    <form name="ListLeaveProcessStructureSetup" type="multi" list-name="listIt" use-row-submit="true" title="" target="updatePayrollPayGrade"
+     	paginate-target="FindLeaveProcessStructureSetup"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+  		<actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="ProcessStructureCtx"/>
+                <field-map field-name="entityName" value="ProcessStructure"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions> 
+        <field name="processStrId" title="Structure Id"><display></display></field>
+        <!-- <field name="processType"><hidden></hidden></field>  -->
+        <field name="processName"><display></display></field>
+        <field name="description"><display></display></field>
+        <field name="isActive"><display></display></field>
+        <field name="fromDate"><display></display></field>
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink target="EditLeaveProcessStructureSetup" description="Edit" also-hidden="false">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="processName"/>
+                <parameter param-name="description"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="fromDate"/>
+            </hyperlink>
+        </field>
+        <field name="detailsLink" title="" widget-style="buttontext">
+            <hyperlink target="DetailsLeaveProcessStructureSetup" description="Details" also-hidden="false">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="processName"/>
+                <parameter param-name="description"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="fromDate"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="" widget-style="buttontext">
+            <hyperlink target="deleteLeaveProcessStructureSetup" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="processStrId"/>
+                <parameter param-name="processName"/>
+                <parameter param-name="description"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="fromDate"/>
+            </hyperlink>
+        </field>
+    </form>
+</forms>

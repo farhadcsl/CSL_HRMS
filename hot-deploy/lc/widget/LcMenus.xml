@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    <menu name="MainAppBar" title="${uiLabelMap.LcApplication}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="main" title="${uiLabelMap.CommonMain}"><link target="main"/></menu-item>
+        <menu-item name="lcConfig" title="Configuration">
+			<link target="CreateBank" />
+		</menu-item>
+		<menu-item name="lc" title="LC">
+			<link target="FindPi" />
+		</menu-item>
+		<menu-item name="reoort" title="Reoort">
+			<link target="Reoort" />
+		</menu-item>
+    </menu>
+  	<menu name="LcConfigMenus" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="LC Configuration Menus" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+        
+        <menu-item name="LcBankConfig" title="Bank Configuration">
+            <link target="CreateBank"/>
+        </menu-item>
+        <menu-item name="LcShiperConfig" title="Shiper Info Setup">
+            <link target="CreateShiperInfo"/>
+        </menu-item>
+        <menu-item name="LcInsuranceConfig" title="Insurance Info Setup">
+            <link target="CreateInsuranceInfo"/>
+        </menu-item> 
+    </menu>
+    <menu name="LcMenus" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="LC Menus" type="simple" menu-container-style="button-bar tab-bar" 
+        default-selected-style="selected" selected-menuitem-context-field-name="tabButtonItem">
+       <menu-item name="Pi" title="PI">
+            <link target="FindPi"/>
+        </menu-item>
+        <menu-item name="Lc" title="LC">
+            <link target="FindLc"/>
+        </menu-item>
+        <menu-item name="Tt" title="TT">
+            <link target="FindTt"/>
+        </menu-item> 
+    </menu>
+    <menu name="AddlcRequisitionDocument">
+		<menu-item name="addlcRequisitionDocument" title=" ">
+			<link style="addCompanyScreenLet">
+				<image src="/flatgrey/images/custom/add-16.png" id="addDocumentlcRequisition" style="addCompanyScreenLet"/>
+				
+			</link>
+			
+		</menu-item>
+	</menu>
+   
+</menus>

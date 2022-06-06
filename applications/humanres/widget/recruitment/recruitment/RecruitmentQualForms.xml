@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+    <form name="AddApplicantQual" type="single" target="createApplicantQual" header-row-style="header-row" default-table-style="basic-table">
+		<field name="partyId"><hidden/></field>
+		<field name="statusId"><hidden/></field>
+		<!-- <field name="verifStatusId"><hidden value="PQV_NOT_VERIFIED"/></field> -->
+		<field name="thruDate"><hidden/></field>
+		
+		<field name="qualificationDesc" title="Institute"><text size="27" maxlength="50"/></field>
+		<field name="partyQualTypeId"  title="Exam Title" tooltip="${uiLabelMap.CommonRequired}" widget-style="required">
+            <drop-down allow-empty="true">
+            
+         <auto-complete/>
+                <entity-options description="${description}" key-field-name="partyQualTypeId" entity-name="PartyQualType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="passingYear" tooltip="e.g. 2015"><text size="27" maxlength="50"/></field>
+        
+       	<field name="fromDate" title="${uiLabelMap.PartyQualYear}" tooltip="${uiLabelMap.HumanResYearFormat}"><hidden/></field>
+       	<field name="title" title="Result"><text size="27" maxlength="50"/></field>
+       	<field name="countryGeoId" title="Country">
+		<drop-down no-current-selected-key="${defaultCountryGeoId}" allow-empty="true">
+			<auto-complete/>
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="COUNTRY"/>
+                    <entity-order-by field-name="geoId"/>
+                </entity-options>
+            </drop-down>
+		</field>
+       	<field name="remarks" title="Remarks"><text size="27" maxlength="50"/></field>
+       	<field name="statusId" position="11">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="statusId" entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="HR_DEGREE_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+     
+		<field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+		<field name="cancelLink" title=" " use-when="personInfo!=null" widget-style="smallSubmit">
+            <hyperlink target="ApplicantProfile" also-hidden="false" description="${uiLabelMap.CommonCancelDone}">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+	</form>
+	
+	
+	<form name="SimpleApplicantQual" type="list" list-name="partyqualList" odd-row-style="alternate-row" default-table-style="basic-table">
+		<field name="partyId"><hidden/></field>
+		<field name="statusId"><hidden/></field>
+		<field name="verifStatusId"><hidden/></field>
+		<field name="thruDate"><hidden/></field>
+		
+       <field name="partyQualTypeId" title="Exam Title"><display-entity entity-name="PartyQualType"  description="${description}"/></field>
+    	<field name="countryGeoId" title="Country"><display-entity entity-name="Geo" key-field-name="geoId" description="${geoName}" /></field>
+    	<field name="qualificationDesc" title="Institute"><display/></field>
+    	<field name="passingYear" title="Passing Year "><display/></field>
+    	<field name="title" title="Result"><display/></field>
+    	<field name="remarks" title="Remarks" ><display/></field>
+	</form>  
+    
+    <form name="EditApplicantQuals" type="single" default-entity-name="PartyQual" target="updateApplicantQual" header-row-style="header-row" default-table-style="basic-table">
+		
+		<field name="partyId"><hidden/></field>		
+		<field name="fromDate" title="${uiLabelMap.PartyQualYear}" tooltip="${uiLabelMap.CommonNotModifRecreat}"><hidden/></field>
+		<field name="qualificationDesc" title="${uiLabelMap.PartyQualDesc}"><text size="27" maxlength="50"/></field>
+		<field name="partyQualTypeId"  title="${uiLabelMap.PartyQualExamTitle}" tooltip="${uiLabelMap.CommonNotModifRecreat}" widget-style="required">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" key-field-name="partyQualTypeId" entity-name="PartyQualType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+		<field name="statusId"><hidden/></field>
+		<field name="verifStatusId"><hidden/></field>
+		<field name="thruDate"><hidden/></field>
+		<field name="passingYear" tooltip="${uiLabelMap.HumanResYearFormat}"><text size="27" maxlength="50"/></field>
+       	<field name="title" title="${uiLabelMap.PartyQualTitle}"><text size="27" maxlength="50"/></field>
+		<field name="submitButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	<form name="AddApplicantWrittenTest" type="single" target="createApplicantWrittenTest" header-row-style="header-row" default-table-style="basic-table">
+		<field name="partyId"><hidden/></field>
+		<field name="marks" title="Full Marks" tooltip="required" widget-style="required"><text/></field>
+		<field name="obtain" title="Marks Obtain" tooltip="required" widget-style="required"><text/></field>
+		<field name="status" title="Result Status"><drop-down allow-empty="false"><option key="Pass" description="Pass"/><option key="Fail" description="Failure"/></drop-down></field>
+		<field name="testDate" title="Test Date" tooltip="required" widget-style="required"><date-time type="date"/></field>
+       	<field name="commment" title="Comments" tooltip="required" widget-style="required"><textarea rows="3" cols="60" /></field>
+		<field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+	
+	<form name="SimpleApplicantWritten" type="list" list-name="partyWrittenTestlist" odd-row-style="alternate-row" default-table-style="basic-table">
+		<field name="partyId"><hidden/></field>
+		
+		<field name="marks" title="Total Marks Of Test"><display/>
+        </field>
+        <field name="obtain" title="Marks obtain"><display/>
+        </field>
+        <field name="status" title="Result Status"><display/></field>
+        <field name="commment" title ="comment"><display/></field>
+	
+        
+        <field name="testDate" title="Written Test Date"><hidden/></field>
+       
+        <!-- <field name="editLink" title="${uiLabelMap.CommonEdit}" widget-style="buttontext">
+             <hyperlink target="EditApplicantWrittenTest" also-hidden="true" description="${uiLabelMap.CommonEdit}">
+                <parameter param-name="partyId"/>                
+                <parameter param-name="testDate"/>
+                <parameter param-name="result"/>
+                <parameter param-name="marks"/>
+               
+            </hyperlink>   
+        </field> -->
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteApplicantWrittenTest" also-hidden="true" description="${uiLabelMap.CommonDelete}">
+                <parameter param-name="partyId"/>
+                
+            </hyperlink>
+        </field>
+	</form>  
+	<form name="SimpleApplicantInterview" type="list" list-name="partyVivaTestlist" odd-row-style="alternate-row" default-table-style="basic-table">
+		<field name="partyId"><hidden/></field>
+		
+		<field name="marks" title="Total Marks Of Test"><display></display>
+        </field>
+        <field name="obtain" title="Marks obtain"><display></display>
+        </field>
+        <field name="status" title="Result Status"><display/></field>
+        <field name="comment" title ="comment"><display/></field>
+	
+        
+        <field name="testDate" title="Interview Date"><hidden/></field>
+       
+        <!-- <field name="editLink" title="${uiLabelMap.CommonEdit}" widget-style="buttontext">
+             <hyperlink target="EditApplicantWrittenTest" also-hidden="true" description="${uiLabelMap.CommonEdit}">
+                <parameter param-name="partyId"/>                
+                <parameter param-name="testDate"/>
+                <parameter param-name="result"/>
+                <parameter param-name="marks"/>
+               
+            </hyperlink>   
+        </field> -->
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteApplicantWrittenTest" also-hidden="true" description="${uiLabelMap.CommonDelete}">
+                <parameter param-name="partyId"/>
+                
+            </hyperlink>
+        </field>
+	</form>
+	<form name="AddApplicantInterviewTest" type="single" target="createApplicantInterviewTest" header-row-style="header-row" default-table-style="basic-table">
+		<field name="partyId"><hidden/></field>
+		<field name="marks" title="Full Marks"><text/></field>
+		<field name="obtain" title="Marks Obtain"><text/></field>
+		<field name="status" title="Result Status"><drop-down allow-empty="false"><option key="Pass" description="Pass"/><option key="Fail" description="Failure"/></drop-down></field>
+		<field name="testDate" title="Test Date" ><date-time type="date"/></field>
+       	<field name="commment" title="Comments"><textarea rows="3" cols="60" /></field>
+		<field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
+    
+</forms>

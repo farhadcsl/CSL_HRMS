@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+       
+  <form name="ListTrainingExpenseType" type="multi" title="" target="updateTrainingExpenseType"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="TrainingExpenseType"><order-by field-name="expenseId"/></entity-condition>
+        </actions>
+        <field name="expenseId"><display/></field>
+        <field name="expenseName"><display/></field>
+        <field name="description" title="Description"><display/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteTrExpType" description="${uiLabelMap.CommonDelete}" also-hidden="false" request-confirmation="true">
+                <parameter param-name="expenseId"/>
+            </hyperlink>
+        </field>
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink target="editTrainingExpenseTypeSetup" description="Edit" also-hidden="false">
+                <parameter param-name="expenseId"/>  
+                <parameter param-name="expenseName"/>
+                <parameter param-name="description"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddTrainingExpenseType" type="single" target="createTrainingExpenseType" default-map-name="TrainingExpenseType"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="expenseId"><hidden/></field>
+        <field name="expenseName" title="Training Expense Type Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="UpdateTrainingExpenseType" type="single" target="updateTrExpType" header-row-style="header-row" default-table-style="basic-table">
+        <field name="expenseId"><hidden/></field>
+        <field name="expenseName" title="Training Expense Type Name" tooltip="${uiLabelMap.CommonRequired}" widget-style="required"><text/></field>
+        <field name="description" title="Description"><textarea/></field>
+        <field name="submitButton" title="Update" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form> 
+    
+    
+ </forms>

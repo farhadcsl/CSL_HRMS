@@ -1,0 +1,1316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+	<!--Start Employee Attendance Preference -->
+	<form name="EmployeeAttendancePreferenceForm" target="UpdateEmpAttenPreference" type="single" default-map-name="empAttendancePreference">
+	  <actions>
+	   <set field="orgPreId" 
+					value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getOrgPreferenceId(orgPartyId,delegator)}"
+					type="String" />	
+	   <entity-and entity-name="OrgAttendancePreference" list="orgPreList">
+            <field-map field-name="organizationPreferencdId" value="${orgPreId}"/>   
+       </entity-and>     
+     
+	  </actions>
+	  	 <alt-target use-when="empAttendancePreference==null" target="AddEmpAttenPreference"/>
+	  	 <field name="fromDate"><date-time type="date"/></field>
+	  	 <field name="thruDate"><date-time type="date"/></field>
+	  	 <field name="empPrefRevision" parameter-name="empPrefRevision"><hidden/></field>
+		 <field name="employeePreferenceId" parameter-name="employeePreferenceId"><hidden/></field>
+		 <field name="employeeId" tooltip="${uiLabelMap.CommonRequired}" use-when="empAttendancePreference==null"><lookup target-form-name="EmployeeLookupForAttendance"/></field>
+		 <field name="employeeId" tooltip="${uiLabelMap.CommonRequired}" use-when="empAttendancePreference!=null"><hidden/></field>
+		 <field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		 <field name="rosterPreferenceId" parameter-name="rosterPreferenceId"><hidden/></field>
+		 <field name="organizationPreferencdId" parameter-name="organizationPreferencdId"><hidden/></field>
+		 
+         <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="empAttendancePreference!=null" ><text size="25"/></field>	 	
+	 	 <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="empAttendancePreference==null" ><text size="25" default-value="${orgPreList[0].entryTime}"/></field>		
+		
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].exitTime}"/></field>
+         
+         <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryTime}"/></field>
+         
+         
+         <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].maximumStayTime}"/></field>
+		 
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTStartTime}"/></field>
+		 
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTEndTime}"/></field>
+		 
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].extraOTStartTime}"/></field>
+		
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].extraOTEndTime}"/></field>	
+		 
+		  <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="empAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinStartTime}"/></field>	
+		 
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="empAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinEndTime}"/></field>	
+		
+         <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinStartTime}"/></field>		
+		 
+         <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinEndTime}"/></field>
+				 
+         <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="empAttendancePreference!=null"><text size="25" /></field>
+		 <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].nightStartTime}"/></field>		 
+		
+	     <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].nightEndTime}"/></field>	
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><text size="25"/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><text size="25"/></field>	
+		
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="empAttendancePreference!=null" tooltip="*Hours"><text size="25"/></field>
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="empAttendancePreference==null" tooltip="*Hours"><text size="25" default-value="${orgPreList[0].lunchDuration}"/></field>	
+         
+         <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="empAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lunchStartTime}"/></field>	
+		 
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="empAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lunchEndTime}"/></field>
+		
+		
+		 <field name="oTallowances" title="OT Allowances" use-when="empAttendancePreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="oTallowances" title="OT Allowances" use-when="empAttendancePreference==null">
+				<radio no-current-selected-key="${orgPreList[0].oTallowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" use-when="empAttendancePreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" use-when="empAttendancePreference==null">
+				<radio no-current-selected-key="${orgPreList[0].attendanceBonusAllowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances" use-when="empAttendancePreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances" use-when="empAttendancePreference==null">
+				<radio no-current-selected-key="${orgPreList[0].extraOTallowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		 
+		 <field name="lateEntryDaysForAttenBonusDisable" id-name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		<field name="lateEntryDaysForAttenBonusDisable" id-name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryDaysForAttenBonusDisable}"/></field>
+		
+		<field name="lateEntryDaysForAttenBonusDeduction" id-name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		<field name="lateEntryDaysForAttenBonusDeduction" id-name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryDaysForAttenBonusDeduction}"/></field>
+		 
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" id-name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" id-name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].yearlyLateEntryDaysForAttenBonusDisable}"/></field>
+		
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" id-name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="empAttendancePreference!=null"><text size="25"/></field>	 
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" id-name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].yearlylateEntryDaysForAttenBonusDeduction}"/></field>	 
+		
+		 <field name="firstHalfHolidayRate" id-name="firstHalfHolidayRate" title="First Half Holiday Rate" tooltip="TK" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="firstHalfHolidayRate" id-name="firstHalfHolidayRate" title="First Half Holiday Rate" tooltip="TK" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].firstHalfHolidayRate}"/></field>
+		 
+		 <field name="secondHalfHolidayRate" id-name="secondHalfHolidayRate" title="Second Half Holiday Rate" tooltip="TK" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="secondHalfHolidayRate" id-name="secondHalfHolidayRate" title="Second Half Holiday Rate" tooltip="TK" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].secondHalfHolidayRate}"/></field>
+		
+		 <field name="montlyBonusAmount" id-name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="montlyBonusAmount" id-name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].montlyBonusAmount}"/></field>
+		 
+		 <field name="yearlyBonusAmount" id-name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="yearlyBonusAmount" id-name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].yearlyBonusAmount}"/></field>
+		 
+		 <field name="bonusDeductionAmount" id-name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)" use-when="empAttendancePreference!=null"><text size="25"/></field>
+		 <field name="bonusDeductionAmount" id-name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].bonusDeductionAmount}"/></field>
+		
+		 <field name="oTCalculationOperand" id-name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)" use-when="empAttendancePreference!=null"><text size="25" /></field>
+		 <field name="oTCalculationOperand" id-name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)" use-when="empAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTCalculationOperand}"/></field>
+		 
+		 
+		 <field name="firstTiffinRate" id-name="firstTiffinRate" title="First Tiffin Rate"><text size="25"/></field>
+	  	 <field name="secondTiffinRate" id-name="secondTiffinRate" title="Second Tiffin Rate"><text size="25"/></field>
+	  	 <field name="nightRate" id-name="nightRate" title="Night Rate"><text size="25"/></field>
+		 
+		
+		<field name="submitButton" use-when="empAttendancePreference==null" title="Save" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="empAttendancePreference!=null" title="Edit" widget-style="smallSubmit"><submit button-type="button"/></field>
+		
+	</form>
+	
+	<form name="EmpAttenPreferenceList" type="list" list-name="empAttenPreferenceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="EmployeePreference">
+		
+	
+		<field name="employeeId" title="Employee Id"><display/></field>
+		<field name="emplName" title="Employee Name"><display/></field>
+		<field name="emplPositionName" title="Designation"><display/></field>
+		<field name="employeePreferenceId" ><hidden/></field>
+		<field name="empPrefRevision" title="Revision"><display/></field>
+	 	<field name="fromDate" title="From Date"><display/></field>
+	  	<field name="thruDate" title="Thru Date"><display/></field>
+		<field name="edit" widget-style="buttontext" title="Action">
+            	<hyperlink also-hidden="false" target-type="plain" description="Edit" target="javascript:contessaPopupAttenEdit('Edit Employee Preference','#editEmployeePreference','EditEmpPreference?&amp;employeePreferenceId=${employeePreferenceId}&amp;empPrefRevision=${empPrefRevision}&amp;partyId=${partyId}&amp;title=Edit Employee Preference','650','650')"/>
+        </field>
+        
+        
+        <field name="deleteLink" title="Delete" widget-style="buttontext" event="onclick" action="javascript:return confirm('Are you want to delete?')">
+           <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteEmployeePreference">
+                <parameter param-name="employeePreferenceId" value="${employeePreferenceId}"/>
+                <parameter param-name="empPrefRevision" value="${empPrefRevision}"/>
+                <parameter param-name="partyId" value="${partyId}"/>
+            </hyperlink>
+        </field>
+        
+        <field name="detail" widget-style="buttontext" title="Detail">
+            	<hyperlink also-hidden="false" target-type="plain" description="Detail" target="javascript:contessaPopup('View Employee Preference','#editEmployeePreference','ViewEmpPreference?&amp;employeePreferenceId=${employeePreferenceId}&amp;empPrefRevision=${empPrefRevision}&amp;partyId=${partyId}','600','600')"/>
+        </field>
+		 
+		 <field name="oTallowances" title="OT Allowance"><display/></field>
+		 <field name="attendanceBonusAllowances" title="AB Allowance"><display/></field>
+		 <field name="extraOTallowances" title="Extra OT Allowance"><display/></field>
+		 		 
+
+	
+	</form>
+	
+	
+	<form name="EmpPreferenceDetail" type="single" default-map-name="empAttendancePreference">
+       
+        <field name="employeePreferenceId"><display/></field>
+        <field name="employeeId"><display/></field>
+        <field name="orgPartyId" title="Organization"><display/></field>
+        
+        <field name="fromDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(fromDate, &quot;MM/dd/yyyy&quot;);}"/></field>
+	  	<field name="thruDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(thruDate, &quot;MM/dd/yyyy&quot;);}"/></field>
+ 
+        <field name="entryTime"><display/></field>
+        <field name="exitTime"><display/></field>
+        <field name="maximumStayTime"><display/></field>
+        
+        
+         <field name="lateEntryTime" ><display/></field>
+		 <field name="oTStartTime" title="OT Start Time"><display/></field>
+		 <field name="oTEndTime" title="OT End Time"><display/></field> 
+	 	 <field name="extraOTStartTime" title="Extra OT Start Time"><display/></field>
+		 <field name="extraOTEndTime" title="Extra OT End Time"><display/></field> 
+		 
+		 <field name="firstTiffinStartTime" title="First Tiffin Start Time"><display/></field>	
+		 <field name="firstTiffinEndTime" title="First Tiffin End Time"><display/></field>	
+		 <field name="secondTiffinStartTime" title="Second Tiffin Start Time"><display/></field>
+		 <field name="secondTiffinEndTime" title="Second Tiffin End Time"><display/></field>
+		 <field name="nightStartTime" title="Night Start Time"><display/></field>
+		 <field name="nightEndTime" title="Night End Time"><display/></field>	
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><display/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><display/></field>	
+		 
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time"><display/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time"><display/></field>	
+		
+		 <field name="lunchDuration" ><display/></field> 
+		 
+		 <field name="oTallowances" title="OT Allowance"><display/></field>
+		 <field name="attendanceBonusAllowances" ><display/></field>
+		 <field name="extraOTallowances" title="Extra OT Allowance"><display/></field>
+		 		 
+		 <field name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For Attendance Bonus Disable"><display/></field>
+		 <field name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For Attendance Bonus Deduction" ><display/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For Attendance Bonus Disable"><display/></field>
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For Attendance Bonus Deduction" ><display/></field>
+		 <field name="montlyBonusAmount" title="Monthly Bonus Amount"><display/></field>
+		 <field name="yearlyBonusAmount"  ><display/></field>
+		 <field name="bonusDeductionAmount" ><display/></field>
+		 <field name="oTCalculationOperand" title="OT Calculation Operand"><display/></field> 
+        
+   
+    
+    </form>
+    <!--End Employee Attendance Preference -->
+    
+    
+    <!--Start  DayAttendancePreference -->
+	<form name="DayAttendancePreferenceForm" target="UpdateDayAttenPreference" type="single" default-map-name="dayAttendancePreference">
+	  <actions>
+	   <set field="orgPreId" 
+					value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getOrgPreferenceId(orgPartyId,delegator)}"
+					type="String" />	
+	   <entity-and entity-name="OrgAttendancePreference" list="orgPreList">
+            <field-map field-name="organizationPreferencdId" value="${orgPreId}"/>   
+       </entity-and>     
+     
+	  </actions>
+	  	 <alt-target use-when="dayAttendancePreference==null" target="AddDayAttenPreference"/>
+	  	 
+		 <field name="dayPreferenceId" parameter-name="dayPreferenceId"><hidden/></field>
+		 <field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		 <field name="dateId" id-name="dateId" tooltip="${uiLabelMap.CommonRequired}" required-field="true" title="Date"><date-time type="date"/></field>
+
+         <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="dayAttendancePreference!=null" ><text size="25"/></field>	 	
+	 	 <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="dayAttendancePreference==null" ><text size="25" default-value="${orgPreList[0].entryTime}"/></field>		
+		
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].exitTime}"/></field>
+         
+         <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryTime}"/></field>
+         
+         
+         <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].maximumStayTime}"/></field>	 
+		 
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTStartTime}"/></field>
+		 
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTEndTime}"/></field>
+		 
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].extraOTStartTime}"/></field>
+		
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].extraOTEndTime}"/></field>
+		 
+		  <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinStartTime}"/></field>	
+		 
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinEndTime}"/></field>	
+		
+         <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinStartTime}"/></field>		
+		 
+         <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinEndTime}"/></field>
+				 
+         <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="dayAttendancePreference!=null"><text size="25" /></field>
+		 <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].nightStartTime}"/></field>		 
+		
+	     <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>
+		 <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].nightEndTime}"/></field>
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><text size="25"/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><text size="25"/></field>	
+		
+		
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="dayAttendancePreference!=null" tooltip="*Hours"><text size="25"/></field>
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="dayAttendancePreference==null" tooltip="*Hours"><text size="25" default-value="${orgPreList[0].lunchDuration}"/></field>	
+         
+         <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lunchStartTime}"/></field>	
+		 
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="dayAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="dayAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lunchEndTime}"/></field>
+		
+		
+		<field name="submitButton" use-when="dayAttendancePreference==null" title="Save" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="dayAttendancePreference!=null" title="Edit" widget-style="smallSubmit"><submit button-type="button"/></field>
+		
+	</form>
+    
+    
+    
+    <form name="DayAttenPreferenceList" type="list" list-name="dayAttendancePreferenceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="DayPreference">
+		
+
+		<field name="dateId" title="Date">
+   			<display description="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.FormatDate(dateId)}"></display>
+   		</field>
+		<field name="orgPartyId" title="Organization"><display/></field>
+		<field name="edit" widget-style="buttontext" title="Action">
+            	<hyperlink also-hidden="false" target-type="plain" description="Edit" target="javascript:contessaPopupAttenEdit('Edit Day Preference','#editDayPreference','EditDayPreference?&amp;dayPreferenceId=${dayPreferenceId}&amp;title=Edit Day Preference','540','540')"/>
+        </field>
+        
+        <field name="detail" widget-style="buttontext" title="Detail">
+            	<hyperlink also-hidden="false" target-type="plain" description="Detail" target="javascript:contessaPopup('View Day Preference','#editDayPreference','ViewDayPreference?&amp;dayPreferenceId=${dayPreferenceId}','540','540')"/>
+        </field>
+
+	
+	</form>
+	
+	
+	<form name="DayPreferenceDetail" type="single" default-map-name="dayAttendancePreference">
+         <actions>
+            <set field="day" value="${dayAttendancePreference.dateId}" type="Timestamp"/>
+        </actions>
+      	<field name="dayPreferenceId" ><hidden/></field>    
+        <field name="dateId" title="Date">
+   			  <display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(day, &quot;dd/MM/yyyy&quot;);}"/>
+   		</field>
+        <field name="orgPartyId" title="Organization"><display/></field>
+        <field name="entryTime" title="Entry Time"><display/></field>
+        <field name="exitTime" title="Exit Time"><display/></field>
+        <field name="lunchDuration" title="Lunch Duration"><display/></field>
+      
+        <field name="maximumStayTime" title="Maximum Stay Time"><display/></field>
+        <field name="lateEntryTime" title="Late Entry Time"><display/></field>
+        <field name="oTStartTime" title="OT Start Time" ><display/></field>
+        <field name="oTEndTime" title="OT End Time"><display/></field>
+        <field name="extraOTStartTime" title="Extra OT Start Time"><display/></field>
+        <field name="extraOTEndTime" title="Extra OT End Time"><display/></field>   
+        
+       	 <field name="firstTiffinStartTime" title="First Tiffin Start Time"><display/></field>	
+		 <field name="firstTiffinEndTime" title="First Tiffin End Time"><display/></field>	
+		 <field name="secondTiffinStartTime" title="Second Tiffin Start Time"><display/></field>
+		 <field name="secondTiffinEndTime" title="Second Tiffin End Time"><display/></field>
+		 <field name="nightStartTime" title="Night Start Time"><display/></field>
+		 <field name="nightEndTime" title="Night End Time"><display/></field>	
+		 
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time"><display/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time"><display/></field>	
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><display/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><display/></field>	
+    
+    </form>
+	<!--Start  DayAttendancePreference -->
+    
+   	<!--Start Organization Preference  -->
+	<form name="OrganizationPreferenceForm" target="updateOrgAttenPreference" type="single" header-row-style="header-row" default-table-style="basic-table" default-map-name="orgAttendancePreference">
+		
+
+		 <alt-target use-when="orgAttendancePreference==null" target="AddOrgAttenPreference"/>	
+		 <field name="organizationPreferencdId" parameter-name="organizationPreferencdId"><hidden/></field>
+		 <field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		 <field name="orgPrefRevision" parameter-name="orgPrefRevision"><hidden/></field>
+		 
+		 <field name="fromDate"><date-time type="date"/></field>
+	  	 <field name="thruDate"><date-time type="date"/></field>
+	  	
+		 <field name="lunchDuration" title="Lunch Duration" tooltip="*Hours"><text size="25"/></field> 
+		 <field name="entryTime" title="Entry Time" ><text size="25"/></field>
+		 <field name="exitTime" title="Exit Time"><text size="25"/></field>
+		 <field name="maximumStayTime" title="Maximum Stay Time"><text size="25"/></field>
+		 <field name="lateEntryTime" title="Late Entry Time"><text size="25"/></field>
+		 <field name="oTStartTime" title="OT Start Time"><text size="25"/></field>
+		 <field name="oTEndTime" title="OT End Time"><text size="25"/></field>
+		 <field name="extraOTStartTime" title="Extra OT Start Time"><text size="25"/></field>
+		 <field name="extraOTEndTime" title="Extra OT End Time"><text size="25"/></field>
+		 
+		 <field name="firstTiffinStartTime" title="First Tiffin Start Time"><text size="25"/></field>	
+		 <field name="firstTiffinEndTime" title="First Tiffin End Time"><text size="25"/></field>	
+		 <field name="secondTiffinStartTime" title="Second Tiffin Start Time"><text size="25"/></field>
+		 <field name="secondTiffinEndTime" title="Second Tiffin End Time"><text size="25"/></field>
+		 <field name="nightStartTime" title="Night Start Time"><text size="25"/></field>
+		 <field name="nightEndTime" title="Night End Time"><text size="25"/></field>		
+		 
+		 
+		 <field name="halfDayMorningStart" id-name="half_Day_Morning_Start" title="Half Day Morning Start Time"><text size="25"/></field>
+		 <field name="halfDayMorningEnd" id-name="half_Day_Morning_End" title="Half Day Morning End Time"><text size="25"/></field>
+		 <field name="halfDayEveningStart" id-name="half_Day_Evening_Start" title="Half Day Evening Start Time"><text size="25"/></field>
+		 <field name="halfDayEveningEnd" id-name="half_Day_Evening_End" title="Half Day Evening End Time"><text size="25"/></field>
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><text size="25"/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><text size="25"/></field>
+		 
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time"><text size="25"/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time"><text size="25"/></field>	
+		 
+		 <field name="oTallowances" title="OT Allowances">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />
+					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" >
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />
+					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />
+					
+				</radio>
+		</field>
+		 <field name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days"><text size="25"/></field>
+		 <field name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days"><text size="25"/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days"><text size="25"/></field>
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days"><text size="25"/></field>	 
+		 <field name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK"><text size="25"/></field>
+		 <field name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK"><text size="25"/></field>
+		 <field name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)"><text size="25"/></field>
+		 <field name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)"><text size="25" /></field>
+		<field name="confirmationAfter" title="Confirmation After"><text size="25"/></field>
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+		
+		
+	</form>
+    
+    <form name="OrgAttenPreferenceList" type="list" list-name="orgAttenPreferenceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="OrganizationPreference">
+		
+	
+		<field name="organizationPreferencdId" title="Organization Preference Id"><display/></field>
+		<field name="orgPartyId" title="Organization"><display/></field>
+		<field name="orgPrefRevision" parameter-name="orgPrefRevision" title="Revision"><display/></field>
+		 
+		<field name="fromDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(fromDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+	  	<field name="thruDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(thruDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+	  	
+		<field name="oTallowances" title="OT Allowance"><display/></field>
+		<field name="attendanceBonusAllowances" title="Bonus Allowance"><display/></field>
+		<field name="extraOTallowances" title="Extra OT Allowance"><display/></field>
+		<field name="edit" widget-style="buttontext" title="Action">
+            <hyperlink also-hidden="false" target-type="plain" description="Edit" target="javascript:contessaPopupAttenEdit('Edit Organization Preference','#editOrgPreference','EditOrgPreference?&amp;organizationPreferencdId=${organizationPreferencdId}&amp;orgPartyId=${orgPartyId}&amp;orgPrefRevision=${orgPrefRevision}&amp;title=Edit Organization Preference','650','650')"/>
+        </field>
+        <field name="detail" widget-style="buttontext" title="Detail">
+            	<hyperlink also-hidden="false" target-type="plain" description="Detail" target="javascript:contessaPopup('View Organization Preference','#editOrgPreference','ViewOrgPreference?&amp;organizationPreferencdId=${organizationPreferencdId}&amp;orgPartyId=${orgPartyId}&amp;orgPrefRevision=${orgPrefRevision}','600','600')"/>
+        </field>
+	
+	</form>
+	
+		
+	<form name="OrgPreferenceDetail" type="single" default-map-name="orgAttendancePreference">
+       
+        <field name="organizationPreferencdId" title="Organization Preference Id"><display/></field>
+        <field name="orgPartyId" title="Organization"><display/></field>
+        
+        <field name="orgPrefRevision" parameter-name="orgPrefRevision"><display/></field>
+
+        <field name="entryTime"><display/></field>
+        <field name="exitTime"><display/></field>
+        
+        <field name="fromDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(fromDate, &quot;MM/dd/yyyy&quot;);}"/></field>
+	  	<field name="thruDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(thruDate, &quot;MM/dd/yyyy&quot;);}"/></field>
+        
+        <field name="lunchDuration" title="Lunch Duration"></field>
+        
+        <field name="maximumStayTime"><display/></field> 
+        
+         <field name="lateEntryTime" ><display/></field>
+		 <field name="oTStartTime" title="OT Start Time"><display/></field>
+		 <field name="oTEndTime" title="OT End Time"><display/></field> 
+	 	 <field name="extraOTStartTime" title="Extra OT Start Time"><display/></field>
+		 <field name="extraOTEndTime" title="Extra OT End Time"><display/></field> 
+		 
+		 <field name="firstTiffinStartTime" title="First Tiffin Start Time"><display/></field>	
+		 <field name="firstTiffinEndTime" title="First Tiffin End Time"><display/></field>	
+		 <field name="secondTiffinStartTime" title="Second Tiffin Start Time"><display/></field>
+		 <field name="secondTiffinEndTime" title="Second Tiffin End Time"><display/></field>
+		 <field name="nightStartTime" title="Night Start Time"><display/></field>
+		 <field name="nightEndTime" title="Night End Time"><display/></field>	
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><display/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><display/></field>	
+		 
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time"><display/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time"><display/></field>	
+		 
+		 <field name="halfDayMorningStart" title="Half Day Morning Start Time"><display/></field>
+		 <field name="halfDayMorningEnd" title="Half Day Morning End Time"><display/></field>
+		 <field name="halfDayEveningStart" title="Half Day Evening Start Time"><display/></field>
+		 <field name="halfDayEveningEnd" title="Half Day Evening End Time"><display/></field>
+		 
+		 
+		 <field name="lunchDuration" ><display/></field> 		 
+		 <field name="oTallowances" title="OT Allowance"><display/></field>
+		 <field name="attendanceBonusAllowances" ><display/></field>
+		 <field name="extraOTallowances" title="Extra OT Allowance"><display/></field>		 		 
+		 <field name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For Attendance Bonus Disable"><display/></field>
+		 <field name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For Attendance Bonus Deduction" ><display/></field>		 
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For Attendance Bonus Disable"><display/></field>
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For Attendance Bonus Deduction" ><display/></field>
+		 <field name="montlyBonusAmount" title="Monthly Bonus Amount"><display/></field>
+		 <field name="yearlyBonusAmount"  ><display/></field>
+		 <field name="bonusDeductionAmount" ><display/></field>
+		 <field name="oTCalculationOperand" title="OT Calculation Operand"><display/></field> 
+        
+   
+    
+    </form>
+    <!--End Organization Preference  -->
+    
+    <!--Start Roster Preference   -->
+	<form name="RosterPreferenceForm" target="UpdateRosterAttenPreference" type="single" header-row-style="header-row" default-table-style="basic-table" default-map-name="rosterAttendancePreference">
+		
+	<actions>
+	
+	  <set field="orgPreId" 
+					value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getOrgPreferenceId(orgPartyId,delegator)}"
+					type="String" />	
+	 <entity-and entity-name="OrgAttendancePreference" list="orgPreList">
+            <field-map field-name="organizationPreferencdId" value="${orgPreId}"/>   
+     </entity-and> 
+     
+	</actions>
+		<alt-target use-when="rosterAttendancePreference==null" target="AddRosterAttenPreference"/>		
+		
+		 <field name="rosterPreferenceId" parameter-name="rosterPreferenceId"><hidden/></field>
+		 <field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		 <field name="rosterName" title="Roster Name" use-when="rosterAttendancePreference==null"><text size="25"/></field>
+		 <field name="rosterName" title="Roster Name" use-when="rosterAttendancePreference!=null"><display/></field> 
+		 <field name="rosterPrefRevision" parameter-name="rosterPrefRevision"><hidden/></field>
+		 <field name="rosterStartTime" title="Roster Start Time" ><text size="25"/></field>
+		 <field name="rosterEndTime" title="Roster End Time"><text size="25"/></field>
+		 
+         <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="rosterAttendancePreference!=null" ><text size="25"/></field>	 	
+	 	 <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="rosterAttendancePreference==null" ><text size="25" default-value="${orgPreList[0].entryTime}"/></field>		 
+		
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].exitTime}"/></field>		
+		
+		 <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].maximumStayTime}"/></field>
+		 
+         <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryTime}"/></field>		 
+		
+		  <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTStartTime}"/></field>
+		 
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTEndTime}"/></field>
+		 
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].extraOTStartTime}"/></field>
+		
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].extraOTEndTime}"/></field>
+		 
+		  <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinStartTime}"/></field>	
+		 
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinEndTime}"/></field>	
+		
+         <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinStartTime}"/></field>		
+		 
+         <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinEndTime}"/></field>
+		 
+		 <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="rosterAttendancePreference!=null"><text size="25" /></field>
+		 <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].nightStartTime}"/></field>		 
+		
+	     <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].nightEndTime}"/></field>
+		 
+	     <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="rosterAttendancePreference!=null" tooltip="*Hours"><text size="25"/></field>
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="rosterAttendancePreference==null" tooltip="*Hours"><text size="25" default-value="${orgPreList[0].lunchDuration}"/></field>	
+         
+         <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lunchStartTime}"/></field>	
+		 
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="rosterAttendancePreference!=null"><text size="25"/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lunchEndTime}"/></field>	
+		
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><text size="25"/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><text size="25"/></field>	
+		 
+        <field name="oTallowances" title="OT Allowances" use-when="rosterAttendancePreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="oTallowances" title="OT Allowances" use-when="rosterAttendancePreference==null">
+				<radio no-current-selected-key="${orgPreList[0].oTallowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" use-when="rosterAttendancePreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" use-when="rosterAttendancePreference==null">
+				<radio no-current-selected-key="${orgPreList[0].attendanceBonusAllowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances" use-when="rosterAttendancePreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances" use-when="rosterAttendancePreference==null">
+				<radio no-current-selected-key="${orgPreList[0].extraOTallowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="lateEntryDaysForAttenBonusDisable" id-name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		<field name="lateEntryDaysForAttenBonusDisable" id-name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryDaysForAttenBonusDisable}"/></field>
+		
+		<field name="lateEntryDaysForAttenBonusDeduction" id-name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		<field name="lateEntryDaysForAttenBonusDeduction" id-name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].lateEntryDaysForAttenBonusDeduction}"/></field> 
+		
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" id-name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" id-name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].yearlyLateEntryDaysForAttenBonusDisable}"/></field>
+		
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" id-name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="rosterAttendancePreference!=null"><text size="25"/></field>	 
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" id-name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].yearlylateEntryDaysForAttenBonusDeduction}"/></field>
+		 
+		 <field name="montlyBonusAmount" id-name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="montlyBonusAmount" id-name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].montlyBonusAmount}"/></field>
+		 
+		 <field name="yearlyBonusAmount" id-name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="yearlyBonusAmount" id-name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].yearlyBonusAmount}"/></field>	 
+		 
+		 <field name="bonusDeductionAmount" id-name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)" use-when="rosterAttendancePreference!=null"><text size="25"/></field>
+		 <field name="bonusDeductionAmount" id-name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].bonusDeductionAmount}"/></field>
+		
+		 <field name="oTCalculationOperand" id-name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)" use-when="rosterAttendancePreference!=null"><text size="25" /></field>
+		 <field name="oTCalculationOperand" id-name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)" use-when="rosterAttendancePreference==null"><text size="25" default-value="${orgPreList[0].oTCalculationOperand}"/></field>
+		
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+		
+		
+	</form>	
+	
+	<form name="RosterAttenPreferenceList" type="list" list-name="rosterAttenPreferenceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="RosterPreference">
+	
+	  	<field name="rosterPreferenceId" title="Roster Preference Id" widget-style="buttontext" >
+			<hidden/>
+		</field>
+		<field name="orgPartyId"><hidden/></field>
+		<field name="rosterName" title="Roster Name" widget-style="buttontext">
+			<hyperlink also-hidden="false" target="RosterEmployees" description="${rosterName}">
+				<parameter param-name="rosterPreferenceId" from-field="rosterPreferenceId"/>
+				<parameter param-name="rosterName" from-field="rosterName"/>
+				<parameter param-name="rosterPrefRevision" from-field="rosterPrefRevision"/>
+		</hyperlink>
+		</field> 
+		<field name="rosterPrefRevision" title="Revision"><display/></field>
+		<field name="rosterStartTime" title="Roster Start Time"><display/></field>
+		<field name="rosterEndTime" title="Roster End Time"><display/></field>
+	 	<field name="edit" widget-style="buttontext" title="Action">
+            <hyperlink also-hidden="false" target-type="plain" description="Edit" target="javascript:contessaPopupAttenEdit('Edit Roster Preference','#editRosterPreference','EditRosterPreference?&amp;rosterPreferenceId=${rosterPreferenceId}&amp;rosterPrefRevision=${rosterPrefRevision}&amp;title=Edit Roster Preference','650','650')"/>
+        </field>
+        <field name="detail" widget-style="buttontext" title="Detail">
+            	<hyperlink also-hidden="false" target-type="plain" description="Detail" target="javascript:contessaPopup('View Roster Preference','#editRosterPreference','ViewRosterPreference?&amp;rosterPreferenceId=${rosterPreferenceId}&amp;rosterPrefRevision=${rosterPrefRevision}','600','600')"/>
+        </field>
+        
+        
+        <field name="batchAssign" title="Batch Assign" widget-style="buttontext" >
+		<hyperlink also-hidden="false" target="AssignBatchEmployees" description="Assign Batch Employees">
+				<parameter param-name="rosterPreferenceId" from-field="rosterPreferenceId"/>
+				<parameter param-name="rosterName" from-field="rosterName"/>
+				<parameter param-name="rosterPrefRevision" from-field="rosterPrefRevision"/>
+		</hyperlink>
+		
+		</field>
+		<field name="swap" title="Swap" widget-style="buttontext">
+			<hyperlink also-hidden="false" target-type="plain" description="Swap" target="javascript:contessaPopup('Swap Roster Preference','#editRosterPreference','SwapRosterPreference?&amp;rosterPreferenceId=${rosterPreferenceId}&amp;orgPartyId=${orgPartyId}&amp;rosterName=${rosterName}&amp;rosterPrefRevision=${rosterPrefRevision}','250','350')"/>
+		</field>
+
+	
+	</form>
+	
+	<form name="SwapRosterPreference" target="SwapRoster" type="single" header-row-style="header-row" default-table-style="basic-table" default-map-name="">
+		
+		<actions>
+			 <set field="orgPartyId" value="${orgPartyId}"/>
+			 <set field="rosterPreferenceId" value="${rosterPreferenceId}"/>
+			 <set field="rosterPrefRevision" value="${rosterPrefRevision}"/>
+			 <set field="rosterlist" value="${bsh: org.ofbiz.humanres.attendance.AttendancePreferenceEvents.getRosterList(delegator, orgPartyId,rosterPreferenceId,rosterPrefRevision)}" type="List"/>	
+		</actions>
+	
+		<field name="rosterPreferenceId" title="Roster Id"><hidden/></field>
+		<field name="rosterPrefRevision" title="Roster Id"><hidden/></field>
+		<field name="rosterEmpRevesion" title="Roster Id"><hidden/></field>
+		<field name="partyId" title="Roster Id"><hidden/></field>
+		<field name="orgPartyId" title="Roster Id"><hidden/></field>
+		<field name="rosterName" title="Roster Name"><display/></field>
+		
+		<field name="fromDate"><date-time type="date"/></field>
+	  	<field name="thruDate"><date-time type="date"/></field>		
+
+		<field name="swapTo" title="Swap To">
+			 <drop-down allow-multiple="false" allow-empty="true">
+		 		<auto-complete/>
+            	<list-options description="${name}[${id}]" key-name="id" list-name="rosterlist"/>
+            </drop-down>
+		</field>
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	
+	</form>
+	
+	<form name="SwapEmpBtnRoster" target="SwapSingleEmpBtnRoster" type="single" header-row-style="header-row" default-table-style="basic-table" default-map-name="">
+		
+		<actions>
+			 <set field="orgPartyId" value="${orgPartyId}"/>
+			 <set field="rosterPreferenceId" value="${rosterPreferenceId}"/>
+			 <set field="rosterPrefRevision" value="${rosterPrefRevision}"/>
+			 <set field="rosterlist" value="${bsh: org.ofbiz.humanres.attendance.AttendancePreferenceEvents.getRosterList(delegator, orgPartyId,rosterPreferenceId,rosterPrefRevision)}" type="List"/>	
+		</actions>
+	
+		<field name="rosterPreferenceId" title="Roster Id"><hidden/></field>
+		<field name="rosterPrefRevision"><hidden/></field>
+		<field name="rosterEmpRevesion" title="Roster Id"><hidden/></field>
+		<field name="partyId"><hidden/></field>
+		<field name="employeeId"><display/></field>
+		<field name="orgPartyId" title="Roster Id"><hidden/></field>
+		<field name="rosterName" title="Roster Name"><display/></field>
+		<field name="employeeFullName" title="Employee"><display/></field>
+		<field name="fromDate"><date-time type="date"/></field>
+	  	<field name="thruDate"><date-time type="date"/></field>		
+
+		<field name="swapTo" title="Move To">
+			 <drop-down allow-multiple="false" allow-empty="true">
+		 		<auto-complete/>
+            	<list-options description="${name}[${id}]" key-name="id" list-name="rosterlist"/>
+            </drop-down>
+		</field>
+		
+		<field name="submitBtn" title="Submit" widget-style="smallSubmit"><submit button-type="button"/></field>
+	
+	</form>
+		
+	<form name="RosterPreferenceDetail" type="single" default-map-name="rosterAttendancePreference">
+       
+        <field name="rosterPreferenceId"><display/></field>
+        <field name="orgPartyId" title="Organization"><display/></field>
+        <field name="rosterName" title="Roster Name"><display/></field> 
+      	<field name="rosterPrefRevision" parameter-name="rosterPrefRevision"><hidden/></field>
+        <field name="rosterStartTime"><display/></field>
+        <field name="rosterEndTime"><display/></field>
+
+        <field name="entryTime"><display/></field>
+        <field name="exitTime"><display/></field>
+        <field name="maximumStayTime"><display/></field>
+        
+        
+         <field name="lateEntryTime" ><display/></field>
+		 <field name="oTStartTime" title="OT Start Time"><display/></field>
+		 <field name="oTEndTime" title="OT End Time"><display/></field> 
+	 	 <field name="extraOTStartTime" title="Extra OT Start Time"><display/></field>
+		 <field name="extraOTEndTime" title="Extra OT End Time"><display/></field> 
+		 
+		 <field name="firstTiffinStartTime" title="First Tiffin Start Time"><display/></field>	
+		 <field name="firstTiffinEndTime" title="First Tiffin End Time"><display/></field>	
+		 <field name="secondTiffinStartTime" title="Second Tiffin Start Time"><display/></field>
+		 <field name="secondTiffinEndTime" title="Second Tiffin End Time"><display/></field>
+		 <field name="nightStartTime" title="Night Start Time"><display/></field>
+		 <field name="nightEndTime" title="Night End Time"><display/></field>	
+		 
+		 <field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><display/></field>	
+		 <field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><display/></field>	
+		 
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time"><display/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time"><display/></field>	
+		
+		 <field name="lunchDuration" ><display/></field> 		 
+		 <field name="oTallowances" title="OT Allowance"><display/></field>
+		 <field name="attendanceBonusAllowances" ><display/></field>
+		 <field name="extraOTallowances" title="Extra OT Allowance"><display/></field>		 		 
+		 <field name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For Attendance Bonus Disable"><display/></field>
+		 <field name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For Attendance Bonus Deduction" ><display/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For Attendance Bonus Disable"><display/></field>
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For Attendance Bonus Deduction" ><display/></field>
+		 <field name="montlyBonusAmount" title="Monthly Bonus Amount"><display/></field>
+		 <field name="yearlyBonusAmount"  ><display/></field>
+		 <field name="bonusDeductionAmount" ><display/></field>
+		 <field name="oTCalculationOperand" title="OT Calculation Operand"><display/></field> 
+        
+   
+    
+    </form>
+        
+    <!--Add Employee Form -->
+	<form name="AddEmployeeForm" target="addRosterEmployee" type="single"  default-map-name="rosterEmployee">
+	
+		 <field name="employeeId" tooltip="${uiLabelMap.CommonRequired}"><lookup target-form-name="EmployeeLookupForAttendance"/></field>
+		 <field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		 <field name="rosterEmpRevesion" parameter-name="rosterEmpRevesion"><hidden/></field>
+		 <field name="rosterName" parameter-name="rosterName"><hidden/></field>
+		 <field name="fromDate"><date-time type="date"/></field>
+	  	 <field name="thruDate"><date-time type="date"/></field>
+     	 <field name="rosterPreferenceId" parameter-name="rosterPreferenceId"><hidden/></field>
+     	 <field name="rosterPrefRevision" parameter-name="rosterPrefRevision"><hidden/></field>
+
+		<field  name="submitButton"  title="Add" widget-style="mySubmit"><submit button-type="button"/></field>
+		
+	</form>
+	
+	
+	    <!--Add Employee Form -->
+	<form name="UpdateEmployeeForm" target="updateRosterEmployee" type="single"  default-map-name="rosterEmployee">
+
+		 <field name="employeeId"><display/></field>
+		 <field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+		 <field name="rosterEmpRevesion" parameter-name="rosterEmpRevesion"><hidden/></field>
+		 <field name="fromDate"><date-time type="date"/></field>
+	  	 <field name="thruDate"><date-time type="date"/></field>
+     	 <field name="rosterPreferenceId" parameter-name="rosterPreferenceId"><hidden/></field>
+     	 <field name="rosterPrefRevision" parameter-name="rosterPrefRevision"><hidden/></field>
+		 <field name="rosterName" parameter-name="rosterName" ><hidden value="${rosterName}"/></field>
+     	 
+		<field  name="submitButton"  title="Update" widget-style="mySubmit"><submit button-type="button"/></field>
+		
+	</form>
+	
+	
+	<form name="RosterEmployeeListForm" type="list" list-name="rosterEmployeeList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="RosterEmployees">
+ 
+		<field name="rosterPreferenceId" title="Roster Preference Id"><hidden/></field> 
+		
+		<field name="employeeId" title="Employee Id"><display/></field>
+		<field name="partyId" title="Party Id"><hidden/></field>
+		<field name="rosterName"><hidden/></field>
+		<field name="rosterPrefRevision" title="Roster Revision"><display/></field> 
+		<field name="rosterEmpRevesion" parameter-name="rosterEmpRevesion"><hidden/></field>
+		<field name="employeeFullName" title="Employee Name"><display/></field>
+		<field name="orgPartyId" title="Organization">
+		<display-entity entity-name="PartyGroup"
+				key-field-name="partyId" description="${groupName} ">
+		</display-entity>
+		
+		</field>
+		<field name="fromDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(fromDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+	  	<field name="thruDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(thruDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+        <field name="deleteLink" title="Delete" widget-style="buttontext">
+            <hyperlink target="deleteRosterEmployee" description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="partyId"/>
+                <parameter param-name="rosterPreferenceId"/>
+                <parameter param-name="employeeId"/>
+                <parameter param-name="rosterName"/>
+                <parameter param-name="rosterPrefRevision"/>
+                <parameter param-name="orgPartyId"/> 
+                <parameter param-name="rosterEmpRevesion"/> 
+            </hyperlink> 
+        </field>
+        
+        <field name="editRosterEmployee" title="Update" widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${uiLabelMap.CommonUpdate}" target="javascript:contessaPopup('Update Roster Employee','#addRosterEmpContainer','UpdateEmployee?&amp;partyId=${partyId}&amp;rosterPreferenceId=${rosterPreferenceId}&amp;orgPartyId=${orgPartyId}&amp;rosterEmpRevesion=${rosterEmpRevesion}&amp;rosterName=${rosterName}&amp;rosterPrefRevision=${rosterPrefRevision}','310','450')"/>
+        </field>
+        
+        <field name="swap" title="Move" widget-style="buttontext">
+			<hyperlink also-hidden="false"  target-type="plain" description="Move" target="javascript:contessaPopup('Swap Employee Between Roster','#addRosterEmpContainer','SwapEmployeeBtnRoster?&amp;rosterPreferenceId=${rosterPreferenceId}&amp;rosterPrefRevision=${rosterPrefRevision}&amp;orgPartyId=${orgPartyId}&amp;rosterName=${rosterName}&amp;partyId=${partyId}&amp;rosterEmpRevesion=${rosterEmpRevesion}&amp;employeeFullName=${employeeFullName}&amp;employeeId=${employeeId}','350','350')"/>
+		</field>
+        
+        
+    </form>
+        
+          	
+	<form name="RosterPreIdForm" type="single" list-name="" use-row-submit="true">
+    
+
+        <field name="rosterPreferenceId">
+            <hidden/>
+        </field>
+		<field name="rosterPrefRevision">
+            <hidden/>
+        </field>
+        <field name="rosterName">
+            <hidden/>
+        </field>
+    
+    </form>
+    
+    <form name="DesignationPreIdForm" type="single" list-name="" use-row-submit="true">
+    
+
+        <field name="designationPreferenceId">
+            <hidden/>
+        </field>
+	
+    
+    </form>
+    
+	<!--End Roster Preference   -->
+    
+    <!-- Start Designation Preference -->
+    
+    <form name="DesignationPositionsForm" type="list" list-name="designationPostionList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="${pagination}">
+ 
+		<field name="designationPreferenceId"><display/></field> 
+		<field name="designEmplposRevesion"><display/></field>
+		<field name="emplPositionId" title="Position Id"><display/></field>
+		<field name="emplPositionName" title="Position Name"><display/></field>
+		<field name="deptName" title="Department Name"><display/></field>
+		<field name="fromDate" title="From Date"><display /></field>
+	  	<field name="thruDate" title="Thru Date"><display /></field>
+
+        <field name="deleteLink" title="Delete" widget-style="buttontext">
+            <hyperlink target="deleteDesigPosBatch" description="${uiLabelMap.CommonDelete}" also-hidden="false">
+                <parameter param-name="designationPreferenceId"/>
+                <parameter param-name="designEmplposRevesion"/>
+                <parameter param-name="emplPositionId"/>
+            </hyperlink> 
+        </field>
+        <field name="editRosterEmployee" title="Update" widget-style="buttontext">
+            <hyperlink also-hidden="false" target-type="plain" description="${uiLabelMap.CommonUpdate}" target="javascript:contessaPopup('Edit','#addPosition','updatePosition?&amp;designationPreferenceId=${designationPreferenceId}&amp;emplPositionId=${emplPositionId}&amp;designEmplposRevesion=${designEmplposRevesion}','310','450')"/>
+        </field>
+        
+        
+    </form>
+    
+    <form name="AddPositionForm" target="addPosition" type="single"  default-map-name="designPrefEmplposition">
+		 <alt-target use-when="designPrefEmplposition!=null" target="updateEmpPosition"/>
+		 
+		 <field name="emplPositionId" title="Position"><lookup target-form-name="LookupForTotalEmplPosition"/></field>
+		 <field name="fromDate"><date-time type="date"/></field>
+	  	 <field name="thruDate"><date-time type="date"/></field>
+     	 <field name="designationPreferenceId" parameter-name="designationPreferenceId"><display/></field>
+     	 <field name="designEmplposRevesion" parameter-name="designEmplposRevesion"><display/></field>
+
+		<field  name="submitButton"  title="Add" widget-style="mySubmit" use-when="designPrefEmplposition==null"><submit button-type="button"/></field>
+		<field  name="submitButton"  title="Update" widget-style="mySubmit" use-when="designPrefEmplposition!=null"><submit button-type="button"/></field>
+		
+	</form>
+	
+	<form name="AddBatchPositionForm" target="addBatchPosition" type="single"  default-map-name="designPrefEmplposition">
+	
+		 <field name="emplPositionTypeId" >
+            <drop-down allow-empty="true">
+            	<auto-complete/>
+            	
+                <entity-options description="${description}" key-field-name="emplPositionTypeId" entity-name="EmplPositionType"></entity-options>
+            </drop-down>
+         </field>
+		 <field name="fromDate"><date-time type="date"/></field>
+	  	 <field name="thruDate"><date-time type="date"/></field>
+     	 <field name="designationPreferenceId" parameter-name="designationPreferenceId"><hidden/></field>
+
+		<field  name="submitButton"  title="Add" widget-style="mySubmit"><submit button-type="button"/></field>
+		
+	</form>
+    
+	<form name="DesignationPreferenceForm" target="UpdateDesignationPreference" type="single" default-map-name="designationPreference">
+	<actions>
+	 <set field="orgPreId" 
+					value="${bsh:org.ofbiz.humanres.attendance.AttendanceUtils.getOrgPreferenceId(orgPartyId,delegator)}"
+					type="String" />	
+	 <entity-and entity-name="OrgAttendancePreference" list="orgPreList">
+            <field-map field-name="organizationPreferencdId" value="${orgPreId}"/>   
+     </entity-and>     
+     
+	</actions>
+	  	<alt-target use-when="designationPreference==null" target="AddDesignationPreferences"/>
+	  	<field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>  	
+	  	<field name="designationPreferenceId" parameter-name="designationPreferenceId" >
+		 	<hidden />
+	  	</field>
+ 		<!-- <field name="fromDate"><date-time type="date"/></field>
+	  	<field name="thruDate"><date-time type="date"/></field>
+	  	 --><!-- <field name="emplPositionId" title="Position"><lookup target-form-name="LookupForTotalEmplPosition"/></field> -->
+	  	<field name="firstTiffinRate" id-name="firstTiffinRate" title="First Tiffin Rate"><text size="25"/></field>
+	  	<field name="secondTiffinRate" id-name="secondTiffinRate" title="Second Tiffin Rate"><text size="25"/></field>
+	  	<field name="nightRate" id-name="nightRate" title="Night Rate"><text size="25"/></field>
+	  	<!-- <field name="attBonDeductAmnt" id-name="attBonDeductAmnt" title="Attendance Bonnus Deduction Amount"><text size="25"/></field> -->
+       
+         <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="designationPreference!=null" ><text size="25"/></field>	 	
+	 	 <field name="entryTime" id-name="entryTime" title="Entry Time" use-when="designationPreference==null" ><text size="25" default-value="${orgPreList[0].entryTime}"/></field>		
+		
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="exitTime" id-name="exitTime" title="Exit Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].exitTime}"/></field>
+         
+         <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="lateEntryTime" id-name="lateEntryTime" title="Late Entry Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].lateEntryTime}"/></field>
+         
+         
+         <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="maximumStayTime" id-name="maximumStayTime" title="Maximum Stay Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].maximumStayTime}"/></field>		
+		
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="oTStartTime" id-name="oTStartTime" title="OT Start Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].oTStartTime}"/></field>
+		 
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="oTEndTime" id-name="oTEndTime" title="OT End Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].oTEndTime}"/></field>
+		 
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="extraOTStartTime" id-name="extraOTStartTime" title="Extra OT Start Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].extraOTStartTime}"/></field>
+		
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="extraOTEndTime" id-name="extraOTEndTime" title="Extra OT End Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].extraOTEndTime}"/></field>
+		 
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="designationPreference!=null" tooltip="*Hours"><text size="25"/></field>
+		 <field name="lunchDuration" id-name="lunchDuration" title="Lunch Duration" use-when="designationPreference==null" tooltip="*Hours"><text size="25" default-value="${orgPreList[0].lunchDuration}"/></field>	
+         
+         <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="designationPreference!=null"><text size="25"/></field>	
+		 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].lunchStartTime}"/></field>	
+		 
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="designationPreference!=null"><text size="25"/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].lunchEndTime}"/></field>	
+		 
+		  <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="designationPreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinStartTime" id-name="firstTiffinStartTime" title="First Tiffin Start Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinStartTime}"/></field>	
+		 
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="designationPreference!=null"><text size="25"/></field>	
+		 <field name="firstTiffinEndTime" id-name="firstTiffinEndTime" title="First Tiffin End Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].firstTiffinEndTime}"/></field>	
+		
+         <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinStartTime" id-name="secondTiffinStartTime" title="Second Tiffin Start Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinStartTime}"/></field>		
+		 
+         <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="secondTiffinEndTime" id-name="secondTiffinEndTime" title="Second Tiffin End Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].secondTiffinEndTime}"/></field>
+				 
+         <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="designationPreference!=null"><text size="25" /></field>
+		 <field name="nightStartTime" id-name="nightStartTime" title="Night Start Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].nightStartTime}"/></field>		 
+		
+	     <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="nightEndTime" id-name="nightEndTime" title="Night End Time" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].nightEndTime}"/></field>		
+		
+		 <field name="oTallowances" title="OT Allowances" use-when="designationPreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="oTallowances" title="OT Allowances" use-when="designationPreference==null">
+				<radio no-current-selected-key="${orgPreList[0].oTallowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" use-when="designationPreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances" use-when="designationPreference==null">
+				<radio no-current-selected-key="${orgPreList[0].attendanceBonusAllowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances" use-when="designationPreference!=null">
+				<radio no-current-selected-key="Y">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		<field name="extraOTallowances" title="Extra OT Allowances" use-when="designationPreference==null">
+				<radio no-current-selected-key="${orgPreList[0].extraOTallowances}">
+					<option key="Y" 
+							description="YES" />
+					<option key="N"
+							description="NO" />					
+				</radio>
+		</field>
+		 <field name="lateEntryDaysForAttenBonusDisable" id-name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="designationPreference!=null"><text size="25"/></field>
+		<field name="lateEntryDaysForAttenBonusDisable" id-name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].lateEntryDaysForAttenBonusDisable}"/></field>
+		
+		<field name="lateEntryDaysForAttenBonusDeduction" id-name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="designationPreference!=null"><text size="25"/></field>
+		<field name="lateEntryDaysForAttenBonusDeduction" id-name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].lateEntryDaysForAttenBonusDeduction}"/></field>
+		 
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" id-name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" id-name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].yearlyLateEntryDaysForAttenBonusDisable}"/></field>
+		
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" id-name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="designationPreference!=null"><text size="25"/></field>	 
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" id-name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].yearlylateEntryDaysForAttenBonusDeduction}"/></field>	 
+		
+		 <field name="montlyBonusAmount" id-name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="montlyBonusAmount" id-name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].montlyBonusAmount}"/></field>
+		 
+		 <field name="yearlyBonusAmount" id-name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="yearlyBonusAmount" id-name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].yearlyBonusAmount}"/></field>
+		 
+		 <field name="firstHalfHolidayRate" id-name="firstHalfHolidayRate" title="First Half Holiday Rate" tooltip="TK" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="firstHalfHolidayRate" id-name="firstHalfHolidayRate" title="First Half Holiday Rate" tooltip="TK" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].firstHalfHolidayRate}"/></field>
+		 
+		 <field name="secondHalfHolidayRate" id-name="secondHalfHolidayRate" title="Second Half Holiday Rate" tooltip="TK" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="secondHalfHolidayRate" id-name="secondHalfHolidayRate" title="Second Half Holiday Rate" tooltip="TK" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].secondHalfHolidayRate}"/></field>
+		 
+		 <field name="bonusDeductionAmount" id-name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)" use-when="designationPreference!=null"><text size="25"/></field>
+		 <field name="bonusDeductionAmount" id-name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].bonusDeductionAmount}"/></field>
+		
+		 <field name="oTCalculationOperand" id-name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)" use-when="designationPreference!=null"><text size="25" /></field>
+		 <field name="oTCalculationOperand" id-name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].oTCalculationOperand}"/></field>
+		
+	 	 
+		 <field name="confirmationAfter" title="Confirmation After" id-name="confirmationAfter" use-when="designationPreference!=null"><text size="25"/></field>
+	 	 <field name="confirmationAfter" title="Confirmation After" id-name="confirmationAfter" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].confirmationAfter}"/></field>	 	
+	 	
+	 	
+	 	<field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable" use-when="designationPreference!=null"><text size="25"/></field>	
+		<field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].leOrAbsForattbnDis}"/></field>	
+		
+		<field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction" use-when="designationPreference!=null"><text size="25"/></field>
+		<field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction" use-when="designationPreference==null"><text size="25" default-value="${orgPreList[0].halfLesForattbnDed}"/></field>
+		
+		<field name="submitButton" use-when="designationPreference==null" title="Save" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="designationPreference!=null" title="Update" widget-style="smallSubmit"><submit button-type="button"/></field>
+		
+	</form>
+	
+	<form name="DesignationPreferenceVeiwForm" target="" type="single" default-map-name="designationPreference">
+	
+	  	<field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+	  <!-- 	<field name="emplPositionId" title="Position"><display/></field> -->
+	  <!-- 	<field name="designPrefRevision" parameter-name="designPrefRevision"><display/></field> -->
+	  	
+ 		<!-- <field name="fromDate" title="From Date"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(fromDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+	  	<field name="thruDate" title="Thru Date"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(thruDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+	  	 -->
+	  	<field name="firstTiffinRate" title="First Tiffin Rate"><display/></field>
+	  	<field name="secondTiffinRate" title="Second Tiffin Rate"><display/></field>
+	  	<field name="nightRate" title="Night Rate"><display/></field>
+	  	<field name="attBonDeductAmnt" title="Attendance Bonnus Deduction Amount"><display/></field>
+	  	<field name="confirmationAfter" title="Confirmation After"><display/></field>
+	  	<field name="attendanceBonusAllowances" title="Attendance Bonus Allowances"><display/></field>
+	  	
+	  	<field name="leOrAbsForattbnDis" id-name="leOrAbsForattbnDis" title="Leave OR Absence For attendance bonus Disable"><display/></field>	
+		<field name="halfLesForattbnDed" id-name="halfLesForattbnDed" title="Half Day Leaves For attendance bonus Deduction"><display/></field>	
+	 	
+	 	 <field name="lunchStartTime" id-name="lunchStartTime" title="Lunch Start Time"><display/></field>	
+		 <field name="lunchEndTime" id-name="lunchEndTime" title="Lunch End Time"><display/></field>	
+		
+	 	
+	 	 <field name="entryTime" title="Entry Time" ><display/></field>
+		 <field name="exitTime" title="Exit Time"><display/></field>
+		 <field name="lunchDuration" title="Lunch Duration" tooltip="*Hours"><display/></field>
+
+		 <field name="maximumStayTime" title="Maximum Stay Time"><display/></field>
+		 <field name="lateEntryTime" title="Late Entry Time"><display/></field>
+		 <field name="oTStartTime" title="OT Start Time"><display/></field>
+		 <field name="oTEndTime" title="OT End Time"><display/></field>
+		 <field name="extraOTStartTime" title="Extra OT Start Time"><display/></field>
+		 <field name="extraOTEndTime" title="Extra OT End Time"><display/></field>
+		 
+		 <field name="firstTiffinStartTime" title="First Tiffin Start Time"><display/></field>
+		 <field name="firstTiffinEndTime" title="First Tiffin End Time"><display/></field>
+		 <field name="secondTiffinStartTime" title="Second Tiffin Start Time"><display/></field>
+		 <field name="secondTiffinEndTime" title="Second Tiffin End Time"><display/></field>
+		 <field name="nightStartTime" title="Night Start Time"><display/></field>
+		 <field name="nightEndTime" title="Night End Time"><display/></field>
+		 
+		 
+		 <field name="oTallowances" title="OT Allowances"><display/></field>
+		 <field name="attendanceBonusAllowances" title="Attendance Bonus Allowances"><display/></field>
+		 <field name="extraOTallowances" title="Extra OT Allowances"><display/></field>
+		 <field name="lateEntryDaysForAttenBonusDisable" title="Monthly Late Entry Days For AttenBonus Disable" tooltip="Days"><display/></field>
+		 <field name="lateEntryDaysForAttenBonusDeduction" title="Monthly Late Entry Days For AttenBonus Deduction" tooltip="Days"><display/></field>
+		 <field name="yearlyLateEntryDaysForAttenBonusDisable" title="Yearly Late Entry Days For AttenBonus Disable" tooltip="Days"><display/></field>
+		 <field name="yearlylateEntryDaysForAttenBonusDeduction" title="Yearly Late Entry Days For AttenBonus Deduction" tooltip="Days"><display/></field>
+		 <field name="montlyBonusAmount" title="Monthly Bonus Amount" tooltip="TK"><display/></field>
+		 <field name="yearlyBonusAmount" title="Yearly Bonus Amount" tooltip="TK"><display/></field>
+		 <field name="bonusDeductionAmount" title="Bonus Deduction Amount" tooltip="Example(100.00)"><display/></field>
+		 <field name="oTCalculationOperand" title="OT Calculation Operand" tooltip="Example(100.00)"><display/></field>
+	 	
+	 
+	 
+	</form>
+	
+	<form name="DesignationPreferenceList" type="list" list-name="designationPreferenceList" paginate="true" hide-header="false" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar" paginate-target="DesignationPreference">
+		
+	
+		<!-- <field name="emplPositionId" title="Position"><display/>
+		</field> -->
+		<!-- <field name="designPrefRevision" parameter-name="designPrefRevision" title="Revision"><display/></field> -->
+ 		<!-- <field name="fromDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(fromDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+	  	<field name="thruDate"><display description="${groovy:org.ofbiz.base.util.UtilDateTime.toDateString(thruDate, &quot;dd/MM/yyyy&quot;);}"/></field>
+		 -->
+		<field name="designationPreferenceId" title="Id" widget-style="buttontext">
+			<hyperlink also-hidden="false" target="DesignationPositions" description="${designationPreferenceId}">
+					<parameter param-name="designationPreferenceId" from-field="designationPreferenceId"/>
+			</hyperlink>
+		</field> 
+		<field name="firstTiffinRate" title="First Tiffin Rate"><display/></field>
+		<field name="secondTiffinRate" title="Second Tiffin Rate"><display/></field>
+		<field name="nightRate" title="Night Rate"><display/></field>
+		<field name="firstHalfHolidayRate" title="First Half Holiday Rate"><display/></field>
+		<field name="secondHalfHolidayRate" title="Second Half Holiday Rate"><display/></field>
+		
+		<field name="edit" widget-style="buttontext" title="Action">
+            	<hyperlink also-hidden="false" target-type="plain" description="Edit" target="javascript:contessaPopupAttenEdit('Edit Designation Preference','#editDesignationPreference','EditDesignationPreference?&amp;designationPreferenceId=${designationPreferenceId}&amp;title=Edit Designation Preference','650','650')"/>
+        </field>
+        
+        <field name="detail" widget-style="buttontext" title="Detail">
+            	<hyperlink also-hidden="false" target-type="plain" description="Detail" target="javascript:contessaPopup('View Designation Preference','#editDesignationPreference','ViewDesignationPreference?&amp;designationPreferenceId=${designationPreferenceId}','650','650')"/>
+        </field>
+        
+        <field name="action" title="Action" widget-style="buttontext">
+			<hyperlink also-hidden="false" target="PositionsBatchAssignment" description="Batch Assignment">
+					<parameter param-name="designationPreferenceId" from-field="designationPreferenceId"/>
+			</hyperlink>
+		</field> 
+		 		 
+
+	
+	</form>
+	<!-- End Designation Preference -->
+	
+	<!-- Start Batch Assign -->
+	<form name="BatchAssignForm" type="single" target="assignBatchEmployee" header-row-style="header-row"
+          default-table-style="basic-table">
+		
+     	<field name="rosterPreferenceId" parameter-name="rosterPreferenceId"><hidden/></field>
+     	<field name="rosterPrefRevision" parameter-name="rosterPrefRevision"><hidden/></field>
+     	<field name="rosterName" parameter-name="rosterName"><hidden/></field>
+     	<field name="orgPartyId" parameter-name="orgPartyId"><hidden/></field>
+     	<field name="fromDate"><date-time type="date"/></field>
+	  	<field name="thruDate"><date-time type="date"/></field>
+     	
+     	<field name="division" id-name="division" ><lookup target-form-name="contessaLookupPartyGroupDivision"/></field>
+      	<field name="department" id-name="department"><lookup target-form-name="contessaLookupPartyGroupDepartment"/></field>
+      	<field name="section" id-name="section"><lookup target-form-name="contessaLookupPartyGroupSection"/></field>
+      	<field name="line"  id-name="line"><lookup target-form-name="contessaLookupPartyGroupLine"/></field>
+     	<field name="submitButton" title="Assign Batch" widget-style="smallSubmit">
+            <submit button-type="button"/>
+        </field>
+    </form>
+    
+    
+</forms>

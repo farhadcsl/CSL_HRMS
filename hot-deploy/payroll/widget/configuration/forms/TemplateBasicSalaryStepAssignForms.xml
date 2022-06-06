@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+     
+     
+   <form name="ListTemplateBasicSalaryStepAssign" type="multi" target="updateTemplateBasicSalaryStepAssign" odd-row-style="alternate-row" header-row-style="header-row-2"
+        default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="SalTempBasSalAssign"><order-by field-name="salaryTemplateId"/></entity-condition>
+        </actions>
+        <row-actions>
+	        <entity-one value-field="salaryTemplate" entity-name="SalaryTemplate">
+            	<field-map field-name="salaryTemplateId" from-field="salaryTemplateId"/> 
+            </entity-one>
+             <entity-one value-field="basicSalaryStep" entity-name="BasicSalaryStep">
+             	<field-map field-name="basicSalaryStepId" from-field="basicSalaryStepId"/> 
+             </entity-one>
+        </row-actions>
+        <field name="salaryTemplateId" title="Salary Template Id"><display/></field>
+        <field name="salaryTemplateName" title="Salary Template Name"><display description="${salaryTemplate.salaryTemplateName}"/></field>
+        <field name="basicSalaryStepId" title="Basic Salary Step Id"><display/></field>
+        <field name="basicSalaryStepName" title="Basic Salary Step"><display description="${basicSalaryStep.basicSalaryStepName}"/></field>
+        <field name="comments" title="Comments"><display/></field>
+        
+        <field name="editLink" title="Edit" widget-style="buttontext">
+            <hyperlink  target="EditTemplateBasicSalaryStepAssignExt" description="Edit" also-hidden="false">
+                <parameter param-name="salaryTemplateId"/>  
+                <parameter param-name="basicSalaryStepId"/>
+                <parameter param-name="isActive"/> 
+                <parameter param-name="comments"/>  
+            </hyperlink>
+        </field>
+       
+        <field name="deleteLink" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink also-hidden="false" description="${uiLabelMap.CommonDelete}" target="deleteTemplateBasicSalaryStepAssign" request-confirmation="true"> 
+                <parameter param-name="salaryTemplateId"/> 
+                <parameter param-name="basicSalaryStepId"/> 
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddTemplateBasicSalaryStepAssign" type="single" target="createTemplateBasicSalaryStepAssign" header-row-style="header-row" default-table-style="basic-table">     
+        
+        <field name="salaryTemplateId" title="Salary Template" required-field="true" tooltip="Required">
+            <drop-down >
+            <auto-complete/>
+                <entity-options description="${salaryTemplateName}" key-field-name="salaryTemplateId" entity-name="SalaryTemplate">
+                    <entity-order-by field-name="salaryTemplateId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+         
+        <field name="basicSalaryStepId" title="Basic Salary Step" required-field="true" tooltip="Required">
+            <drop-down >
+            <auto-complete/>
+                <entity-options description="${basicSalaryStepName}" key-field-name="basicSalaryStepId" entity-name="BasicSalaryStep">
+                    <entity-order-by field-name="basicSalaryStepId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="isActive" title="Value"><hidden value="Y"/></field>
+        <field name="comments" title="Comments" required-field="true"><textarea/></field>
+        
+         <field name="submitButton" title="Submit">
+            <submit/>
+        </field>
+    </form>
+   
+    <form name="UpdateTemplateBasicSalaryStepAssignExt" type="single" target="updateTemplateBasicSalaryStepAssignExt" header-row-style="header-row" default-table-style="basic-table">
+        <field name="salaryTemplateId"><display/></field>        
+        <field name="basicSalaryStepId"><display/></field>
+        <!-- <field name="isActive" title="Value"><display/></field> --> 
+        <field name="comments" title="Comments"><textarea/></field> 
+        <field name="submitButton" title="Submit">
+            <submit/>
+        </field>
+    </form>
+     
+
+</forms>

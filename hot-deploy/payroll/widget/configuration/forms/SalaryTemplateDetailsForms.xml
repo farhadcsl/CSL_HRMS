@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+     
+     
+    <form name="ListSalaryTemplateDetails" type="list" list-name="salaryTemplateDetailsList" use-row-submit="true" title=""
+     	 target="updateSalaryTemplateDetails" paginate-target="FindPayrollSalaryTemplateDetails"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <!-- <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="SalaryTemplateDetailsCtx"/>
+                <field-map field-name="entityName" value="SalaryTemplateDetails"/>                
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions> -->
+        <auto-fields-service default-field-type="display" service-name="updateSalaryTemplateDetails"/> 
+        <field name="amount"><hidden/></field>
+        <field name="salaryTemplateId" title="Salary Template"><display /></field>
+        <field name="payrollItemTypeId" title="Payroll Item"><display /></field>
+        <field name="calculationType" title="Calculation Type">
+        	<display description="${groovy: if(calculationType=='B') return 'Benifit'; if(calculationType=='D') return 'Deduction';}"/>
+        </field>
+        <field name="optValue" title="Value"><display /></field>
+        <field name="thruDate"><hidden/></field>
+        <field name="isActive"><hidden/></field>
+        <field name="editLink" title="" widget-style="buttontext">
+            <hyperlink  target="UpdateListSalaryTemplateDetails" description="Edit" also-hidden="false">
+                <parameter param-name="salaryTemplateId"/>
+                <parameter param-name="payrollItemTypeId"/>
+                <parameter param-name="calculationType"/>
+                <parameter param-name="calculationMode"/>
+                <parameter param-name="optValue"/>
+                <parameter param-name="amount"/>
+                <parameter param-name="fromDate"/>
+                <parameter param-name="isActive"/>
+                <parameter param-name="comments"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title="" widget-style="buttontext">
+            <hyperlink target="deleteSalaryTemplateDetails" description="Inactive" also-hidden="false"
+            	request-confirmation="true" confirmation-message="Do you want to delete payroll item ${payrollItemTypeId} from salary template ${salaryTemplateId} ">
+                <parameter param-name="salaryTemplateId"/>
+                <parameter param-name="fromDate"/>
+                <parameter param-name="payrollItemTypeId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="NewSalaryTemplateDetails" type="single" target="createSalaryTemplateDetails" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <actions>
+	        <entity-and entity-name="PayrollItem" list="payrollItem">
+	        	<field-map field-name="payrollType" value="F"/>
+	        </entity-and>
+        </actions>
+        <field name="salaryTemplateId" required-field="true"><display/></field>
+        <field name="payrollItemTypeId">
+            <drop-down allow-empty="false">
+                 <entity-options entity-name="PayrollItem" key-field-name="payrollItemTypeId" description="${payrollItemName}"> 
+                     <entity-constraint name="payrollType" operator="equals" value="F" /> 
+                 </entity-options>
+            </drop-down>
+        </field>
+        <field name="payrollItemTypeId" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options description="${payrollItemTypeId}" key-field-name="payrollItemTypeId" entity-name="PayrollItem">
+                   <entity-order-by field-name="invoiceItemTypeId"/>
+                   <entity-constraint name="payrollType" value="V"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="calculationType" widget-style="required" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="B" description="Benifit"/>
+                <option key="D" description="Deduction"/>
+            </drop-down>
+        </field>
+        <field name="calculationMode" widget-style="required" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field>
+        <field name="optValue" title="Value" required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+        <field name="comments" title="Comments" ><textarea/></field>
+        <field name="isActive" title="Value"><hidden value="Y"/></field>
+        <field name="amount" title="Value" required-field="true"><hidden/></field>
+     
+        <field name="submitButton" title="Create" widget-style="smallSubmit">
+        	<submit/>
+        </field>
+       
+    </form>
+    
+     <form name="UpdateSalaryTemplateDetails" type="single" target="updateSalaryTemplateDetails" header-row-style="header-row" default-table-style="basic-table" >
+      	<field name="fromDate"><hidden/></field>
+        <field name="salaryTemplateId"><display/></field>
+       
+        <field name="payrollItemTypeId" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options description="${payrollItemTypeId}" key-field-name="payrollItemTypeId" entity-name="PayrollItem">
+                    <entity-order-by field-name="invoiceItemTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="calculationType" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="B" description="Benifit"/>
+                <option key="D" description="Deduction"/>
+            </drop-down>
+        </field>
+        <field name="calculationMode" required-field="true">
+            <drop-down allow-empty="false">
+                <option key="Fixed" description="Fixed"/>
+                <option key="Percentage" description="Percentage"/>
+            </drop-down>
+        </field>
+        <field name="optValue" title="Value"  required-field="true" tooltip="Only Number Value are allowed eg.(12345)" widget-style="number"><text/></field>
+        <field name="comments" title="Comments"><textarea/></field>
+        <field name="isActive" title="Value"><hidden/></field>
+        <field name="amount" title="Value"><hidden/></field>
+     
+      
+        <field name="submitButton" title="Update" widget-style="smallSubmit">
+        	<submit/>
+        </field>
+    </form>
+
+</forms>
